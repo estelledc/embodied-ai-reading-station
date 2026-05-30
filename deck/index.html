@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280,initial-scale=1">
+<title>LLaVA: Visual Instruction Tuning — 论文精读汇报</title>
+<link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --paper: #efe7d2;
+  --paper-warm: #ece4cf;
+  --paper-dark: #ddd2b6;
+  --bone: #f7f1de;
+  --ink: #15140f;
+  --ink-soft: #2a2620;
+  --ink-mute: #5a5448;
+  --ink-faint: #8b8676;
+  --coral: #ed6f5c;
+  --mustard: #e9b94a;
+  --slide-w: 1280px;
+  --slide-h: 720px;
+
+  --font-sans: "Inter", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --font-display: "Inter", "Inter Tight", -apple-system, sans-serif;
+  --font-serif: "Playfair Display", "Source Han Serif SC", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1814; }
+body {
+  font-family: var(--font-sans);
+  color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.deck { position: relative; width: var(--slide-w); height: var(--slide-h); overflow: hidden; }
+.deck-track { display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.23,1,0.32,1); }
+.slide {
+  width: var(--slide-w); height: var(--slide-h); flex-shrink: 0;
+  background: var(--paper); position: relative; overflow: hidden;
+  padding: 56px 80px 48px;
+}
+.slide.dark { background: var(--ink); color: var(--paper); }
+.slide.dark .em { color: var(--coral); }
+.slide.dark .ink-faint { color: var(--paper-dark); opacity: 0.7; }
+
+/* paper noise */
+.slide::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(106,92,56,0.05), transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(106,92,56,0.03), transparent 60%);
+  mix-blend-mode: multiply;
+}
+.slide::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  mix-blend-mode: multiply;
+}
+.slide.dark::after { mix-blend-mode: screen; opacity: 0.08; }
+
+/* per-slide chrome */
+.chrome {
+  position: absolute; left: 80px; right: 80px; bottom: 28px;
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--ink-faint);
+  border-top: 1px solid var(--paper-dark); padding-top: 10px; z-index: 2;
+}
+.slide.dark .chrome { color: var(--paper-dark); border-color: rgba(221,210,182,0.25); }
+.chrome .star { color: var(--mustard); margin-right: 0.4em; }
+.chrome .pg { font-variant-numeric: tabular-nums; }
+
+/* inner column */
+.col { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; padding-bottom: 40px; }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 18px;
+  border-bottom: 1px solid var(--coral); padding-bottom: 4px; display: inline-block; align-self: flex-start;
+}
+.slide.dark .eyebrow { color: var(--paper-dark); border-color: var(--coral); }
+
+h1.cover-title {
+  font-family: var(--font-display); font-weight: 800; font-size: 92px; line-height: 0.96;
+  letter-spacing: -0.04em; color: inherit;
+}
+h1.cover-title em { font-family: var(--font-serif); font-style: italic; font-weight: 500; letter-spacing: -0.02em; }
+.cover-title .em { color: var(--coral); }
+
+.cover-zh {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: 30px; line-height: 1.3; color: var(--ink-soft); margin-top: 22px; max-width: 28ch;
+}
+.slide.dark .cover-zh { color: var(--paper-dark); }
+
+h2.title {
+  font-family: var(--font-display); font-weight: 800; font-size: 56px; line-height: 1.05;
+  letter-spacing: -0.025em; max-width: 22ch; margin-bottom: 8px;
+}
+h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 500; color: var(--coral); }
+.title-en { font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 22px; color: var(--ink-mute); margin-bottom: 24px; max-width: 50ch; }
+
+.bilingual { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; flex: 1; align-content: start; }
+.bilingual h3 { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px; }
+.bilingual .lang-zh { font-size: 18px; line-height: 1.55; color: var(--ink-soft); }
+.bilingual .lang-en { font-family: var(--font-serif); font-size: 17px; line-height: 1.5; color: var(--ink-soft); font-style: normal; font-weight: 500; }
+.bilingual p { margin-bottom: 12px; }
+.bilingual ul { padding-left: 1.2em; margin-top: 6px; }
+.bilingual li { margin-bottom: 8px; line-height: 1.5; }
+
+.roman {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  color: var(--coral); font-size: 18px; letter-spacing: 0.04em;
+}
+.chapter-num {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: 220px; line-height: 1; color: var(--coral); letter-spacing: -0.03em;
+}
+
+/* stats slide */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; margin-top: 28px; }
+.stat .val {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: 78px; line-height: 1; letter-spacing: -0.02em; color: var(--coral);
+  font-variant-numeric: tabular-nums;
+}
+.stat .lbl { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-top: 10px; }
+.stat .sub { font-size: 14px; color: var(--ink-soft); margin-top: 6px; line-height: 1.4; }
+
+/* method cards */
+.methods { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 36px; margin-top: 18px; }
+.method { border-left: 2px solid var(--coral); padding: 6px 0 6px 18px; }
+.method .name { font-family: var(--font-display); font-weight: 700; font-size: 19px; letter-spacing: -0.01em; }
+.method .meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-top: 2px; }
+.method .body { font-size: 14.5px; color: var(--ink-soft); margin-top: 8px; line-height: 1.55; }
+
+/* arch image slide */
+.arch-figure { display: grid; grid-template-columns: 1fr 1.3fr; gap: 40px; flex: 1; align-items: center; }
+.arch-figure img { width: 100%; height: auto; border: 1px solid var(--paper-dark); background: var(--bone); }
+.arch-figure .caption { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint); margin-top: 10px; }
+.arch-figure .arch-text { font-size: 16px; line-height: 1.55; color: var(--ink-soft); }
+.arch-figure .arch-text strong { color: var(--ink); font-weight: 700; }
+
+/* limits / takeaways */
+.list-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 32px 56px; }
+.list-pair h3 {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-faint); margin-bottom: 14px;
+  border-bottom: 1px solid var(--paper-dark); padding-bottom: 6px;
+}
+.list-pair li { margin-bottom: 10px; line-height: 1.5; font-size: 16px; color: var(--ink-soft); }
+
+/* end slide */
+.end-mega {
+  font-family: var(--font-serif); font-style: italic; font-weight: 500;
+  font-size: 200px; line-height: 0.95; letter-spacing: -0.04em; color: var(--coral);
+}
+.end-colophon {
+  margin-top: 60px; font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--paper-dark);
+}
+
+/* nav */
+.nav-dots {
+  position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 50;
+}
+.nav-dots button {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--paper-dark);
+  border: none; cursor: pointer; transition: background 0.2s, transform 0.2s;
+}
+.nav-dots button[aria-current="true"] { background: var(--coral); transform: scale(1.4); }
+.help {
+  position: fixed; bottom: 18px; right: 24px; font-family: var(--font-mono);
+  font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; z-index: 50;
+}
+
+/* overview grid */
+.deck.overview .deck-track { display: grid; grid-template-columns: repeat(4, 1fr); transform: none !important; gap: 20px; padding: 40px; width: 100%; height: 100vh; }
+.deck.overview .slide { width: 100%; height: 220px; transform: scale(1); cursor: pointer; outline: 2px solid transparent; }
+.deck.overview .slide:hover { outline-color: var(--coral); }
+.deck.overview .chrome, .deck.overview .nav-dots, .deck.overview .help { display: none; }
+.deck.overview .slide * { font-size: 0.4em !important; }
+.deck.overview .slide .chapter-num, .deck.overview .slide .end-mega { font-size: 60px !important; }
+.deck.overview .slide .cover-title { font-size: 28px !important; }
+
+@media print {
+  html, body { background: white; overflow: visible; }
+  body { display: block; }
+  .deck, .deck-track { width: auto !important; height: auto !important; transform: none !important; display: block !important; }
+  .slide { page-break-after: always; transform: none !important; box-shadow: none; }
+  .nav-dots, .help { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+<div class="deck-track" id="track">
+
+<!-- 1. COVER -->
+<section class="slide dark" data-kind="cover">
+  <div class="col">
+    <span class="eyebrow">Paper reading · undergraduate research · 2026.06</span>
+    <div style="flex:1; display:flex; flex-direction: column; justify-content: center;">
+      <h1 class="cover-title">Visual<br><em class="em">Instruction</em><br>Tuning</h1>
+      <p class="cover-zh">视觉指令微调 — 让模型从"看图描述"<br>变成"看图办事"。</p>
+    </div>
+    <div style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--paper-dark);">
+      <div>Liu, Li, Wu, Lee · NeurIPS 2023 · arXiv 2304.08485</div>
+      <div style="margin-top:6px">presented by Jason · advisor 张瑞杰 / 王宁</div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · cover</span><span class="pg">01 / 14</span></div>
+</section>
+
+<!-- 2. ROADMAP -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">I</span> · agenda · 路线图</span>
+    <h2 class="title">Where this <em>fits</em>.</h2>
+    <p class="title-en">Why LLaVA matters in the embodied-AI roadmap.</p>
+    <div class="bilingual">
+      <div>
+        <h3>中文</h3>
+        <p class="lang-zh">本科生科研任务给了 13 篇论文，覆盖 7 个主题：从 <strong>VLM 基座</strong>，到 <strong>任务规划</strong>，再到 <strong>端到端 VLA</strong>、世界模型、射频与听觉。</p>
+        <p class="lang-zh">LLaVA 是 <strong>主题 I</strong>（VLM 基座）的开山论文，也是其余主题（OpenVLA / SayCan / Cosmos）默认的视觉接入范式。先读它，等于拿到这条主线的钥匙。</p>
+      </div>
+      <div>
+        <h3>English</h3>
+        <p class="lang-en">The undergraduate research brief lists 13 papers across 7 topics — from VLM foundations to high-level planning, end-to-end VLA, world models, RF perception, and auditory intelligence.</p>
+        <p class="lang-en">LLaVA opens <strong>topic I</strong> and quietly becomes the default visual front-end of nearly every later paper in the list. Reading it first hands us the key to the rest of the roadmap.</p>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · roadmap</span><span class="pg">02 / 14</span></div>
+</section>
+
+<!-- 3. CHAPTER -->
+<section class="slide dark" data-kind="chapter">
+  <div class="col" style="justify-content: center;">
+    <span class="eyebrow" style="border-color: var(--coral); color: var(--paper-dark);">Chapter</span>
+    <div class="chapter-num">I.</div>
+    <h2 class="title" style="color: var(--paper); margin-top: 24px;">Why <em>visual</em><br>instruction tuning?</h2>
+    <p class="title-en" style="color: var(--paper-dark); font-size: 24px;">为什么需要视觉指令微调？</p>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · chapter I</span><span class="pg">03 / 14</span></div>
+</section>
+
+<!-- 4. WHY THIS PAPER -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">I.1</span> · motivation · 研究动机</span>
+    <h2 class="title">The <em>visual</em> AI in 2023 was <em>blind</em> to instructions.</h2>
+    <p class="title-en">2023 年的视觉 AI 听不懂"按指令办事"。</p>
+    <div class="bilingual">
+      <div>
+        <h3>中文 · 三个断层</h3>
+        <ul class="lang-zh">
+          <li><strong>视觉模型</strong>（CLIP、检测器）很强，但接口僵硬——一个模型只解一个任务，不能用人话切模式。</li>
+          <li><strong>大语言模型</strong> 听得懂人话，但<strong>眼盲</strong>——只能处理文字。</li>
+          <li><strong>已有多模态模型</strong>（BLIP-2、Flamingo）能"看图说话"，但没专门用<strong>图文指令数据</strong>训过，一让它"按指令回答"就退化成"描述图片"。</li>
+        </ul>
+      </div>
+      <div>
+        <h3>English · three gaps</h3>
+        <ul class="lang-en">
+          <li>Vision models are <strong>powerful but rigid</strong> — one task per model, no natural-language switching.</li>
+          <li>LLMs <strong>understand language</strong> but are blind to pixels.</li>
+          <li>Existing multimodal models <strong>weren't trained on image-text instruction tuples</strong>, so they fall back to plain captioning when asked to follow instructions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · motivation</span><span class="pg">04 / 14</span></div>
+</section>
+
+<!-- 5. CHAPTER -->
+<section class="slide dark" data-kind="chapter">
+  <div class="col" style="justify-content: center;">
+    <span class="eyebrow" style="border-color: var(--coral); color: var(--paper-dark);">Chapter</span>
+    <div class="chapter-num">II.</div>
+    <h2 class="title" style="color: var(--paper); margin-top: 24px;">The <em>method</em>.</h2>
+    <p class="title-en" style="color: var(--paper-dark); font-size: 24px;">方法</p>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · chapter II</span><span class="pg">05 / 14</span></div>
+</section>
+
+<!-- 6. METHOD - DATA -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">II.1</span> · data · GPT-4 当数据厨子</span>
+    <h2 class="title">Let GPT-4 <em>cook the recipe</em>; have Vicuna <em>plate the dish</em>.</h2>
+    <p class="title-en">GPT-4 生成图文指令数据 — 158K 条 conversation / detail / reasoning。</p>
+    <div class="methods">
+      <div class="method">
+        <div class="name">Caption + Bounding Box → Text Skeleton</div>
+        <div class="meta">step 1 · 把图变成纯文字</div>
+        <div class="body">把图片用场景描述 (caption) + 物体框坐标 (bbox) 转成"文字骨架"，喂给纯文本 GPT-4。<br><em>Like translating the photo into a recipe before cooking.</em></div>
+      </div>
+      <div class="method">
+        <div class="name">Three Response Types</div>
+        <div class="meta">step 2 · 三种数据各取所长</div>
+        <div class="body"><strong>Conversation</strong>（多轮对话）· <strong>Detail Description</strong>（详细描述）· <strong>Complex Reasoning</strong>（复杂推理）。<br>Total <strong>158 K</strong> instruction tuples.</div>
+      </div>
+      <div class="method">
+        <div class="name">Symbolic, Not Visual</div>
+        <div class="meta">why this works</div>
+        <div class="body">GPT-4 完全没看图，只看文字骨架，就生成了高质量指令数据——把"标注昂贵"问题转化为"模型蒸馏便宜"问题。</div>
+      </div>
+      <div class="method">
+        <div class="name">Seed Examples</div>
+        <div class="meta">in-context priming</div>
+        <div class="body">人工写几条样例放进 prompt 让 GPT-4 照葫芦画瓢；类比 "show the chef two sample plates, then let them riff."</div>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · method · data</span><span class="pg">06 / 14</span></div>
+</section>
+
+<!-- 7. METHOD - ARCH -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">II.2</span> · architecture · 架构</span>
+    <h2 class="title">A <em>USB-to-Type-C</em> adapter, not a Q-Former.</h2>
+    <p class="title-en">CLIP + 单层线性投影 + Vicuna — 比 BLIP-2 / Flamingo 简单一个数量级。</p>
+    <div class="arch-figure">
+      <div>
+        <img src="llava-arch.jpg" alt="LLaVA architecture">
+        <p class="caption">Plate Nº I · LLaVA architecture (Liu et al. 2023, Fig. 1)</p>
+      </div>
+      <div class="arch-text">
+        <p style="margin-bottom: 12px"><strong>CLIP ViT-L/14</strong> 把图切成 14×14 patch，输出视觉特征 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">Z_v</code>。</p>
+        <p style="margin-bottom: 12px"><strong>Projection W</strong>（一个矩阵）把 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">Z_v</code> 投影成"伪词向量" <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">H_v</code>，维度对齐 LLM token embedding。</p>
+        <p><strong>Vicuna LLM</strong> 把 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">H_v</code> 当成几个特殊词，拼到指令文本前，端到端解码答案。</p>
+        <p style="margin-top: 12px; font-style: italic; color: var(--ink-mute); font-family: var(--font-serif);">English: a single-layer projection acts like a USB-to-Type-C adapter — fast to iterate, easy to ablate, surprisingly effective.</p>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · method · architecture</span><span class="pg">07 / 14</span></div>
+</section>
+
+<!-- 8. METHOD - TRAINING -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">II.3</span> · training · 两阶段训练</span>
+    <h2 class="title">Two stages: <em>align,</em> then <em>tune</em>.</h2>
+    <p class="title-en">先教翻译插头认词，再让整个团队配合演练。</p>
+    <div class="bilingual">
+      <div>
+        <h3>Stage 1 · Feature Alignment Pre-training</h3>
+        <ul class="lang-zh">
+          <li>数据：CC3M 595K 图文对，每张图当成 "describe this image" 的单轮对话</li>
+          <li>训：仅 W；冻结 CLIP 和 LLM</li>
+          <li>类比：先让 USB 转接头学会基本针脚映射</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Stage 2 · End-to-End Instruction Tuning</h3>
+        <ul class="lang-en">
+          <li>Data: 158K GPT-4 instruction tuples (conv / detail / reasoning)</li>
+          <li>Train: <strong>W + Vicuna</strong>; CLIP stays frozen</li>
+          <li>Analogy: now the whole crew rehearses together</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top: 24px; font-family: var(--font-mono); font-size: 12px; color: var(--ink-mute); letter-spacing: 0.06em; text-transform: uppercase; border-top: 1px solid var(--paper-dark); padding-top: 12px;">Ablation: skip stage 1 → drop 5.11 pts on ScienceQA. Both stages and model size matter.</p>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · method · training</span><span class="pg">08 / 14</span></div>
+</section>
+
+<!-- 9. CHAPTER -->
+<section class="slide dark" data-kind="chapter">
+  <div class="col" style="justify-content: center;">
+    <span class="eyebrow" style="border-color: var(--coral); color: var(--paper-dark);">Chapter</span>
+    <div class="chapter-num">III.</div>
+    <h2 class="title" style="color: var(--paper); margin-top: 24px;">Does it <em>work</em>?</h2>
+    <p class="title-en" style="color: var(--paper-dark); font-size: 24px;">实验与结果</p>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · chapter III</span><span class="pg">09 / 14</span></div>
+</section>
+
+<!-- 10. STATS -->
+<section class="slide" data-kind="stats">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">III.1</span> · numbers that matter · 关键指标</span>
+    <h2 class="title">Four <em>numbers</em>, one verdict.</h2>
+    <p class="title-en">Strong instruction following, near-GPT-4 reasoning at 1/100 the data.</p>
+    <div class="stats">
+      <div class="stat"><div class="val">67.3</div><div class="lbl">LLaVA-Bench (in-the-wild)</div><div class="sub">+29 pts vs BLIP-2 · +48 pts vs OpenFlamingo</div></div>
+      <div class="stat"><div class="val">81.7</div><div class="lbl">Complex reasoning</div><div class="sub">relative to text-only GPT-4 with ground-truth captions</div></div>
+      <div class="stat"><div class="val">92.5</div><div class="lbl">ScienceQA SOTA</div><div class="sub">LLaVA + GPT-4 ensemble · single-model 90.92</div></div>
+      <div class="stat"><div class="val" style="font-size:72px">158K</div><div class="lbl">Instruction tuples</div><div class="sub">Generated by GPT-4 — no human annotation</div></div>
+    </div>
+    <p style="margin-top: 32px; font-size: 14px; color: var(--ink-mute); font-family: var(--font-serif); font-style: italic;">"At ~1% the data of contemporaries, the simplest possible adapter outperformed elaborate cross-attention designs. Simplicity wins again."</p>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · stats</span><span class="pg">10 / 14</span></div>
+</section>
+
+<!-- 11. LIMITS -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">III.2</span> · limits · 局限与疑点</span>
+    <h2 class="title">A <em>bag of patches</em> — not yet a scene.</h2>
+    <p class="title-en">Where LLaVA still falls short.</p>
+    <div class="list-pair">
+      <div>
+        <h3>中文</h3>
+        <ul>
+          <li><strong>"Patch 袋子"问题：</strong>把图当无序 patch，不能精细绑定语义。冰箱里的草莓 + 酸奶会被合并成"草莓味酸奶"。</li>
+          <li><strong>分辨率与百科知识瓶颈：</strong>识别拉面店招牌、酸奶品牌之类需要 OCR + 知识库的问题做不好。</li>
+          <li><strong>数据由 GPT-4 自动生成：</strong>质量上限被老师模型卡住，会继承 GPT-4 的偏见与幻觉。</li>
+          <li><strong>评测自循环：</strong>用 GPT-4 当 LLaVA 输出的裁判，可能偏好 GPT-4 风格答案。</li>
+        </ul>
+      </div>
+      <div>
+        <h3>English</h3>
+        <ul>
+          <li><strong>Bag-of-patches:</strong> objects co-occurring in patches get fused (yogurt + strawberry → "strawberry yogurt").</li>
+          <li><strong>Resolution & world-knowledge ceiling:</strong> fails on OCR-heavy or brand-recognition queries.</li>
+          <li><strong>Teacher-model ceiling:</strong> GPT-4 generated data inherits its biases and hallucinations.</li>
+          <li><strong>Self-evaluating loop:</strong> GPT-4 grading GPT-4-style answers risks systematic preference bias.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · limits</span><span class="pg">11 / 14</span></div>
+</section>
+
+<!-- 12. WHY IT MATTERS -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">IV</span> · legacy · 为什么这篇是地基</span>
+    <h2 class="title">Quietly the <em>visual front-end</em> of every VLA that followed.</h2>
+    <p class="title-en">悄然成为后续所有 VLA 模型的视觉接入层。</p>
+    <div class="list-pair">
+      <div>
+        <h3>下游影响 · downstream</h3>
+        <ul>
+          <li><strong>OpenVLA / RT-2 / π0</strong> 都复用 "CLIP + 投影层 + LLM" 范式（投影层从单层 MLP 升级到 2-layer，核心思路一致）</li>
+          <li><strong>SayCan / PaLM-E</strong> 把 LLaVA 视觉 token 化方案当作 embodied reasoning 的简化替代</li>
+        </ul>
+      </div>
+      <div>
+        <h3>方法论遗产 · methodology</h3>
+        <ul>
+          <li>"用强模型造指令数据"（symbolic data generation）成为多模态训练的标配——RT-2、OpenVLA cotraining 数据都有它的影子</li>
+          <li>极简优于复杂（simplicity wins）成为后续 VLM 设计准则</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · legacy</span><span class="pg">12 / 14</span></div>
+</section>
+
+<!-- 13. ROADMAP -->
+<section class="slide" data-kind="content">
+  <div class="col">
+    <span class="eyebrow"><span class="roman">V</span> · next · 接下来要做什么</span>
+    <h2 class="title">From <em>reading</em> to <em>doing</em>.</h2>
+    <p class="title-en">Task 2 路线图 — 把读到的东西在仿真里跑起来。</p>
+    <div class="bilingual">
+      <div>
+        <h3>已完成 · done</h3>
+        <ul class="lang-zh">
+          <li>13 篇论文资料就位（10 篇带图 md + 1 篇网页 + 3 篇 stub）</li>
+          <li>13 篇机器辅助生成的中文 auto-summary 笔记</li>
+          <li>静态学习站（atelier-zero 风格 · GitHub Pages 部署中）</li>
+          <li>LLaVA 精读 · 本汇报</li>
+        </ul>
+      </div>
+      <div>
+        <h3>下一步 · next</h3>
+        <ul class="lang-en">
+          <li><strong>Reading:</strong> SayCan → OpenVLA, then the multimodal &amp; world-model branches</li>
+          <li><strong>Coding (Task 2):</strong> reproduce <code style="font-family:var(--font-mono);font-size:0.9em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">VLM_Grasp_Interactive</code> in mujoco</li>
+          <li><strong>VLA fine-tune:</strong> SmolVLA on LeRobot data, deploy in sim</li>
+          <li><strong>Catch up</strong> with advisor (张瑞杰 / 王宁) every 2 weeks</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · roadmap</span><span class="pg">13 / 14</span></div>
+</section>
+
+<!-- 14. END -->
+<section class="slide dark" data-kind="end">
+  <div class="col" style="justify-content: center;">
+    <div class="end-mega">fin.</div>
+    <p style="font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 32px; color: var(--paper); margin-top: 30px;">Questions, doubts, redirections — welcome.</p>
+    <p style="font-size: 18px; color: var(--paper-dark); margin-top: 8px;">欢迎追问、纠错、改方向。</p>
+    <div class="end-colophon">Embodied AI Reading Station · 2026 · Jason Zhang · advisor 张瑞杰 / 王宁<br>presentation deck typeset in Inter Tight + Playfair Display + JetBrains Mono</div>
+  </div>
+  <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · fin.</span><span class="pg">14 / 14</span></div>
+</section>
+
+</div>
+
+<div class="nav-dots" id="dots" aria-label="slide navigation"></div>
+<div class="help">← / → · wheel · swipe · ESC</div>
+</div>
+
+<script>
+(() => {
+  const deck = document.getElementById('deck');
+  const track = document.getElementById('track');
+  const slides = [...track.querySelectorAll('.slide')];
+  const dotsBox = document.getElementById('dots');
+  let idx = 0;
+
+  // build dots
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.setAttribute('aria-label', `slide ${i+1}`);
+    b.addEventListener('click', () => goto(i));
+    dotsBox.appendChild(b);
+  });
+
+  function goto(i) {
+    idx = Math.max(0, Math.min(slides.length - 1, i));
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    [...dotsBox.children].forEach((d, di) => d.setAttribute('aria-current', di === idx ? 'true' : 'false'));
+  }
+
+  // keyboard
+  document.addEventListener('keydown', (e) => {
+    if (deck.classList.contains('overview') && e.key !== 'Escape') return;
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goto(idx + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); goto(idx - 1); }
+    else if (e.key === 'Home') goto(0);
+    else if (e.key === 'End') goto(slides.length - 1);
+    else if (e.key === 'Escape') {
+      deck.classList.toggle('overview');
+    }
+  });
+
+  // wheel
+  let wheelLock = false;
+  document.addEventListener('wheel', (e) => {
+    if (deck.classList.contains('overview')) return;
+    if (wheelLock) return;
+    if (Math.abs(e.deltaX) + Math.abs(e.deltaY) < 40) return;
+    wheelLock = true;
+    setTimeout(() => wheelLock = false, 600);
+    if (e.deltaX > 0 || e.deltaY > 0) goto(idx + 1);
+    else goto(idx - 1);
+  }, { passive: true });
+
+  // touch
+  let tx = 0;
+  document.addEventListener('touchstart', (e) => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', (e) => {
+    const dx = (e.changedTouches[0].clientX - tx);
+    if (Math.abs(dx) < 50) return;
+    goto(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  // overview click
+  slides.forEach((s, i) => s.addEventListener('click', () => {
+    if (deck.classList.contains('overview')) {
+      deck.classList.remove('overview');
+      goto(i);
+    }
+  }));
+
+  // viewport scaling
+  function fit() {
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const sw = 1280, sh = 720;
+    const scale = Math.min(vw / sw, vh / sh);
+    deck.style.transform = `scale(${scale})`;
+    deck.style.transformOrigin = 'center center';
+  }
+  window.addEventListener('resize', fit);
+  fit();
+
+  goto(0);
+})();
+</script>
+
+</body>
+</html>
