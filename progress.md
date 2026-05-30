@@ -13,9 +13,9 @@
 - [x] 05 VLAS — `vlas` ✓ 带图 md
 - [x] 06 MLA — `mla` ✓ 带图 md
 - [x] 07 Cosmos Policy — `cosmos-policy` ✓ 带图 md
-- [ ] 08 RF-Based 3D SLAM — `rf-slam` ⚠ stub（找学长要 PDF）
-- [ ] 09 mmCLIP — `mmclip` ⚠ stub（找学长要 PDF）
-- [ ] 10 NLOS mmWave — `nlos-mmwave` ⚠ stub（找学长要 PDF）
+- [x] 08 RF-Based 3D SLAM (CartoRadar) — `rf-slam` ✓ 带图 md（用户从 ACM 下到 PDF）
+- [x] 09 mmCLIP — `mmclip` ✓ 带图 md（直链下载）
+- [x] 10 NLOS mmWave (mmNorm) — `nlos-mmwave` ✓ 带图 md（MIT 主页直链）
 - [x] 11 Proactive Hearing — `proactive-hearing` ✓ 带图 md
 - [x] 12 NeuralAids — `neuralaids` ✓ 带图 md
 - [x] 13 Acoustic Swarms — `acoustic-swarms` ✓ Nature 网页抓取 md（无 PDF 图片）
