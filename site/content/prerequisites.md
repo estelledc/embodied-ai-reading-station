@@ -259,3 +259,285 @@ print(y.shape)                   # 看输出表格的形状是 (2, 5)
 ---
 
 *最后一句：地图画完了。先把阶段 1、2 对完号，阶段 3 看完 3Blue1Brown 那 6 集，再来挑一篇论文开读——比从头啃完所有教材高效十倍。*
+
+---
+
+## 中文学习资源（B 站 / 知乎 / 公众号）
+
+> 看英文教程吃力？下面是国内具身智能 / VLA 入门最有用的中文系列。视频排第一档（看就懂）、文章排第二档（深度更高）。
+
+## 0. 名词速查（看资源前先扫一遍）
+
+- **具身智能（Embodied AI）**：让 AI 长一个"身体"，通过机器人 / 机械臂在真实世界感知、决策、行动，而不是只产文字图片。类比："只会刷题的学霸 → 会做实验的学霸"。
+- **VLA（Vision-Language-Action）**：视觉-语言-动作模型。输入摄像头画面 + 一句中文指令（"把红色方块放进盒子"），直接输出机器人电机要发的动作序列。
+- **模仿学习 / Imitation Learning**：人类先示范几遍，模型学着抄。类比"师傅带徒弟"。
+- **强化学习 / RL**：让机器人自己试错，做对了加分。类比"打游戏靠 Game Over 学操作"。
+- **Sim2Real**：先在仿真器（Isaac / MuJoCo）里训，再迁移到真机。类比"先开模拟驾驶舱，再开真飞机"。
+
+---
+
+## A. B 站系列教程（视频 / 中文 / 高完整度）
+
+### A1. 跟李沐学 AI（B 站频道）
+- 链接：https://space.bilibili.com/1567748478
+- 一句话定位：亚马逊前首席科学家李沐，B 站最权威的中文 AI 教学频道，"动手学深度学习"+"论文精读"两大系列均在此频道更新。
+- 难度：⭐⭐
+- 推荐时机：**最先打开**，作为入门主线频道收藏。
+
+### A2. 动手学深度学习 v2（李沐）
+- 链接：https://courses.d2l.ai/zh-v2/ ｜ 配套书 https://zh-v2.d2l.ai/
+- 一句话定位：CNN / RNN / Transformer / BERT 全套，每节配 PyTorch 代码 Jupyter，被国内一票大学拿来当教材。
+- 难度：⭐⭐
+- 推荐时机：学完 Python 基础后第一门系统课。
+
+### A3. 论文精读系列（李沐）— 精读 Transformer / ViT / CLIP / GAN
+- 链接：https://space.bilibili.com/1567748478/lists/358497?type=series
+- 一句话定位：李沐逐句念论文 + 当场吐槽，把"看论文"门槛打穿；首推 Transformer 一期（2.5h，看完直接秒懂注意力）。
+- 难度：⭐⭐⭐
+- 推荐时机：A2 学完 Transformer 章节后立刻看。
+
+### A4. 李宏毅《机器学习》2024（台大 / 国语）
+- 链接（B 站搬运合集）：https://www.bilibili.com/video/BV1Sd4tepEot/
+- 一句话定位：用宝可梦 / 凉宫春日讲机器学习概念，零基础最佳起点；2024 已并入"生成式 AI 导论"主题。
+- 难度：⭐
+- 推荐时机：完全 0 基础先看 2-3 节预习"什么是模型 / 什么是 loss"。
+
+### A5. 李宏毅《生成式 AI 导论 2024》
+- 链接：https://www.bilibili.com/video/BV1tsNDe4E2i/
+- 一句话定位：聚焦 LLM / 多模态 / Agent / 加速生成；为后续读 VLA（视觉-语言-动作）打"语言模型"地基。
+- 难度：⭐⭐
+- 推荐时机：A4 看完后无缝衔接。
+
+### A6. 周博磊《强化学习纲要》（港中文 / B 站）
+- 链接：https://www.bilibili.com/video/av96834288 ｜ 课件 https://github.com/zhoubolei/introRL
+- 一句话定位：中文世界最系统的 RL 公开课，PPT+板书，从 MDP 到 PPO 全覆盖。VLA 后训练 / 机器人控制都需要 RL。
+- 难度：⭐⭐⭐
+- 推荐时机：要读 OpenVLA / RT-2 论文中"动作微调"章节前看。
+
+### A7. 尤里卡 AI《具身智能导学（适合 0 基础）》
+- 链接：https://www.bilibili.com/cheese/play/ss196866090
+- 一句话定位：39 课时小课，专攻 OpenVLA 部署 + VLA 概念；视频试看免费，付费内容是文档+代码。
+- 难度：⭐⭐
+- 推荐时机：通读完 A1-A4 后想要"从概念走向第一行机器人代码"时。
+
+### A8. 尤里卡 AI《具身智能入门_OpenVLA 复现》（B 站免费视频）
+- 链接：https://www.bilibili.com/video/BV1VAMnznEkG/
+- 一句话定位：1 小时跟跑式视频，演示如何把 OpenVLA 在自己机器上跑起来；"不付费版"。
+- 难度：⭐⭐⭐
+- 推荐时机：A7 觉得太长，先看这个找感觉。
+
+### A9. 算法与数学之美《宇树 G1 实战课》
+- 链接：https://m.sohu.com/a/1028914405_701814/（介绍页）
+- 一句话定位：以宇树 G1 人形机器人为载体，11 个项目实战覆盖强化学习 + 复杂地形 + 动作模仿；偏运控（机器人腿怎么走），不是 VLA。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：对"人形机器人怎么站起来"好奇时；不是 VLA 主线必看。
+
+### A10. 北大博雅人工智能讲堂《大模型赋能的人形机器人》（王鹤）
+- 关键词搜：B 站搜"博雅人工智能讲堂 王鹤"
+- 一句话定位：北大助理教授 + 银河通用 CTO 王鹤的公开讲座，1.5h 浓缩"为什么需要 VLA + 合成数据"。
+- 难度：⭐⭐⭐
+- 推荐时机：想知道"国内具身的研究到哪了"时。
+
+---
+
+## B. 中文公众号 / 知乎 / CSDN 专栏
+
+### B1. 机器之心｜《北大-灵初重磅发布具身 VLA 全面综述》
+- 链接：https://m.10100.com/article/2704071（机器之心转载）
+- 一句话定位：8 种主流 action token 拆解，VLA 技术路线全景图；中文长文里最权威的一篇综述导读。
+- 难度：⭐⭐⭐
+- 推荐时机：扫完一两个 B 站视频后，想要"全景概览"时读。
+
+### B2. 量子位｜《最火 VLA，看这一篇综述就够了》
+- 链接：http://m.toutiao.com/group/7567299209209053696/
+- 一句话定位：把 VLA 6 大趋势（效率优化 / 视频预测 / Diffusion / ...）拍平讲，含 HyperVLA / AutoQVLA / Cosmos 关键工作。
+- 难度：⭐⭐⭐
+- 推荐时机：B1 之后第二篇综述。
+
+### B3. CSDN 具身智能之心《VLA 主流方案全解析》
+- 链接：https://blog.csdn.net/CV_Autobot/article/details/145603274
+- 一句话定位：基于 Transformer / Diffusion / 自回归 三大类 VLA 方案对比；含 ALOHA、RT-1、HPT、π0 项目地址。
+- 难度：⭐⭐⭐
+- 推荐时机：决定"我要复现哪个项目"前对比用。
+
+### B4. 知乎《具身智能入门指南》（开源 Embodied-AI-Guide 中文化）
+- CSDN 镜像：https://blog.csdn.net/yiwei1225/article/details/145184685
+- 原仓库：https://github.com/TianxingChen/Embodied-AI-Guide
+- 一句话定位：全网最系统的中文具身入门 roadmap，按"基础→算法→仿真→数据"分章，6.2k 阅读。
+- 难度：⭐⭐
+- 推荐时机：第一周用来"对清楚要学的全图"。
+
+### B5. 知乎魔珐星云《小鸡毛的具身智能 VLA 入门自学路线》
+- 链接：https://xingyun3d.csdn.net/69ddfbb072111d255bf8c064.html
+- 一句话定位：作者本人 300 小时自学路线复盘，明确给出"Python → DL → PyTorch → Transformer → 生成 → 模仿/RL → OpenVLA/π" 七阶。
+- 难度：⭐⭐
+- 推荐时机：想抄一份"过来人的 KPI 清单"时。
+
+### B6. CSDN《具身智能论文精读（四）：Diffusion Policy》
+- 链接：https://blog.csdn.net/m0_56263746/article/details/160667039
+- 一句话定位：Diffusion Policy 是 2023 年来"模仿学习的主流方案"。文章中文翻译 + 注解原论文。
+- 难度：⭐⭐⭐
+- 推荐时机：A6 RL 学过、想知道"为什么现在大家都用扩散"时读。
+
+### B7. 稀土掘金《RT-2 学习笔记 — VLA 范式》
+- 链接：https://juejin.cn/post/7605214360084283428
+- 一句话定位：RT-2 是 VLA 开山之作；本文用三个问题（Tokenization / Data Mixing / 涌现能力）穿起来读。
+- 难度：⭐⭐⭐
+- 推荐时机：读 VLA 论文第一篇就读它。
+
+### B8. 王晋东《迁移学习简明手册 / 迁移学习导论》
+- 仓库：https://github.com/jindongwang/transferlearning
+- 一句话定位：知乎"王晋东不在家"自维护，迁移学习中文最佳入门；具身智能 Sim2Real 实质就是迁移学习。
+- 难度：⭐⭐
+- 推荐时机：研究 Sim2Real 时回头补这本。
+
+### B9. 微软亚洲研究院《AI Next 播客 S1E2：从世界模型到具身智能》
+- 链接：https://www.microsoft.com/en-us/research/articles/ai-next-podcast-s1e2/
+- 一句话定位：MSRA 郭百宁 vs 边江对谈，把"世界模型 / 具身智能 / 游戏训练场"几个概念串清楚；30min 通勤友好。
+- 难度：⭐⭐
+- 推荐时机：想要"换换脑子听音频"时。
+
+### B10. 澎湃新闻《李飞飞：空间智能是 AI 下一个前沿》（机器之心译版）
+- 链接：https://m.thepaper.cn/newsDetail_forward_31939684
+- 一句话定位：李飞飞 11/2025 长文中译，把"语言模型 → 空间智能"的下一步野心讲透；具身智能的"为什么重要"答案。
+- 难度：⭐
+- 推荐时机：开头第一篇科普文。
+
+### B11. 量子位《200 位具身从业者沙龙纪要》
+- 链接：http://m.toutiao.com/group/7633657217254605362/
+- 一句话定位：2026.04 现场实录，2 万小时数据真正有效的可能不到 3000 小时——产业最新真问题。
+- 难度：⭐⭐
+- 推荐时机：跟踪行业现状 / 找研究痛点时。
+
+### B12. 智元官网《GO-1：ViLLA 架构通用具身基座》
+- 链接：https://www.zhiyuan-robot.com/article/189/detail/56.html
+- 一句话定位：智元 2025.03 发布通用基座大模型 GO-1，提出 ViLLA = VLM + MoE + Latent Planner + Action Expert；国内第一个公开 VLA 大模型架构白皮书。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：B7 读完，想看"国内是怎么改 VLA"时。
+
+### B13. 智元官网《GenieReasoner：一体化具身大小脑》
+- 链接：https://www.zhiyuan-robot.com/article/315/detail/118.html
+- 一句话定位：智元 2026.01 二代系统，把"语义推理 + 动作控制"梯度冲突问题正式提出来 + 开源 ERIQ 评测基准。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：B12 之后追更。
+
+### B14. 智元 / 银河通用 / 千寻 / 它石智航 公司公开发布
+- 关键词聚合：B11 / B12 / B13 / 它石智航 AWE3.0
+- 一句话定位：四家国内具身一线公司近半年的产品发布稿，是"行业现在做到哪一步"的最快入口。
+- 难度：⭐⭐
+- 推荐时机：每月扫一次跟进。
+
+---
+
+## C. GitHub 中文教程 / 开源项目
+
+### C1. 动手学深度学习（d2l-zh）
+- 仓库：https://github.com/d2l-ai/d2l-zh ｜ 在线书 https://zh-v2.d2l.ai/
+- 一句话定位：A2 课程的代码 + 教材；25k+ star。
+- 难度：⭐⭐
+- 推荐时机：跟 A2 视频同步开。
+
+### C2. Datawhale every-embodied
+- 仓库：https://github.com/datawhalechina/every-embodied
+- 一句话定位：Datawhale 2026.04 开源的中文具身导航实战教程，"半天跑通感知→决策→规划→控制"全链路；1k+ star。
+- 难度：⭐⭐⭐
+- 推荐时机：在 B4 路线图后第一个动手项目。
+
+### C3. Datawhale《具身智能基础与机器人控制》组队学习
+- 介绍：https://blog.csdn.net/weixin_42291933/article/details/161235245
+- 一句话定位：Datawhale 2026.05 开的免费组队学，task1 涵盖空间运动 / PID / Habitat 仿真导航。
+- 难度：⭐⭐⭐
+- 推荐时机：想要"有同伴 + 有 deadline"时报名。
+
+### C4. Embodied-AI-Guide（中文 awesome 仓库）
+- 仓库：https://github.com/TianxingChen/Embodied-AI-Guide
+- 一句话定位：B4 的源仓库；维护非常活跃，按"启动 / 算法 / 工具 / 论文清单"分章，社区最权威中文 awesome。
+- 难度：⭐⭐
+- 推荐时机：长期挂在浏览器收藏夹。
+
+### C5. zhoubolei/introRL
+- 仓库：https://github.com/zhoubolei/introRL
+- 一句话定位：A6 课程的 PPT + 作业；中文 RL 入门最完整开源资料。
+- 难度：⭐⭐⭐
+- 推荐时机：跟 A6 视频同步看 slides。
+
+### C6. jindongwang/transferlearning
+- 仓库：https://github.com/jindongwang/transferlearning
+- 一句话定位：B8 的代码仓库；7k+ star，含中文 PDF 手册。
+- 难度：⭐⭐⭐
+- 推荐时机：Sim2Real 主题深入。
+
+### C7. zchoi/Awesome-Embodied-Robotics-and-Agent
+- 仓库：https://github.com/zchoi/Awesome-Embodied-Robotics-and-Agent
+- 一句话定位：英文仓库但被国内圈子高频引用；按硬件/软件栈/数据集/Benchmark 分类，比 C4 更偏研究者。
+- 难度：⭐⭐⭐
+- 推荐时机：C4 看完后进阶。
+
+---
+
+## D. 国内研究机构 / 学者主页（追更入口）
+
+### D1. 北大王鹤实验室（具身感知与交互实验室）
+- 主页：https://hughw19.github.io/
+- 一句话定位：王鹤主页 + 论文清单；国内具身 VLA 学术起源之一（NOCS / GAPartNet / Galbot 系列）。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：要找有引用的硬核论文时。
+
+### D2. 上交人工智能学院 / 卢策吾实验室
+- 上交人工智能学院：https://ai.sjtu.edu.cn/
+- 一句话定位：上交 2026 年开了"具身智能拔尖班"（全国首个本科级），卢策吾任带头人；新闻稿里能扒到他们的研究方向。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：要找研究生学校时。
+
+### D3. 银河通用 Galbot 官网 / 论文页
+- 链接：https://galbot.com/（含 paper 列表）
+- 一句话定位：王鹤创立公司，核心做"合成数据 + VLA 大模型"；G1 商场试运营案例多。
+- 难度：⭐⭐⭐
+- 推荐时机：想看"VLA 在真实场景跑起来什么样"时。
+
+### D4. 智元机器人 论文 / 白皮书页
+- 链接：https://www.zhiyuan-robot.com/news/article（公司新闻）
+- 一句话定位：稚晖君任 CTO；2026.03 累计 1 万台机器人下线，是国内第一家做到"产业化"的具身公司。
+- 难度：⭐⭐
+- 推荐时机：B14 同。
+
+### D5. 宇树 Unitree 论文 / 开源
+- 主页：https://www.unitree.com/cn ｜ GitHub https://github.com/unitreerobotics
+- 一句话定位：四足 + G1 人形开源生态最完整；运控算法 + 仿真环境对外免费。
+- 难度：⭐⭐⭐⭐
+- 推荐时机：研究"硬件层 / 运动控制"时。
+
+### D6. NVIDIA GTC 2026 王鹤演讲《工业级具身智能从概念走向现实》
+- 链接：https://www.nvidia.cn/on-demand/session/gtc26-s82127/
+- 一句话定位：王鹤在 NVIDIA GTC 上的中文实录 + 视频；演示 Galbot G1 + Isaac Sim 训练管线。
+- 难度：⭐⭐⭐
+- 推荐时机：想看"产业 + 仿真 + VLA"全栈样例时。
+
+---
+
+## E. 推荐学习路径（把上面 30+ 条串起来）
+
+```
+第 1 周（科普 + 立目标）
+  B10 李飞飞空间智能 → B4 入门指南 → A4 李宏毅 ML 前 3 节
+
+第 2-4 周（深度学习地基）
+  A2 d2l + C1 仓库 → A3 Transformer 精读
+
+第 5-6 周（VLA 概念）
+  A5 生成式 AI 导论 → B1 + B2 VLA 综述 → B7 RT-2 笔记
+
+第 7-8 周（动手）
+  A8 OpenVLA 复现视频 → C2 Datawhale every-embodied
+
+第 9 周后（深入分支）
+  RL 路：A6 周博磊 + C5 introRL
+  生成模型路：B6 Diffusion Policy
+  工业落地路：B14 + D6
+```
+
+---
+
+## F. 链接验证状态
+
+调研日期：2026-05-31。所有链接以 lr websearch general 返回的 URL 为准；CSDN / 哔哩哔哩 / 公众号转载链接长期可访问，B 站视频偶有下架风险（建议见到立即收藏）。智元官网与北大 / 上交学院主页为机构官方域名，稳定性最高。

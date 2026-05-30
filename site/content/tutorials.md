@@ -309,3 +309,187 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 - 解决了就回来记一笔到 [problems/](../../../../problems/)，下次自己或别人能直接用
 
 *读到这里你应该懂了：遇坑不可怕，记下来就是经验。*
+
+---
+
+## 能跑得起来的开源项目（按"能不能上手"排序）
+
+> 下面这些是 2026-05 当时还活跃维护、有清楚 README、能在合理硬件上跑通的开源项目。从最适合第一次跑的开始。
+
+## 术语速查（首次出现给类比，不重复解释）
+
+- **VLA（Vision-Language-Action）模型**：吃图片 + 文字指令，吐出机器人动作的"大脑"。类比：把 ChatGPT 装进机械臂里，告诉它"把红方块拿过来"它就会动。
+- **仿真器（simulator）**：电脑里的虚拟物理世界，让机器人先在里面摔一万次再上真机。类比：F1 车手先在赛车游戏里练。
+- **Imitation Learning（模仿学习）**：人手把手示范几十次，机器人学着做。类比：师傅带徒弟。
+- **RL（Reinforcement Learning）**：机器人自己反复试错，做对了给奖励。类比：训狗。
+- **BOM（Bill of Materials）**：清单 + 总价。买齐这些零件就能搭一台机器。
+- **Colab T4**：Google Colab 免费档配的 GPU，16GB 显存，能力约等于 2018 年的卡。能跑小模型推理，跑不动大模型训练。
+- **RTX 3060 / 4090 / A100**：消费级 → 发烧级 → 数据中心级 GPU。显存依次约 12GB / 24GB / 80GB，价格依次约 ¥2k / ¥15k / ¥15w。
+
+---
+
+## 第一梯队：入门读者首选（⭐ 难度 1-2）
+
+### 1. HuggingFace LeRobot
+
+- **链接**：<https://github.com/huggingface/lerobot>
+- **一句话定位**：具身智能界的"HuggingFace Transformers"——下载预训练策略 / 数据集 / 跑微调，全套工具链
+- **状态**：24.5k stars / v0.5.1（2026-04-07）/ 极活跃
+- **门槛**：⭐⭐ 纯软件部分能在 Colab T4 跑；硬件可选（最低 ¥230 一对 SO-101 臂就能玩）
+- **支持硬件**：SO-100 / SO-101 / Koch / Aloha / Unitree G1 / 手机 / 键盘等
+- **入门路径**：
+  - Hugging Face Spaces 上的免费 [Robot Learning Tutorial](https://huggingface.co/learn) 课（中英文）
+  - 官方 [examples/](https://github.com/huggingface/lerobot/tree/main/examples) 编号 1-3 教程：加载数据集 → 评估预训练策略 → 训练自己的策略
+  - 中文社区教程：搜"lerobot SO-100 教程"
+- **推荐时机**：**第一站**。先跑通 examples/2_evaluate_pretrained_policy.py，能看到机器人在仿真里动起来——比啃论文有正反馈得多
+
+### 2. MuJoCo Menagerie
+
+- **链接**：<https://github.com/google-deepmind/mujoco_menagerie>
+- **一句话定位**：DeepMind 维护的高质量机器人模型仓库——免费的 3D 机器人"贴纸册"
+- **状态**：3.5k stars / 持续更新
+- **门槛**：⭐ MuJoCo 本身 pip 一行装好；纯 CPU 就能跑，**Colab 完全可用**
+- **包含模型**：Unitree H1/G1/Go2 / Franka Panda / UR5e / Boston Dynamics Spot / Shadow Hand / Stretch 3 等几十款
+- **入门路径**：
+  - `pip install mujoco` → 打开任意 XML 文件即可加载渲染
+  - DeepMind [MuJoCo tutorial.ipynb](https://github.com/google-deepmind/mujoco/blob/main/python/tutorial.ipynb)（Colab 一键跑）
+- **推荐时机**：想直观感受"机器人模型长什么样"时；做仿真前的"逛博物馆"
+
+### 3. ManiSkill 3
+
+- **链接**：<https://github.com/haosulab/ManiSkill>
+- **一句话定位**：UC San Diego 出品的 GPU 加速操作仿真平台——SAPIEN 引擎 + 数十个 RL/IL 任务
+- **状态**：2.9k stars / v3.0.1（2026-04-21）/ 活跃
+- **门槛**：⭐⭐ 官方提供 [Colab 快速上手 notebook](https://maniskill.readthedocs.io/)，免费档可跑；本地需要 NVIDIA GPU + Linux
+- **亮点**：高端 GPU 上 RGBD 数据采集可达 30000+ FPS，比传统 CPU 仿真快 10-100 倍
+- **推荐时机**：跑通 LeRobot 后想做大规模训练 / 数据采集时
+
+---
+
+## 第二梯队：有 GPU 的进阶玩家（⭐ 3）
+
+### 4. Robosuite
+
+- **链接**：<https://github.com/ARISE-Initiative/robosuite>
+- **一句话定位**：MuJoCo 之上的模块化机器人学习框架——**模仿学习论文最常用的 benchmark 之一**
+- **状态**：2.4k stars / v1.5.2（2025-12-24）
+- **门槛**：⭐⭐ CPU 也能跑（慢），GPU 渲染加速；无 Colab 官方支持但社区有 notebook
+- **配套**：常和 [robomimic](https://github.com/ARISE-Initiative/robomimic) 一起用做 IL 实验
+- **推荐时机**：想复现 ALOHA / Diffusion Policy / ACT 论文时
+
+### 5. RLBench
+
+- **链接**：<https://github.com/stepjam/RLBench>
+- **一句话定位**：基于 CoppeliaSim 的 100+ 操作任务集——视觉/语言条件策略论文的常客
+- **状态**：1.8k stars / v1.1.0（2021-05，更新慢但论文还在用）
+- **门槛**：⭐⭐⭐ 装 CoppeliaSim 麻烦；headless 跑需要 X server 配置
+- **推荐时机**：复现 PerAct / RVT / 3D Diffuser Actor 等论文时
+
+### 6. Habitat-Lab
+
+- **链接**：<https://github.com/facebookresearch/habitat-lab>
+- **一句话定位**：Meta 出品的具身导航仿真平台（人形 + 机器人 + 室内场景）
+- **状态**：3.0k stars / v0.3.4（2026-05-07）/ **Meta 内部已停止官方维护**（注意）
+- **门槛**：⭐⭐⭐ Docker 装；NVIDIA GPU 必备；社区有 Colab tutorial 但需自己改
+- **推荐时机**：研究**导航 / 家务机器人 / 人机交互**时；想跑 manipulation 用 ManiSkill
+
+---
+
+## 第三梯队：需要 4090+ 或云 GPU（⭐ 4-5）
+
+### 7. Physical Intelligence π0 / π0.5（OpenPI）
+
+- **链接**：<https://github.com/Physical-Intelligence/openpi>
+- **一句话定位**：**π0 已开源**！能"听懂自然语言指令、在新家也能干活"的真·VLA 基础模型
+- **状态**：12.1k stars / 2025-09 加 PyTorch 支持 + π0.5 / Apache 2.0
+- **GPU 门槛**：
+
+| 任务 | 显存 | 大概什么卡 |
+|------|------|----------|
+| 推理 | >8 GB | RTX 4090 / 3090 |
+| LoRA 微调 | >22.5 GB | RTX 4090 |
+| 全量微调 | >70 GB | A100 / H100（云上租） |
+
+- **Colab T4 能跑吗**：勉强能跑推理（要 8bit 量化）；微调跑不动
+- **入门路径**：README 的 "easy inference" 几行代码就能跑通假数据
+- **推荐时机**：把 LeRobot / ManiSkill 玩透之后；想看"真正的 VLA 大脑"长什么样
+
+### 8. OpenVLA
+
+- **链接**：<https://github.com/openvla/openvla>
+- **一句话定位**：开源 7B VLA 模型——**很多 VLA 论文的对比基线**
+- **状态**：6.3k stars / 持续更新（OFT / FAST 更新到 2025-03）
+- **GPU 门槛**：推理 ~16GB（4090 行）；LoRA 微调 ~72GB A100；全量需 8×A100
+- **Colab T4 能跑吗**：勉强（8bit 量化推理）
+- **入门路径**：HuggingFace AutoModel 两行代码加载预训练模型
+- **推荐时机**：读 VLA 论文时拿来对照基线效果
+
+### 9. NVIDIA Isaac Lab
+
+- **链接**：<https://github.com/isaac-sim/IsaacLab>
+- **一句话定位**：NVIDIA 官方的 GPU 加速机器人学习框架（建立在 Isaac Sim 上，**取代已弃用的 Isaac Gym**）
+- **状态**：7.3k stars / v3.0.0-beta（2026-03-17）/ Apache 2.0
+- **GPU 门槛**：⭐⭐⭐⭐ 必须 RTX 卡（要 RT Cores），推荐 RTX 3070+；**Colab 不支持**（需要 X server 显示环境）
+- **官方推荐**：RTX 3070 起步 / 32GB RAM / Ubuntu 22.04
+- **入门路径**：[Isaac Lab 文档](https://isaac-sim.github.io/IsaacLab/)有 30+ 即开即用环境
+- **推荐时机**：有 NVIDIA 工作站 + 想做大规模 RL（如四足机器人步态）时
+
+### 10. Mobile ALOHA / ALOHA 2（硬件）
+
+- **链接**：
+  - Mobile ALOHA：<https://github.com/MarkFzp/mobile-aloha>（4.4k stars / Stanford）
+  - 项目主页：<https://aloha-2.github.io/>（DeepMind ALOHA 2）
+- **一句话定位**：双臂遥操作机器人——能折衣服、煎虾、铺床的**全开源硬件平台**
+- **BOM 成本**：
+  - 自组 Mobile ALOHA ≈ **$32,000**（4 个 Interbotix 臂 + AgileX 移动底盘 + 相机）
+  - Trossen Robotics 预装套件 $30k-$45k
+  - ALOHA 2 静态版 $20k-$32k
+- **门槛**：⭐⭐⭐⭐⭐ 给个人玩家不现实；适合实验室 / 公司
+- **推荐时机**：作为"目标海报"——想象一下你做完 LeRobot 教程后能玩什么
+
+---
+
+## 入门读者的"跑通"路线推荐
+
+### 周 1-2：零成本起步
+1. 跑通 [MuJoCo Colab tutorial](https://github.com/google-deepmind/mujoco)（看到机器人动起来）
+2. 跑通 LeRobot examples/2_evaluate_pretrained_policy.py（看预训练策略表现）
+
+### 周 3-4：加点深度
+3. LeRobot examples/3_train_policy.py（训练自己第一个 ACT/Diffusion 策略）
+4. ManiSkill quickstart Colab（感受 GPU 并行仿真）
+
+### 月 2+：可选硬件
+5. 攒 ¥230 买 SO-101 双臂套件（如果真的喜欢）
+6. 用真机录 50 条数据 → 上传 HuggingFace Hub → 训练 → 部署
+
+### 月 3+：大模型实战
+7. 租 4090（autodl / vast.ai 一小时 ¥1-3）跑 OpenPI π0 推理
+8. 复现一篇你最喜欢的 VLA 论文
+
+---
+
+## "什么卡能跑什么"速查表
+
+| 项目 | Colab T4 (16GB) | RTX 3060 (12GB) | RTX 4090 (24GB) | A100 (80GB) |
+|------|---|---|---|---|
+| MuJoCo Menagerie | OK | OK | OK | OK |
+| LeRobot 推理/训练（小） | OK | OK | OK | OK |
+| ManiSkill 仿真 | OK | OK | OK | OK |
+| Robosuite | OK | OK | OK | OK |
+| Habitat-Lab | 需配置 | OK | OK | OK |
+| Isaac Lab / Sim | NO | 勉强 | OK | OK |
+| OpenPI π0 推理 | 8bit 量化 | 8bit 量化 | OK | OK |
+| OpenPI π0 LoRA 微调 | NO | NO | OK | OK |
+| OpenPI π0 全量微调 | NO | NO | NO | OK |
+| OpenVLA 推理 | 8bit | 8bit | OK | OK |
+
+---
+
+## 总结一句话
+
+- **明天就能开跑**：MuJoCo Menagerie + LeRobot examples
+- **有点 GPU 想做研究**：ManiSkill / Robosuite / RLBench 三选一
+- **真要搞 VLA 大模型**：OpenPI（π0 已开源是 2025 年最大利好）
+- **想买真机**：SO-101 ¥230 入门 → 攒钱看 ALOHA $30k+
+- **企业级仿真**：Isaac Lab（但有学习曲线，不是入门首选）
