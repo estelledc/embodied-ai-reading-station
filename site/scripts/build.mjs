@@ -14,6 +14,12 @@ const NOTES_DIR = path.join(ROOT, "notes");
 const PAPERS_DIR = path.join(ROOT, "papers");
 const DIST = path.join(SITE, "dist");
 
+// Base path for GitHub Pages project sites (e.g. estelledc.github.io/<REPO>/).
+// Override with SITE_BASE="" for root-domain deploys, or any prefix.
+// Default empty in dev (npm run serve), filled by GitHub Actions to "/embodied-ai-reading-station".
+const BASE = (process.env.SITE_BASE ?? "").replace(/\/$/, "");
+const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
+
 // --- topic order & metadata (mirrors README.md) -----------------------------
 const PAPERS = [
   { slug: "llava", num: 1, title: "LLaVA: Visual Instruction Tuning", topic: "vlm-foundation", topicLabel: "VLM Foundation", topicRoman: "I" },
@@ -81,13 +87,13 @@ marked.use({ renderer, gfm: true, breaks: false });
 // --- layout templates -------------------------------------------------------
 function masthead(active) {
   const items = [
-    { href: "/", label: "Index", id: "index" },
-    { href: "/topics/", label: "Topics", id: "topics" },
-    { href: "/deck/", label: "Deck", id: "deck" },
-    { href: "/about/", label: "About", id: "about" },
+    { href: url("/"), label: "Index", id: "index" },
+    { href: url("/topics/"), label: "Topics", id: "topics" },
+    { href: url("/deck/"), label: "Deck", id: "deck" },
+    { href: url("/about/"), label: "About", id: "about" },
   ];
   return `<header class="masthead">
-    <div><span class="star">★</span><a href="/">Embodied AI Reading Station</a></div>
+    <div><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
     <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
     <div>2026 · 张洵</div>
   </header>`;
@@ -107,7 +113,7 @@ function page({ title, body, active, extraHead = "" }) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${title}</title>
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="${url("/styles.css")}">
   ${extraHead}
 </head>
 <body>
@@ -149,7 +155,7 @@ function buildIndex(notes) {
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
-        <h3><a href="/papers/${n.slug}/">${n.title}</a></h3>
+        <h3><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></h3>
         <span class="difficulty">${n.difficulty || ""}</span>
         <p>${n.tldr || ""}</p>
       </article>`;
@@ -179,7 +185,7 @@ function buildTopics(notes) {
     for (const n of inTopic) {
       body += `<li style="border-bottom:1px solid var(--paper-dark);padding:0.7rem 0;display:flex;align-items:baseline;gap:0.8rem;font-family:var(--font-mono);font-size:0.92rem">
         <span style="color:var(--ink-faint);width:2.5em">№ ${String(n.num).padStart(2,"0")}</span>
-        <a href="/papers/${n.slug}/" style="font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-0.01em">${n.title}</a>
+        <a href="${url(`/papers/${n.slug}/`)}" style="font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-0.01em">${n.title}</a>
         <span style="color:var(--coral);margin-left:auto">${n.difficulty || ""}</span>
         <span style="color:var(--ink-faint);text-transform:uppercase;font-size:0.72rem">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
       </li>`;
@@ -301,7 +307,7 @@ function extractTLDR(md) {
 function rewriteImagePaths(md, slug) {
   // normalize relative paths so build copies them under /assets/<slug>/
   return md.replace(/!\[([^\]]*)\]\((?:\.\.\/)?papers\/[^/]+\/images\/([^)]+)\)/g,
-    (_, alt, file) => `![${alt}](/assets/${slug}/${file})`);
+    (_, alt, file) => `![${alt}](${url(`/assets/${slug}/${file}`)})`);
 }
 
 function stripFirstH1(md) {

@@ -28,7 +28,10 @@ jobs:
           cache: npm
           cache-dependency-path: site/package-lock.json
       - run: npm ci
-      - run: npm run build
+      - name: Build with repo-name base path
+        env:
+          SITE_BASE: /${{ github.event.repository.name }}
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
