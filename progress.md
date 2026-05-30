@@ -47,10 +47,10 @@
 
 ## 站点 + PPT（阶段 3-5）
 
-- [ ] 阶段 3：site/ 跑通 build，本地预览
-- [ ] 阶段 4：GitHub 仓库 + Pages 部署
-- [ ] 阶段 5：deck/ 中英 10-15 页 PPT
+- [x] 阶段 3：site/ 跑通 build，本地预览（http://127.0.0.1:8765/site/dist/）
+- [ ] 阶段 4：GitHub 仓库 + Pages 部署 — 等 Jason 跑 `gh auth login` + 看 [DEPLOY.md](DEPLOY.md)
+- [x] 阶段 5：deck/ 14 页中英 LLaVA 精读 deck（http://127.0.0.1:8765/deck/）
 
 ## 选定的 PPT 论文
 
-> 阶段 2 完成 Wave 1 后填这里。
+**LLaVA**（auto-summary 笔记完成度足够支撑首版 deck；后续若想换论文，照着 deck/index.html 结构改即可）。
