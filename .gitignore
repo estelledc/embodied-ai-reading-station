@@ -1,0 +1,14 @@
+# Build artifacts
+site/dist/
+site/node_modules/
+.preview/
+
+# Original PDFs (large, copyright)
+papers/*/paper.pdf
+papers/*/bundle.zip
+
+# OS / editor
+.DS_Store
+*.swp
+.idea/
+.vscode/
