@@ -88,6 +88,7 @@ marked.use({ renderer, gfm: true, breaks: false });
 function masthead(active) {
   const items = [
     { href: url("/"), label: "Index", id: "index" },
+    { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -133,6 +134,11 @@ function buildIndex(notes) {
     <span class="eyebrow">Filed under · embodied AI · 2026</span>
     <h1>Reading <em>13 papers</em> on how robots learn to <em>see, plan,</em> and <em>act</em>.</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:38ch">这是一个本科生科研任务的精读学习站。从 VLM 视觉-语言基座，到高层任务规划，再到端到端 VLA、世界模型，以及射频和听觉这两条偏门的具身感知路径——一站读完。</p>
+
+    <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
+      <span style="color:var(--coral)">→</span>
+      <span>零基础先读这里 · Start with the beginner track</span>
+    </a>
 
     <div style="display:flex;gap:2rem;margin:2.5rem 0 1rem;font-family:var(--font-mono);font-size:0.85rem">
       <div><span style="color:var(--coral);font-size:1.6rem;font-family:var(--font-serif);font-style:italic">${done}</span><span style="color:var(--ink-faint)"> / ${total}</span> papers noted</div>
@@ -237,6 +243,49 @@ function buildAbout() {
     </div>
   </main>`;
   return page({ title: "About — Embodied AI Reading", body, active: "about" });
+}
+
+// --- learn pages (beginner supplements) -------------------------------------
+function buildLearnIndex(pages) {
+  const body = `<main class="shell">
+    <span class="eyebrow">For beginners · 零基础入门导航</span>
+    <h1>Don't <em>read</em> the papers first.</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
+      13 篇论文是终点，不是起点。先在这里取齐前置知识、术语、综述、教程和社区入口，再回去读论文，事半功倍。
+    </p>
+    <hr style="margin-top:2rem"/>
+    <div class="papers-grid" style="margin-top:2rem">
+      ${pages.map((p, i) => `<article class="paper-card" style="background:var(--paper-warm)">
+        <span class="num">№ ${String(i + 1).padStart(2, "0")}</span>
+        <span class="topic">Beginner Track</span>
+        <h3><a href="${url(`/learn/${p.slug}/`)}">${p.title}</a></h3>
+        <p>${p.intro || ""}</p>
+      </article>`).join("")}
+    </div>
+  </main>`;
+  return page({ title: "Learn — Embodied AI Reading", body, active: "learn" });
+}
+
+function buildLearnPage(p, allPages) {
+  const html = marked.parse(p.body);
+  const otherLinks = allPages.filter(x => x.slug !== p.slug).map(x =>
+    `<li style="margin-bottom:0.5rem"><a href="${url(`/learn/${x.slug}/`)}">${x.title}</a></li>`
+  ).join("");
+
+  const body = `<main class="note-shell">
+    <span class="eyebrow">Learn · Beginner Track</span>
+    <h1>${p.title}</h1>
+    ${p.intro ? `<p style="font-family:var(--font-serif);font-style:italic;color:var(--ink-mute);font-size:1.1rem;margin-top:0.5rem">${p.intro}</p>` : ""}
+    <hr/>
+    <div class="note-content">${html}</div>
+
+    <hr style="margin-top:4rem"/>
+    <details style="margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-mute)">
+      <summary style="cursor:pointer">Other beginner pages</summary>
+      <ul style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem;list-style:none">${otherLinks}</ul>
+    </details>
+  </main>`;
+  return page({ title: `${p.title} — Learn`, body, active: "learn" });
 }
 
 // --- single note page -------------------------------------------------------
@@ -346,6 +395,30 @@ function build() {
   // each note
   for (const n of notes) {
     write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n));
+  }
+
+  // learn pages from site/content/*.md
+  const CONTENT_DIR = path.join(SITE, "content");
+  const learnPages = [];
+  if (fs.existsSync(CONTENT_DIR)) {
+    for (const file of fs.readdirSync(CONTENT_DIR)) {
+      if (!file.endsWith(".md")) continue;
+      const slug = file.replace(/\.md$/, "");
+      const raw = read(path.join(CONTENT_DIR, file));
+      const { data, content } = matter(raw);
+      learnPages.push({
+        slug,
+        title: data.title || slug,
+        order: data.order ?? 99,
+        intro: data.intro || "",
+        body: stripFirstH1(content),
+      });
+    }
+    learnPages.sort((a, b) => a.order - b.order);
+    write(path.join(DIST, "learn", "index.html"), buildLearnIndex(learnPages));
+    for (const p of learnPages) {
+      write(path.join(DIST, "learn", p.slug, "index.html"), buildLearnPage(p, learnPages));
+    }
   }
 
   // assets
