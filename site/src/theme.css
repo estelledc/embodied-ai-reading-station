@@ -449,3 +449,24 @@ footer .fin { color: var(--coral); font-family: var(--font-serif); font-style: i
   body::before, body::after { display: none; }
   .masthead, footer { display: none; }
 }
+
+/* hub-satellite return link — 不改主体设计 */
+.return-to-hub {
+  font-family: var(--font-mono, "JetBrains Mono", Menlo, monospace);
+  font-size: 0.875rem;
+  color: var(--ink-mute, #5a5448);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: lowercase;
+  margin-right: 0.75rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s, color 0.15s;
+}
+.return-to-hub:hover {
+  color: var(--coral, #ed6f5c);
+  border-bottom-color: var(--coral, #ed6f5c);
+}
+.mast-divider {
+  color: var(--ink-faint, rgba(0,0,0,0.2));
+  margin: 0 0.5rem;
+}

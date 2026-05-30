@@ -93,7 +93,7 @@ function masthead(active) {
     { href: url("/about/"), label: "About", id: "about" },
   ];
   return `<header class="masthead">
-    <div><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
+    <div><a class="return-to-hub" href="https://estelledc.github.io/" rel="home">← estelledc.github.io</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
     <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
     <div>2026 · 张洵</div>
   </header>`;
