@@ -1,56 +1,59 @@
-# 学习进度
+## 学习进度
 
-> 起始：2026-05-30
-> Task 1 截止：2026-06-30（PPT + 学长沟通）
-> 个人目标：13 篇全部精读
+我是初学者，零编程基础，靠 AI 一句一句陪我读论文、查名词。这页不是工作汇报，是我自己的学习日记。
 
-## 资料就位（阶段 1）✅
+> **具身智能（Embodied AI）**：让机器人像人一样，能看、能听、能听懂话再动手做事。
 
-- [x] 01 LLaVA — `llava` ✓ 带图 md
-- [x] 02 3DShape2VecSet — `3dshape2vecset` ✓ 带图 md
-- [x] 03 SayCan — `saycan` ✓ 带图 md
-- [x] 04 OpenVLA — `openvla` ✓ 带图 md
-- [x] 05 VLAS — `vlas` ✓ 带图 md
-- [x] 06 MLA — `mla` ✓ 带图 md
-- [x] 07 Cosmos Policy — `cosmos-policy` ✓ 带图 md
-- [x] 08 RF-Based 3D SLAM (CartoRadar) — `rf-slam` ✓ 带图 md（用户从 ACM 下到 PDF）
-- [x] 09 mmCLIP — `mmclip` ✓ 带图 md（直链下载）
-- [x] 10 NLOS mmWave (mmNorm) — `nlos-mmwave` ✓ 带图 md（MIT 主页直链）
-- [x] 11 Proactive Hearing — `proactive-hearing` ✓ 带图 md
-- [x] 12 NeuralAids — `neuralaids` ✓ 带图 md
-- [x] 13 Acoustic Swarms — `acoustic-swarms` ✓ Nature 网页抓取 md（无 PDF 图片）
+> **论文（paper）**：研究者把一项新发现写成的几十页学术文章，里面会讲他们做了什么、用了什么办法、效果有多好。
 
-## 精读笔记（阶段 2）
+读到这里你应该懂了：13 篇论文 = 我这个学期要啃的 13 篇大作文。
 
-按"先易后难，先建立信心"排序：
+### 先打基础（5 篇入门轨道，learn track）
 
-**Wave 1 — 主线三连（Task 1 PPT 候选池，6/30 前必完成）**
-- [ ] LLaVA — VLM 基座最经典
-- [ ] SayCan — 任务规划思路最直观
-- [ ] OpenVLA — 端到端 VLA，连接 Task 2
+类比：把 13 篇论文当高考压轴大题，那这 5 篇就是先把课本和公式表过一遍。
 
-**Wave 2 — 多模态扩展**
-- [ ] 3DShape2VecSet
-- [ ] MLA
-- [ ] VLAS
+- [x] 前置知识地图 — 我现在还缺什么数学和计算机基础，列了一张清单
+- [x] 名词小词典（glossary）— 把"向量""夹角""波长"这种词整理成查得到的字典
+- [ ] 综述类文章（surveys）— 研究者写给入门者看的"领域全景图"，等我读完前 3 篇论文再回头看
+- [ ] 在线小教程（tutorials）— 用浏览器就能跑的代码作业，类似化学实验的虚拟版
+- [ ] 学术社区入口（community）— 找哪些公众号 / 论坛 / 大学课程在持续讲这块
 
-**Wave 3 — 世界模型**
-- [ ] Cosmos Policy（最难，最后啃）
+### 13 篇论文（按主题分组）
 
-**Wave 4 — 射频与听觉**
-- [ ] RF-SLAM
-- [ ] mmCLIP
-- [ ] NLOS mmWave
-- [ ] Proactive Hearing
-- [ ] NeuralAids
-- [ ] Acoustic Swarms
+读法：每篇先让 AI 帮我画"一句话讲清这篇在干嘛"，再决定要不要逐段精读。
 
-## 站点 + PPT（阶段 3-5）
+> **VLM**：Vision-Language Model，看图说话的 AI，类似你给它看猫的照片它能写"一只橘猫"。
+> **VLA**：Vision-Language-Action，看图听话还能动手的 AI，比 VLM 多了"动作"这一步。
 
-- [x] 阶段 3：site/ 跑通 build，本地预览（http://127.0.0.1:8765/site/dist/）
-- [ ] 阶段 4：GitHub 仓库 + Pages 部署 — 等 Jason 跑 `gh auth login` + 看 [DEPLOY.md](DEPLOY.md)
-- [x] 阶段 5：deck/ 14 页中英 LLaVA 精读 deck（http://127.0.0.1:8765/deck/）
+主线三连（6 月 30 日前必须挑一篇做英文汇报）：
 
-## 选定的 PPT 论文
+- [ ] LLaVA — VLM 最经典入门款（已建笔记，等精读）
+- [ ] SayCan — 让机器人把"我想喝水"拆成"走过去 → 拿杯子 → 倒水"（已建笔记，等精读）
+- [ ] OpenVLA — 端到端的 VLA，看图听话直接出动作（已建笔记，等精读）
 
-**LLaVA**（auto-summary 笔记完成度足够支撑首版 deck；后续若想换论文，照着 deck/index.html 结构改即可）。
+3D 与多模态扩展：
+
+- [ ] 3DShape2VecSet — 怎么把一个 3D 物体压成一串数字让 AI 看懂（已建笔记，等精读）
+- [ ] MLA — 给机器人装"多模态大脑"的方案（已建笔记，等精读）
+- [ ] VLAS — VLA 的另一种做法（已建笔记，等精读）
+
+世界模型（最难，最后啃）：
+
+- [ ] Cosmos Policy — 让 AI 在脑内"预演"动作再决定怎么做（已建笔记，等精读）
+
+射频感知（用电磁波看东西，类似蝙蝠用超声波）：
+
+- [ ] CartoRadar (RF-SLAM) — 用 wifi 一样的电磁波画屋子地图（已建笔记，等精读）
+- [ ] mmCLIP — 让 AI 既看图又"听"电磁波回声（已建笔记，等精读）
+- [ ] mmNorm (NLOS mmWave) — 隔着墙看人（已建笔记，等精读）
+
+听觉感知（让 AI 像戴耳机一样听清楚目标声音）：
+
+- [ ] Proactive Hearing — 主动选你想听的人（已建笔记，等精读）
+- [ ] NeuralAids — 神经网络助听器（已建笔记，等精读）
+- [ ] Acoustic Swarms — 一群小麦克风协作分离声音（已建笔记，等精读）
+
+### 下一步（今天最好奇的两个问题）
+
+1. LLaVA 是怎么做到"既看懂图、又听懂话"的？图片在 AI 眼里到底变成了什么样的一串数字？
+2. OpenVLA 让机器人"出动作"，那"动作"在电脑里长什么样？是一串坐标还是别的东西？

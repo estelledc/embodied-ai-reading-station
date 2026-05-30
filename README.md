@@ -1,57 +1,71 @@
-# Embodied AI Paper Reading / 具身智能论文阅读
+## Embodied AI Reading Station
 
-> 一份 12 篇具身智能论文（VLM / VLA / 机器人 / 多模态 / 世界模型 / 射频 / 听觉）的精读学习站。
-> A reading-station that walks through 12 papers across embodied AI: VLM / VLA / robotics / multimodal / world models / RF / auditory intelligence.
+> 一个把"机器人 + AI"顶会论文翻译成入门读者能读懂版本的学习站。
 
-## 这是什么
+### 这站想做什么
 
-由本科科研任务驱动的学习项目：精读 12 篇论文 → 沉淀双语笔记 → 部署成可反复访问的网站 → 最终产出一份 10–15 页中英文汇报 PPT。
+这里收了 13 篇关于"让机器看懂世界、听懂指令、动起手来"的研究论文。它们原文都很硬：满屏数学符号、英文缩写、看一页要查二十次。
 
-## 目录结构
+我们做的事是：把每篇论文重写一遍，让一个**会基础数学和物理常识**的人就能看完。不会预先假设你懂任何"AI 黑话"。第一次出现的术语会用一句话解释，并配一个生活类比。
+
+读到这里你应该懂了：这是一个面向入门读者的论文翻译站，不是论文原文站。
+
+### 怎么用
+
+**第一次来**：先翻 `/learn/`。
+
+那里有"零基础前置课"——把后面会反复出现的几个概念先讲透：
+
+- **向量**：高中学过的那个，用 (a, b, c) 表示一个方向。两个向量夹角越小，越"像"。
+- **矩阵**：一张数字表格，可以理解成 Excel 的一块区域；表格之间相乘有"行列要对齐"的规则。
+- **概率分布**：一件事发生的可能性怎么散布在所有结果上，比如掷骰子是 1-6 各 1/6。
+- **模型**：一个把输入变成输出的"函数"，输入一张图，输出"这是猫"。
+- **Loss（损失）**：模型答题的扣分总和——越小越好。模型学习的目标就是想办法降这个分。
+- **梯度下降**：像下山找最低点，每一步都往最陡的下坡方向迈一小步，直到走不动为止。这就是模型"学习"的过程。
+
+**前置课读完**，再去 `/papers/` 选一篇感兴趣的：想看机器人能不能听懂"把可乐递给我"，就读 SayCan；想看 AI 怎么"看见"3D 形状，就读 3DShape2VecSet；想看 WiFi 信号能不能当眼睛用，就读 RF-SLAM。
+
+每篇论文笔记都有同样的结构：
+
+- 这篇论文想解决什么问题（用一个生活场景说）
+- 之前的人怎么做、为什么不够好
+- 这篇论文的新点子是什么（一句话讲清）
+- 它怎么验证自己是对的（实验长什么样）
+- 留下了什么没解决
+
+读到这里你应该懂了：先去 `/learn/` 学概念，再去 `/papers/` 看具体论文。
+
+### 项目目录
 
 ```
 embodied-ai-research/
-├── research-task.md     # 原始任务清单（导师下发的 PDF 整理）
-├── papers/              # 12 篇论文：原 PDF + lr pdf bundle 转出的带图 markdown
-├── notes/               # 12 篇精读笔记（中文为主，关键术语保留英文）
-├── site/                # 静态学习站源码（atelier-zero 期刊风）
-├── deck/                # 10–15 页中英汇报 PPT（HTML deck → 浏览器打印 PDF）
-└── README.md            # 本文件
+├── papers/    13 篇原 PDF + 转好的带图 markdown
+├── notes/     13 篇精读笔记（中文为主，重要术语保留英文）
+├── site/      把笔记渲染成网页的代码（这就是你看到的网站）
+└── deck/      最后产出的汇报 PPT（10-15 页中英对照）
 ```
 
-## 论文清单（按主题）
+四个目录的关系像做一道菜：
 
-| # | 主题 | 论文 | short-name |
-|---|---|---|---|
-| 01 | 一. VLM 基座 | LLaVA — Visual Instruction Tuning | `llava` |
-| 02 | 一. VLM 基座 | 3DShape2VecSet | `3dshape2vecset` |
-| 03 | 二. 任务规划 | SayCan | `saycan` |
-| 04 | 三. 端到端 VLA | OpenVLA | `openvla` |
-| 05 | 四. 多模态 | VLAS — VLA with Speech | `vlas` |
-| 06 | 四. 多模态 | MLA — Multisensory Language-Action | `mla` |
-| 07 | 五. 世界模型 | Cosmos Policy | `cosmos-policy` |
-| 08 | 六. 射频感知 | RF-Based 3D SLAM | `rf-slam` |
-| 09 | 六. 射频感知 | mmCLIP | `mmclip` |
-| 10 | 六. 射频感知 | NLOS 3D Reconstruction | `nlos-mmwave` |
-| 11 | 七. 听觉 | Proactive Hearing Assistants | `proactive-hearing` |
-| 12 | 七. 听觉 | NeuralAids | `neuralaids` |
-| 13 | 七. 听觉 | Acoustic Swarms / Speech Zones | `acoustic-swarms` |
+- `papers/` 是**生食材**（原论文）
+- `notes/` 是**切配好的半成品**（人话版笔记）
+- `site/` 是**装盘上桌**（变成网页）
+- `deck/` 是**饭后甜点**（汇报用的 PPT）
 
-> 实际是 13 篇——任务 PDF 里七大主题里塞了 13 篇，不是 12。我们全读。
+读到这里你应该懂了：源头是 PDF，中间是 markdown，最后是网站和 PPT。
 
-## 工作流
+### 论文清单速览
 
-1. `lr pdf bundle <paper.pdf>` → 把 PDF 转成带图 markdown
-2. 在 `notes/<short-name>.md` 用统一模板写精读笔记
-3. `node site/scripts/build.mjs` 把 markdown 渲染成期刊风 HTML
-4. push 到 GitHub → Actions 自动部署到 Pages
+13 篇分成 7 个主题：
 
-## 视觉风格
+1. **VLM 基座**——让 AI 同时看图和读字（LLaVA / 3DShape2VecSet）
+2. **任务规划**——把"我饿了"翻译成机器人具体动作（SayCan）
+3. **端到端 VLA**——一个模型直接从画面输出关节角度（OpenVLA）
+4. **多模态**——加上声音、触觉一起决策（VLAS / MLA）
+5. **世界模型**——AI 在脑子里先模拟一遍再行动（Cosmos Policy）
+6. **射频感知**——用 WiFi、毫米波"看穿"墙壁（RF-SLAM / mmCLIP / NLOS）
+7. **听觉智能**——让助听器只放大你想听的人（Proactive Hearing / NeuralAids / Acoustic Swarms）
 
-- 主视觉：[atelier-zero](../open-design/design-systems/atelier-zero/DESIGN.md) — 暖纸 ivory + 珊瑚红 + 罗马数字章节
-- 阅读节奏：[warm-editorial](../open-design/design-systems/warm-editorial/DESIGN.md) — GT Sectra serif + terracotta accent
-- 工艺规则：[craft/typography-hierarchy-editorial](../open-design/craft/typography-hierarchy-editorial.md)
+### 进度
 
-## 进度
-
-进度看 [progress.md](progress.md)（精读完一篇划掉一行）。
+精读进度看 [progress.md](progress.md)，每读完一篇划掉一行。

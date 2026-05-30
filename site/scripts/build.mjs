@@ -96,7 +96,6 @@ function masthead(active) {
   return `<header class="masthead">
     <div><a class="return-to-hub" href="https://estelledc.github.io/" rel="home">← estelledc.github.io</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
     <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
-    <div>2026 · 张洵</div>
   </header>`;
 }
 
@@ -132,12 +131,12 @@ function buildIndex(notes) {
 
   let body = `<main class="shell">
     <span class="eyebrow">Filed under · embodied AI · 2026</span>
-    <h1>Reading <em>13 papers</em> on how robots learn to <em>see, plan,</em> and <em>act</em>.</h1>
-    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:38ch">这是一个本科生科研任务的精读学习站。从 VLM 视觉-语言基座，到高层任务规划，再到端到端 VLA、世界模型，以及射频和听觉这两条偏门的具身感知路径——一站读完。</p>
+    <h1><em>13 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 13 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
 
     <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
       <span style="color:var(--coral)">→</span>
-      <span>零基础先读这里 · Start with the beginner track</span>
+      <span>从这里开始 · 学习路径 · 术语字典 · 实战教程</span>
     </a>
 
     <div style="display:flex;gap:2rem;margin:2.5rem 0 1rem;font-family:var(--font-mono);font-size:0.85rem">
@@ -205,10 +204,12 @@ function buildTopics(notes) {
 // --- about page -------------------------------------------------------------
 function buildAbout() {
   const body = `<main class="note-shell">
-    <span class="eyebrow">Colophon</span>
+    <span class="eyebrow">Colophon · 这站是怎么诞生的</span>
     <h1>About this <em>reading station</em></h1>
     <div class="note-content" style="max-width:68ch">
-      <p>这是一个本科生科研任务驱动的论文学习站。任务来自实验室，要求精读具身智能（embodied AI）方向 13 篇代表论文，覆盖 7 个主题：</p>
+      <p>这站是为想读懂顶会论文、但还在入门阶段的人做的。<strong>具身智能（Embodied AI）</strong>讲的是「怎么让机器人有身体地融入世界」——它要看见、要听见、要听懂指令、要决定下一步怎么做。听起来像科幻，但 2024-2025 已经在论文里跑通了一大半。</p>
+      <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。我把它们重写成<strong>能读懂的版本</strong>——保留所有数字和方法，但用基础的类比解释每个新词。</p>
+      <p>七个主题是这样：</p>
       <ul>
         <li><strong>I. VLM Foundation</strong> — 视觉与语言对齐的基座模型</li>
         <li><strong>II. High-Level Planning</strong> — 让 LLM 输出"做得到"的指令</li>
@@ -248,10 +249,10 @@ function buildAbout() {
 // --- learn pages (beginner supplements) -------------------------------------
 function buildLearnIndex(pages) {
   const body = `<main class="shell">
-    <span class="eyebrow">For beginners · 零基础入门导航</span>
-    <h1>Don't <em>read</em> the papers first.</h1>
+    <span class="eyebrow">Start here · 入门轨道</span>
+    <h1>论文是<em>终点</em>，不是起点。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
-      13 篇论文是终点，不是起点。先在这里取齐前置知识、术语、综述、教程和社区入口，再回去读论文，事半功倍。
+      13 篇顶会论文堆在那里，原本是博士看的。要让入门读者也能读懂，先在这里把<strong>路径、术语、全景、动手、社区</strong>这五件事捋顺，再回头读论文，事半功倍。
     </p>
     <hr style="margin-top:2rem"/>
     <div class="papers-grid" style="margin-top:2rem">

@@ -1,248 +1,249 @@
 ---
 title: 社区 / 持续追踪
 order: 5
-intro: '论文是慢变量，社区是快变量 — 每日 / 每周 / 每月看什么'
+intro: '论文是慢车，社区是快车 — 入门读者每天 5 分钟、每周 30 分钟、每月 1 小时怎么跟'
 ---
 
-> 论文是慢变量，社区是快变量。这里告诉你每天 / 每周 / 每月该看什么。
+> 论文像教材，几个月才出一版；社区像同学群，每天都在聊新八卦。
+> 这一页告诉你：作为一个读者，时间宝贵，每天该看什么、不该看什么。
 
-刚入门别一上来就订阅 30 个 newsletter。先从「每日 1 个 + 每周 2 个 + 每月 1 次」开始，跑顺了再加。
-
----
-
-## 1. 顶会 / 期刊（每月看一次截稿/接收名单）
-
-具身智能跨学科：机器人会议（CoRL/RSS/ICRA/IROS）+ 视觉/学习会议（CVPR/NeurIPS/ICLR）+ 系统/感知会议（SIGCOMM/MobiCom/SenSys）。
-
-| 会议 | 一般召开时间 | 投稿截止 | 与具身智能 / VLA 的关联度 | 一句话定位 |
-|---|---|---|---|---|
-| **CoRL** (Conference on Robot Learning) | 11 月 | 6 月 | 极高（机器人 + 学习的主场，VLA / 模仿学习 / Sim2Real 集中地） | 必看，每年 11 月集中扫一遍 oral |
-| **RSS** (Robotics: Science and Systems) | 7 月 | 1-2 月 | 极高（机器人顶会，重 system 和理论） | 必看，质量高、量少 |
-| **ICRA** (IEEE Int'l Conf on Robotics and Automation) | 5-6 月 | 9 月 | 高（IEEE 旗舰，量大；操作 / 导航 / 控制 全覆盖） | 关注，挑感兴趣 session |
-| **IROS** (IEEE/RSJ Int'l Conf on Intelligent Robots and Systems) | 10 月 | 3 月 | 高（与 ICRA 互补，更偏系统） | 关注，挑 workshop |
-| **CVPR** | 6 月 | 11 月 | 中高（VLM / 3D / 感知部分跟具身强相关） | 关注 robotics workshop 和 VLA tag 论文 |
-| **NeurIPS** | 12 月 | 5 月 | 中高（基础模型 / RL / 表征学习；具身专题 workshop 多） | 关注 12 月集中扫 |
-| **ICLR** | 5 月 | 9-10 月 | 中（基础模型层，VLA 训练方法常出现） | 关注，OpenReview 可提前看 |
-| **SIGCOMM** | 8-9 月 | 1-2 月 | 低（网络顶会，感知 / 6G / 边缘计算偶尔涉及） | 看 Mingmin Zhao / Adib 组论文 |
-| **MobiCom** | 9-10 月 | 3 月 / 8 月 | 低中（移动感知顶会，毫米波 / WiFi 感知集中地） | 看「无线感知 + 行为识别」类论文 |
-| **SenSys** / IMWUT | 11 月 / 全年 | 5 月 / 滚动 | 中（传感 + 机器学习交叉，可穿戴 / 环境感知） | 偶尔翻一翻 |
-
-**优先级建议**：
-- 真正必看：CoRL + RSS（机器人学习两大顶会）
-- 强相关：CVPR（感知）、NeurIPS（基础模型）、ICRA（机器人主流）
-- 弱相关但偶尔出大文章：SIGCOMM / MobiCom（无线感知系列论文）
+先说一句最重要的：**不要一上来就订阅 30 个公众号**。
+你会被淹没，然后什么都没看。
+正确做法 = 每天 5 分钟 + 每周 30 分钟 + 每月 1-2 小时，三档之外全部砍掉。
 
 ---
 
-## 2. 关键实验室 / 教授（每月看一次新论文）
+## 1. 先讲清楚几个新词
 
-按领域分组。每个 PI 给一句话定位，看主页比看推特靠谱（推特是噪声，主页是信号）。
+下面后面会反复用到，先用初高中熟悉的东西打个比方：
 
-### 机器人学习 / VLA 主流派系
+> **顶会（Top Conference）**：这个领域里最厉害的"年度学术擂台"。每年只录一小部分论文，类似高考全省前 1%。
+> **PI（Principal Investigator，导师 / 教授）**：实验室的"班主任 + 总教练"，决定研究方向、带学生发论文。
+> **arxiv（音"archive"）**：一个免费论文仓库，相当于"作业还没交老师就先贴到学校公告栏"——没经过同行评审，但快。
+> **预印本（preprint）**：放上 arxiv 还没正式发表的论文。
+> **开源代码**：作者把自己写的程序公开放到网上（一般在 GitHub），任何人都能下载、运行、改。
+> **复现（reproduce）**：拿到别人的代码和数据，自己跑一遍，看能不能得到论文里那个结果。像"按菜谱炒一遍这道菜，看味道一样不一样"。
+> **VLA（Vision-Language-Action）**：一类机器人模型的简称——输入"看到的画面 + 听到的指令"，输出"手脚怎么动"。可以理解为"会看会听会动手的 AI"。
+> **具身智能（Embodied AI）**：让 AI 拥有"身体"，不只是在屏幕里聊天，而是能在真实世界里做事。比如机器人收拾桌子、自动驾驶。
 
-**Sergey Levine — UC Berkeley**
-- 主页：https://people.eecs.berkeley.edu/~svlevine/
-- 代表作：RT-2、Octo、CrossFormer、PI0 系列；BAIR 实验室核心
-- 推特：@svlevine
-- 定位：端到端机器人学习的旗手，几乎每月都有大模型 / 数据集 / 基准发布
-
-**Pieter Abbeel — UC Berkeley**
-- 主页：https://people.eecs.berkeley.edu/~pabbeel/
-- 代表作：Dreamer 系列、World Models、Robot Brain；Covariant 创始人
-- 推特：@pabbeel
-- 定位：RL + 机器人创业派，关注他的播客 The Robot Brains
-
-**Chelsea Finn — Stanford**
-- 主页：https://ai.stanford.edu/~cbfinn/
-- 代表作：MAML、ALOHA、Mobile ALOHA、Open X-Embodiment（合作）
-- 推特：@chelseabfinn
-- 定位：低成本机器人 + 元学习；ALOHA 让人形操作进入大众视野
-
-**Fei-Fei Li — Stanford**
-- 主页：https://profiles.stanford.edu/fei-fei-li
-- 代表作：BEHAVIOR、ImageNet、World Labs（spatial intelligence）
-- 推特：@drfeifei
-- 定位：「空间智能」概念提出者，World Labs 是当下最热具身创业之一
-
-**Deepak Pathak — CMU**
-- 主页：https://www.cs.cmu.edu/~dpathak/
-- 代表作：好奇心驱动 RL、Dreamer 系列、人形机器人 Dreamer Policy
-- 推特：@pathak2206
-- 定位：人形机器人控制 + 自监督；CMU 机器人实验室明星
-
-**Russ Tedrake — MIT**
-- 主页：https://groups.csail.mit.edu/locomotion/russt.html
-- 代表作：Diffusion Policy、Underactuated Robotics（公开课）、TRI 合作
-- 推特：@russtedrake
-- 定位：Diffusion Policy 作者；从经典控制到学习的桥梁人物
-
-### 视觉 + 多模态 + 大模型派
-
-**RT-X / Open X-Embodiment 团队 — Google DeepMind**
-- 项目主页：https://robotics-transformer-x.github.io/
-- 代表作：RT-1、RT-2、RT-X、SayCan、PaLM-E
-- 推特：@GoogleDeepMind 官方账号；个人推荐 @QuanVng（Quan Vuong）、@xf1280（Fei Xia）
-- 定位：VLA 主流路线的产业代表，数据规模 + 模型规模双驱动
-
-**NVIDIA Robotics / GEAR Lab — Jim Fan / Linxi Fan**
-- 主页：https://research.nvidia.com/labs/gear/
-- 代表作：Eureka、Voyager、Cosmos World Model、GR00T 人形大模型
-- 推特：@DrJimFan、@LinxiFan（同一人）
-- 定位：仿真 + 大模型，Cosmos 在 13 篇里出现；推特活跃，输出密度高
-
-### 无线感知 / 系统感知派（13 篇里多次出现）
-
-**Mingmin Zhao — UPenn**
-- 主页：https://www.cis.upenn.edu/~mingminz/
-- 代表作：mmWave 感知系列、SIGCOMM/MobiCom 多篇；非视觉感知接入具身的关键人
-- 定位：如果你对「不只用摄像头」的感知方向感兴趣，必看
-
-**Fadel Adib — MIT**
-- 主页：https://www.mit.edu/~fadel/
-- 代表作：Signal Kinetics 实验室；穿墙感知、水下通信
-- 推特：@FadelAdib
-- 定位：MIT Media Lab 系，无线 + 物理 + AI 跨界
-
-**Dina Katabi — MIT**
-- 主页：https://people.csail.mit.edu/dina/
-- 代表作：RF-Pose、医疗无线监测、Emerald 项目
-- 定位：把无线信号变成"超人感知"的代表人物
-
-### 中国 / 亚洲核心团队
-
-**清华叉院 / 高阳团队**
-- 主页：https://gaoyang.online/
-- 代表作：ALOHA 中国版、ViLa、Diffusion Policy 复现 + 改进
-- 定位：国内 VLA 复现 + 创新一线，开源率高
-
-**北大董豪 / Hao Dong**
-- 主页：https://zsdonghao.github.io/
-- 代表作：Genh2r、机器人操作大模型、ManiSkill 系列合作
-- 定位：北大具身实验室代表；国内学生想读博常去的组
-
-**上交卢策吾 / Cewu Lu**
-- 主页：https://www.mvig.org/
-- 代表作：HOI 检测、AnyGrasp、机器人抓取大规模数据集
-- 定位：抓取 / 具身感知方向，AnyGrasp 是国内出圈的代表
-
-**港中文（深圳）韩晓光 / Xiaoguang Han**
-- 主页：https://gaplab.cuhk.edu.cn/
-- 代表作：3D 视觉 + 数字人 + 具身 3D 表征
-- 定位：3D 表征派的代表
-
-**Shanghai AI Lab（OpenRobotLab）**
-- 主页：https://github.com/OpenRobotLab
-- 代表作：GRUtopia 仿真平台、PointLLM、机器人多模态系列
-- 定位：上海 AI Lab 的具身分支，工程力强、开源完整
+*读到这里你应该懂了：顶会、arxiv、开源、VLA、具身智能 这几个词后面再出现就不解释了。*
 
 ---
 
-## 3. Newsletter / 博客（每周看 1-2 个）
+## 2. 你每天看什么（≤ 5 分钟）
 
-### 中文
+**唯一目标**：保持"这个领域今天大概出了什么大新闻"的手感。
 
-| 名称 | 形式 | 频率 | 一句话 |
-|---|---|---|---|
-| **机器之心** | 公众号 + 网站 | 每日 | 综合 AI 媒体，具身板块覆盖中等；适合扫标题 |
-| **量子位** | 公众号 | 每日 | 同上，互补阅读 |
-| **PaperWeekly** | 公众号 + 网站 | 每周 | 论文导读偏深度，具身专题不少 |
-| **深蓝学院** | 公众号 + 课程 | 每周 | 偏机器人 + 自动驾驶，有付费课但订阅免费推送 |
-| **将门创投 TechBeat** | 公众号 | 每周 | 直播 + 论文解读，具身专题偶尔出现 |
+只做一件事：
 
-刚开始建议：机器之心（每日扫标题）+ PaperWeekly（每周一深读）。
+- 打开手机，刷一下 **机器之心** 公众号 或 **量子位** 公众号
+- 只看标题，**不点进去**
+- 看到"机器人 / 具身 / 人形 / VLA / 大模型"的标题，心里记一下名字就行
 
-### 英文
+为什么不深读？因为你刚上路，深读要留给周末。
 
-| 名称 | 作者 | 频率 | 一句话 |
-|---|---|---|---|
-| **The Batch** | Andrew Ng / DeepLearning.AI | 每周 | AI 综合周报，具身覆盖较少但是入门必读 |
-| **Ahead of AI** | Sebastian Raschka | 每月 | 深度技术综述，常涉及多模态 / VLM |
-| **Import AI** | Jack Clark | 每周 | 政策 + 研究 + 趋势综合，密度高 |
-| **The Robot Report** | 行业媒体 | 每日 | 偏机器人产业新闻，看公司动向 |
-| **The Robot Brains Podcast** | Pieter Abbeel | 双周 | 顶尖学者访谈，听比读省力 |
+> **公众号**：微信里的内容订阅号。在微信"搜一搜"输入名字就能关注。
 
-刚开始建议：The Batch（每周）+ Import AI（每周）+ Robot Brains（双周通勤听）。
+每天 3-5 分钟，跑完就走。**别开知乎，会刷上瘾**。
 
-### 具身智能专项
-
-- **Embodied AI Workshop**（CVPR / NeurIPS 附属）：年度 workshop 集合，主页 https://embodied-ai.org/，每年看一次综述报告
-- **OpenRobotLab 公众号**：上海 AI Lab 子账号，国内具身方向更新最频繁的之一
-- **The Humanoid**（Substack）：人形机器人专项 newsletter，覆盖 Tesla Optimus / Figure / Unitree 等动态
+*读到这里你应该懂了：日更不是为了学，是为了不掉队。*
 
 ---
 
-## 4. Discord / Slack / 微信群
+## 3. 你每周看什么（30 分钟，挑周末一次性看完）
 
-### 国际
+每周从下面 4 件事里挑 **2 件** 做（不是全做）：
 
-| 社区 | 入口 | 一句话 |
+### A. 看一篇 PaperWeekly 公众号的论文导读
+
+- 它专门做"把一篇论文翻译成人话"
+- 选标题里有"机器人 / 具身 / VLA / 多模态"的那篇
+- 看不懂没关系，你的目标是混个脸熟，不是当场学会
+
+### B. 看一个 B 站讲解视频
+
+推荐这些 UP 主（搜名字即可）：
+
+| UP 主类型 | 找谁 | 一句话 |
 |---|---|---|
-| **HuggingFace Discord** | https://discord.gg/huggingface | 「lerobot」「robotics」频道是核心；遇 LeRobot 报错先来这 |
-| **LeRobot 社区** | HuggingFace 旗下 | 全球低成本机器人 DIY 集散地；每周有 office hour |
-| **EleutherAI Discord** | https://discord.gg/eleutherai | 偏基础模型，但 multi-modal / embodied 频道有讨论 |
-| **CoRL Slack** | 注册 CoRL 后获取 | 会议期间最热，平时低活跃；存档值得翻 |
+| 综合 AI 解读 | **跟李沐学 AI**、**李宏毅** | 沐神是大佬亲自讲论文；李宏毅老师讲课最适合零基础 |
+| 机器人 / 具身专题 | 在 B 站搜 "具身智能" "机器人大模型" | 多是研究生录的组会汇报，10-30 分钟一段 |
+| 入门数学 / 编程 | **3Blue1Brown 中文搬运**、**StatQuest 中文** | 讲向量、矩阵、概率特别直观 |
 
-### 国内
+> **B 站**：bilibili.com，国内年轻人主要的视频学习平台。
+> **搬运**：把油管/外网视频加中文字幕重新发一遍。
 
-- **机器之心读者群**：扫公众号底部二维码，按方向（具身 / VLM / RL）分群
-- **量子位 AI 大本营**：类似上面
-- **VLA / 具身智能技术交流群**：在知乎 / B 站找具身博主拉群（高阳 / 王鹤 / 张林峰 等学生运营的居多）
-- **HuggingFace 中文社区**：B 站 + Discord 双入口
+### C. 看一期播客（边走路边听）
 
-刚开始建议：HuggingFace Discord（潜水 1 个月）+ 1 个国内具身微信群（看真实人怎么聊）。
+- 中文：**「硅谷 101」**、**「张小珺商业访谈」**——常请国内具身创业者
+- 英文（练听力顺便学）：**The Robot Brains**，主持人是 UC Berkeley 的 Pieter Abbeel 教授
 
----
+### D. 翻一下 HuggingFace Daily Papers
 
-## 5. 每日刷什么（核心 30 分钟流程）
+- 网址：https://huggingface.co/papers
+- 它每天选 ~10 篇社区投票最高的论文，自带英文摘要
+- 你只看摘要的第一句话（"What is this paper about？"），混眼熟
 
-最低成本日常追踪 = 每天 30 分钟，覆盖 80% 信号。
+> **HuggingFace（抱抱脸）**：一个全球最大的 AI 模型 / 论文 / 代码社区，相当于"AI 界的 GitHub"。
 
-### 早上 10 分钟：arxiv 扫标题
-
-- 入口：https://arxiv.org/list/cs.RO/recent + https://arxiv.org/list/cs.LG/recent
-- 推荐工具：**arxiv-sanity-lite**（http://arxiv-sanity-lite.com/）按你 star 的论文推相似
-- 关键词订阅：在 arxiv-sanity / Google Scholar Alert 设关键词「Vision-Language-Action」「Diffusion Policy」「Embodied」「Manipulation」
-
-### 中午 10 分钟：Twitter / X List
-
-建一个具身专属 list，只放 15-20 个账号：
-- @svlevine、@chelseabfinn、@pabbeel、@pathak2206、@russtedrake
-- @DrJimFan、@QuanVng、@xf1280
-- @drfeifei、@FadelAdib
-- @AdaRob（Karol Hausman / RT 系列作者）
-- @skydiver_yang（Yang Zhou，前 DeepMind）
-- @karpathy（虽然不是具身，但他的视野能借）
-
-list 而不是 follow，是为了不被他们日常推文淹没。
-
-### 晚上 10 分钟：HuggingFace Daily Papers
-
-- 入口：https://huggingface.co/papers
-- 它每天选 ~10 篇社区投票最高的论文，具身 / VLA 命中率高，自带摘要
-
-### 每周一次：Group meeting / 公开讲座
-
-- **Stanford AI Lab seminars**（https://ai.stanford.edu/events/）：录像会发 YouTube
-- **MIT CSAIL Robotics Seminar**：YouTube 频道 MIT CSAIL
-- **CMU RI Seminar**：CMU Robotics Institute YouTube 频道
-- **国内 VALSE 在线讲座**（https://valser.org/）：每周一次，含具身专场
-
-刚开始建议：每周看 1 个，专心看完比看 10 个走神强。
-
-### 每月一次：综述 + Awesome list
-
-- https://github.com/GT-RIPL/Awesome-LLM-Robotics（持续更新）
-- https://github.com/jonbarron/website 看 Jon Barron 怎么维护研究主页
-- 每月看一遍，看新加了什么综述、什么基准
+*读到这里你应该懂了：每周不是逼自己学完一篇论文，是让大脑对几个名字变熟。*
 
 ---
 
-## 上手节奏（给零基础学习者）
+## 4. 你每月看什么（1-2 小时，月底找一个下午）
 
-第 1-2 周：**先消化 13 篇论文**，社区先放着不订阅
-第 3-4 周：开始订阅「机器之心 + The Batch」+ 关注 5 个推特账号
-第 2 个月：加 HuggingFace Daily Papers + 进 1 个微信群潜水
-第 3 个月：建 Twitter list、设 arxiv 关键词、看 1 个 group meeting
-第 6 个月：能挑出「这周值得读的 3 篇」时，节奏就跑通了
+每月做 **1 件** 事就够：
 
-订阅是手段，不是目的。**信号密度比信源数量重要**。
+### 选项 A：扫一遍当月顶会的"标题列表"
+
+- 11 月：CoRL（机器人学习顶会）的接收论文列表
+- 6 月：CVPR（计算机视觉顶会）
+- 12 月：NeurIPS（机器学习顶会）
+
+打开会议官网，**只看论文标题**。100 个标题里挑 3 个你眼熟的关键词的，记到笔记本。
+
+> **接收论文列表（accepted papers）**：每年顶会公布的"今年录取了哪些论文"清单。
+
+### 选项 B：看一个研究综述（survey paper）
+
+- 综述 = "这一年这个方向的总结报告"，比单篇论文好读
+- 找综述：在 GitHub 搜 "Awesome LLM Robotics" 或 "Awesome Embodied AI"
+- 这种仓库会列出最近的好综述，挑一篇中文版（机器之心 / PaperWeekly 经常翻译）
+
+> **GitHub**：全球最大的代码仓库网站，可以理解成"程序员的网盘 + 朋友圈"。
+> **Awesome 仓库**：社区维护的"某主题最佳资源清单"，约定俗成叫 "Awesome-XXX"。
+
+### 选项 C：看一场公开讲座录像
+
+- B 站搜 "VALSE" — 国内最大计算机视觉学术沙龙，每年有具身专场
+- YouTube（需科学上网）搜 "Stanford AI Seminar" 或 "MIT CSAIL Robotics"
+
+每场 60-90 分钟，1.5 倍速 + 跳过提问环节，1 小时搞定。
+
+*读到这里你应该懂了：每月只做一件事，宁少勿多。*
+
+---
+
+## 5. 完全不必关注的（高中阶段先放下）
+
+下面这些，你看到了也别花时间，等你上大学修过线性代数 / 概率论再说：
+
+| 不必关注的 | 为什么 |
+|---|---|
+| 推特 / X 上的实时讨论 | 信噪比极低，90% 是吵架和广告，需要很强的"过滤能力"才能看出门道 |
+| arxiv 每日新论文列表 | 每天 100+ 篇，你看不完也读不懂，徒增焦虑 |
+| Discord / Slack 国际社群 | 全英文 + 时差 + 行业黑话，零基础进去会自闭 |
+| 各种付费 newsletter | 高中阶段免费的中文资源已经管够 |
+| 模型源代码 | 现在还看不懂 Python，先打地基 |
+| 各家发布会"哪个机器人最强" | 营销 > 学术，看个热闹就行 |
+| 论文里复杂的数学公式页 | 等你大学学会矩阵 / 偏导再回头看 |
+
+**判断原则**：如果一篇内容里 80% 的词你都不认识，**那它现在不是给你看的**。
+关掉，回到上面的"每周 30 分钟"清单。
+
+*读到这里你应该懂了：会取舍，比会学习更重要。*
+
+---
+
+## 6. 国内学生友好的资源地图
+
+### 中文公众号（每天最多看 2 个，超过就是浪费）
+
+| 名称 | 频率 | 一句话 |
+|---|---|---|
+| **机器之心** | 每日 | 综合 AI 媒体，机器人栏目稳定更新 |
+| **量子位** | 每日 | 同上，互补 |
+| **PaperWeekly** | 每周几篇 | 论文导读偏深度，有具身专题 |
+| **将门创投 TechBeat** | 每周 | 直播 + 论文解读 |
+| **OpenRobotLab** | 不定期 | 上海 AI Lab 的具身分支官号，国内具身更新最频繁的之一 |
+
+### 知乎专栏 / 答主（搜下面名字）
+
+- **跟李沐学 AI**：B 站和知乎双平台，论文带读
+- **王鹤、高阳、卢策吾**：国内具身一线教授，他们的学生在知乎答题
+- **机器之心** 知乎机构号
+
+### B 站 UP 主（入门最友好的渠道）
+
+- **跟李沐学 AI**、**李宏毅**：基础课
+- **3Blue1Brown 中文搬运**：数学直觉
+- 搜 "具身智能"、"机器人 大模型"、"VLA" 三个关键词，看播放量高的近期视频
+
+### 微信群（暂时别加）
+
+加群之前先问自己："我能听懂他们在说什么吗？"
+入门阶段先不要加技术群，**潜水公众号留言区**就够了。
+
+*读到这里你应该懂了：中文资源 > 英文资源；视频 > 文字；高质量少量 > 低质量大量。*
+
+---
+
+## 7. 如果你 18 岁前想给具身智能领域留下一点声音
+
+**先泼冷水**：发顶会论文几乎不可能（导师 / 算力 / 数学全缺），别想。
+**但是**——下面这几件事，一个读者认真做完，质量足以让一个名校博士生看完点头：
+
+### 难度 1 星：做一个可视化网页
+
+- 选一个具身智能里的小概念（比如"什么是模仿学习？"）
+- 用图、动画、互动滑块讲清楚
+- 学一点 HTML / CSS / JS（B 站搜 "前端入门" 一周入门）
+- 部署到 GitHub Pages（免费），把链接发到知乎/B 站
+
+类似参考：3Blue1Brown 的网页解释，或 Distill.pub 上的可视化论文。
+
+### 难度 2 星：翻译一篇英文综述
+
+- 选一篇 30-50 页的具身智能综述（每月清单里能找到）
+- 用 ChatGPT / DeepSeek 当字典，自己一段段过
+- 每翻译完一节，写一段"我读这一段的理解"
+- 发到知乎专栏 / 自己的小红书 / GitHub
+
+> **综述**：把某个方向最近 5-10 年的进展整理成一篇"教科书章节"的论文，一般 30-100 页。
+
+这件事**特别有用**：
+1. 你的英文阅读会暴涨
+2. 中文社区缺这种东西，会被收藏转发
+3. 你写完会比 95% 的本科生更懂这个方向
+
+### 难度 3 星：复现一篇论文的开源代码
+
+- 找一篇代码已经开源的具身论文（github 上有 ⭐ 数）
+- 在自己电脑或免费云算力（Google Colab / 阿里云学生礼包）上跑通
+- 写一份"我踩了 10 个坑"的复现笔记，发知乎或 GitHub
+- 加分项：把作者英文 README 翻译成中文 PR 给原仓库
+
+> **PR（Pull Request）**：在 GitHub 上向别人的项目提交修改的标准动作，相当于"学生交作业给老师"。
+> **开源仓库**：作者把代码免费放出来的项目地址。
+
+如果你的复现笔记或翻译被作者本人 merge（合并）进官方仓库，**这就是你 18 岁前留下的真实贡献**。
+你能写进任何申请文书 / 面试 / 简历里，且大学教授看了会眼前一亮。
+
+### 难度 4 星（极少数人能做到）：发一篇博客被领域大佬转发
+
+- 选一个具身领域的"被忽视的小问题"（比如"为什么 VLA 模型大多用 7B 参数？"）
+- 自己查 5-10 篇论文，写一篇 2000 字的中文博客，逻辑严密、有图、有引用
+- 发知乎 + B 站专栏 + 推特（中英双语）
+- 私信 / @ 几位国内导师（高阳 / 王鹤 / 卢策吾 课题组的学生），礼貌求转发
+
+成功率很低，但成本也低，撞上一次就够你写进任何履历。
+
+*读到这里你应该懂了：入门读者不能拼学历，但可以拼"看得清+写得清+做得完"——这是大学之后越来越稀缺的能力。*
+
+---
+
+## 8. 总结：你的 6 个月节奏表
+
+| 阶段 | 做什么 | 不做什么 |
+|---|---|---|
+| 第 1 个月 | 关注 2 个中文公众号；高考冲刺优先 | 别学 Python，别看英文论文 |
+| 第 2 个月 | 加上每周 1 个 B 站讲解视频 | 别建推特账号 |
+| 第 3 个月 | 加上每周 1 期播客 | 别参加任何技术社群 |
+| 第 4 个月 | 月底扫一次 HuggingFace Daily Papers 标题 | 别强迫自己读论文 |
+| 第 5 个月 | 选一个"难度 1 星"的小项目动手做 | 别同时做两个 |
+| 第 6 个月 | 把项目发出来，记录自己 6 个月的变化 | 别和同龄 AI 大牛比，比的是 6 个月前的自己 |
+
+订阅是手段，不是目的。
+**信号密度 > 信源数量。少而精，比多而乱有用 100 倍。**
+
+*读到这里你应该懂了：入门阶段，"保持手感 + 一个小项目"已经超越 99% 的同龄人了。*

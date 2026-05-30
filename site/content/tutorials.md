@@ -1,215 +1,311 @@
 ---
 title: 实战教程 / 跑得起来的代码
 order: 4
-intro: '跑得起来的代码 — 按 今晚 / 周末 / 一周 分级的实战清单'
+intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」三档分级，给完全没写过代码的同学'
 ---
 
-读累了想动手？这里是按时间投入排序的实战清单。
+读累了想动手？这一页把所有教程按「门槛」分成三档：
 
-每个资源都标了：**中英文 / 时长 / 难度 / 是否需要 GPU / 一句话定位**。读者画像是编程零基础但能照着教程一行一行跑——所以「今晚就能跑」那一栏的东西，开了 Colab 浏览器就行，不用配环境。
+- **第 0 档**：什么都不用装，打开浏览器看视频或网页就行
+- **第 1 档**：用 **Colab**（谷歌提供的免费在线代码本，浏览器打开就能跑代码，自带显卡），不用配环境
+- **第 2 档**：要在自己电脑上装 **Python**（一种编程语言）和一堆库，配环境约 1-2 小时
 
----
+> **Colab（Google Colaboratory）**：网页上的"代码本子"。每个格子写一段代码，点运行就出结果，谷歌免费借你一台带显卡的服务器。**完全不需要在自己电脑上装任何东西，只要能科学上网。**
 
-## 今晚就能跑（< 2h，浏览器打开就跑）
+> **GPU（显卡 / 图形处理器）**：原本是给游戏画面渲染用的芯片，现在 AI 训练全靠它做大量并行计算。家用显卡也分高低端，跑大模型一般要专业的 A100 / H100，但 Colab 免费版给的 T4 已经够练手。
 
-### 1. OpenAI CLIP 官方 Colab：Interacting with CLIP
+> **模型（model）**：你可以理解为"一个算好参数的复杂函数"。给它一个输入（图片/文字），它给你一个输出（标签/回答/动作）。所谓"训练模型"就是不断调整这个函数里的几亿个参数，让它越答越准。
 
-- **平台**：Google Colab（OpenAI 官方）
-- **URL**：https://colab.research.google.com/github/openai/clip/blob/master/notebooks/Interacting_with_CLIP.ipynb
-- **语言**：英文（代码注释为主，能跟着跑）
-- **时长**：30 分钟
-- **难度**：入门
-- **GPU**：Colab 免费 T4 够
-- **定位**：**第一次跑多模态模型的最低门槛**。把图片和文字 encode 成向量、做 zero-shot 分类。读完 [mmCLIP 笔记](../notes/mmclip.md) 立刻跑这个，体感最强。
-
-### 2. OpenAI CLIP Prompt Engineering for ImageNet
-
-- **平台**：Google Colab（OpenAI 官方）
-- **URL**：https://colab.research.google.com/github/openai/CLIP/blob/master/notebooks/Prompt_Engineering_for_ImageNet.ipynb
-- **语言**：英文
-- **时长**：1 小时
-- **难度**：入门
-- **GPU**：Colab T4
-- **定位**：上一个跑通了再来。看「prompt 怎么写能让 zero-shot 分类涨点」——后面 VLA 论文里 ensemble prompt 的思想都从这来。
-
-### 3. MuJoCo 官方 Python Tutorial
-
-- **平台**：Google Colab（DeepMind 官方）
-- **URL**：https://colab.research.google.com/github/google-deepmind/mujoco/blob/main/python/tutorial.ipynb
-- **语言**：英文
-- **时长**：1.5 小时
-- **难度**：入门
-- **GPU**：不需要（CPU 即可）
-- **定位**：**Task 2 复现 `VLM_Grasp_Interactive` 之前必做**。教 MuJoCo XML 模型怎么定义、怎么 step 仿真、怎么渲染。跑完再看那个 grasp 项目的代码不会蒙。
-
-### 4. SayCan 官方 Colab：SayCan-Robot-Pick-Place
-
-- **平台**：Google Colab（Google Research 官方）
-- **URL**：https://github.com/google-research/google-research/tree/master/saycan
-- **语言**：英文
-- **时长**：1 小时
-- **难度**：入门到中级（涉及 PaLM API 调用，可能要换成本地 LLM）
-- **GPU**：Colab T4 够
-- **定位**：读完 [SayCan 笔记](../notes/saycan.md) 跑这个。看 LLM 怎么对每个机器人 skill 打分、怎么和 affordance 相乘选动作。
-
-### 5. 3Blue1Brown：Neural Networks 系列
-
-- **平台**：YouTube
-- **URL**：https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
-- **语言**：英文（YouTube 自动中文字幕质量可用）
-- **时长**：约 2 小时（7 集，每集 15-25 分钟）
-- **难度**：入门
-- **GPU**：不需要（看视频）
-- **定位**：神经网络/反向传播/Transformer 的视觉化讲解。**任何具身智能教程开始前都该刷一遍**，尤其第 5-7 集 GPT 和 Attention。
-
-### 6. 跟李沐学 AI · 动手学深度学习 PyTorch 版
-
-- **平台**：B 站
-- **URL**：https://www.bilibili.com/video/BV1if4y147hS/
-- **语言**：中文
-- **时长**：单集 1-2 小时（70+ 集，按需看）
-- **难度**：入门到中级
-- **GPU**：不需要（视频）；配套 Notebook 需要
-- **定位**：**编程零基础学 PyTorch 的中文最佳路径**。建议先刷前 10 集打基础（线性回归 → 多层感知机 → 卷积），再去碰 VLA。配套书：https://zh.d2l.ai/
+*读到这里你应该懂了：第 0 档看视频就行，第 1 档浏览器打开 Colab 就能跑代码，第 2 档才需要折腾环境。*
 
 ---
 
-## 周末项目（半天到一天）
+## 几个反复出现的词，先一次性讲清
 
-### 7. HuggingFace LeRobot 官方教程（Robot Learning: A Tutorial）
+后面教程里这些词高频出现，先在这里翻译成人话，往下看就不卡壳。
 
-- **平台**：HuggingFace Space
-- **URL**：https://huggingface.co/spaces/lerobot/robot-learning-tutorial
-- **语言**：英文
-- **时长**：4-6 小时
-- **难度**：中级
-- **GPU**：Colab T4 / 本地 8GB+ 即可
-- **定位**：**Task 2 主线**。LeRobot 官方 hands-on 课程，教数据格式、teleoperation、训练扩散策略和 ACT。学完能直接读 SmolVLA 代码。
+> **神经网络（Neural Network）**：一堆"小函数"层层堆叠，每层接收上一层的数字，做一次加权求和再变换，最后吐出结果。形象点：每一层像考试里的一道大题，前一题的答案是后一题的输入。
 
-### 8. LeRobot 中文教程（飞书文档）
+> **训练 / 学习**：让模型一遍遍看「输入 → 正确答案」的样例，每次答错就调整内部参数。**像背错题本**：错一次就改一次，错得越多调得越多。
 
-- **平台**：飞书 Wiki（社区翻译）
-- **URL**：https://zihao-ai.feishu.cn/wiki/space/7589642043471924447
-- **语言**：中文
-- **时长**：2-4 小时（看 SO-ARM101 装配章节可跳）
-- **难度**：入门到中级
-- **GPU**：跑训练时需要
-- **定位**：英文版读不动可以来这里。重点看「训练扩散策略」章节。
+> **Loss（损失 / 扣分）**：模型这次答得有多差，用一个数字表示。**就是考试扣分总和，越小越好。** 模型学习的全部目标就是想办法让这个分往下降。
 
-### 9. SmolVLA Quick Start（HuggingFace 官方 Blog）
+> **梯度下降（Gradient Descent）**：调参数的方法。**像下山**：站在半山腰，每一步往最陡的下坡方向迈一小步，反复迈直到走到山谷（也就是 Loss 最低点）。
 
-- **平台**：HuggingFace Blog + LeRobot GitHub
-- **URL**：https://huggingface.co/blog/smolvla
-- **语言**：英文
-- **时长**：3-5 小时（含 fine-tune 训练 20k steps）
-- **难度**：中级
-- **GPU**：单张消费级 GPU（甚至 MacBook M 系列）
-- **定位**：450M 的小 VLA，**能在自己电脑上跑通的 VLA 模型**。读完 [OpenVLA 笔记](../notes/openvla.md) 来跑这个体感最好——OpenVLA 7B 跑不动，SmolVLA 跑得动。
+> **矩阵（Matrix）**：一张排好的数字表格，有行有列。两个矩阵相乘有规则，行数列数要对齐。AI 内部所有计算几乎都是矩阵在乘来乘去。
 
-### 10. PyBullet Quickstart Guide（官方）
+> **向量表示 / 把东西变成一串数字**：一张图、一句话，模型会先把它变成一串数字（比如 512 个数字组成的向量）。**两个向量夹角越小（内积越大），代表它俩语义越接近**——这就是高中学过的向量内积，AI 里反复用。
 
-- **平台**：PyBullet 官方文档 + GitHub examples
-- **URL**：https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA
-- **语言**：英文
-- **时长**：4-5 小时
-- **难度**：中级
-- **GPU**：不需要
-- **定位**：MuJoCo 跑通后想换个仿真器对比。PyBullet 安装简单（`pip install pybullet` 就行），机器人 URDF 资源更多。
+> **数据集（Dataset）**：一大堆训练样例打包成的文件夹，比如"100 万张图片 + 每张图的文字描述"。
 
-### 11. CLIP fine-tune your own dataset（社区 Colab）
+> **fine-tune（微调）**：别人已经训练好一个大模型，你只用一小撮自己的数据"补课"几小时，让它适应你的任务。**像借了学霸的复习提纲再加几道自己学校的题型。**
 
-- **平台**：Google Colab
-- **URL**：在 GitHub 搜 `CLIP fine-tune colab`，推荐 OpenCLIP repo 的 `examples/`：https://github.com/mlfoundations/open_clip
-- **语言**：英文
-- **时长**：4-6 小时
-- **难度**：中级
-- **GPU**：Colab Pro 或本地 12GB+
-- **定位**：用自己的图文对 fine-tune CLIP，理解 contrastive loss 怎么调。
+> **Prompt（提示词）**：你给模型的输入文字。同一个模型，prompt 写法不同，效果差很多。
+
+> **Zero-shot（零样本）**：不给模型看过任何这个任务的例子，直接让它做。**像月考考了课本上没出现过的题型，但学生靠通识能蒙对。**
+
+*读到这里你应该懂了：训练 = 让模型背错题本，Loss = 扣分，梯度下降 = 下山找最低点，矩阵 = 数字表格，向量夹角小 = 意思接近。*
 
 ---
 
-## 需要一周深入（多日 + GPU）
+## 第 0 档：不用配环境，看视频就行
 
-### 12. OpenVLA 完整训练 / fine-tune
+什么都不用装，B 站 / YouTube 打开就看。**强烈建议第一周只做这一档。**
 
-- **GitHub**：https://github.com/openvla/openvla
-- **最后更新**：活跃维护（2025 年 OFT、FAST 更新）
-- **状态**：能跑通，issue 区主要是「显存不够」和「数据集格式」类，不是「跑不起来」
-- **语言**：英文
-- **时长**：1 周（含数据准备 + LoRA fine-tune）
-- **难度**：进阶
-- **GPU**：LoRA 需要 27GB 单卡（A100 80GB 推荐）；Full fine-tune 需要 8×A100 节点
-- **定位**：**配 GPU 服务器后的主线项目**。读 [OpenVLA 笔记](../notes/openvla.md) → 跑 LIBERO benchmark → 在自己数据集上 LoRA fine-tune。
+### 1. 3Blue1Brown · 神经网络系列
 
-### 13. NVIDIA Cosmos World Foundation Model
+| 项目 | 说明 |
+|---|---|
+| 平台 | YouTube |
+| 链接 | https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi |
+| 语言 | 英文（YouTube 自动中文字幕能看） |
+| 时长 | 约 2 小时（7 集，每集 15-25 分钟） |
+| 需要英文阅读吗 | 不强制，开自动字幕即可 |
+| 好玩瞬间 | 第 3 集会用动画演示"梯度下降下山"，看到蓝色小球一路滚到山谷的瞬间，前面所有抽象数学一下就具象了 |
 
-- **GitHub**：https://github.com/NVIDIA/Cosmos
-- **配套 Tokenizer**：https://github.com/NVIDIA/Cosmos-Tokenizer
-- **语言**：英文
-- **时长**：1 周（仅 inference + 后训练样例）
-- **难度**：进阶
-- **GPU**：A100/H100 推荐（4B-14B 多档模型）
-- **定位**：读 [Cosmos Policy 笔记](../notes/cosmos-policy.md) 后做。世界模型生成 + 后训练做 Policy，门槛高但前沿。
+- **为什么先看这个**：把"神经网络怎么从数字识别一步步变成 ChatGPT 背后的 Transformer"用动画讲清楚，**没有任何编程门槛**
+- 看完你会理解前面那些术语（神经网络 / Loss / 梯度下降）到底长什么样
 
-### 14. LLaVA 官方代码 + 训练
+### 2. 跟李沐学 AI · 动手学深度学习
 
-- **GitHub**：https://github.com/haotian-liu/LLaVA（v1.5）/ https://github.com/LLaVA-VL/LLaVA-NeXT（v1.6）
-- **语言**：英文
-- **时长**：1 周（pre-train + visual instruction tuning）
-- **难度**：进阶
-- **GPU**：8×A100 推荐做完整训练；推理单卡 24GB 可
-- **定位**：读 [LLaVA 笔记](../notes/llava.md) 后做。先用预训练模型推理，再尝试 visual instruction tuning。
+| 项目 | 说明 |
+|---|---|
+| 平台 | B 站 |
+| 链接 | https://www.bilibili.com/video/BV1if4y147hS/ |
+| 语言 | 中文 |
+| 时长 | 单集 1-2 小时（共 70+ 集，先看前 10 集就够） |
+| 需要英文阅读吗 | 不需要 |
+| 好玩瞬间 | 第 8 集左右第一次用代码画出"模型预测的直线慢慢贴近真实数据点"的动图 |
 
-### 15. NVIDIA Isaac Lab（仿真大全）
+- **为什么推荐**：编程零基础学 AI 最稳的中文路径，李沐是行业内顶级讲师，配套书在 https://zh.d2l.ai/ 免费看
+- 计划：**只先看前 10 集**（线性回归 → 多层感知机 → 卷积神经网络），不要贪多
 
-- **官方文档**：https://isaac-sim.github.io/IsaacLab/
-- **GitHub**：https://github.com/isaac-sim/IsaacLab
-- **语言**：英文（中文社区有 LycheeAI 等 YouTube 频道）
-- **时长**：1-2 周入门
-- **难度**：进阶
-- **GPU**：RTX 30 系以上 / Linux 系统
-- **定位**：替代 Isaac Gym 的统一框架，集成 GR00T。MuJoCo 入门后想做 RL + VLA 大规模训练再来。
+### 3. Two Minute Papers
 
-### 16. Two Minute Papers（背景刷）
+| 项目 | 说明 |
+|---|---|
+| 平台 | YouTube |
+| 链接 | https://www.youtube.com/@TwoMinutePapers |
+| 语言 | 英文（自动字幕够用） |
+| 时长 | 每集 5-10 分钟 |
+| 需要英文阅读吗 | 不需要 |
+| 好玩瞬间 | 看到一篇"AI 生成会跳舞的人体"或"机器狗在沙地翻跟头"的视频，5 分钟看完会觉得这个领域真的在飞速进步 |
 
-- **平台**：YouTube
-- **URL**：https://www.youtube.com/@TwoMinutePapers
-- **语言**：英文（自动字幕可用）
-- **时长**：每集 5-10 分钟，按主题刷
-- **难度**：入门
-- **GPU**：不需要
-- **定位**：跑代码累了换换脑子。机器人 / 生成式 AI / NeRF / Sora 各种新论文 5 分钟梗概，找下一个想读的论文用。
+- **作用**：累了换换脑子，每集挑一篇前沿论文用动画讲一遍
+- **不要尝试自己复现**，就当看科技新闻
+
+*读到这里你应该懂了：先把这三个看完，建立"AI 是什么样子"的直觉，再去碰代码。*
+
+---
+
+## 第 1 档：用 Colab 浏览器跑（不用配环境）
+
+打开链接 → 登录谷歌账号 → 点"运行全部"→ 等出结果。**全程不在自己电脑上装任何东西。**
+
+> **前置说明**：Colab 在国内需要科学上网。免费版给的显卡是 T4，跑前沿小模型都够。每次连接最多 12 小时，关掉浏览器就断。
+
+### 4. CLIP 官方 Colab：图文匹配第一课
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | Google Colab（OpenAI 官方） |
+| 链接 | https://colab.research.google.com/github/openai/clip/blob/master/notebooks/Interacting_with_CLIP.ipynb |
+| 语言 | 英文（注释为主，照着点运行就行） |
+| 时长 | 30 分钟 |
+| 需要英文阅读吗 | 略需要看懂注释，不会就丢翻译 |
+| 好玩瞬间 | 上传一张你自己的照片，模型在「猫 / 狗 / 飞机 / 日落」里挑一个最匹配的标签——它真的能挑对 |
+
+> **CLIP**：OpenAI 2021 年的模型。它干的事是把"图"和"对应的文字描述"都变成同一个空间里的向量，**图和文字的向量夹角越小越是同一回事**。后面所有看图说话的 AI 几乎都拿它当眼睛。
+
+- **为什么推这个**：第一次跑多模态 AI 的最低门槛
+- 配套笔记：[mmCLIP 笔记](../notes/mmclip.md)
+
+### 5. CLIP Prompt Engineering：换句话能涨多少分
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | Google Colab（OpenAI 官方） |
+| 链接 | https://colab.research.google.com/github/openai/CLIP/blob/master/notebooks/Prompt_Engineering_for_ImageNet.ipynb |
+| 语言 | 英文 |
+| 时长 | 1 小时 |
+| 需要英文阅读吗 | 略需要 |
+| 好玩瞬间 | 同一张图，prompt 从 "cat" 改成 "a photo of a cat"，准确率涨好几个点——你会第一次直观感觉到"AI 也是会偏科的考生" |
+
+- **跑通第 4 个再来跑这个**
+- 学到的是"提示词工程"的雏形
+
+### 6. MuJoCo 官方 Python Tutorial：让物体在屏幕里掉下来
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | Google Colab（DeepMind 官方） |
+| 链接 | https://colab.research.google.com/github/google-deepmind/mujoco/blob/main/python/tutorial.ipynb |
+| 语言 | 英文 |
+| 时长 | 1.5 小时 |
+| 需要英文阅读吗 | 略需要 |
+| 好玩瞬间 | 写几行 XML 描述"一个球 + 一个斜面"，然后看球真的从斜面滚下来——第一次感受到"用代码捏物理世界" |
+
+> **仿真器（Simulator）**：在电脑里"假造"一个有重力、有摩擦、有碰撞的世界。机器人在真实世界训练太贵又危险，先在仿真里练熟了再搬到真机。**MuJoCo** 是 DeepMind 维护的物理仿真器，业界标配。
+
+- **作用**：后面要做"机器人"相关的项目都绕不开仿真，这是入门第一步
+- 这个跑通之后，看后面 SayCan / VLA 项目的代码不会蒙
+
+### 7. SayCan 官方 Colab：让大语言模型指挥机器人
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | Google Colab（Google Research 官方） |
+| 链接 | https://github.com/google-research/google-research/tree/master/saycan |
+| 语言 | 英文 |
+| 时长 | 1 小时 |
+| 需要英文阅读吗 | 需要看懂 prompt 的英文 |
+| 好玩瞬间 | 你打字 "把可乐递给我"，机器人手臂在仿真里依次完成「找到可乐 → 抓起来 → 放到你旁边」——大语言模型第一次"指挥"了一个会动的东西 |
+
+- **配套笔记**：[SayCan 笔记](../notes/saycan.md)
+- 看 LLM 怎么给每个动作打分，再和"我现在到底能不能做这个动作"相乘选最优
+
+> **LLM（Large Language Model，大语言模型）**：就是 ChatGPT、文心一言这一类。给它一段文字，它接着写。
+
+*读到这里你应该懂了：第 1 档的 4 个 Colab 全跑完，你就摸过了"图文匹配 + 物理仿真 + LLM 指挥机器人"三件事。*
+
+---
+
+## 第 2 档：自己电脑装 Python（配环境 1-2 小时）
+
+要在自己电脑装 Python，第一次配环境约 1-2 小时。**强烈建议先把第 0、1 档过一遍再来这档。**
+
+> **Python**：一种编程语言。AI 圈几乎全用它。安装方式推荐 [Miniconda](https://docs.conda.io/projects/miniconda/en/latest/)（一个包管理工具）。
+
+> **包 / 库（Package / Library）**：别人写好的代码合集，直接拿来用。装库的命令长这样：`pip install xxx`。**国内装库慢就用清华源**：`pip install xxx -i https://pypi.tuna.tsinghua.edu.cn/simple`
+
+> **PyTorch**：Facebook 主推的 AI 框架（一大堆现成函数）。本档项目几乎全建在它上面。
+
+### 8. SmolVLA：能在自己笔记本上跑通的"机器人大脑"
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | HuggingFace Blog + LeRobot GitHub |
+| 链接 | https://huggingface.co/blog/smolvla |
+| 语言 | 英文 |
+| 时长 | 3-5 小时（含微调约 20 分钟） |
+| 需要英文阅读吗 | 需要，配翻译 |
+| 是否要 GPU | 需要，但单张消费级显卡或 MacBook M 系列就够 |
+| 好玩瞬间 | 你的小笔记本（不是服务器）真的训出了一个能"看图听指令、给出机械臂动作"的小模型 |
+
+> **VLA（Vision-Language-Action 模型）**：眼睛看图（V）+ 耳朵听指令（L）+ 手做动作（A）三合一的模型，给机器人当大脑。
+
+- **作用**：450M 参数的小型 VLA，用 Macbook 也能跑
+- **配套笔记**：[OpenVLA 笔记](../notes/openvla.md) + [VLA 大盘](../tracks/vla-mcp-overview.md)
+
+### 9. HuggingFace LeRobot 官方教程
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | HuggingFace Space |
+| 链接 | https://huggingface.co/spaces/lerobot/robot-learning-tutorial |
+| 语言 | 英文 |
+| 时长 | 4-6 小时 |
+| 需要英文阅读吗 | 需要 |
+| 是否要 GPU | Colab T4 / 本地 8GB+ 显卡 |
+| 好玩瞬间 | 用键盘"遥操"一个仿真机械臂去抓木块，自己录数据，再训一个模型让它自己抓 |
+
+- **作用**：HuggingFace 官方机器人学习课程，覆盖数据格式、遥操、训策略
+- 可作为「跑通 SmolVLA」之后的进阶
+
+### 10. LeRobot 中文教程（飞书文档）
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | 飞书 Wiki（社区翻译） |
+| 链接 | https://zihao-ai.feishu.cn/wiki/space/7589642043471924447 |
+| 语言 | 中文 |
+| 时长 | 2-4 小时 |
+| 需要英文阅读吗 | 不需要 |
+| 是否要 GPU | 跑训练时需要 |
+| 好玩瞬间 | 中文文档下顺利跑通"训练扩散策略"那一节，没卡在英文 |
+
+- **作用**：上一个英文教程读不动了来这里
+- 重点看「训练扩散策略」章节
+
+### 11. PyBullet 入门：另一个免费仿真器
+
+| 项目 | 说明 |
+|---|---|
+| 平台 | 官方文档 + GitHub examples |
+| 链接 | https://docs.google.com/document/d/10sXEhzFRSnvFcl3XxNGhnD4N2SedqwdAvK3dsihxVUA |
+| 语言 | 英文 |
+| 时长 | 4-5 小时 |
+| 需要英文阅读吗 | 需要 |
+| 是否要 GPU | 不需要 |
+| 好玩瞬间 | 看到一个 URDF 描述的机械臂在 PyBullet 里挥舞 |
+
+- **作用**：MuJoCo 跑通后想换换看，PyBullet 装起来更简单（一行 `pip install pybullet`），机器人模型库更丰富
+
+*读到这里你应该懂了：第 2 档的核心是 SmolVLA + LeRobot——能在自己电脑上摸到一个真正的机器人模型。*
+
+---
+
+## 第 3 档：先别碰，等有 GPU 服务器再说
+
+下面这些都是大模型，**家用显卡跑不动，需要 A100 / H100 这种专业卡**。现在不必跑，看视频和论文为主。
+
+| 项目 | 链接 | 显存要求 | 一句话 |
+|---|---|---|---|
+| OpenVLA 完整训练 | https://github.com/openvla/openvla | 单卡 LoRA 微调要 27GB；完整训要 8 张 A100 | 真的能用的开源 VLA，门槛是 GPU |
+| NVIDIA Cosmos | https://github.com/NVIDIA/Cosmos | A100/H100 推荐 | 世界模型 + 后训练，**前沿但门槛高** |
+| LLaVA | https://github.com/haotian-liu/LLaVA | 推理单卡 24GB；训练 8 张 A100 | "看图说话"模型代表 |
+| NVIDIA Isaac Lab | https://github.com/isaac-sim/IsaacLab | RTX 30 系以上 + Linux | 大规模仿真训练框架 |
+
+> **LoRA（Low-Rank Adaptation）**：微调大模型的省钱招。原模型有几十亿参数，全调一遍训不动；LoRA 只在旁边加一小撮参数，**只调这一小撮**，省 90% 显存。
+
+> **后训练（Post-training）**：在已经训好的模型上，再用一小批高质量数据"做题强化"，让它更对齐人类偏好或某个具体任务。
+
+*读到这里你应该懂了：第 3 档现在只用看，不用跑。等到你有云服务器或学校实验室的显卡再说。*
+
+---
+
+## 推荐路径（编程零基础版）
+
+```
+第 1 周：3Blue1Brown 神经网络（看视频）→ 李沐前 10 集（看视频）
+第 2 周：CLIP 两个 Colab（浏览器跑）→ MuJoCo Tutorial（浏览器跑）
+第 3 周：SayCan Colab（浏览器跑）→ 装 Python → SmolVLA（自己电脑跑）
+第 4 周：LeRobot 官方教程（自己电脑跑）
+第 5 周后：有 GPU 再去碰 OpenVLA / Cosmos
+```
+
+**重点提醒**：
+
+- 不要跳级。直接啃 OpenVLA 训练代码，会卡 80% 的时间在配环境上，反而学不到任何概念
+- **每跑通一个就在 [problems/](../../../../problems/) 记一笔**，至少写"今天遇到 XX 报错，搜了 XX 解决"
+- **每懂一个新概念就在 [learnings/](../../../../learnings/) 写一篇**，用自己的话解释一遍
+
+*读到这里你应该懂了：从看视频到自己跑模型大约需要 4-5 周，不要急。*
 
 ---
 
 ## 仓库可用性快速参考
 
-| 论文 | GitHub | 维护状态 | 一句话 |
+| 论文 / 项目 | GitHub | 维护状态 | 一句话 |
 |------|--------|---------|-------|
-| OpenVLA | https://github.com/openvla/openvla | 活跃，2025 年 OFT/FAST 更新 | 能跑，issue 多是显存问题 |
-| LeRobot / SmolVLA | https://github.com/huggingface/lerobot | 活跃，24.5k star，2026-04 v0.5.1 | 能跑，HF 官方维护 |
-| LLaVA | https://github.com/haotian-liu/LLaVA | 已有 NeXT 版接班，原 repo 略旧 | 能跑，建议直接用 LLaVA-NeXT |
-| SayCan | https://github.com/google-research/google-research/tree/master/saycan | 仅 Colab demo，非完整训练码 | 能跑 demo，不能复现训练 |
-| Cosmos | https://github.com/NVIDIA/Cosmos | 活跃，2025 年 CES 发布 | 能跑 inference，门槛高 |
-| CartoRadar | 未公开（MIT Signal Kinetics 组）| 论文公开，代码未开源 | 不能跑，等开源 |
-| 3DShape2VecSet | 论文为主，社区有非官方实现 | - | 跑社区版 |
-| MMA / NLOS-mmwave / Acoustic Swarms / RF-SLAM 等硬件论文 | 多数无开源代码 | - | 读论文为主，硬件复现不现实 |
+| OpenVLA | https://github.com/openvla/openvla | 活跃，2025 年还在更新 | 能跑，主要难在 GPU 不够 |
+| LeRobot / SmolVLA | https://github.com/huggingface/lerobot | 非常活跃，HuggingFace 官方维护 | 能跑，强烈推荐 |
+| LLaVA | https://github.com/haotian-liu/LLaVA | 已有 NeXT 版接班 | 能跑，建议直接用 LLaVA-NeXT |
+| SayCan | https://github.com/google-research/google-research/tree/master/saycan | 仅 Colab 演示 | 能跑 demo，不能复现训练 |
+| Cosmos | https://github.com/NVIDIA/Cosmos | 活跃，NVIDIA 官方 | 能跑推理，门槛高 |
+| CartoRadar | 未公开（MIT 实验室） | 论文公开，代码未开源 | 不能跑，等开源 |
+| 大量硬件相关论文 | 多无开源代码 | - | 读论文为主，硬件复现不现实 |
+
+*读到这里你应该懂了：不是每篇论文都有代码可跑，但本页推荐的入门项目都已亲测能跑通。*
 
 ---
 
-## 学习路径建议（编程零基础版）
+## 跑代码遇到问题怎么办
 
-```
-第 1 周：3Blue1Brown 神经网络 → 李沐前 10 集 → CLIP Colab 两个
-第 2 周：MuJoCo Tutorial → SayCan Colab → 复现 VLM_Grasp_Interactive（Task 2）
-第 3 周：LeRobot 官方教程 → SmolVLA fine-tune
-第 4 周+：OpenVLA / Cosmos 看条件
-```
+- 先 grep 看 [problems/](../../../../problems/) 有没有人踩过同一个坑
+- 报错信息直接复制到搜索引擎或 ChatGPT，90% 都有现成答案
+- 国内下载慢就换镜像源（清华 / 阿里）
+- 模型权重下载不动就用 [HuggingFace 镜像站](https://hf-mirror.com)
+- 解决了就回来记一笔到 [problems/](../../../../problems/)，下次自己或别人能直接用
 
-不建议跳级：跳过 Colab 直接啃 OpenVLA 训练代码会卡 80% 时间在配环境而不是学概念。
-
----
-
-## 跑代码遇到坑了？
-
-记到 [problems/](../../../../problems/)；解决方法可复用的话归档到 [learnings/](../../../../learnings/)。仿真环境常见坑、CUDA 版本问题、HuggingFace 下载慢等，都先 grep 已有 problems 看有没有人踩过。
+*读到这里你应该懂了：遇坑不可怕，记下来就是经验。*

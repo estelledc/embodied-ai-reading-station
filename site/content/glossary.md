@@ -1,12 +1,28 @@
 ---
 title: 具身智能术语字典
 order: 2
-intro: 'VLM / VLA / SLAM / CLIP / LoRA... 50+ 术语一句话讲清'
+intro: '50+ 个英文缩写，每条用高中知识讲清楚——看到 VLA / SLAM / CLIP 这种缩写不用慌。'
 ---
 
-读论文笔记遇到看不懂的英文缩写？查这里。
+读论文笔记看到一串英文缩写就头大？这页就是给你查的。
 
-每条只给一句话定义 + 一个日常类比 + 出现在哪几篇 + 想深入读什么。按字母排序，挑了 13 篇笔记里出现频率最高的 ~55 个术语。
+每条只做四件事：
+
+- 一句话定义（不超过 25 字）
+- 用学校生活 / 物理 / 集合 / 向量打个比方
+- 标出现频率（13 篇笔记里出现过几次，越多星越常见）
+- 留一个"想再深入"的链接
+
+按字母排序。先记常出现的（4 星 / 5 星）就够入门用了。
+
+> 几个全文重复用到的小词先约定一下：
+>
+> - **向量**：高中学过——一组有方向有长度的数字，可以做内积、看夹角。
+> - **矩阵**：一张数字表格；两张表相乘要"行列对齐"。
+> - **梯度下降**：像下山找最低点，每一步都朝最陡的下坡方向迈一小步。
+> - **Loss（扣分总和）**：模型每次答错都要扣分，全部扣分加起来就是 Loss；学习的目标就是想办法把 Loss 越变越小。
+> - **概率分布**：一组事件各自出现的概率，所有概率加起来等于 1。
+> - **神经网络**：把一组数字层层加工的"流水线"，每一层做一点小的变换。
 
 ## 索引
 
@@ -16,553 +32,572 @@ intro: 'VLM / VLA / SLAM / CLIP / LoRA... 50+ 术语一句话讲清'
 
 ## A
 
-### Action
-- 中文：动作
-- 定义：机器人下一步要发出的控制指令（关节角度 / 末端位姿 / 速度等）。
-- 类比：你打字时手指按下哪个键。
-- 出现：cosmos-policy / mla / openvla / saycan / vlas
-- 深入：[Robot Learning lecture (Stanford CS223A)](https://see.stanford.edu/Course/CS223A)
+> **Action（动作）**：机器人下一步要发出的控制指令。
 
-### Affordance
-- 中文：可供性 / 行动可能性
-- 定义：环境告诉智能体"在这里可以做什么动作"的属性。
-- 类比：把手暗示"这里可以拉"，按钮暗示"这里可以按"。
-- 出现：saycan
-- 深入：[Wikipedia: Affordance](https://en.wikipedia.org/wiki/Affordance)
+- 类比：你打字时手指要按下哪个键。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[Stanford CS223A 机器人课](https://see.stanford.edu/Course/CS223A)
 
-### ALOHA
-- 中文：ALOHA 双臂遥操作平台
-- 定义：低成本双臂机器人平台 + 数据采集系统，常作 VLA 训练数据来源。
-- 类比：双手版的"教机器人开火锅店"录像棚。
-- 出现：openvla / mla
-- 深入：[ALOHA project page](https://tonyzhaozh.github.io/aloha/)
+> **Affordance（可供性）**：环境暗示这里"可以做什么动作"。
 
-### ASR (Automatic Speech Recognition)
-- 中文：自动语音识别
-- 定义：把语音波形转成文本。
-- 类比：你说话，电脑打字员实时打出来。
-- 出现：neuralaids / proactive-hearing / vlas
-- 深入：[Wikipedia: Speech recognition](https://en.wikipedia.org/wiki/Speech_recognition)
+- 类比：门把手长得让你想拉，按钮长得让你想按；这就是把手和按钮的 affordance。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[Wikipedia: Affordance](https://en.wikipedia.org/wiki/Affordance)
 
-### Attention
-- 中文：注意力机制
-- 定义：让模型对输入序列里不同位置赋予不同权重再加权求和。
-- 类比：读句子时眼睛重点盯关键词。
-- 出现：3dshape2vecset / acoustic-swarms / mla / neuralaids / openvla / proactive-hearing / saycan / vlas
-- 深入：[The Illustrated Transformer (Jay Alammar)](https://jalammar.github.io/illustrated-transformer/)
+> **ALOHA（双臂遥操作平台）**：低成本双臂机器人 + 录数据系统。
+
+- 类比：双手版的"教机器人煮泡面"录像棚——人在前面演示，机器人在后面记。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[ALOHA 项目主页](https://tonyzhaozh.github.io/aloha/)
+
+> **ASR（自动语音识别）**：把语音转成文字。
+
+- 类比：你说话，电脑帮你实时打出来；微信里"按住说话"那个转文字按钮就是 ASR。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Wikipedia: Speech recognition](https://en.wikipedia.org/wiki/Speech_recognition)
+
+> **Attention（注意力机制）**：让模型对一句话不同位置打分再加权汇总。
+
+- 类比：读题时眼睛会反复盯几个关键词，自己分配"看哪儿、看多重"；这个机制就是把这件事写成数学步骤。
+- 出现频率：⭐⭐⭐⭐（8/13）
+- 想懂深一点：[Jay Alammar 的图解 Transformer](https://jalammar.github.io/illustrated-transformer/)
+
+*读到这里你应该懂了 A 段 5 个词都围绕"机器人怎么听、怎么看、怎么动"。*
+
+---
 
 ## B
 
-### Backbone
-- 中文：主干网络
-- 定义：模型负责提特征的核心部分，下游任务接小头复用它。
-- 类比：一棵树的树干，上面挂不同的"任务枝"。
-- 出现：mla / openvla / vlas
-- 深入：[Backbone in deep learning (Papers with Code)](https://paperswithcode.com/method/backbone)
+> **Backbone（主干网络）**：模型负责提特征的核心部分。
 
-### BC (Behavior Cloning)
-- 中文：行为克隆
-- 定义：直接监督学习人类示范"看到 X → 做 Y"的映射。
-- 类比：徒弟照着师傅每一步抄。
-- 出现：mla / nlos-mmwave / openvla / saycan
-- 深入：[Imitation Learning survey (Osa et al. 2018)](https://arxiv.org/abs/1811.06711)
+- 类比：一棵树的树干，下游不同任务挂上去当树枝；树干训练好可以反复用。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Backbone 总览（Papers with Code）](https://paperswithcode.com/method/backbone)
 
-### BERT
-- 中文：BERT 语言模型
-- 定义：双向 Transformer 编码器，给文本/序列产稠密向量。
-- 类比：把一句话压成一组数字"指纹"。
-- 出现：3dshape2vecset / mmclip / openvla / saycan
-- 深入：[BERT paper (Devlin 2018)](https://arxiv.org/abs/1810.04805)
+> **BC（Behavior Cloning，行为克隆）**：照搬人类示范的"看到 X 就做 Y"。
 
-### BLIP
-- 中文：BLIP 图文模型
-- 定义：图文联合预训练模型家族，常作 VLA 的视觉理解模块。
-- 类比：升级版的"看图说话"机器人。
-- 出现：llava / openvla / vlas
-- 深入：[BLIP paper (Li 2022)](https://arxiv.org/abs/2201.12086)
+- 类比：徒弟拿着师傅炒菜的录像，每一步都跟着抄；师傅没演过的情况就抄不出来。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[Imitation Learning 综述](https://arxiv.org/abs/1811.06711)
+
+> **BERT**：一种把句子压成一组数字（向量）的语言模型。
+
+- 类比：每个句子被压成 768 个数字组成的向量，意思相近的两句话向量夹角小——靠"内积"就能比较像不像。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[BERT 原论文](https://arxiv.org/abs/1810.04805)
+
+> **BLIP**：一类"看图说话 + 看文字找图"的图文模型。
+
+- 类比：升级版"看图作文"机器，既能给图配文字，也能根据一句话翻照片库找出对应的图。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[BLIP 原论文](https://arxiv.org/abs/2201.12086)
+
+*读到这里你应该懂了 B 段都是"模型的某个部件 / 某种学习方式"，不是新感官。*
+
+---
 
 ## C
 
-### CLIP (Contrastive Language-Image Pretraining)
-- 中文：CLIP 图文对比模型
-- 定义：用对比学习把图像和文字塞进同一个向量空间。
-- 类比：照片和它的标题在同一张坐标纸上靠得更近。
-- 出现：3dshape2vecset / llava / mmclip / nlos-mmwave / openvla / vlas
-- 深入：[OpenAI CLIP blog](https://openai.com/research/clip)
+> **CLIP**：把图片和文字塞进同一个坐标系，相关的靠得近。
 
-### CNN (Convolutional Neural Network)
-- 中文：卷积神经网络
-- 定义：用滑动窗口提空间局部特征的网络，传统视觉主力。
-- 类比：拿放大镜一格格扫描照片找模式。
-- 出现：3dshape2vecset / acoustic-swarms / neuralaids / saycan
-- 深入：[CS231n CNN notes](https://cs231n.github.io/convolutional-networks/)
+- 类比：高中讲过两个向量夹角小代表方向相近；CLIP 就是把"猫的照片"和"a cat"都画成向量，让它们的夹角接近 0。
+- 出现频率：⭐⭐⭐⭐（6/13）
+- 想懂深一点：[OpenAI CLIP 官方介绍](https://openai.com/research/clip)
 
-### Codebook
-- 中文：码本
-- 定义：一组离散向量字典，每个输入被量化映射到字典里最近的一个。
-- 类比：把所有发型归类到"短发/长发/卷发..."有限几种。
-- 出现：mla（隐式）/ vlas（speech token）
-- 深入：[VQ-VAE paper (van den Oord 2017)](https://arxiv.org/abs/1711.00937)
+> **CNN（卷积神经网络）**：用小窗口在图片上滑动找局部模式的网络。
+
+- 类比：拿放大镜一格格扫照片，第一遍找边缘，第二遍找眼睛、鼻子，最后拼出"是只猫"。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[CS231n CNN 讲义](https://cs231n.github.io/convolutional-networks/)
+
+> **Codebook（码本）**：一组离散字典向量，输入被归到最像的那个。
+
+- 类比：全班发型只允许归成"短发 / 长发 / 卷发 / 光头"四种，每个人贴一个标签——离散化的好处是后面好处理。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[VQ-VAE 原论文](https://arxiv.org/abs/1711.00937)
+
+*读到这里你应该懂了 C 段是"把图、文、离散符号都变成数字"的几种基础工具。*
+
+---
 
 ## D
 
-### DDPM / DDIM (Denoising Diffusion Probabilistic / Implicit Models)
-- 中文：去噪扩散模型 / 确定性采样变体
-- 定义：从纯噪声逐步去噪生成数据；DDIM 是更快的确定性采样器。
-- 类比：把一团雪花静电慢慢"擦"成清晰图片。
-- 出现：3dshape2vecset / mla
-- 深入：[What are Diffusion Models? (Lilian Weng)](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)
+> **DDPM / DDIM**：从纯噪声一步步去噪，把图像生成出来的方法。
 
-### DETR (DEtection TRansformer)
-- 中文：基于 Transformer 的目标检测器
-- 定义：用 Transformer 端到端做目标检测，替代传统 anchor 流程。
-- 类比：让模型"一眼看完整张图"再框物体。
-- 出现：3dshape2vecset
-- 深入：[DETR paper (Carion 2020)](https://arxiv.org/abs/2005.12872)
+- 类比：电视雪花屏慢慢"擦"成清晰照片；DDIM 是"少擦几次也能擦清楚"的快速版。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Lilian Weng 扩散模型笔记](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/)
 
-### Diffusion
-- 中文：扩散模型
-- 定义：通过学"如何把噪声还原回数据"来生成图像/动作/3D 形状。
-- 类比：先把照片揉成雪花屏，再学倒着把雪花屏揉回照片。
-- 出现：3dshape2vecset / cosmos-policy / mla / nlos-mmwave / openvla
-- 深入：[Diffusion explained visually (AssemblyAI)](https://www.assemblyai.com/blog/diffusion-models-for-machine-learning-introduction/)
+> **DETR**：用注意力机制端到端做物体框选的检测器。
 
-### Doppler
-- 中文：多普勒效应
-- 定义：物体相对运动会让反射回波频率偏移，由此可测速。
-- 类比：救护车开过你身边时鸣笛音调先高后低。
-- 出现：mmclip / rf-slam
-- 深入：[Wikipedia: Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect)
+- 类比：以前找物体要"先撒网再筛选"；DETR 让模型一眼把图看完，直接输出"这里有只猫、那里有杯子"。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[DETR 原论文](https://arxiv.org/abs/2005.12872)
+
+> **Diffusion（扩散模型）**：学怎么把噪声还原成数据，用来生成图 / 动作 / 3D。
+
+- 类比：先把照片揉碎成雪花屏，再训练模型倒着把雪花屏揉回照片；学会了之后给一团新雪花，它也能"揉"出张新图。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[AssemblyAI 扩散模型可视化](https://www.assemblyai.com/blog/diffusion-models-for-machine-learning-introduction/)
+
+> **Doppler（多普勒效应）**：物体相对运动会让回波频率偏移。
+
+- 类比：物理课讲过——救护车开过你身边时鸣笛先尖后沉，频率差就告诉你它有多快。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Doppler effect](https://en.wikipedia.org/wiki/Doppler_effect)
+
+*读到这里你应该懂了 D 段两条主线：扩散类（生成）和多普勒（测速）。*
+
+---
 
 ## E
 
-### EDM (Elucidating Diffusion Models)
-- 中文：EDM 扩散框架
-- 定义：Karras 等人 2022 年提出的统一扩散模型设计空间，含改进采样器。
-- 类比：把各家扩散方法的"调料瓶"摆成一张图，让你按需调配。
-- 出现：3dshape2vecset / cosmos-policy
-- 深入：[EDM paper (Karras 2022)](https://arxiv.org/abs/2206.00364)
+> **EDM**：Karras 团队 2022 年提出的扩散模型统一框架。
 
-### Embedding
-- 中文：嵌入向量
-- 定义：把离散输入（词/图块/物体）映射成稠密向量。
-- 类比：把"猫"这个字翻译成一组 768 个数字描述它的"猫性"。
-- 出现：mmclip / proactive-hearing
-- 深入：[Word embeddings (TensorFlow tutorial)](https://www.tensorflow.org/text/guide/word_embeddings)
+- 类比：把各家扩散方法的"调料瓶"摆在一张表上，让你知道每个旋钮在控制啥。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[EDM 原论文](https://arxiv.org/abs/2206.00364)
 
-### Embodied
-- 中文：具身的
-- 定义：智能体有物理身体，必须和真实/仿真环境交互完成任务。
-- 类比：不是只在屏幕里聊天的 AI，是能伸手拿杯子的 AI。
-- 出现：cosmos-policy / saycan
-- 深入：[Embodied AI workshop](https://embodied-ai.org/)
+> **Embedding（嵌入向量）**：把"猫" "狗"这种离散符号变成一组数字。
 
-### Encoder / Decoder
-- 中文：编码器 / 解码器
-- 定义：编码器把输入压成特征向量，解码器从特征生成输出。
-- 类比：压缩成 zip 再解压回文件。
-- 出现：3dshape2vecset / acoustic-swarms / cosmos-policy / mla / mmclip / openvla / saycan / vlas
-- 深入：[Sequence to sequence intro (Sutskever 2014)](https://arxiv.org/abs/1409.3215)
+- 类比：高中向量能表示方向；这里就是把每个词都变成几百维的向量，意思相近的两个词向量夹角小。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[TensorFlow 词嵌入教程](https://www.tensorflow.org/text/guide/word_embeddings)
+
+> **Embodied（具身的）**：智能体有物理身体，要在真实 / 仿真世界里动手做事。
+
+- 类比：不是只在屏幕里聊天的 AI，是能伸手把杯子端到嘴边的那种 AI。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Embodied AI Workshop](https://embodied-ai.org/)
+
+> **Encoder / Decoder（编码器 / 解码器）**：编码器把输入压成中间向量；解码器从中间向量生成输出。
+
+- 类比：把文件压成 zip 再解压回来，中间那个 zip 就是"压缩特征"；模型常常前半段编码、后半段解码。
+- 出现频率：⭐⭐⭐⭐（8/13）
+- 想懂深一点：[Seq2Seq 原论文](https://arxiv.org/abs/1409.3215)
+
+*读到这里你应该懂了 E 段的核心是"把世界压成数字"再"从数字还原回世界"。*
+
+---
 
 ## F
 
-### FFT (Fast Fourier Transform)
-- 中文：快速傅里叶变换
-- 定义：把时域信号转成频域成分（频率 / 相位）的高效算法。
-- 类比：把一段和弦音拆成"哪些音符以多大音量同时响"。
-- 出现：mmclip / neuralaids / nlos-mmwave / proactive-hearing
-- 深入：[3Blue1Brown: But what is the Fourier Transform?](https://www.youtube.com/watch?v=spUNpyF58BY)
+> **FFT（快速傅里叶变换）**：把一段时间信号拆成不同频率成分的快速算法。
 
-### FMCW (Frequency-Modulated Continuous Wave) Radar
-- 中文：调频连续波雷达
-- 定义：连续发频率随时间线性扫描的电磁波，回波频差换算距离与速度。
-- 类比：连续吹一声从低到高的口哨，听回声音调差判断墙离多远。
-- 出现：mmclip / nlos-mmwave / rf-slam
-- 深入：[TI mmWave radar primer](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)
+- 类比：物理课讲过——复杂声音可以分解成多个正弦波叠加；FFT 就是那把"咔嚓一刀分解"的剪刀。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[3Blue1Brown: 傅里叶变换](https://www.youtube.com/watch?v=spUNpyF58BY)
 
-### Foundation Model
-- 中文：基础模型
-- 定义：在海量通用数据上预训练、能迁移到很多下游任务的大模型。
-- 类比：上完九年义务教育的"通才"，再去专修任何专业。
-- 出现：cosmos-policy / mla / mmclip / openvla / vlas
-- 深入：[Stanford CRFM report](https://crfm.stanford.edu/report.html)
+> **FMCW Radar（调频连续波雷达）**：连续发频率随时间变化的电磁波，用回波频差测距离 + 速度。
 
-### FSDP (Fully Sharded Data Parallel)
-- 中文：完全分片数据并行
-- 定义：PyTorch 把模型参数/梯度/优化器状态切分到多卡的训练方案。
-- 类比：一本太厚的书拆成 8 份，8 个人各保管一段，要用时互相借。
-- 出现：llava / openvla
-- 深入：[PyTorch FSDP tutorial](https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html)
+- 类比：你连续吹一声从低到高的口哨，听回声音调差几度，就能算墙离多远。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[TI mmWave 雷达白皮书](https://www.ti.com/lit/wp/spyy005a/spyy005a.pdf)
+
+> **Foundation Model（基础模型）**：在海量数据上预训练好、能转去做很多任务的大模型。
+
+- 类比：上完九年义务教育的"通才"，再去专修任何一行只需稍微培训。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[Stanford CRFM 报告](https://crfm.stanford.edu/report.html)
+
+> **FSDP（完全分片数据并行）**：把一个大模型切成几片放到多张显卡上一起训。
+
+- 类比：一本太厚的书拆成 8 份，8 个人各保管一段；要用某一页时彼此借页。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[PyTorch FSDP 教程](https://pytorch.org/tutorials/intermediate/FSDP_tutorial.html)
+
+*读到这里你应该懂了 F 段两类东西：信号处理算法（FFT / FMCW）和训练时的工程技巧（FSDP / Foundation）。*
+
+---
 
 ## G
 
-### Generalization
-- 中文：泛化
-- 定义：在没见过的数据/场景上仍然能干得好的能力。
-- 类比：学会做番茄炒蛋后，换了厨房和锅也能炒。
-- 出现：cosmos-policy / mla / mmclip / neuralaids / openvla
-- 深入：[Generalization in deep learning (Zhang 2017)](https://arxiv.org/abs/1611.03530)
+> **Generalization（泛化）**：在没见过的样本上还能干得好。
 
-### GPT (Generative Pre-trained Transformer)
-- 中文：GPT 类自回归语言模型
-- 定义：用 Transformer 解码器架构、按 token 自左向右生成的语言模型。
-- 类比：超级强力的"下一个字预测"输入法。
-- 出现：cosmos-policy / llava / openvla / proactive-hearing / saycan / vlas
-- 深入：[The Illustrated GPT-2](https://jalammar.github.io/illustrated-gpt2/)
+- 类比：你学会做番茄炒蛋后，换个厨房换口锅照样能炒出来——这就叫泛化得好。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[泛化经典论文（Zhang 2017）](https://arxiv.org/abs/1611.03530)
+
+> **GPT**：用注意力机制按字往后逐个写的语言模型。
+
+- 类比：超级强力的"下一个字预测"输入法；你给它开头，它能一直往下写一篇作文。
+- 出现频率：⭐⭐⭐⭐（6/13）
+- 想懂深一点：[图解 GPT-2](https://jalammar.github.io/illustrated-gpt2/)
+
+*读到这里你应该懂了 G 段的核心：模型不止背答案，还能在新场景里举一反三。*
+
+---
 
 ## H
 
-### HAR (Human Activity Recognition)
-- 中文：人体行为识别
-- 定义：从传感器信号判断人在做什么动作（走 / 坐 / 跌倒 / 挥手）。
-- 类比：手表通过加速度判断你"在跑步还是在睡觉"。
-- 出现：mmclip
-- 深入：[HAR survey (Wang 2019)](https://arxiv.org/abs/1809.08762)
+> **HAR（人体行为识别）**：靠传感器判断人在做什么动作。
+
+- 类比：手表用加速度传感器判断你"在跑步还是在睡觉"；HAR 就是把这件事做精。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[HAR 综述](https://arxiv.org/abs/1809.08762)
+
+*读到这里你应该懂了 H 只有一个词，但很常见于可穿戴设备。*
+
+---
 
 ## I
 
-### IMU (Inertial Measurement Unit)
-- 中文：惯性测量单元
-- 定义：含加速度计 + 陀螺仪（常加磁力计）的传感器，测姿态变化。
-- 类比：手机里的"知道自己在转还是在动"的小芯片。
-- 出现：acoustic-swarms / neuralaids / nlos-mmwave
-- 深入：[Wikipedia: Inertial measurement unit](https://en.wikipedia.org/wiki/Inertial_measurement_unit)
+> **IMU（惯性测量单元）**：加速度计 + 陀螺仪的小芯片，测姿态变化。
 
-### Inference
-- 中文：推理
-- 定义：模型训练好之后跑一次前向得出预测的过程。
-- 类比：考完试后"考场" → 现在在"做题"阶段。
-- 出现：3dshape2vecset / cosmos-policy / mmclip / openvla / vlas
-- 深入：[ML inference vs training (NVIDIA blog)](https://blogs.nvidia.com/blog/difference-deep-learning-training-inference-ai/)
+- 类比：手机里"知道自己在转还是在动"的小芯片；玩横屏游戏时屏幕自动旋转就是它在工作。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Wikipedia: IMU](https://en.wikipedia.org/wiki/Inertial_measurement_unit)
+
+> **Inference（推理）**：模型已经训完，跑一遍出预测的过程。
+
+- 类比：训练 = 考前复习；推理 = 上考场答题。两个阶段计算量、目标都不一样。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[NVIDIA: 训练 vs 推理](https://blogs.nvidia.com/blog/difference-deep-learning-training-inference-ai/)
+
+*读到这里你应该懂了 I 段两件事：一个测姿态，一个分清"训"和"用"。*
+
+---
 
 ## K
 
-### KL Divergence (Kullback-Leibler)
-- 中文：KL 散度
-- 定义：衡量两个概率分布有多不一样的非对称距离。
-- 类比：你猜的硬币正反概率和真实硬币偏多远。
-- 出现：3dshape2vecset / mmclip
-- 深入：[Wikipedia: KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
+> **KL Divergence（KL 散度）**：衡量两个概率分布有多不一样的非对称差距。
+
+- 类比：你猜硬币正面概率是 0.6，真硬币其实是 0.5，KL 散度就告诉你猜偏了多少；注意它不是对称的——你猜真和真猜你不一样。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
+
+*读到这里你应该懂了 K 段就一个度量距离的工具，和"考试扣分"一样是给模型打分用的。*
+
+---
 
 ## L
 
-### Latent
-- 中文：潜变量 / 潜空间表示
-- 定义：模型内部抽象出来、不直接可见的特征向量。
-- 类比：人脑里"猫的概念"——你说不出来但能识别。
-- 出现：3dshape2vecset / acoustic-swarms / cosmos-policy / mla / openvla
-- 深入：[Latent space explained (Towards Data Science)](https://towardsdatascience.com/understanding-latent-space-in-machine-learning-de5a7c687d8d)
+> **Latent（潜变量 / 潜空间）**：模型内部抽出来、肉眼看不见的特征数字。
 
-### LiDAR (Light Detection And Ranging)
-- 中文：激光雷达
-- 定义：发射激光脉冲、用回波时间测距得出 3D 点云。
-- 类比：用激光"摸"出周围环境的盲人手杖。
-- 出现：mmclip / nlos-mmwave / rf-slam
-- 深入：[Wikipedia: Lidar](https://en.wikipedia.org/wiki/Lidar)
+- 类比：你脑子里"猫的概念"——你说不清是哪几个数字，但看到猫立刻能认出来。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[Towards Data Science: Latent Space](https://towardsdatascience.com/understanding-latent-space-in-machine-learning-de5a7c687d8d)
 
-### LIBERO / CALVIN / DROID
-- 中文：常用机器人操作 benchmark / 数据集
-- 定义：评测 VLA 在多种厨房 / 桌面操作任务上的标准测试集。
-- 类比：机器人版的"高考真题"。
-- 出现：openvla / mla / cosmos-policy
-- 深入：[DROID dataset](https://droid-dataset.github.io/) · [LIBERO benchmark](https://libero-project.github.io/)
+> **LiDAR（激光雷达）**：发激光脉冲、用回波时间测距离的传感器。
 
-### LLM (Large Language Model)
-- 中文：大语言模型
-- 定义：参数量在 10 亿+ 的 Transformer 文本模型，如 GPT / Llama。
-- 类比：读完互联网的"博学话痨"。
-- 出现：acoustic-swarms / cosmos-policy / llava / mla / mmclip / openvla / proactive-hearing / rf-slam / saycan / vlas
-- 深入：[A Survey of LLMs (Zhao 2023)](https://arxiv.org/abs/2303.18223)
+- 类比：盲人用手杖敲地板感知前方；激光雷达是用激光"敲"周围空间一圈，回来就有 3D 点云。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Wikipedia: Lidar](https://en.wikipedia.org/wiki/Lidar)
 
-### LoRA (Low-Rank Adaptation)
-- 中文：低秩适配微调
-- 定义：冻结大模型主干，只训插入的低秩矩阵实现轻量微调。
-- 类比：不动书的正文，只在书页上贴小便条。
-- 出现：mmclip / openvla
-- 深入：[LoRA paper (Hu 2021)](https://arxiv.org/abs/2106.09685)
+> **LIBERO / CALVIN / DROID**：评测机器人操作能力的"高考真题集"。
 
-### LSTM (Long Short-Term Memory)
-- 中文：长短期记忆网络
-- 定义：能记长序列依赖的循环神经网络变种，含门控机制。
-- 类比：会自己决定"哪段记忆要留要忘"的笔记本。
-- 出现：neuralaids / proactive-hearing / vlas
-- 深入：[Understanding LSTM Networks (Christopher Olah)](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+- 类比：标准化的厨房 / 桌面任务考卷，谁分高谁强——大家都用同一份卷子比。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[DROID 数据集](https://droid-dataset.github.io/) · [LIBERO benchmark](https://libero-project.github.io/)
+
+> **LLM（大语言模型）**：参数 10 亿+ 的文本模型，比如 GPT、Llama。
+
+- 类比：把整个互联网的字读了一遍的"博学话痨"，让它写信、答题、续写都行。
+- 出现频率：⭐⭐⭐⭐⭐（10/13）
+- 想懂深一点：[LLM 综述](https://arxiv.org/abs/2303.18223)
+
+> **LoRA（低秩适配微调）**：冻住大模型主体，只训插进去的小补丁数字表格（低秩矩阵）。
+
+- 类比：不动这本厚书的正文，只在书页夹一些小便条；便条很薄但能改"遇到这个词就这么读"。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[LoRA 原论文](https://arxiv.org/abs/2106.09685)
+
+> **LSTM（长短期记忆网络）**：能记住长序列依赖的循环网络变种。
+
+- 类比：会自己决定"哪段记忆该留、该忘"的笔记本，比普通笔记本多三个开关（输入门 / 遗忘门 / 输出门）。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Olah: 理解 LSTM](https://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+
+*读到这里你应该懂了 L 段重头是 LLM——你看到 5 颗星就知道它有多常见。*
+
+---
 
 ## M
 
-### Manipulation
-- 中文：（机器人）操作
-- 定义：用机械臂 / 手抓取、移动、旋转物体的任务族。
-- 类比：机器人版的"用筷子夹菜"。
-- 出现：mla / openvla / saycan / vlas
-- 深入：[Robot Manipulation course (MIT 6.4210)](https://manipulation.csail.mit.edu/)
+> **Manipulation（操作）**：用机械臂抓、移、转物体的任务。
 
-### MDP (Markov Decision Process)
-- 中文：马尔可夫决策过程
-- 定义：用 (状态, 动作, 转移概率, 奖励) 描述强化学习问题的数学框架。
-- 类比：玩棋——当前局面 + 你下一步 → 下一局面 + 得分。
-- 出现：cosmos-policy / saycan
-- 深入：[Sutton & Barto RL book ch.3](http://incompleteideas.net/book/RLbook2020.pdf)
+- 类比：机器人版的"用筷子夹菜"。要的是稳、准、快。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[MIT 6.4210 机器人操作课](https://manipulation.csail.mit.edu/)
 
-### Mesh
-- 中文：网格
-- 定义：用三角面片（顶点 + 拓扑）表示的 3D 物体表面。
-- 类比：3D 模型上的"钢丝外壳"。
-- 出现：3dshape2vecset / nlos-mmwave
-- 深入：[Polygon mesh (Wikipedia)](https://en.wikipedia.org/wiki/Polygon_mesh)
+> **MDP（马尔可夫决策过程）**：用 (状态, 动作, 转移概率, 奖励) 描述强化学习问题的数学框架。
 
-### MLA (Multisensory Language-Action)
-- 中文：多感官语言动作模型（本站 mla 论文）
-- 定义：让 VLA 同时融合视觉、触觉、点云并预测未来感官状态。
-- 类比：机器人不止用眼睛吃饭，还用指尖+距离感+脑补下一口。
-- 出现：mla
-- 深入：[本站 mla 笔记](/notes/mla.html)
+- 类比：下棋——当前局面（状态）+ 你下一步（动作）→ 下一局面 + 得分（奖励）。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Sutton & Barto RL 教材](http://incompleteideas.net/book/RLbook2020.pdf)
 
-### MLP (Multi-Layer Perceptron)
-- 中文：多层感知机
-- 定义：最基础的全连接前馈网络，常作各种模型里的"小头"。
-- 类比：搭积木里的最小单元方块。
-- 出现：3dshape2vecset / mla / openvla / rf-slam / vlas
-- 深入：[MLP explained (DeepLearning.ai)](https://www.deeplearning.ai/ai-notes/initialization/index.html)
+> **Mesh（网格）**：用很多小三角面片拼出来的 3D 表面。
 
-### mmWave (Millimeter Wave)
-- 中文：毫米波
-- 定义：30–300 GHz 频段电磁波，常用 60 / 77 GHz 雷达感知。
-- 类比：能"看穿"薄墙、雾、烟的隐身视线。
-- 出现：mmclip / nlos-mmwave / rf-slam
-- 深入：[mmWave overview (TI)](https://www.ti.com/sensors/mmwave-radar/overview.html)
+- 类比：3D 模型的"钢丝外壳"，把所有顶点连成三角形包起来。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Polygon mesh](https://en.wikipedia.org/wiki/Polygon_mesh)
+
+> **MLA（本站 mla 论文）**：让 VLA 同时融合视觉、触觉、点云。
+
+- 类比：机器人不只用眼睛吃饭，还用指尖触觉、距离感、对未来的预想一起决定怎么动。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[本站 mla 笔记](/notes/mla.html)
+
+> **MLP（多层感知机）**：最朴素的全连接网络。
+
+- 类比：搭积木里那种最小的方块，几乎所有大模型里都有它当"小头"在末端做最后一锤定音。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[deeplearning.ai: 初始化与 MLP](https://www.deeplearning.ai/ai-notes/initialization/index.html)
+
+> **mmWave（毫米波）**：30–300 GHz 的电磁波，常做 60 / 77 GHz 雷达。
+
+- 类比：物理课讲过波长越短分辨率越高；毫米波介于普通雷达和光之间，能穿薄墙、雾、烟。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[TI mmWave 概览](https://www.ti.com/sensors/mmwave-radar/overview.html)
+
+*读到这里你应该懂了 M 段以"机器人怎么动 + 用什么波看"为主。*
+
+---
 
 ## N
 
-### NLOS (Non-Line-Of-Sight)
-- 中文：非视距
-- 定义：传感器和目标之间被障碍物挡住，需靠反射 / 散射成像。
-- 类比：用墙上的反光看到墙后面的人。
-- 出现：mmclip / nlos-mmwave / rf-slam
-- 深入：[NLOS imaging review (O'Toole 2018, Nature)](https://www.nature.com/articles/nature25489)
+> **NLOS（非视距）**：传感器和目标之间被挡住，要靠反射成像。
+
+- 类比：用墙上的反光看到墙后面的人；这就是非视距感知。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[NLOS imaging review (Nature 2018)](https://www.nature.com/articles/nature25489)
+
+*读到这里你应该懂了 N 一个词——但它是穿墙感知的核心招牌。*
+
+---
 
 ## O
 
-### Octree
-- 中文：八叉树
-- 定义：把 3D 空间递归切成 8 个子立方体的数据结构。
-- 类比：3D 版的地图缩放——大区域看不清就切 8 块继续放大。
-- 出现：3dshape2vecset / nlos-mmwave
-- 深入：[Wikipedia: Octree](https://en.wikipedia.org/wiki/Octree)
+> **Octree（八叉树）**：把 3D 空间递归切成 8 个小立方体的数据结构。
 
-### OOD (Out-Of-Distribution)
-- 中文：分布外
-- 定义：测试样本来自和训练集不同的数据分布。
-- 类比：你只学过中餐，今天给你一道法餐让你做。
-- 出现：cosmos-policy / openvla / proactive-hearing
-- 深入：[OOD detection survey (Yang 2021)](https://arxiv.org/abs/2110.11334)
+- 类比：3D 版的"地图缩放"——一大块看不清就切成 8 块继续放大，再不清楚就再切 8 块。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Octree](https://en.wikipedia.org/wiki/Octree)
+
+> **OOD（分布外）**：测试样本和训练样本不是同一种分布。
+
+- 类比：你只学过中餐，今天突然给一道法式焗蜗牛让你做——这就叫 OOD。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[OOD 综述](https://arxiv.org/abs/2110.11334)
+
+*读到这里你应该懂了 O 段两词都和"边界"有关：空间边界 / 数据边界。*
+
+---
 
 ## P
 
-### Patch
-- 中文：图像块 / 切片
-- 定义：把一张图等分成 16×16 等小块，每块当一个 token 喂给 Transformer。
-- 类比：把一幅画剪成方块拼图，再让模型读每一块。
-- 出现：3dshape2vecset（隐式）/ openvla
-- 深入：[ViT paper (Dosovitskiy 2020)](https://arxiv.org/abs/2010.11929)
+> **Patch（图像块）**：把图等分成 16×16 的小块，每块当一个输入单位。
 
-### Policy
-- 中文：策略
-- 定义：从观测 → 动作的映射函数，机器人 / RL 智能体的"大脑"。
-- 类比：司机的"看到红灯就踩刹车"驾驶习惯总和。
-- 出现：3dshape2vecset / acoustic-swarms / cosmos-policy / mla / openvla / saycan
-- 深入：[Spinning Up RL: Policies](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)
+- 类比：把一幅画剪成方块拼图，模型一块一块读再拼回来。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[ViT 原论文](https://arxiv.org/abs/2010.11929)
 
-### Pose
-- 中文：位姿
-- 定义：物体的位置 (x,y,z) + 朝向（旋转）合在一起。
-- 类比：不仅"杯子在桌上哪儿"，还要"杯口朝哪儿"。
-- 出现：nlos-mmwave / rf-slam
-- 深入：[Pose (computer vision) — Wikipedia](https://en.wikipedia.org/wiki/Pose_(computer_vision))
+> **Policy（策略）**：从看到的画面到要做的动作的对应规则。
 
-### Pretrain / Finetune
-- 中文：预训练 / 微调
-- 定义：先在大规模通用数据上学（pretrain），再在小规模目标任务上学（finetune）。
-- 类比：先上大学，再上岗培训。
-- 出现：openvla / vlas / mla 等多数
-- 深入：[Transfer learning intro (Sebastian Ruder)](https://ruder.io/transfer-learning/)
+- 类比：司机的"看到红灯就踩刹车"这种自动反应总和；policy 就是这个反应表写成函数。
+- 出现频率：⭐⭐⭐⭐（6/13）
+- 想懂深一点：[OpenAI Spinning Up: Policies](https://spinningup.openai.com/en/latest/spinningup/rl_intro.html)
+
+> **Pose（位姿）**：物体的位置 (x,y,z) + 朝向（旋转）合在一起。
+
+- 类比：不仅"杯子在桌上哪儿"，还要"杯口朝哪儿"。少一个都没法抓。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Pose](https://en.wikipedia.org/wiki/Pose_(computer_vision))
+
+> **Pretrain / Finetune（预训练 / 微调）**：先在通用大数据上学，再在小目标数据上学。
+
+- 类比：先上大学 4 年（预训练），再去公司岗前培训 1 周（微调）。
+- 出现频率：⭐⭐⭐⭐（7/13）
+- 想懂深一点：[Sebastian Ruder: Transfer Learning](https://ruder.io/transfer-learning/)
+
+*读到这里你应该懂了 P 段是"机器人脑子的接线方式"：从看到画面到出动作的整条链。*
+
+---
 
 ## Q
 
-### Quantization (QAT / PTQ)
-- 中文：量化（训练时 / 训练后）
-- 定义：把 32-bit 浮点权重压成 8-bit / 4-bit 整数，缩体积加速推理。
-- 类比：把高清照片转成低分辨率图省存储。
-- 出现：neuralaids / openvla
-- 深入：[Quantization for neural networks (Krishnamoorthi 2018)](https://arxiv.org/abs/1806.08342)
+> **Quantization（量化）**：把 32 位浮点权重压成 8 位 / 4 位整数。
+
+- 类比：把高清照片转成低分辨率图，省一半存储但看着差不多——模型推理也用同样的省钱思路。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[量化原论文](https://arxiv.org/abs/1806.08342)
+
+*读到这里你应该懂了 Q 一个词，本质是"压缩存储 / 加速运行"。*
+
+---
 
 ## R
 
-### Radar
-- 中文：雷达
-- 定义：发射无线电波、接回波分析目标距离 / 速度 / 形状的传感器。
-- 类比：蝙蝠回声定位的电磁版。
-- 出现：mmclip / nlos-mmwave / rf-slam
-- 深入：[Wikipedia: Radar](https://en.wikipedia.org/wiki/Radar)
+> **Radar（雷达）**：发无线电波，靠回波分析目标距离 / 速度 / 形状。
 
-### RAG (Retrieval-Augmented Generation)
-- 中文：检索增强生成
-- 定义：生成前先去外部知识库检索相关片段拼到 prompt 里。
-- 类比：写作业前先翻参考书再下笔。
-- 出现：vlas
-- 深入：[RAG paper (Lewis 2020)](https://arxiv.org/abs/2005.11401)
+- 类比：蝙蝠靠超声回声辨方向；雷达是同一件事，但用电磁波，传更远。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Wikipedia: Radar](https://en.wikipedia.org/wiki/Radar)
 
-### RGB / RGB-D
-- 中文：彩色图 / 彩色 + 深度图
-- 定义：标准 3 通道彩色图像；RGB-D 多一通道每像素到相机的距离。
-- 类比：普通照片 vs 带"等高线"的照片。
-- 出现：3dshape2vecset / cosmos-policy / mla / nlos-mmwave / openvla / rf-slam / saycan
-- 深入：[RGB-D sensor (Wikipedia)](https://en.wikipedia.org/wiki/RGBD_sensor)
+> **RAG（检索增强生成）**：回答前先去知识库查资料，把资料拼到提问里。
 
-### RIR (Room Impulse Response)
-- 中文：房间脉冲响应
-- 定义：声音从某个声源到某个麦克位置经过墙壁反射后的"传函"。
-- 类比：在浴室喊一声会有回声——就是浴室的 RIR 在起作用。
-- 出现：acoustic-swarms / proactive-hearing
-- 深入：[Wikipedia: Impulse response](https://en.wikipedia.org/wiki/Impulse_response)
+- 类比：写作业前先翻参考书，找到原文再下笔；模型记不住所有事实就靠这招。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[RAG 原论文](https://arxiv.org/abs/2005.11401)
 
-### RL (Reinforcement Learning)
-- 中文：强化学习
-- 定义：智能体通过和环境试错、根据奖励信号调整行为的学习范式。
-- 类比：训狗——做对了给零食，做错了不给。
-- 出现：cosmos-policy / saycan
-- 深入：[Sutton & Barto RL book](http://incompleteideas.net/book/the-book-2nd.html)
+> **RGB / RGB-D**：彩色 3 通道图 / 多一通道每像素到相机的距离。
 
-### RNN / GRU
-- 中文：循环神经网络 / 门控循环单元
-- 定义：按时间步循环展开、把隐藏状态传给下一步的序列模型。
-- 类比：边读句子边在脑子里维护一个"读到哪"的小本本。
-- 出现：neuralaids
-- 深入：[Recurrent neural networks (CS230)](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks)
+- 类比：普通照片 + 一张"等高线图"，每点告诉你"离镜头有多远"。
+- 出现频率：⭐⭐⭐⭐（7/13）
+- 想懂深一点：[Wikipedia: RGB-D 传感器](https://en.wikipedia.org/wiki/RGBD_sensor)
+
+> **RIR（房间脉冲响应）**：声音从声源到麦克风经反射后的"传函"。
+
+- 类比：浴室里你喊一声有回声，那回声纹路就是浴室的 RIR；不同房间 RIR 不同。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Impulse response](https://en.wikipedia.org/wiki/Impulse_response)
+
+> **RL（强化学习）**：试错 + 奖励信号调整行为的学习方式。
+
+- 类比：训狗——做对给零食，做错没零食；狗自己慢慢学会规矩。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Sutton & Barto RL 书](http://incompleteideas.net/book/the-book-2nd.html)
+
+> **RNN / GRU**：按时间步循环展开、把"读到哪"传给下一步的网络。
+
+- 类比：边读句子边在脑子里维护一个小本本写"目前读到哪、要记住啥"，每读一个字都翻一次本子。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[CS230 RNN 速查表](https://stanford.edu/~shervine/teaching/cs-230/cheatsheet-recurrent-neural-networks)
+
+*读到这里你应该懂了 R 段一半在讲传感器（雷达 / RGB / RIR），一半在讲学习方式（RL / RAG / RNN）。*
+
+---
 
 ## S
 
-### SDF (Signed Distance Function)
-- 中文：有符号距离函数
-- 定义：3D 函数告诉你每点到最近表面的距离，外正内负。
-- 类比：等高线告诉你"到山顶还差几米"，SDF 告诉你"到物体表面还差几米"。
-- 出现：3dshape2vecset / nlos-mmwave / rf-slam
-- 深入：[SDF intro (Inigo Quilez)](https://iquilezles.org/articles/distfunctions/)
+> **SDF（有符号距离函数）**：3D 函数告诉你每点到最近表面的距离，外正内负。
 
-### SFT (Supervised Fine-Tuning)
-- 中文：有监督微调
-- 定义：用标注好的 (输入, 期望输出) 对在预训练模型上做监督训练。
-- 类比：通才大学生考前刷历年真题。
-- 出现：mla / vlas
-- 深入：[Instruction tuning survey (Zhang 2023)](https://arxiv.org/abs/2308.10792)
+- 类比：地图等高线告诉你"到山顶差几米"；SDF 告诉你"到物体表面还差几米，是在外面还是已经在里面"。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Inigo Quilez: SDF 入门](https://iquilezles.org/articles/distfunctions/)
 
-### Skill
-- 中文：技能
-- 定义：可复用的子动作单元（"打开抽屉" / "夹起苹果"），常被高层 LLM 调度。
-- 类比：菜谱里的"切丁 / 翻炒 / 装盘"动作模板。
-- 出现：openvla / saycan
-- 深入：[SayCan paper](https://say-can.github.io/)
+> **SFT（有监督微调）**：用标好答案的数据在预训练模型上做监督训练。
 
-### SLAM (Simultaneous Localization And Mapping)
-- 中文：同步定位与建图
-- 定义：机器人一边建环境地图一边算自己在地图里位置。
-- 类比：闭着眼睛走进陌生房间，边摸边画平面图还要知道自己在哪。
-- 出现：acoustic-swarms / mla / mmclip / nlos-mmwave / rf-slam
-- 深入：[Cyrill Stachniss SLAM lectures](https://www.youtube.com/playlist?list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_)
+- 类比：通才大学生考前刷历年真题；刷一遍立刻在那门题上提分。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Instruction Tuning 综述](https://arxiv.org/abs/2308.10792)
 
-### SOTA (State Of The Art)
-- 中文：当前最好成绩
-- 定义：在某个 benchmark 上现存方法里最高分。
-- 类比：奥运会上目前为止的世界纪录。
-- 出现：3dshape2vecset / acoustic-swarms / cosmos-policy / llava / mla / neuralaids / openvla / proactive-hearing / vlas
-- 深入：[Papers with Code SOTA leaderboards](https://paperswithcode.com/sota)
+> **Skill（技能）**：可复用的子动作单元，被高层 LLM 调度。
 
-### STFT (Short-Time Fourier Transform)
-- 中文：短时傅里叶变换
-- 定义：把音频按窗滑动切成短帧再做 FFT，得到时-频谱图。
-- 类比：把一首歌切成 1 秒小段，每段画一张"哪些音符在响"的图。
-- 出现：neuralaids / proactive-hearing / vlas
-- 深入：[STFT explained (Wikipedia)](https://en.wikipedia.org/wiki/Short-time_Fourier_transform)
+- 类比：菜谱里的"切丁 / 翻炒 / 装盘"动作模板；总厨（LLM）决定按什么顺序调用这些技能。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[SayCan 项目页](https://say-can.github.io/)
+
+> **SLAM（同步定位与建图）**：机器人一边建地图一边算自己在地图里的位置。
+
+- 类比：闭着眼走进陌生房间，边摸边在脑子里画平面图，还要随时知道自己站哪。
+- 出现频率：⭐⭐⭐（5/13）
+- 想懂深一点：[Cyrill Stachniss SLAM 公开课](https://www.youtube.com/playlist?list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_)
+
+> **SOTA（State Of The Art）**：某个 benchmark 上目前最高分的方法。
+
+- 类比：奥运会某项目目前为止的世界纪录；不断有人来打破。
+- 出现频率：⭐⭐⭐⭐⭐（9/13）
+- 想懂深一点：[Papers with Code SOTA 排行](https://paperswithcode.com/sota)
+
+> **STFT（短时傅里叶变换）**：把音频按时间分小段，每段做 FFT。
+
+- 类比：一首歌切成 1 秒小段，每段画一张"哪些音符在响"的图，串起来就是声音的"热度图"。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Wikipedia: STFT](https://en.wikipedia.org/wiki/Short-time_Fourier_transform)
+
+*读到这里你应该懂了 S 段是出现频率最杂的一段——从 SLAM 到 SOTA 都在这里。*
+
+---
 
 ## T
 
-### Token / Tokenizer
-- 中文：词元 / 分词器
-- 定义：把文本（或图 / 动作 / 音频）切成离散小单位喂给 Transformer。
-- 类比：把句子拆成乐高积木块，模型一块块拼。
-- 出现：mla / mmclip / openvla / vlas
-- 深入：[Tokenization (HuggingFace course)](https://huggingface.co/learn/nlp-course/chapter6/1)
+> **Token / Tokenizer（词元 / 分词器）**：把一句话切成模型能吃的一小块一小块。
 
-### Trajectory
-- 中文：轨迹
-- 定义：机器人在一段时间内的状态/动作序列。
-- 类比：跑步 GPS 记录的那条蓝线。
-- 出现：rf-slam（隐式多处）/ openvla / mla
-- 深入：[Trajectory optimization (Tedrake)](https://underactuated.mit.edu/trajopt.html)
+- 类比：把句子拆成乐高积木块，模型一块一块拼着读；图、动作、音频也能切成 token。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[HuggingFace 分词课](https://huggingface.co/learn/nlp-course/chapter6/1)
 
-### Transformer
-- 中文：Transformer
-- 定义：基于自注意力的序列模型架构，是 GPT / BERT / VLA 的共同骨架。
-- 类比：每个词都能"互相看一眼"再决定自己怎么变化的会议室。
-- 出现：3dshape2vecset / acoustic-swarms / cosmos-policy / llava / mla / mmclip / neuralaids / nlos-mmwave / openvla / vlas
-- 深入：[Attention Is All You Need (Vaswani 2017)](https://arxiv.org/abs/1706.03762)
+> **Trajectory（轨迹）**：一段时间里状态 / 动作的连续序列。
 
-### TTS (Text-To-Speech)
-- 中文：语音合成
-- 定义：把文字转成自然听感的语音波形。
-- 类比：会念课文的电脑播音员。
-- 出现：proactive-hearing / vlas
-- 深入：[Wikipedia: Speech synthesis](https://en.wikipedia.org/wiki/Speech_synthesis)
+- 类比：跑步 App 记录的那条蓝色轨迹线；机器人的轨迹也是同样意思。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[Tedrake: 轨迹优化](https://underactuated.mit.edu/trajopt.html)
+
+> **Transformer**：靠"互相看一眼"机制处理序列的网络架构。
+
+- 类比：开会时每个人发言前都先扫一眼其他所有人记下的要点，再决定自己说啥；GPT、BERT、VLA 都基于它。
+- 出现频率：⭐⭐⭐⭐⭐（10/13）
+- 想懂深一点：[Attention Is All You Need](https://arxiv.org/abs/1706.03762)
+
+> **TTS（语音合成）**：把文字读出来变成自然听感的语音。
+
+- 类比：电脑里的"播音员"，能把课文朗读出来——和 ASR 是反过来的。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Speech synthesis](https://en.wikipedia.org/wiki/Speech_synthesis)
+
+*读到这里你应该懂了 T 段是 13 篇笔记里最常出现的一组——尤其 Transformer。*
+
+---
 
 ## U
 
-### Uncertainty Quantification (UQ)
-- 中文：不确定性量化
-- 定义：让模型不仅给预测，还给出"我有多确定"的可信度估计。
-- 类比：天气预报不只说"会下雨"，还说"概率 70%"。
-- 出现：rf-slam
-- 深入：[UQ for deep learning (Abdar 2021)](https://arxiv.org/abs/2011.06225)
+> **UQ（不确定性量化）**：模型给预测时还顺便报"我有几成把握"。
+
+- 类比：天气预报不只说"会下雨"，还说"概率 70%"——后者更有用。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[UQ 综述](https://arxiv.org/abs/2011.06225)
+
+*读到这里你应该懂了 U 一个词——给"模型自信度"打分。*
+
+---
 
 ## V
 
-### VAE (Variational Autoencoder)
-- 中文：变分自编码器
-- 定义：学一个能采样的连续潜空间的生成模型，编码器输出分布。
-- 类比：把所有人脸压进一片"脸地图"，从地图任意点都能解码出一张新脸。
-- 出现：3dshape2vecset / cosmos-policy
-- 深入：[VAE intro (Kingma 2019 tutorial)](https://arxiv.org/abs/1906.02691)
+> **VAE（变分自编码器）**：学一个能采样的连续潜空间的生成模型。
 
-### VLA (Vision-Language-Action Model)
-- 中文：视觉-语言-动作模型
-- 定义：吃图像 + 自然语言指令、吐机器人动作 token 的端到端模型。
-- 类比：把"看图说话"扩展成"看图听指令再动手"。
-- 出现：cosmos-policy / mla / openvla / vlas
-- 深入：[OpenVLA paper](https://arxiv.org/abs/2406.09246)
+- 类比：把所有人脸压进一片"脸地图"；从地图随便点一个点都能解码出一张新脸。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[VAE 教程](https://arxiv.org/abs/1906.02691)
 
-### VLAS (VLA with Speech)
-- 中文：带语音的 VLA（本站 vlas 论文）
-- 定义：让 VLA 直接吃语音指令而非文本，端到端"听-看-动"。
-- 类比：从看字幕的机器人升级成听人话的机器人。
-- 出现：vlas
-- 深入：[本站 vlas 笔记](/notes/vlas.html)
+> **VLA（视觉-语言-动作模型）**：吃图像 + 自然语言、吐机器人动作的端到端模型。
 
-### VLM (Vision-Language Model)
-- 中文：视觉-语言模型
-- 定义：联合理解图像和文本的多模态模型，如 LLaVA / GPT-4V。
-- 类比：会看图又会聊天的双语助手。
-- 出现：3dshape2vecset / llava / mla / mmclip / neuralaids / openvla / proactive-hearing / rf-slam / vlas
-- 深入：[VLM survey (Zhang 2024)](https://arxiv.org/abs/2304.00685)
+- 类比：把"看图说话"升级成"看图听指令再动手"。
+- 出现频率：⭐⭐⭐（4/13）
+- 想懂深一点：[OpenVLA 原论文](https://arxiv.org/abs/2406.09246)
 
-### Voxel
-- 中文：体素
-- 定义：3D 版的像素——把空间切成等大立方体小格子。
-- 类比：我的世界 (Minecraft) 里的方块。
-- 出现：3dshape2vecset / nlos-mmwave
-- 深入：[Wikipedia: Voxel](https://en.wikipedia.org/wiki/Voxel)
+> **VLAS（本站 vlas 论文）**：让 VLA 直接吃语音指令而非文本。
 
-### VQA (Visual Question Answering)
-- 中文：视觉问答
-- 定义：给一张图 + 一个问题，模型回答问题。
-- 类比：考"看图回答问题"的智力测试。
-- 出现：llava / openvla / vlas
-- 深入：[VQA paper (Antol 2015)](https://arxiv.org/abs/1505.00468)
+- 类比：从"看字幕的机器人"升级成"听人说话就能动"的机器人。
+- 出现频率：⭐（1/13）
+- 想懂深一点：[本站 vlas 笔记](/notes/vlas.html)
+
+> **VLM（视觉-语言模型）**：联合理解图片和文字的多模态模型。
+
+- 类比：会看图又会聊天的双语助手；给一张图能写说明，给一段描述能找到图。
+- 出现频率：⭐⭐⭐⭐⭐（9/13）
+- 想懂深一点：[VLM 综述](https://arxiv.org/abs/2304.00685)
+
+> **Voxel（体素）**：3D 版的像素——把空间切成等大立方体小格子。
+
+- 类比：Minecraft 里的方块，所有东西都是 1 立方体 1 立方体堆出来的。
+- 出现频率：⭐⭐（2/13）
+- 想懂深一点：[Wikipedia: Voxel](https://en.wikipedia.org/wiki/Voxel)
+
+> **VQA（视觉问答）**：给一张图 + 一个问题，模型回答问题。
+
+- 类比：考试题里的"看图回答问题"，比如"图里有几只猫？""那个人在干吗？"。
+- 出现频率：⭐⭐（3/13）
+- 想懂深一点：[VQA 原论文](https://arxiv.org/abs/1505.00468)
+
+*读到这里你应该懂了 V 段都围绕"视觉 + 别的模态"——加文字 = VLM，加文字+动作 = VLA，加语音 = VLAS。*
+
+---
+
+## 怎么用这页
+
+- 读笔记遇到不懂的缩写，就 Ctrl+F 搜——查到一个就理解一段。
+- 同一个词出现 4 星 / 5 星的，**先记住这些**，回报最高。
+- 类比看不懂时，回到顶部那 6 个"全文重复用到的小词"再看一遍。
+
+*这一页约定的高中知识：集合、向量内积 / 夹角、概率初步、函数、简单导数、波 / 频率 / 反射 / 多普勒。需要更多前置就再单独写一篇笔记。*
