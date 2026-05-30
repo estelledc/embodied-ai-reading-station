@@ -83,6 +83,7 @@ function masthead(active) {
   const items = [
     { href: "/", label: "Index", id: "index" },
     { href: "/topics/", label: "Topics", id: "topics" },
+    { href: "/deck/", label: "Deck", id: "deck" },
     { href: "/about/", label: "About", id: "about" },
   ];
   return `<header class="masthead">
@@ -343,6 +344,13 @@ function build() {
 
   // assets
   copyAssets(notes);
+
+  // deck (LLaVA presentation)
+  const DECK_SRC = path.resolve(ROOT, "deck");
+  if (fs.existsSync(DECK_SRC)) {
+    const deckDst = path.join(DIST, "deck");
+    copyDir(DECK_SRC, deckDst);
+  }
 
   console.log(`✓ Built ${notes.length} note pages → ${DIST}`);
   console.log(`  Open: http://localhost:8080/   (run \`npm run serve\`)`);
