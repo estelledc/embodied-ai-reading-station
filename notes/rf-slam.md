@@ -1,7 +1,6 @@
 ---
 title: "CartoRadar: RF-Based 3D SLAM Rivaling Vision Approaches"
 slug: rf-slam
-topic: 六. 射频感知
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/rf-slam/paper.pdf
@@ -9,6 +8,8 @@ venue: MobiCom 2025 (Best Artifact Award)
 authors: "Haowen Lai, Zhiwei Zheng, Mingmin Zhao (UPenn WAVES Lab)"
 generated_at: 2026-05-30
 era: classic
+num: 8
+topic: rf
 ---
 
 # CartoRadar: RF-Based 3D SLAM Rivaling Vision Approaches

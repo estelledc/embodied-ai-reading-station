@@ -1,7 +1,6 @@
 ---
 title: "mmNorm: Non-Line-of-Sight 3D Object Reconstruction via mmWave Surface Normal Estimation"
 slug: nlos-mmwave
-topic: 六. 射频感知
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/nlos-mmwave/paper.pdf
@@ -9,6 +8,8 @@ venue: MobiSys 2025
 authors: "Dodds, Boroushaki, Zhou, Adib (MIT)"
 generated_at: 2026-05-30
 era: frontier
+num: 10
+topic: rf
 ---
 
 # mmNorm：隔着纸箱"看清"里面的东西

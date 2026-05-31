@@ -20,32 +20,39 @@ const DIST = path.join(SITE, "dist");
 const BASE = (process.env.SITE_BASE ?? "").replace(/\/$/, "");
 const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
 
-// --- topic order & metadata (mirrors README.md) -----------------------------
-const PAPERS = [
-  { slug: "llava", num: 1, title: "LLaVA: Visual Instruction Tuning", topic: "vlm-foundation", topicLabel: "VLM Foundation", topicRoman: "I" },
-  { slug: "3dshape2vecset", num: 2, title: "3DShape2VecSet", topic: "vlm-foundation", topicLabel: "VLM Foundation", topicRoman: "I" },
-  { slug: "saycan", num: 3, title: "SayCan", topic: "planning", topicLabel: "High-Level Planning", topicRoman: "II" },
-  { slug: "openvla", num: 4, title: "OpenVLA", topic: "vla", topicLabel: "End-to-End VLA", topicRoman: "III" },
-  { slug: "vlas", num: 5, title: "VLAS — VLA with Speech", topic: "multimodal", topicLabel: "Multimodal Ecology", topicRoman: "IV" },
-  { slug: "mla", num: 6, title: "MLA — Multisensory Language-Action", topic: "multimodal", topicLabel: "Multimodal Ecology", topicRoman: "IV" },
-  { slug: "cosmos-policy", num: 7, title: "Cosmos Policy", topic: "world-model", topicLabel: "Video World Model Policy", topicRoman: "V" },
-  { slug: "rf-slam", num: 8, title: "RF-Based 3D SLAM", topic: "rf", topicLabel: "RF Perception & Mapping", topicRoman: "VI" },
-  { slug: "mmclip", num: 9, title: "mmCLIP", topic: "rf", topicLabel: "RF Perception & Mapping", topicRoman: "VI" },
-  { slug: "nlos-mmwave", num: 10, title: "NLOS mmWave Reconstruction", topic: "rf", topicLabel: "RF Perception & Mapping", topicRoman: "VI" },
-  { slug: "proactive-hearing", num: 11, title: "Proactive Hearing Assistants", topic: "auditory", topicLabel: "Auditory & Acoustic", topicRoman: "VII" },
-  { slug: "neuralaids", num: 12, title: "NeuralAids", topic: "auditory", topicLabel: "Auditory & Acoustic", topicRoman: "VII" },
-  { slug: "acoustic-swarms", num: 13, title: "Acoustic Swarms / Speech Zones", topic: "auditory", topicLabel: "Auditory & Acoustic", topicRoman: "VII" },
-];
+// --- topics + papers loaded dynamically from notes/ -------------------------
+const TOPICS_JSON = path.join(NOTES_DIR, "topics.json");
+const TOPIC_ORDER = JSON.parse(fs.readFileSync(TOPICS_JSON, "utf8")).topics;
+const TOPIC_BY_ID = new Map(TOPIC_ORDER.map(t => [t.id, t]));
 
-const TOPIC_ORDER = [
-  { id: "vlm-foundation", roman: "I", label: "VLM Foundation", subtitle: "视觉-语言基座" },
-  { id: "planning", roman: "II", label: "High-Level Planning", subtitle: "高层任务规划" },
-  { id: "vla", roman: "III", label: "End-to-End VLA", subtitle: "端到端视觉-语言-动作" },
-  { id: "multimodal", roman: "IV", label: "Multimodal Ecology", subtitle: "多模态交互与数据生态" },
-  { id: "world-model", roman: "V", label: "Video World Model Policy", subtitle: "视频生成与世界模型策略" },
-  { id: "rf", roman: "VI", label: "RF Perception & Mapping", subtitle: "射频感知与空间建图" },
-  { id: "auditory", roman: "VII", label: "Auditory & Acoustic", subtitle: "听觉智能与声学空间交互" },
-];
+// 自动发现：扫 notes/*.md 的 frontmatter，按 num 排序生成 PAPERS
+function discoverPapers() {
+  const files = fs.readdirSync(NOTES_DIR).filter(f => f.endsWith(".md"));
+  const papers = [];
+  for (const f of files) {
+    const slug = f.replace(/\.md$/, "");
+    const raw = fs.readFileSync(path.join(NOTES_DIR, f), "utf8");
+    const { data } = matter(raw);
+    if (!data.num || !data.topic) continue; // 没补全的跳过
+    const t = TOPIC_BY_ID.get(data.topic);
+    if (!t) {
+      console.warn(`unknown topic '${data.topic}' for ${slug}, skip`);
+      continue;
+    }
+    papers.push({
+      slug,
+      num: Number(data.num),
+      title: data.title || slug,
+      topic: data.topic,
+      topicLabel: t.label,
+      topicRoman: t.roman,
+    });
+  }
+  papers.sort((a, b) => a.num - b.num);
+  return papers;
+}
+
+const PAPERS = discoverPapers();
 
 // --- helpers ----------------------------------------------------------------
 function ensure(dir) { fs.mkdirSync(dir, { recursive: true }); }

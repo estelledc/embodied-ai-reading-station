@@ -1,12 +1,13 @@
 ---
 title: "VLAS: VLA Model With Speech Instructions"
 slug: vlas
-topic: 四. 多模态
 difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/vlas/paper.pdf
 generated_at: 2026-05-30
 era: frontier
+num: 5
+topic: multimodal
 ---
 
 # VLAS: VLA Model With Speech Instructions

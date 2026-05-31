@@ -1,12 +1,13 @@
 ---
 title: Creating speech zones with self-distributing acoustic swarms
 slug: acoustic-swarms
-topic: 七. 听觉智能
 difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/acoustic-swarms/paper.md
 generated_at: 2026-05-30
 era: founder
+num: 13
+topic: auditory
 ---
 
 # Creating speech zones with self-distributing acoustic swarms

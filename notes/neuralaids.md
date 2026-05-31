@@ -1,12 +1,13 @@
 ---
 title: "NeuralAids: Wireless Hearables With Programmable Speech AI Accelerators"
 slug: neuralaids
-topic: 七. 听觉智能
 difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/neuralaids/paper.pdf
 generated_at: 2026-05-30
 era: classic
+num: 12
+topic: auditory
 ---
 
 # NeuralAids: 把"AI 降噪"塞进一只助听器里

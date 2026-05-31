@@ -1,12 +1,13 @@
 ---
 title: "OpenVLA: An Open-Source Vision-Language-Action Model"
 slug: openvla
-topic: 三. 端到端 VLA
 difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/openvla/paper.pdf
 generated_at: 2026-05-30
 era: classic
+num: 4
+topic: vla
 ---
 
 # OpenVLA：让机械臂"看一眼 + 听一句话"就动起来

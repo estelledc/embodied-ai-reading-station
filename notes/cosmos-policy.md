@@ -1,12 +1,13 @@
 ---
 title: "Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control"
 slug: cosmos-policy
-topic: 五. 世界模型
 difficulty: ⭐⭐⭐⭐⭐
 status: auto-summary
 来源: papers/cosmos-policy/paper.pdf
 generated_at: 2026-05-30
 era: frontier
+num: 7
+topic: world-model
 ---
 
 # Cosmos Policy：把"会脑补下一秒视频"的模型，训成会动手的机器人

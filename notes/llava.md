@@ -1,12 +1,13 @@
 ---
 title: "LLaVA: Visual Instruction Tuning"
 slug: llava
-topic: 一. VLM 基座
 difficulty: ⭐⭐
 status: auto-summary
 来源: papers/llava/paper.pdf
 generated_at: 2026-05-30
 era: founder
+num: 1
+topic: vlm-foundation
 ---
 
 # LLaVA: Visual Instruction Tuning

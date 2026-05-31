@@ -1,0 +1,15 @@
+{
+  "topics": [
+    { "id": "vlm-foundation", "roman": "I", "label": "VLM Foundation", "subtitle": "视觉-语言基座" },
+    { "id": "planning", "roman": "II", "label": "High-Level Planning", "subtitle": "高层任务规划" },
+    { "id": "vla", "roman": "III", "label": "End-to-End VLA", "subtitle": "端到端视觉-语言-动作" },
+    { "id": "diffusion-policy", "roman": "IV", "label": "Diffusion Policy", "subtitle": "扩散策略与流匹配" },
+    { "id": "imitation", "roman": "V", "label": "Imitation Learning", "subtitle": "模仿学习与遥操作" },
+    { "id": "world-model", "roman": "VI", "label": "World Model & Video Policy", "subtitle": "世界模型与视频策略" },
+    { "id": "multimodal", "roman": "VII", "label": "Multimodal Ecology", "subtitle": "多模态交互与数据生态" },
+    { "id": "rf", "roman": "VIII", "label": "RF Perception & Mapping", "subtitle": "射频感知与空间建图" },
+    { "id": "auditory", "roman": "IX", "label": "Auditory & Acoustic", "subtitle": "听觉智能与声学空间交互" },
+    { "id": "dataset-eval", "roman": "X", "label": "Datasets & Benchmarks", "subtitle": "数据集与评测基准" },
+    { "id": "sim", "roman": "XI", "label": "Simulation & Sim2Real", "subtitle": "仿真与真实迁移" }
+  ]
+}

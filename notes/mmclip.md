@@ -1,7 +1,6 @@
 ---
 title: "mmCLIP: Boosting mmWave-based Zero-shot HAR via Signal-Text Alignment"
 slug: mmclip
-topic: 六. 射频感知
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/mmclip/paper.pdf
@@ -9,6 +8,8 @@ venue: SenSys 2024
 authors: "Cao, Xue, Liu, Wang, Wang, Zhang, Su (Purdue + UNC Charlotte)"
 generated_at: 2026-05-30
 era: classic
+num: 9
+topic: rf
 ---
 
 # mmCLIP：让一种"看不见人脸的雷达"也能认出新动作

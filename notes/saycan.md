@@ -1,12 +1,13 @@
 ---
 title: "SayCan: Do As I Can, Not As I Say"
 slug: saycan
-topic: 二. 任务规划
 difficulty: ⭐⭐
 status: auto-summary
 来源: papers/saycan/paper.pdf
 generated_at: 2026-05-30
 era: founder
+num: 3
+topic: planning
 ---
 
 # SayCan: Do As I Can, Not As I Say

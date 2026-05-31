@@ -1,12 +1,13 @@
 ---
 title: "MLA: Multisensory Language-Action Model"
 slug: mla
-topic: 四. 多模态
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/mla/paper.pdf
 generated_at: 2026-05-30
 era: frontier
+num: 6
+topic: multimodal
 ---
 
 # MLA: 让机器人同时用眼睛、距离感、指尖去做事
