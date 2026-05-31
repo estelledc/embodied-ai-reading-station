@@ -259,12 +259,17 @@ function buildIndex(notes) {
     body += `<p class="era-hint">按演进顺序：祖师爷 → 现代经典 → 前沿延伸</p>`;
     for (const n of sorted) {
       const badge = makeDifficultyBadge(n.difficulty);
-      const thumbPath = path.join(PAPERS_DIR, n.slug, "images", "img_000.jpg");
-      const hasThumb = fs.existsSync(thumbPath);
+      const realThumb = path.join(PAPERS_DIR, n.slug, "images", "img_000.jpg");
+      const cardThumb = path.join(SITE, "src", "images", "cards", `${n.slug}.webp`);
+      const hasReal = fs.existsSync(realThumb);
+      const hasCard = fs.existsSync(cardThumb);
+      const thumbDiv = hasReal
+        ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>`
+        : hasCard
+          ? `<div class="thumb" style="background-image:url('${url(`/images/cards/${n.slug}.webp`)}')"></div>`
+          : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
       body += `<article class="paper-card">
-        ${hasThumb
-          ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>`
-          : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`}
+        ${thumbDiv}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
