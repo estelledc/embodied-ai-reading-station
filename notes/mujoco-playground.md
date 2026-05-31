@@ -16,15 +16,15 @@ generated_at: 2026-05-31
 
 ## 一句话讲什么（TL;DR）
 
-MuJoCo Playground 是一套**全开源、GPU 加速的机器人学习框架**，把 MJX（MuJoCo 的 JAX 版本）作为底座，集成了刚体仿真、强化学习训练、sim-to-real 部署的整条链路。一句话：用一个 `pip install` 就能在单卡 GPU 上跑通"从随机策略到能上真机的策略"的全过程。
+一个 `pip install` 就能装好的开源仿真平台，让机器人先在电脑里把走路、抓东西练熟，再几乎原样搬到真机上跑。
 
 ## 这是个什么场景 — 日常类比
 
-想象你想教一只机器狗走路。
+想象你要教小孩骑自行车——但每摔一次都要送医院。最稳的办法是先在家里铺垫子练，等孩子稳了再上街。机器人学走路也一样：真机摔一次少则几千、多则几十万，所以大家都先在电脑里仿真练熟，再放到真机上去。
 
-传统做法像**租场地**：你得装 Isaac Gym（NVIDIA 闭源生态）+ 写 reward + 写域随机化 + 写 sim-to-real 部署代码——每一块都是不同的房东、不同的合同、不同的押金。装环境就要花一周。
+问题是这套"仿真练熟 → 真机部署"的链路以前像**自己装修房子**：仿真器从 A 家买（比如 Isaac Gym，NVIDIA 闭源生态）、奖励函数自己写、域随机化（Domain Randomization，故意在仿真里加随机扰动让策略变皮实）自己调、真机部署代码再单独搞——每一块都是不同的房东、不同的合同、不同的押金。装环境就要花一周。
 
-MuJoCo Playground 的做法像**全包民宿**：仿真器（MJX）、训练任务（locomotion / manipulation / dexterous）、训练算法（PPO / SAC）、部署示例都在一个仓库里，开箱即用。而且因为 MJX 跑在 JAX 上，仿真和神经网络在**同一张 GPU 的同一段内存**里跑，省掉了传统 PyTorch + C++ 仿真器之间的数据搬运开销。
+MuJoCo Playground 的做法像**全包民宿**：仿真器（MJX，MuJoCo 的 JAX 版本）、训练任务（locomotion / manipulation / dexterous）、训练算法（PPO / SAC）、真机部署示例全都在一个仓库里，开箱即用。而且因为 MJX 跑在 JAX 上，仿真和神经网络在**同一张 GPU 的同一段内存**里跑，省掉了传统 PyTorch + C++ 仿真器之间来回搬数据的开销。
 
 ## 之前的人怎么做的 — 3-5 bullet
 
@@ -38,9 +38,11 @@ MuJoCo Playground 的做法像**全包民宿**：仿真器（MJX）、训练任�
 
 **核心三件事**：
 
-1. **MJX 当底座**：MuJoCo 物理引擎重写成 JAX 版本，自动微分 + GPU 并行 + JIT 编译。仿真精度对齐 CPU 版 MuJoCo，但单卡能跑几千个并行环境
-2. **统一任务套件**：把 locomotion（四足/双足）、manipulation（机械臂抓取）、dexterous（灵巧手）三大类任务放在同一个 API 下。换任务只换一行 config
-3. **闭环到真机**：自带 sim-to-real pipeline——域随机化（domain randomization）参数模板、ONNX 导出、真机部署示例代码（针对 Unitree Go1/G1、Franka 等常见平台）
+1. **MJX 当底座**——像把烧柴的老灶台换成集成灶。MuJoCo 物理引擎本来跑在 CPU 上，作者把它整个重写成 JAX 版本，于是同样的物理引擎能 GPU 并行 + 自动微分 + JIT 编译。仿真精度对齐 CPU 版 MuJoCo，但单卡能跑几千个并行环境
+
+2. **统一任务套件**——像超市里给所有家电统一了插头。把 locomotion（四足/双足走路）、manipulation（机械臂抓取）、dexterous（灵巧手）三大类任务塞进同一个 API 下，换任务只换一行 config
+
+3. **闭环到真机**——像考完驾照直接给你配好车钥匙。自带 sim-to-real（仿真训练→真机部署）pipeline：域随机化参数模板、ONNX（一种跨框架的神经网络模型格式）导出、真机部署示例代码（针对 Unitree Go1/G1、Franka 等常见平台）
 
 诚实标签：具体并行环境数量、训练 wall-clock、覆盖任务数等数字需读原文 + repo README。
 
