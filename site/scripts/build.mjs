@@ -470,10 +470,30 @@ function buildIssuePage(issue, notes) {
 }
 
 // --- single note page -------------------------------------------------------
+function injectInlineFigures(slug, body) {
+  const inlineDir = path.join(SITE, "src", "images", "inline");
+  const sceneImg = path.join(inlineDir, `${slug}-scene.webp`);
+  const methodImg = path.join(inlineDir, `${slug}-method.webp`);
+
+  let result = body;
+  // 在「这是个什么场景」H2 段后插场景图（在该段内容末尾，下一个 ## 之前）
+  if (fs.existsSync(sceneImg)) {
+    const sceneMd = `\n\n![场景示意 — 这论文要解决的现实问题](${url(`/images/inline/${slug}-scene.webp`)})\n`;
+    result = result.replace(/(## 这是个什么场景[^\n]*\n[\s\S]*?)(?=\n## )/, (m) => m + sceneMd);
+  }
+  // 在「方法」H2 段后插方法图
+  if (fs.existsSync(methodImg)) {
+    const methodMd = `\n\n![方法示意 — 论文的 pipeline](${url(`/images/inline/${slug}-method.webp`)})\n`;
+    result = result.replace(/(## (?:它分几步做的|它怎么做的|这篇论文的关键想法)[^\n]*\n[\s\S]*?)(?=\n## )/, (m) => m + methodMd);
+  }
+  return result;
+}
+
 function buildNotePage(note) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
-  const html = marked.parse(note.body);
+  const enrichedBody = injectInlineFigures(note.slug, note.body);
+  const html = marked.parse(enrichedBody);
 
   const navItems = PAPERS.map(p => {
     const isCurrent = p.slug === note.slug;
