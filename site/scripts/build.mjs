@@ -46,6 +46,7 @@ function discoverPapers() {
       topic: data.topic,
       topicLabel: t.label,
       topicRoman: t.roman,
+      era: data.era || "classic",
     });
   }
   papers.sort((a, b) => a.num - b.num);
@@ -181,12 +182,12 @@ function page({ title, body, active, extraHead = "" }) {
 // --- index page -------------------------------------------------------------
 function buildIndex(notes) {
   const total = PAPERS.length;
-  const done = notes.filter(n => n.status === "auto-summary" || n.status === "deep-read").length;
+  const done = notes.filter(n => n.status && n.status !== "stub" && n.status !== "missing").length;
 
   let body = `<main class="shell">
     <span class="eyebrow">Filed under · embodied AI · 2026</span>
-    <h1><em>13 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
-    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 13 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
+    <h1><em>${total} 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 ${total} 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM、ICML、ICLR、CVPR）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
 
     <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
       <span style="color:var(--coral)">→</span>
@@ -209,16 +210,29 @@ function buildIndex(notes) {
         <span class="count">${inTopic.length} paper${inTopic.length > 1 ? "s" : ""}</span>
       </div>
       <div class="papers-grid">`;
-    // 按 era 排序：founder → classic → frontier
+    // 排序优先级：1) num<=13 的原始 13 篇置顶 (按 num)
+    //              2) era: founder → classic → frontier
+    //              3) 同 era 内按 num 升序
     const eraRank = { founder: 0, classic: 1, frontier: 2 };
-    const sorted = [...inTopic].sort((a, b) => (eraRank[a.era] ?? 1) - (eraRank[b.era] ?? 1));
+    const sorted = [...inTopic].sort((a, b) => {
+      const aPin = a.num <= 13 ? 0 : 1;
+      const bPin = b.num <= 13 ? 0 : 1;
+      if (aPin !== bPin) return aPin - bPin;
+      if (aPin === 0) return a.num - b.num; // 原 13 篇按 num
+      const ea = eraRank[a.era] ?? 1;
+      const eb = eraRank[b.era] ?? 1;
+      if (ea !== eb) return ea - eb;
+      return a.num - b.num;
+    });
     body += `<p class="era-hint">按演进顺序：祖师爷 → 现代经典 → 前沿延伸</p>`;
     for (const n of sorted) {
       const badge = makeDifficultyBadge(n.difficulty);
       const thumbPath = path.join(PAPERS_DIR, n.slug, "images", "img_000.jpg");
       const hasThumb = fs.existsSync(thumbPath);
       body += `<article class="paper-card">
-        ${hasThumb ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>` : ""}
+        ${hasThumb
+          ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>`
+          : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
@@ -239,11 +253,24 @@ function buildIndex(notes) {
 
 // --- topics page ------------------------------------------------------------
 function buildTopics(notes) {
+  const topicCount = TOPIC_ORDER.length;
+  const totalPapers = notes.length;
   let body = `<main class="shell">
     <span class="eyebrow">Index by · topic</span>
-    <h1>Seven <em>chapters</em> · thirteen papers.</h1>`;
+    <h1><em>${topicCount} chapters</em> · ${totalPapers} papers.</h1>`;
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  const sortInTopic = (a, b) => {
+    const aPin = a.num <= 13 ? 0 : 1;
+    const bPin = b.num <= 13 ? 0 : 1;
+    if (aPin !== bPin) return aPin - bPin;
+    if (aPin === 0) return a.num - b.num;
+    const ea = eraRank[a.era] ?? 1;
+    const eb = eraRank[b.era] ?? 1;
+    if (ea !== eb) return ea - eb;
+    return a.num - b.num;
+  };
   for (const t of TOPIC_ORDER) {
-    const inTopic = notes.filter(n => n.topic === t.id);
+    const inTopic = notes.filter(n => n.topic === t.id).sort(sortInTopic);
     body += `<section>
       <div class="topic-row">
         <span class="topic-roman">${t.roman}</span>
@@ -479,11 +506,30 @@ function loadNotes() {
 }
 
 function extractTLDR(md) {
-  const m = md.match(/##\s*一句话讲什么[^\n]*\n+([^\n]+)/);
-  if (m) return m[1].replace(/^[（(].+?[）)]\s*/, "").trim().slice(0, 140);
-  // fallback: first paragraph after first heading
-  const lines = md.split("\n").filter(l => l.trim() && !l.startsWith("#") && !l.startsWith(">") && !l.startsWith("```"));
-  return (lines[0] || "").slice(0, 140);
+  // 1) 优先：## 一句话讲什么 / ## TL;DR / ## 一句话 / ## 一句话讲清 后的第一段实质内容
+  const headingPatterns = [
+    /##\s*(?:一句话讲什么|一句话|一句话讲清|一句话总结|TL;DR|TLDR|tl;dr)[^\n]*\n+([\s\S]*?)(?=\n##|$)/,
+  ];
+  for (const re of headingPatterns) {
+    const m = md.match(re);
+    if (m) {
+      // 取第一个非空、非引用、非列表标记的行/段
+      const text = m[1]
+        .split('\n')
+        .map(l => l.trim())
+        .filter(l => l && !l.startsWith('>') && !l.startsWith('*所以') && !l.startsWith('---'))
+        .map(l => l.replace(/^[-*]\s*/, '').replace(/\*\*/g, '').replace(/`/g, ''))
+        .filter(l => !/^[（(].+?[）)]$/.test(l)) // 整行括号注释
+        .join(' ');
+      const cleaned = text.replace(/^[（(].+?[）)]\s*/, '').trim();
+      if (cleaned) return cleaned.slice(0, 140);
+    }
+  }
+  // 2) 兜底：第一个非引用非标题的实质段
+  const lines = md.split('\n')
+    .filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('>') && !l.startsWith('```') && !l.startsWith('---') && !l.startsWith('*'))
+    .map(l => l.replace(/^[-*]\s*/, '').replace(/\*\*/g, ''));
+  return (lines[0] || '').trim().slice(0, 140);
 }
 
 function countWords(md) {
