@@ -145,7 +145,6 @@ function footerHtml() {
     <nav class="jx-footer__index">
       <a href="${url("/")}">index</a>
       <a href="${url("/topics/")}">topics</a>
-      <a href="https://estelledc.github.io/">回 hub</a>
       <a href="https://github.com/estelledc/embodied-ai-reading-station">github</a>
     </nav>
     <time class="jx-footer__stamp" datetime="${new Date().toISOString().slice(0,10)}" lang="en">${new Date().toISOString().slice(0,10).replace(/-/g, "·")}</time>
