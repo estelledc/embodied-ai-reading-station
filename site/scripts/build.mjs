@@ -55,6 +55,19 @@ function discoverPapers() {
 
 const PAPERS = discoverPapers();
 
+// --- page hero helper -------------------------------------------------------
+function pageHeroHtml(slug, alt) {
+  const SITE_DIR = path.resolve(__dirname, "..");
+  const heroPath = path.join(SITE_DIR, "src", "images", "pages", `${slug}.webp`);
+  if (!fs.existsSync(heroPath)) return "";
+  return `<figure class="page-hero">
+    <picture>
+      <source type="image/webp" srcset="${url(`/images/pages/${slug}-800.webp`)} 800w, ${url(`/images/pages/${slug}.webp`)} 1672w" sizes="(max-width: 900px) 100vw, 1200px">
+      <img src="${url(`/images/pages/${slug}.webp`)}" alt="${alt}" loading="lazy" width="1672" height="941">
+    </picture>
+  </figure>`;
+}
+
 // --- helpers ----------------------------------------------------------------
 function ensure(dir) { fs.mkdirSync(dir, { recursive: true }); }
 
@@ -276,7 +289,8 @@ function buildTopics(notes) {
   const totalPapers = notes.length;
   let body = `<main class="shell">
     <span class="eyebrow">Index by · topic</span>
-    <h1><em>${topicCount} chapters</em> · ${totalPapers} papers.</h1>`;
+    <h1><em>${topicCount} chapters</em> · ${totalPapers} papers.</h1>
+    ${pageHeroHtml("topics-index", "Topic taxonomy — seven labeled doors")}`;
   const eraRank = { founder: 0, classic: 1, frontier: 2 };
   const sortInTopic = (a, b) => {
     const aPin = a.num <= 13 ? 0 : 1;
@@ -317,6 +331,7 @@ function buildAbout() {
   const body = `<main class="note-shell">
     <span class="eyebrow">Colophon · 这站是怎么诞生的</span>
     <h1>About this <em>reading station</em></h1>
+    ${pageHeroHtml("about", "Typewriter at a wooden desk — colophon illustration")}
     <div class="note-content" style="max-width:68ch">
       <p>这站是为想读懂顶会论文、但还在入门阶段的人做的。<strong>具身智能（Embodied AI）</strong>讲的是「怎么让机器人有身体地融入世界」——它要看见、要听见、要听懂指令、要决定下一步怎么做。听起来像科幻，但 2024-2025 已经在论文里跑通了一大半。</p>
       <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。我把它们重写成<strong>能读懂的版本</strong>——保留所有数字和方法，但用基础的类比解释每个新词。</p>
@@ -365,6 +380,7 @@ function buildLearnIndex(pages) {
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
       13 篇顶会论文堆在那里，原本是博士看的。要让入门读者也能读懂，先在这里把<strong>路径、术语、全景、动手、社区</strong>这五件事捋顺，再回头读论文，事半功倍。
     </p>
+    ${pageHeroHtml("learn-index", "A compass with paths radiating to multiple peaks")}
     <hr style="margin-top:2rem"/>
     <div class="papers-grid" style="margin-top:2rem">
       ${pages.map((p, i) => `<article class="paper-card" style="background:var(--paper-warm)">
@@ -388,6 +404,7 @@ function buildLearnPage(p, allPages) {
     <span class="eyebrow">Learn · Beginner Track</span>
     <h1>${p.title}</h1>
     ${p.intro ? `<p style="font-family:var(--font-serif);font-style:italic;color:var(--ink-mute);font-size:1.1rem;margin-top:0.5rem">${p.intro}</p>` : ""}
+    ${pageHeroHtml(p.slug, p.title)}
     <hr/>
     <div class="note-content">${html}</div>
 
@@ -408,6 +425,7 @@ function buildIssueIndex(issues) {
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch;margin-top:1rem">
       把笔记打包成"期"，是为了让你像翻一本杂志一样翻完——有目录、有编辑前言、有完结。
     </p>
+    ${pageHeroHtml("issues-index", "Stack of vintage magazine issues")}
     <hr class="ornament"/>
     <div class="papers-grid" style="margin-top:2rem">
       ${issues.map(i => `<a class="paper-card" href="${url(`/issues/${i.slug.replace("issue-", "")}/`)}" style="text-decoration:none;color:inherit">

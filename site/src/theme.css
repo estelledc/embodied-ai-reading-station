@@ -1074,3 +1074,22 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
 @media (max-width: 600px) {
   .topic-hero img { max-height: 200px; }
 }
+
+/* === Page hero illustration (about / learn / issues / topics) === */
+.page-hero {
+  margin: 1.5rem 0 2rem;
+  position: relative;
+}
+.page-hero picture,
+.page-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 360px;
+  object-fit: cover;
+  border: 1px solid var(--paper-dark);
+  background: var(--bone);
+}
+@media (max-width: 600px) {
+  .page-hero img { max-height: 220px; }
+}
