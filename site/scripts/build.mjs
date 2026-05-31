@@ -214,12 +214,20 @@ function buildIndex(notes) {
   for (const t of TOPIC_ORDER) {
     const inTopic = notes.filter(n => n.topic === t.id);
     if (!inTopic.length) continue;
+    const topicHeroPath = path.join(SITE, "src", "images", "topics", `${t.id}.webp`);
+    const hasTopicHero = fs.existsSync(topicHeroPath);
     body += `<section>
       <div class="topic-row">
         <span class="topic-roman">${t.roman}</span>
         <h2>${t.label} <span style="color:var(--ink-faint);font-weight:400;font-size:0.7em;margin-left:0.5rem">${t.subtitle}</span></h2>
         <span class="count">${inTopic.length} paper${inTopic.length > 1 ? "s" : ""}</span>
       </div>
+      ${hasTopicHero ? `<figure class="topic-hero">
+        <picture>
+          <source type="image/webp" srcset="${url(`/images/topics/${t.id}-800.webp`)} 800w, ${url(`/images/topics/${t.id}.webp`)} 1672w" sizes="(max-width: 900px) 100vw, 1200px">
+          <img src="${url(`/images/topics/${t.id}.webp`)}" alt="${t.label} — ${t.subtitle}" loading="lazy" width="1672" height="941">
+        </picture>
+      </figure>` : ""}
       <div class="papers-grid">`;
     // 排序优先级：1) num<=13 的原始 13 篇置顶 (按 num)
     //              2) era: founder → classic → frontier

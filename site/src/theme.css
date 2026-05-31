@@ -1055,3 +1055,22 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
   .hero-figure { order: -1; }
 }
+
+/* === Topic hero illustration === */
+.topic-hero {
+  margin: 0 0 2rem;
+  position: relative;
+}
+.topic-hero picture,
+.topic-hero img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: cover;
+  border: 1px solid var(--paper-dark);
+  background: var(--bone);
+}
+@media (max-width: 600px) {
+  .topic-hero img { max-height: 200px; }
+}
