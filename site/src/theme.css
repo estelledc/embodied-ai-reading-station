@@ -949,3 +949,27 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   margin: 0;
   text-decoration: none;
 }
+
+/* —— Dark mode (system-following only) —— */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #1f1b14;
+    --paper-warm: #241f17;
+    --paper-dark: #15120c;
+    --bone: #2a241b;
+    --ink: #ebe1c9;
+    --ink-soft: #cdc3ad;
+    --ink-mute: #a39a86;
+    --ink-faint: #6f685a;
+    --coral: #f08775;
+    --coral-soft: rgba(240, 135, 117, 0.22);
+    --mustard: #e6c068;
+    --olive: #a8b07a;
+  }
+  /* noise/grain overlay：暗底要切 screen 不然黑成一片 */
+  body::before, body::after {
+    mix-blend-mode: screen;
+    opacity: 0.06;
+  }
+}
