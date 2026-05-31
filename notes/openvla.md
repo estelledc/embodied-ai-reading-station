@@ -6,6 +6,7 @@ difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/openvla/paper.pdf
 generated_at: 2026-05-30
+era: classic
 ---
 
 # OpenVLA：让机械臂"看一眼 + 听一句话"就动起来

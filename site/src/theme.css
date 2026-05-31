@@ -620,3 +620,332 @@ hr.ornament::before {
   .note-content { max-width: 100%; }
   .note-content p { line-height: 1.75; }
 }
+
+/* ============================================================
+   长远改进 — Pagefind 搜索 / Outline / KaTeX / 缩略图 / Issue
+   ============================================================ */
+
+/* === Search trigger button === */
+.search-trigger {
+  background: none;
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  padding: 0.3rem 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: border-color 0.15s, color 0.15s;
+}
+.search-trigger:hover { border-color: var(--coral); color: var(--coral); }
+.search-trigger .search-icon { font-size: 1.05em; line-height: 1; }
+.search-trigger .search-hint {
+  font-size: 0.7rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  border-radius: 2px;
+  padding: 0 0.35em;
+  color: var(--ink-faint);
+}
+
+/* === Search dialog === */
+.search-dialog {
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 0;
+  max-width: 720px;
+  width: 92%;
+  max-height: 80vh;
+  margin-top: 8vh;
+  position: relative;
+}
+.search-dialog::backdrop { background: rgba(21, 20, 15, 0.55); }
+.search-close-form {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 10;
+}
+.search-close {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--ink-mute);
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+  line-height: 1;
+}
+.search-close:hover { color: var(--coral); }
+.search-container { padding: 1.5rem 2rem 2rem; }
+
+/* Pagefind UI 主题色覆盖 */
+:root {
+  --pagefind-ui-scale: 0.9;
+  --pagefind-ui-primary: var(--coral);
+  --pagefind-ui-text: var(--ink);
+  --pagefind-ui-background: var(--paper);
+  --pagefind-ui-border: var(--paper-dark);
+  --pagefind-ui-tag: var(--paper-warm);
+  --pagefind-ui-border-width: 1px;
+  --pagefind-ui-border-radius: 2px;
+  --pagefind-ui-image-border-radius: 0;
+  --pagefind-ui-image-box-ratio: 4 / 3;
+  --pagefind-ui-font: var(--font-sans);
+}
+.pagefind-ui__search-input {
+  font-family: var(--font-serif) !important;
+  font-style: italic;
+}
+.pagefind-ui__result-title {
+  font-family: var(--font-display) !important;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+}
+.pagefind-ui__result-link { color: var(--ink) !important; text-decoration: none; }
+.pagefind-ui__result-link:hover { color: var(--coral) !important; }
+mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
+
+/* === Outline 右栏 === */
+.note-shell.has-outline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  gap: 3rem;
+  max-width: 1100px;
+}
+.note-shell.has-outline .note-main { min-width: 0; grid-column: 1; grid-row: 1; }
+.note-shell.has-outline .outline { grid-column: 2; grid-row: 1; }
+.outline {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  border-left: 1px solid var(--paper-dark);
+  padding-left: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+.outline-title {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.outline ul { list-style: none; padding: 0; margin: 0; max-width: none; }
+.outline li { margin: 0.4rem 0; line-height: 1.4; }
+.outline a {
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.15s, padding-left 0.15s;
+  display: block;
+  border-left: 2px solid transparent;
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
+}
+.outline a:hover { color: var(--ink); }
+.outline a.active {
+  color: var(--coral);
+  border-left-color: var(--coral);
+}
+@media (max-width: 1024px) {
+  .note-shell.has-outline { grid-template-columns: 1fr; }
+  .outline {
+    position: static;
+    border-left: none;
+    border-top: 1px solid var(--paper-dark);
+    border-bottom: 1px solid var(--paper-dark);
+    padding: 1rem 0;
+    margin: 0 0 1.5rem;
+    max-height: 12rem;
+  }
+}
+
+/* === KaTeX 微调 === */
+.katex { font-size: 1.05em !important; }
+.katex-display {
+  margin: 1.4rem 0 !important;
+  padding: 0.8rem 1rem;
+  border-left: 2px solid var(--coral);
+  background: var(--bone);
+  overflow-x: auto;
+}
+
+/* === Paper card 缩略图 === */
+.paper-card {
+  position: relative;
+}
+.paper-card .thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  margin: -1.4rem -1.4rem 0.8rem;
+  width: calc(100% + 2.8rem);
+  background-size: cover;
+  background-position: center;
+}
+.paper-card .thumb-empty { display: none; }
+
+/* === Era hint === */
+.era-hint {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+  margin: -0.5rem 0 1rem;
+  padding-left: 0.2rem;
+}
+
+/* === Learn 折叠互动 === */
+.note-content details {
+  border: 1px solid var(--paper-dark);
+  background: var(--bone);
+  padding: 0.8rem 1.2rem;
+  margin: 1.4rem 0;
+  border-radius: 2px;
+}
+.note-content details[open] { border-color: var(--coral); }
+.note-content details summary {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+  cursor: pointer;
+  color: var(--coral);
+  list-style: none;
+  position: relative;
+  padding-left: 1.4em;
+}
+.note-content details summary::-webkit-details-marker { display: none; }
+.note-content details summary::before {
+  content: "?";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.3em;
+  color: var(--coral);
+  line-height: 1;
+}
+.note-content details[open] summary::before { content: "✓"; color: var(--olive); }
+.note-content details > *:not(summary) { margin-top: 0.8rem; }
+
+/* === Sandbox iframe wrapper === */
+.sandbox-wrap {
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  padding: 0.8rem;
+  margin: 1.6rem 0;
+}
+.sandbox-wrap iframe { width: 100%; height: 480px; border: none; background: white; }
+.sandbox-caption {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+}
+
+/* === Issue cover page === */
+.issue-cover {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(2rem, 5vw, 5rem) var(--gutter);
+}
+.issue-masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  padding: 0.8rem 0;
+  margin-bottom: 2rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.issue-masthead .issue-title { color: var(--ink); font-weight: 700; }
+.issue-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(8rem, 20vw, 16rem);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--coral);
+  margin: 0.5rem 0;
+}
+.issue-headline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 1.5rem 0 1rem;
+  max-width: 22ch;
+}
+.issue-headline em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+.issue-editorial {
+  max-width: 38ch;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin: 1rem 0 3rem;
+}
+.issue-editorial p { margin-bottom: 0.9rem; max-width: none; }
+.issue-toc {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.4rem;
+  margin: 2rem 0 4rem;
+}
+.issue-plate {
+  border: 1px solid var(--ink);
+  background: var(--bone);
+  padding: 1.2rem;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  transition: background 0.15s;
+}
+.issue-plate:hover { background: var(--paper-warm); }
+.issue-plate .plate-num {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.4rem;
+  color: var(--coral);
+}
+.issue-plate .plate-topic {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+.issue-plate .plate-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin: 0;
+  text-decoration: none;
+}

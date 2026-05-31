@@ -82,6 +82,28 @@ renderer.image = (token) => {
   return `<figure><img src="${href}" alt="${text || ""}"${title ? ` title="${title}"` : ""}/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${text || title || ""}</figcaption></figure>`;
 };
 
+// 给 H2/H3 加 id（让 outline 能锚点跳转）
+function slugify(s) {
+  return s.toLowerCase()
+    .replace(/[^一-龥\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .slice(0, 50) || "section";
+}
+const headingIds = new Map();
+renderer.heading = (token) => {
+  const { tokens, depth, text } = token;
+  const inner = tokens ? this?.parser?.parseInline?.(tokens) ?? text : text;
+  if (depth === 2 || depth === 3) {
+    let base = slugify(text);
+    let id = base;
+    let n = 2;
+    while (headingIds.has(id)) id = `${base}-${n++}`;
+    headingIds.set(id, true);
+    return `<h${depth} id="${id}">${text}</h${depth}>\n`;
+  }
+  return `<h${depth}>${text}</h${depth}>\n`;
+};
+
 marked.use({ renderer, gfm: true, breaks: false });
 
 // --- layout templates -------------------------------------------------------
@@ -90,13 +112,21 @@ function masthead(active) {
     { href: url("/"), label: "Index", id: "index" },
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
+    { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
   ];
   return `<header class="masthead">
     <div><a class="return-to-hub" href="https://estelledc.github.io/" rel="home">← estelledc.github.io</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
     <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
-  </header>`;
+    <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
+      <span class="search-icon">⌕</span><span class="search-hint">/</span>
+    </button>
+  </header>
+  <dialog class="search-dialog" aria-label="站内搜索">
+    <form method="dialog" class="search-close-form"><button class="search-close" aria-label="关闭">×</button></form>
+    <div class="search-container" data-base="${BASE}"></div>
+  </dialog>`;
 }
 
 function footerHtml() {
@@ -114,12 +144,19 @@ function page({ title, body, active, extraHead = "" }) {
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${title}</title>
   <link rel="stylesheet" href="${url("/styles.css")}">
+  <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   ${extraHead}
 </head>
 <body>
   ${masthead(active)}
   ${body}
   ${footerHtml()}
+  <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
+  <script src="${url("/search.js")}" defer></script>
+  <script src="${url("/outline.js")}" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
 </html>`;
 }
@@ -155,9 +192,16 @@ function buildIndex(notes) {
         <span class="count">${inTopic.length} paper${inTopic.length > 1 ? "s" : ""}</span>
       </div>
       <div class="papers-grid">`;
-    for (const n of inTopic) {
+    // 按 era 排序：founder → classic → frontier
+    const eraRank = { founder: 0, classic: 1, frontier: 2 };
+    const sorted = [...inTopic].sort((a, b) => (eraRank[a.era] ?? 1) - (eraRank[b.era] ?? 1));
+    body += `<p class="era-hint">按演进顺序：祖师爷 → 现代经典 → 前沿延伸</p>`;
+    for (const n of sorted) {
       const badge = makeDifficultyBadge(n.difficulty);
+      const thumbPath = path.join(PAPERS_DIR, n.slug, "images", "img_000.jpg");
+      const hasThumb = fs.existsSync(thumbPath);
       body += `<article class="paper-card">
+        ${hasThumb ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>` : ""}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
@@ -293,17 +337,71 @@ function buildLearnPage(p, allPages) {
   return page({ title: `${p.title} — Learn`, body, active: "learn" });
 }
 
+// --- issue cover pages ------------------------------------------------------
+function buildIssueIndex(issues) {
+  const body = `<main class="shell">
+    <span class="eyebrow">Issues · 期刊合订本</span>
+    <h1>每一期是一个 <em>整体</em>，不只是论文堆。</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch;margin-top:1rem">
+      把笔记打包成"期"，是为了让你像翻一本杂志一样翻完——有目录、有编辑前言、有完结。
+    </p>
+    <hr class="ornament"/>
+    <div class="papers-grid" style="margin-top:2rem">
+      ${issues.map(i => `<a class="paper-card" href="${url(`/issues/${i.slug.replace("issue-", "")}/`)}" style="text-decoration:none;color:inherit">
+        <span class="num">Issue Nº ${i.issueNumber}</span>
+        <h3>${i.title}</h3>
+        <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);letter-spacing:0.06em;text-transform:uppercase">${i.issueDate}</p>
+        <p>${i.intro}</p>
+      </a>`).join("")}
+    </div>
+  </main>`;
+  return page({ title: "Issues — Embodied AI Reading", body, active: "issues" });
+}
+
+function buildIssuePage(issue, notes) {
+  const html = marked.parse(issue.body);
+  // 把 13 篇按 num 排序生成 plate 网格
+  const plates = notes.map(n => `<a class="issue-plate" href="${url(`/papers/${n.slug}/`)}">
+    <span class="plate-num">${["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"][n.num - 1]}</span>
+    <span class="plate-topic">${n.topicLabel}</span>
+    <span class="plate-title">${n.title}</span>
+  </a>`).join("");
+
+  const body = `<main class="issue-cover">
+    <div class="issue-masthead">
+      <span class="issue-title">Embodied AI Reading Station</span>
+      <span>Issue Nº ${issue.issueNumber}</span>
+      <span>${issue.issueDate}</span>
+    </div>
+    <div class="issue-num">${issue.issueNumber}</div>
+    <h1 class="issue-headline">${issue.title.replace(/^Issue Nº \w+ — /, "")}</h1>
+    <div class="issue-editorial">${html}</div>
+    <hr class="ornament"/>
+    <h2 style="font-family:var(--font-mono);font-size:0.9rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute);margin:2rem 0 1rem">本期论文 · 13 plates</h2>
+    <div class="issue-toc">${plates}</div>
+  </main>`;
+  return page({ title: `${issue.title} — Embodied AI Reading`, body, active: "issues" });
+}
+
 // --- single note page -------------------------------------------------------
 function buildNotePage(note) {
   figureCounter = 0; // reset for each note
+  headingIds.clear();
   const html = marked.parse(note.body);
 
   const navItems = PAPERS.map(p => {
     const isCurrent = p.slug === note.slug;
-    return `<li${isCurrent ? ' style="color:var(--coral)"' : ""}><a href="/papers/${p.slug}/" style="text-decoration:none;color:${isCurrent ? "var(--coral)" : "var(--ink-soft)"}">${p.num}. ${p.title}</a></li>`;
+    return `<li${isCurrent ? ' style="color:var(--coral)"' : ""}><a href="${url(`/papers/${p.slug}/`)}" style="text-decoration:none;color:${isCurrent ? "var(--coral)" : "var(--ink-soft)"}">${p.num}. ${p.title}</a></li>`;
   }).join("");
 
-  const body = `<main class="note-shell">
+  const outline = extractOutline(note.body);
+  const outlineHtml = outline.length >= 4 ? `<aside class="outline">
+    <div class="outline-title">On this page</div>
+    <ul>${outline.map(o => `<li><a href="#${o.id}">${o.text}</a></li>`).join("")}</ul>
+  </aside>` : "";
+
+  const body = `<main class="note-shell ${outlineHtml ? "has-outline" : ""}">
+    <div class="note-main">
     <span class="eyebrow">${note.topicLabel} · Plate Nº ${note.num}</span>
     <h1>${note.title}</h1>
     ${note.dek ? `<p class="dek">${note.dek}</p>` : ""}
@@ -317,7 +415,7 @@ function buildNotePage(note) {
       <span>${note.status}</span>
     </div>
 
-    <div class="note-content">
+    <div class="note-content" data-pagefind-body>
       ${html}
       <p class="endmark">◼</p>
     </div>
@@ -327,6 +425,8 @@ function buildNotePage(note) {
       <summary style="cursor:pointer">All 13 papers</summary>
       <ol style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem">${navItems}</ol>
     </details>
+    </div>
+    ${outlineHtml}
   </main>`;
   return page({ title: `${note.title} — Embodied AI Reading`, body, active: "papers" });
 }
@@ -351,6 +451,7 @@ function loadNotes() {
       status: data.status || "auto-summary",
       sourcePath: data["来源"] || data.source || "",
       dek: data.dek || "",
+      era: data.era || "classic",
       tldr: extractTLDR(content),
       wordCount: wc,
       readingTime: readingTime(wc),
@@ -394,6 +495,25 @@ function makeDifficultyBadge(stars) {
   return { class: "diff-hard", label: "硬核" };
 }
 
+function extractOutline(md) {
+  // 扫所有 H2，提取标题 + slug，用于右栏 outline
+  const lines = md.split("\n");
+  const out = [];
+  const seen = new Map();
+  for (const line of lines) {
+    const m = line.match(/^##\s+(.+?)\s*$/);
+    if (!m) continue;
+    const text = m[1].replace(/`/g, "").trim();
+    let base = slugify(text);
+    let id = base;
+    let n = 2;
+    while (seen.has(id)) id = `${base}-${n++}`;
+    seen.set(id, true);
+    out.push({ id, text });
+  }
+  return out;
+}
+
 function rewriteImagePaths(md, slug) {
   // normalize relative paths so build copies them under /assets/<slug>/
   return md.replace(/!\[([^\]]*)\]\((?:\.\.\/)?papers\/[^/]+\/images\/([^)]+)\)/g,
@@ -418,8 +538,10 @@ function build() {
   if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
   ensure(DIST);
 
-  // theme
+  // theme + JS
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
+  copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
+  copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
 
   // load notes
   const notes = loadNotes();
@@ -441,24 +563,36 @@ function build() {
   // learn pages from site/content/*.md
   const CONTENT_DIR = path.join(SITE, "content");
   const learnPages = [];
+  const issuePages = [];
   if (fs.existsSync(CONTENT_DIR)) {
     for (const file of fs.readdirSync(CONTENT_DIR)) {
       if (!file.endsWith(".md")) continue;
       const slug = file.replace(/\.md$/, "");
       const raw = read(path.join(CONTENT_DIR, file));
       const { data, content } = matter(raw);
-      learnPages.push({
+      const entry = {
         slug,
         title: data.title || slug,
         order: data.order ?? 99,
         intro: data.intro || "",
         body: stripFirstH1(content),
-      });
+        issueNumber: data.issue_number || null,
+        issueDate: data.issue_date || "",
+      };
+      if (entry.issueNumber) issuePages.push(entry);
+      else learnPages.push(entry);
     }
     learnPages.sort((a, b) => a.order - b.order);
     write(path.join(DIST, "learn", "index.html"), buildLearnIndex(learnPages));
     for (const p of learnPages) {
       write(path.join(DIST, "learn", p.slug, "index.html"), buildLearnPage(p, learnPages));
+    }
+    issuePages.sort((a, b) => a.order - b.order);
+    if (issuePages.length > 0) {
+      write(path.join(DIST, "issues", "index.html"), buildIssueIndex(issuePages));
+      for (const p of issuePages) {
+        write(path.join(DIST, "issues", p.slug.replace("issue-", ""), "index.html"), buildIssuePage(p, notes));
+      }
     }
   }
 

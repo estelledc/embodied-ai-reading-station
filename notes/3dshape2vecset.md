@@ -6,6 +6,7 @@ difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/3dshape2vecset/paper.pdf
 generated_at: 2026-05-30
+era: classic
 ---
 
 # 3DShape2VecSet：把 3D 模型「装进卡片盒」的论文

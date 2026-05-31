@@ -6,6 +6,7 @@ difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/neuralaids/paper.pdf
 generated_at: 2026-05-30
+era: classic
 ---
 
 # NeuralAids: 把"AI 降噪"塞进一只助听器里

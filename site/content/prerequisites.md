@@ -114,6 +114,22 @@ intro: '入门读者版 — 想读懂 AI 机器人论文，需要先学什么、
 
 类比：你被蒙着眼放在山上，要走到山谷最低点。每一步都用脚摸出"哪个方向最陡向下"，往那走一小步。重复几万次，就到谷底了。
 
+<details>
+<summary>想想看：如果学习率（每步迈多大）调到很大，会发生什么？</summary>
+
+每步迈太大，可能跨过山谷直接到对面山坡——loss 反而变大。这叫"震荡"或"发散"。
+所以训练神经网络时，**学习率（learning rate, lr）** 是最关键的超参数之一，太小学得慢，太大学不动。
+现代优化器（Adam）会自动调整每个旋钮的步长，但起始 lr 还是要人选。
+
+**亲手玩一下**：下面这个 TensorFlow Playground 让你实时调 lr 看 loss 怎么变。把右上角 Learning rate 滑到 1，会看到 loss 飞起来。
+
+<div class="sandbox-wrap">
+<iframe src="https://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=circle&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,2&seed=0.92681&showTestData=false&discretize=false&percTrainData=50&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false" loading="lazy"></iframe>
+<div class="sandbox-caption">↑ 拖动 Learning rate（左上）然后点播放，看 loss 曲线（右下）怎么变</div>
+</div>
+
+</details>
+
 > **反向传播（backpropagation）**：算"每个旋钮该往哪边调多少"的具体方法。你不用现在懂数学，知道**它是给梯度下降服务的工具**就行。
 
 ### 3.3 处理图像：用小窗口扫

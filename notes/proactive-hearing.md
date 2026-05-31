@@ -6,6 +6,7 @@ difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/proactive-hearing/paper.pdf
 generated_at: 2026-05-30
+era: frontier
 ---
 
 # Proactive Hearing Assistants that Isolate Egocentric Conversations

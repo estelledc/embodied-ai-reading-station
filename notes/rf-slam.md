@@ -8,6 +8,7 @@ status: auto-summary
 venue: MobiCom 2025 (Best Artifact Award)
 authors: "Haowen Lai, Zhiwei Zheng, Mingmin Zhao (UPenn WAVES Lab)"
 generated_at: 2026-05-30
+era: classic
 ---
 
 # CartoRadar: RF-Based 3D SLAM Rivaling Vision Approaches

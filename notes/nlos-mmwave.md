@@ -8,6 +8,7 @@ status: auto-summary
 venue: MobiSys 2025
 authors: "Dodds, Boroushaki, Zhou, Adib (MIT)"
 generated_at: 2026-05-30
+era: frontier
 ---
 
 # mmNorm：隔着纸箱"看清"里面的东西

@@ -8,6 +8,7 @@ status: auto-summary
 venue: SenSys 2024
 authors: "Cao, Xue, Liu, Wang, Wang, Zhang, Su (Purdue + UNC Charlotte)"
 generated_at: 2026-05-30
+era: classic
 ---
 
 # mmCLIP：让一种"看不见人脸的雷达"也能认出新动作

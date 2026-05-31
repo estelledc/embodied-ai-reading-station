@@ -6,6 +6,7 @@ difficulty: ⭐⭐⭐⭐
 status: auto-summary
 来源: papers/mla/paper.pdf
 generated_at: 2026-05-30
+era: frontier
 ---
 
 # MLA: 让机器人同时用眼睛、距离感、指尖去做事
