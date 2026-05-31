@@ -7,6 +7,21 @@
 @import url("https://rsms.me/inter/inter.css");
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap");
 
+/* embodied-ai · Jason DS layer 2 override：暖米 Playfair coral 保留 */
+:root {
+  --jx-paper: #efe7d2;
+  --jx-surface: #f5ecd8;
+  --jx-surface-sunk: #e0d6c0;
+  --jx-ink: #15140f;
+  --jx-ink-2: #2d2a23;
+  --jx-ink-muted: #6f685a;
+  --jx-rule: rgba(21,20,15,0.10);
+  --jx-rule-strong: rgba(21,20,15,0.32);
+  --jx-accent: #ed6f5c;  /* coral 期刊调，satellite 局部品牌色 */
+  --jx-accent-hub: #2240d6;  /* 回 hub 仍墨蓝 */
+  --jx-font-display: "Playfair Display", "Source Serif 4", "Songti SC", Georgia, serif;
+}
+
 :root {
   /* === atelier-zero 色板 === */
   --paper: #efe7d2;

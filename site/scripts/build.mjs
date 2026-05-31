@@ -117,7 +117,7 @@ function masthead(active) {
     { href: url("/about/"), label: "About", id: "about" },
   ];
   return `<header class="masthead">
-    <div><a class="return-to-hub" href="https://estelledc.github.io/" rel="home">← estelledc.github.io</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
+    <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
     <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
     <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
       <span class="search-icon">⌕</span><span class="search-hint">/</span>
@@ -130,9 +130,18 @@ function masthead(active) {
 }
 
 function footerHtml() {
-  return `<footer>
-    <div>Embodied AI Reading Station — undergraduate research log</div>
-    <div>Generated ${new Date().toISOString().slice(0,10)} · <span class="fin">fin.</span></div>
+  return `<footer class="jx-footer">
+    <div class="jx-footer__colophon">
+      <strong>Embodied AI Reading Station</strong>
+      <span lang="en">VOL · MMXXVI</span>
+    </div>
+    <nav class="jx-footer__index">
+      <a href="${url("/")}">index</a>
+      <a href="${url("/topics/")}">topics</a>
+      <a href="https://estelledc.github.io/">回 hub</a>
+      <a href="https://github.com/estelledc/embodied-ai-reading-station">github</a>
+    </nav>
+    <time class="jx-footer__stamp" datetime="${new Date().toISOString().slice(0,10)}" lang="en">${new Date().toISOString().slice(0,10).replace(/-/g, "·")}</time>
   </footer>`;
 }
 
@@ -143,6 +152,8 @@ function page({ title, body, active, extraHead = "" }) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${title}</title>
+  <link rel="stylesheet" href="${url("/jx/tokens.css")}">
+  <link rel="stylesheet" href="${url("/jx/components.css")}">
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
@@ -542,6 +553,9 @@ function build() {
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
   copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
+
+  // Jason DS (jx tokens + components)
+  copyDir(path.join(SITE, "src", "jx"), path.join(DIST, "jx"));
 
   // load notes
   const notes = loadNotes();
