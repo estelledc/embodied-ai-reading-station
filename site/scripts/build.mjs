@@ -186,8 +186,19 @@ function buildIndex(notes) {
 
   let body = `<main class="shell">
     <span class="eyebrow">Filed under · embodied AI · 2026</span>
-    <h1><em>${total} 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
-    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 ${total} 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM、ICML、ICLR、CVPR）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1><em>${total} 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
+        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 ${total} 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM、ICML、ICLR、CVPR）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
+      </div>
+      <figure class="hero-figure">
+        <picture>
+          <source type="image/webp" srcset="${url("/images/hero-1200.webp")} 1200w, ${url("/images/hero.webp")} 1672w" sizes="(max-width: 900px) 100vw, 50vw">
+          <img src="${url("/images/hero.webp")}" alt="A robotic hand reaching toward floating eyes, text fragments, and arrows — abstract editorial illustration of embodied AI" loading="eager" width="1672" height="941">
+        </picture>
+        <figcaption><span class="plate">Plate Nº 0</span>— A robotic hand reaching for vision, language, and action.</figcaption>
+      </figure>
+    </div>
 
     <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
       <span style="color:var(--coral)">→</span>
@@ -605,6 +616,12 @@ function build() {
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
   copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
+
+  // images（codex 生成 + cwebp 转换）
+  const IMG_SRC = path.join(SITE, "src", "images");
+  if (fs.existsSync(IMG_SRC)) {
+    copyDir(IMG_SRC, path.join(DIST, "images"));
+  }
 
   // Jason DS (jx tokens + components)
   copyDir(path.join(SITE, "src", "jx"), path.join(DIST, "jx"));
