@@ -8,7 +8,7 @@ status: auto-summary
 venue: CVPR
 year: 2023
 era: founder
-num: 99
+num: 64
 generated_at: 2026-05-31
 ---
 

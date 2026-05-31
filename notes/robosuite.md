@@ -8,7 +8,7 @@ status: auto-summary
 venue: arXiv
 year: 2020
 era: founder
-num: 99
+num: 28
 generated_at: 2026-05-31
 ---
 

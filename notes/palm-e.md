@@ -8,7 +8,7 @@ status: auto-summary
 venue: ICML
 year: 2023
 era: founder
-num: 99
+num: 78
 generated_at: 2026-05-31
 ---
 

@@ -8,7 +8,7 @@ status: auto-summary
 venue: RSS
 year: 2024
 era: classic
-num: 99
+num: 39
 generated_at: 2026-05-31
 ---
 

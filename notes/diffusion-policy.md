@@ -8,7 +8,7 @@ status: auto-summary
 venue: RSS
 year: 2023
 era: founder
-num: 99
+num: 38
 generated_at: 2026-05-31
 ---
 

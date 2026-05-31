@@ -8,7 +8,7 @@ status: auto-summary
 venue: EACL
 year: 2023
 era: classic
-num: 99
+num: 66
 generated_at: 2026-05-31
 ---
 

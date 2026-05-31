@@ -8,7 +8,7 @@ status: auto-summary
 venue: AISTATS
 year: 2011
 era: founder
-num: 99
+num: 49
 generated_at: 2026-05-31
 ---
 

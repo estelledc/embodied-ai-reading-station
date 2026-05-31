@@ -8,7 +8,7 @@ status: auto-summary
 venue: IEEE/ACM TASLP
 year: 2019
 era: founder
-num: 99
+num: 14
 generated_at: 2026-05-31
 ---
 
