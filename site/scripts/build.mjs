@@ -156,12 +156,16 @@ function buildIndex(notes) {
       </div>
       <div class="papers-grid">`;
     for (const n of inTopic) {
+      const badge = makeDifficultyBadge(n.difficulty);
       body += `<article class="paper-card">
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
         <h3><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></h3>
-        <span class="difficulty">${n.difficulty || ""}</span>
+        <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
+          <span class="badge ${badge.class}">${badge.label}</span>
+          <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--ink-faint);letter-spacing:0.06em">${n.readingTime}min · ${n.wordCount}字</span>
+        </div>
         <p>${n.tldr || ""}</p>
       </article>`;
     }
@@ -302,18 +306,23 @@ function buildNotePage(note) {
   const body = `<main class="note-shell">
     <span class="eyebrow">${note.topicLabel} · Plate Nº ${note.num}</span>
     <h1>${note.title}</h1>
-    <div class="note-meta">
-      <span><span class="label">Slug</span>${note.slug}</span>
-      <span><span class="label">Difficulty</span><span class="difficulty">${note.difficulty || ""}</span></span>
-      <span><span class="label">Status</span>${note.status}</span>
-      <span><span class="label">Source</span>${note.sourcePath || "—"}</span>
+    ${note.dek ? `<p class="dek">${note.dek}</p>` : ""}
+    <div class="reading-meta">
+      <span>${note.readingTime} min read</span>
+      <span class="dot">·</span>
+      <span>${note.wordCount} 字</span>
+      <span class="dot">·</span>
+      <span>${note.difficulty || ""}</span>
+      <span class="dot">·</span>
+      <span>${note.status}</span>
     </div>
 
     <div class="note-content">
       ${html}
+      <p class="endmark">◼</p>
     </div>
 
-    <hr style="margin-top:4rem"/>
+    <hr class="ornament" style="margin-top:4rem"/>
     <details style="margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-mute)">
       <summary style="cursor:pointer">All 13 papers</summary>
       <ol style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem">${navItems}</ol>
@@ -333,14 +342,19 @@ function loadNotes() {
       continue;
     }
     const { data, content } = matter(raw);
+    const stripped = stripFirstH1(rewriteImagePaths(content, p.slug));
+    const wc = countWords(stripped);
     notes.push({
       ...p,
       title: data.title || p.title,
       difficulty: data.difficulty || "",
       status: data.status || "auto-summary",
       sourcePath: data["来源"] || data.source || "",
+      dek: data.dek || "",
       tldr: extractTLDR(content),
-      body: stripFirstH1(rewriteImagePaths(content, p.slug)),
+      wordCount: wc,
+      readingTime: readingTime(wc),
+      body: stripped,
     });
   }
   return notes;
@@ -352,6 +366,32 @@ function extractTLDR(md) {
   // fallback: first paragraph after first heading
   const lines = md.split("\n").filter(l => l.trim() && !l.startsWith("#") && !l.startsWith(">") && !l.startsWith("```"));
   return (lines[0] || "").slice(0, 140);
+}
+
+function countWords(md) {
+  // 中文按字数算，英文按词算
+  const stripped = md
+    .replace(/```[\s\S]*?```/g, "")
+    .replace(/`[^`]+`/g, "")
+    .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+    .replace(/[#>*_\-=|]/g, " ");
+  const cn = (stripped.match(/[一-龥]/g) || []).length;
+  const en = (stripped.match(/[a-zA-Z]+/g) || []).length;
+  return cn + en;
+}
+
+function readingTime(wc) {
+  // 中文 350 字/分钟，英文已折算同一单位
+  return Math.max(1, Math.round(wc / 350));
+}
+
+function makeDifficultyBadge(stars) {
+  // 1-2 星 → easy, 3 星 → medium, 4-5 星 → hard
+  const n = (stars || "").length;
+  if (n <= 2) return { class: "diff-easy", label: "入门" };
+  if (n === 3) return { class: "diff-medium", label: "进阶" };
+  return { class: "diff-hard", label: "硬核" };
 }
 
 function rewriteImagePaths(md, slug) {

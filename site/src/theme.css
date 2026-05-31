@@ -470,3 +470,153 @@ footer .fin { color: var(--coral); font-family: var(--font-serif); font-style: i
   color: var(--ink-faint, rgba(0,0,0,0.2));
   margin: 0 0.5rem;
 }
+
+/* === editorial polish (借鉴 The New Yorker / Aeon · Psyche / Offscreen) === */
+
+/* Drop cap — 每篇笔记正文第一段首字母 */
+.note-content > p:first-of-type::first-letter {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 4.2rem;
+  line-height: 0.85;
+  float: left;
+  margin: 0.18em 0.12em 0 -0.04em;
+  color: var(--coral);
+}
+
+@media (max-width: 640px) {
+  .note-content > p:first-of-type::first-letter {
+    font-size: 3rem;
+    margin: 0.12em 0.08em 0 0;
+  }
+}
+
+/* Asterism ornament — 替代实线 hr，节奏更轻 */
+.note-content hr,
+hr.ornament {
+  border: none;
+  margin: 2.6rem auto;
+  text-align: center;
+  height: auto;
+  overflow: visible;
+}
+
+.note-content hr::before,
+hr.ornament::before {
+  content: "✦  ✦  ✦";
+  font-family: var(--font-serif);
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  color: var(--mustard);
+  display: inline-block;
+}
+
+/* End mark — 文章结尾的小方块（New Yorker ◼） */
+.endmark {
+  text-align: center;
+  margin: 3rem 0 1rem;
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  color: var(--mustard);
+  letter-spacing: 0.5em;
+  line-height: 1;
+}
+
+/* Dek — 副标题，h1 后独占一段 */
+.dek {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.32rem;
+  line-height: 1.45;
+  color: var(--ink-mute);
+  max-width: 32ch;
+  margin: 0.6rem 0 1.2rem;
+  letter-spacing: -0.005em;
+}
+
+/* Reading meta — 阅读时长 + 字数 */
+.reading-meta {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0.8rem 0 1.4rem;
+}
+
+.reading-meta .dot {
+  margin: 0 0.6em;
+  color: var(--paper-dark);
+}
+
+/* Difficulty / must-read 徽章 — 用在 paper card */
+.badge {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.18em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.badge.diff-easy { color: var(--olive); }
+.badge.diff-medium { color: var(--mustard); }
+.badge.diff-hard { color: var(--coral); }
+
+.badge.must-read {
+  background: var(--coral);
+  color: var(--paper);
+  border-color: var(--coral);
+}
+
+/* Era 行 — 主题分组的演进顺序提示 */
+.era-hint {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--ink-faint);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 1.5rem;
+  padding-left: 0.2rem;
+}
+
+/* Learn 上下页导航 */
+.learn-pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 4rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--paper-dark);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.learn-pager a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-faint);
+  padding-bottom: 0.2em;
+}
+
+.learn-pager a:hover {
+  color: var(--coral);
+  border-color: var(--coral);
+}
+
+.learn-pager .step-info {
+  color: var(--ink-faint);
+}
+
+/* 移动端阅读体验 */
+@media (max-width: 640px) {
+  html { font-size: 16px; }
+  body { line-height: 1.7; }
+  .note-content { max-width: 100%; }
+  .note-content p { line-height: 1.75; }
+}
