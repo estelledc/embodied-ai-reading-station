@@ -305,6 +305,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/theme-toggle.js")}" defer></script>
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
+  <script src="${url("/svg-export.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -2254,6 +2255,7 @@ function build() {
   copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
+  copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
   copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
   copy(path.join(SITE, "src", "sw.js"), path.join(DIST, "sw.js"));
   copy(path.join(SITE, "src", "sw-register.js"), path.join(DIST, "sw-register.js"));

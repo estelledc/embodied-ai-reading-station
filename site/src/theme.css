@@ -3280,3 +3280,22 @@ html.dark-theme body::after {
   .sm-list li { grid-template-columns: 1fr; gap: 0.2rem; }
   .sm-url { display: none; }
 }
+
+/* === svg export button === */
+.svg-export-btn {
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.svg-export-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+@media print { .svg-export-btn { display: none; } }
