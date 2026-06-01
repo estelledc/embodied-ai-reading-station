@@ -3138,3 +3138,7 @@ html.dark-theme body::after {
   border: 1px solid var(--olive);
   border-radius: 2px;
 }
+
+/* === my stats === */
+.my-stats { background: var(--paper-warm); padding: 1.5rem 1.8rem; border-left: 3px solid var(--coral); }
+.my-topic-bars { margin-top: 1rem; }

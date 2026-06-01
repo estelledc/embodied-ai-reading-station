@@ -1159,6 +1159,27 @@ function buildStats(notes) {
         `).join("")}
       </div>
     </section>
+
+    <hr class="ornament"/>
+
+    <section class="stats-section my-stats" id="eai-my-stats" hidden>
+      <span class="eyebrow" style="color:var(--coral)">你的数据</span>
+      <h2>你的<em>阅读快照</em>。</h2>
+      <p style="color:var(--ink-soft);font-size:0.95rem;line-height:1.55">完全在浏览器本地。清缓存即清空。</p>
+      <div class="big-stats">
+        <div><span class="bs-num" data-my-read>0</span><span class="bs-label">已读篇数</span></div>
+        <div><span class="bs-num" data-my-streak>0</span><span class="bs-label">连续天数</span></div>
+        <div><span class="bs-num" data-my-words>0</span><span class="bs-label">已读字数</span></div>
+        <div><span class="bs-num" data-my-pct>0%</span><span class="bs-label">完成度</span></div>
+      </div>
+      <div class="my-topic-bars" data-my-topic-bars></div>
+    </section>
+    <script id="eai-papers-data" type="application/json">${JSON.stringify(notes.map(n => ({
+      slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",
+      difficulty: (n.difficulty || "").length || 2,
+      tldr: (n.tldr || "").slice(0, 120),
+      url: url(`/papers/${n.slug}/`),
+    })))}</script>
   </main>`;
   return page({ title: "Stats — Embodied AI Reading", body, active: "stats" });
 }

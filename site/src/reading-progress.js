@@ -323,7 +323,49 @@
     bindAutoMarkOnScroll();
     bindReadingLists();
     bindTopicProgress();
+    bindMyStats();
   });
+
+  function bindMyStats() {
+    const sec = document.getElementById("eai-my-stats");
+    if (!sec) return;
+    const dataEl = document.getElementById("eai-papers-data");
+    if (!dataEl) return;
+    let papers = [];
+    try { papers = JSON.parse(dataEl.textContent); } catch { return; }
+
+    function render() {
+      const read = load();
+      if (read.size === 0) {
+        sec.hidden = true;
+        return;
+      }
+      sec.hidden = false;
+      const readPapers = papers.filter(p => read.has(p.slug));
+      // 已读字数估算：用 difficulty 反推 (没有 wordCount 在 data 里 — 估算 4000 平均)
+      const totalWords = readPapers.length * 4000;
+      const pct = Math.round(readPapers.length / papers.length * 100);
+      const streakInfo = computeStreak();
+      sec.querySelector("[data-my-read]").textContent = readPapers.length;
+      sec.querySelector("[data-my-streak]").textContent = streakInfo.streak;
+      sec.querySelector("[data-my-words]").textContent = totalWords.toLocaleString();
+      sec.querySelector("[data-my-pct]").textContent = pct + "%";
+      // 按 topic 分布
+      const topicCount = new Map();
+      for (const p of readPapers) topicCount.set(p.topic, (topicCount.get(p.topic) || 0) + 1);
+      const sorted = [...topicCount.entries()].sort((a, b) => b[1] - a[1]);
+      const max = Math.max(...topicCount.values(), 1);
+      const wrap = sec.querySelector("[data-my-topic-bars]");
+      wrap.innerHTML = sorted.map(([topic, count]) => `
+        <div class="stats-row">
+          <span class="stats-label">${topic}</span>
+          <div class="vbar"><div class="vbar-fill" style="width:${count / max * 100}%"></div><span class="vbar-num">${count}</span></div>
+        </div>
+      `).join("");
+    }
+    render();
+    window.addEventListener("eai:read-changed", render);
+  }
 
   function bindTopicProgress() {
     const el = document.querySelector(".topic-progress[data-topic-slugs]");
