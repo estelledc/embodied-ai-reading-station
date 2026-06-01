@@ -156,11 +156,11 @@ function masthead(active) {
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
     <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
-    <nav>${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}
+    <nav aria-label="主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)" aria-current="page"' : ""}>${i.label}</a>`).join("")}
       <details class="more-nav"${moreActive ? " open" : ""}>
-        <summary${moreActive ? ' style="color:var(--coral)"' : ""}>More ▾</summary>
+        <summary${moreActive ? ' style="color:var(--coral)"' : ""} aria-label="更多导航">More ▾</summary>
         <div class="more-nav-panel">
-          ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}
+          ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)" aria-current="page"' : ""}>${i.label}</a>`).join("")}
         </div>
       </details>
     </nav>
