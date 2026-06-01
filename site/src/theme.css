@@ -3299,3 +3299,25 @@ html.dark-theme body::after {
   color: var(--coral);
 }
 @media print { .svg-export-btn { display: none; } }
+
+/* === code copy button === */
+.note-content pre { position: relative; }
+.code-copy-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.15em 0.5em;
+  cursor: pointer;
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity 0.15s, all 0.12s;
+}
+.note-content pre:hover .code-copy-btn { opacity: 1; }
+.code-copy-btn:hover { border-color: var(--coral); color: var(--coral); }
+.code-copy-btn.copied { background: var(--olive); color: var(--paper); border-color: var(--olive); opacity: 1; }
+@media print { .code-copy-btn { display: none; } }

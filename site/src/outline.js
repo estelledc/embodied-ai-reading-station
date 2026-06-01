@@ -275,3 +275,28 @@
     });
   });
 })();
+
+// === code block copy ===
+(() => {
+  document.querySelectorAll(".note-content pre, .note-content blockquote pre").forEach(pre => {
+    if (pre.closest(".cite-content")) return; // BibTeX 已有自己的复制按钮
+    const code = pre.querySelector("code") || pre;
+    const wrap = pre.parentElement;
+    if (getComputedStyle(pre).position === "static") pre.style.position = "relative";
+    const btn = document.createElement("button");
+    btn.className = "code-copy-btn";
+    btn.type = "button";
+    btn.textContent = "⧉";
+    btn.setAttribute("aria-label", "复制代码");
+    btn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      try {
+        await navigator.clipboard.writeText(code.textContent);
+        btn.textContent = "✓";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = "⧉"; btn.classList.remove("copied"); }, 1100);
+      } catch {}
+    });
+    pre.appendChild(btn);
+  });
+})();
