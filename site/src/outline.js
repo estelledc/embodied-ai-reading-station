@@ -300,3 +300,29 @@
     pre.appendChild(btn);
   });
 })();
+
+// === back to top floating button (only on long pages) ===
+(() => {
+  // 仅论文/issue/learn 这种长文页
+  if (!document.querySelector(".note-content, .issue-editorial")) return;
+  const btn = document.createElement("button");
+  btn.className = "back-top-btn";
+  btn.type = "button";
+  btn.setAttribute("aria-label", "回到顶部");
+  btn.textContent = "↑";
+  btn.hidden = true;
+  document.body.appendChild(btn);
+
+  let raf = null;
+  function check() {
+    raf = null;
+    btn.hidden = window.scrollY < window.innerHeight;
+  }
+  window.addEventListener("scroll", () => {
+    if (!raf) raf = requestAnimationFrame(check);
+  }, { passive: true });
+
+  btn.addEventListener("click", () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+})();

@@ -3321,3 +3321,29 @@ html.dark-theme body::after {
 .code-copy-btn:hover { border-color: var(--coral); color: var(--coral); }
 .code-copy-btn.copied { background: var(--olive); color: var(--paper); border-color: var(--olive); opacity: 1; }
 @media print { .code-copy-btn { display: none; } }
+
+/* === back to top button === */
+.back-top-btn {
+  position: fixed;
+  bottom: 4rem;
+  right: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  background: var(--ink);
+  color: var(--paper);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 50;
+  transition: transform 0.15s, background 0.15s;
+}
+.back-top-btn:hover {
+  background: var(--coral);
+  transform: translateY(-3px);
+}
+@media (max-width: 700px) {
+  .back-top-btn { bottom: 1rem; right: 1rem; }
+}
+@media print { .back-top-btn { display: none; } }
