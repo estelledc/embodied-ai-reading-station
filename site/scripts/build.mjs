@@ -2241,7 +2241,13 @@ function buildAbout(notes = []) {
 }
 
 function notes_count_estimate() {
-  return 590;
+  // 实时数 inline 图（webp）
+  try {
+    const dir = path.join(SITE, "src", "images", "inline");
+    if (!fs.existsSync(dir)) return 590;
+    const count = fs.readdirSync(dir).filter(f => f.endsWith(".webp") && !f.includes("-800")).length;
+    return count;
+  } catch { return 590; }
 }
 
 // --- learn pages (beginner supplements) -------------------------------------
