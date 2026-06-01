@@ -1740,11 +1740,28 @@ function build404(notes) {
 }
 
 // --- about page -------------------------------------------------------------
-function buildAbout() {
+function buildAbout(notes = []) {
+  // Compute numbers from notes if available
+  let bigNums = "";
+  if (notes.length) {
+    let commitCount = "?";
+    try {
+      commitCount = _execSync(`git -C "${ROOT}" rev-list --count HEAD`, { encoding: "utf8" }).trim();
+    } catch {}
+    const wc = notes.reduce((s, n) => s + (n.wordCount || 0), 0);
+    const ys = notes.map(n => Number(n.year)).filter(Boolean);
+    bigNums = `<div class="big-stats" style="margin:1.5rem 0 2rem">
+      <div><span class="bs-num">${notes.length}</span><span class="bs-label">论文笔记</span></div>
+      <div><span class="bs-num">${wc.toLocaleString()}</span><span class="bs-label">总字数</span></div>
+      <div><span class="bs-num">${commitCount}</span><span class="bs-label">git commits</span></div>
+      <div><span class="bs-num">${ys.length ? Math.min(...ys) + "–" + Math.max(...ys) : "—"}</span><span class="bs-label">年份跨度</span></div>
+    </div>`;
+  }
   const body = `<main class="note-shell">
     <span class="eyebrow">Colophon · 这站是怎么诞生的</span>
     <h1>About this <em>reading station</em></h1>
     ${pageHeroHtml("about", "Typewriter at a wooden desk — colophon illustration")}
+    ${bigNums}
     <div class="note-content" style="max-width:68ch">
       <p>这站是为想读懂顶会论文、但还在入门阶段的人做的。<strong>具身智能（Embodied AI）</strong>讲的是「怎么让机器人有身体地融入世界」——它要看见、要听见、要听懂指令、要决定下一步怎么做。听起来像科幻，但 2024-2025 已经在论文里跑通了一大半。</p>
       <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。我把它们重写成<strong>能读懂的版本</strong>——保留所有数字和方法，但用基础的类比解释每个新词。</p>
@@ -2645,7 +2662,7 @@ function build() {
   }
 
   // about
-  write(path.join(DIST, "about", "index.html"), buildAbout());
+  write(path.join(DIST, "about", "index.html"), buildAbout(notes));
 
   // backlinks: 提名匹配 — 先取每篇 title 的 keyword（冒号前 + 已知 abbrev），扫所有正文里出现
   // keywordOf("RT-1: Robotics Transformer") -> ["RT-1"]
