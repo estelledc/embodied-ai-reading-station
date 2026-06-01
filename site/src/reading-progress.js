@@ -380,6 +380,31 @@
       sec.querySelector("[data-my-words]").textContent = totalWords.toLocaleString();
       sec.querySelector("[data-my-pct]").textContent = pct + "%";
 
+      // 里程碑徽章（10/30/50/100）
+      const MILESTONES = [
+        { count: 10, label: "Starter", icon: "✦", desc: "读完 10 篇，开始入门" },
+        { count: 30, label: "Reader", icon: "✦✦", desc: "读完 30 篇，主题感建立" },
+        { count: 50, label: "Scholar", icon: "✦✦✦", desc: "读完 50 篇，能跨主题对比了" },
+        { count: 100, label: "Maven", icon: "★", desc: "读完 100 篇，已经是行家" },
+      ];
+      let badgeRow = sec.querySelector(".milestone-row");
+      if (!badgeRow) {
+        badgeRow = document.createElement("div");
+        badgeRow.className = "milestone-row";
+        const bigStats = sec.querySelector(".big-stats");
+        if (bigStats) bigStats.after(badgeRow);
+      }
+      const earned = MILESTONES.filter(m => readPapers.length >= m.count);
+      badgeRow.innerHTML = MILESTONES.map(m => {
+        const ok = readPapers.length >= m.count;
+        return `<div class="ms-badge ${ok ? 'ms-earned' : 'ms-locked'}">
+          <span class="ms-icon">${ok ? m.icon : '○'}</span>
+          <span class="ms-label">${m.label}</span>
+          <span class="ms-count">${m.count}</span>
+          ${ok ? `<span class="ms-desc">${m.desc}</span>` : ""}
+        </div>`;
+      }).join("");
+
       // 完成度 100% 时显示庆祝徽章
       let medal = sec.querySelector(".completion-medal");
       if (pct >= 100 && !medal) {
