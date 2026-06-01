@@ -1614,3 +1614,60 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   .glossary-term { padding-top: 1rem; border-top: 1px solid var(--paper-dark); }
   .glossary-def { border-bottom: none; padding-bottom: 0.4rem; }
 }
+
+/* === quick filter === */
+.quick-filter {
+  margin: 1.5rem 0 2rem;
+  padding: 1rem 1.2rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  border-radius: 2px;
+}
+.qf-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  padding: 0.3rem 0;
+}
+.qf-row + .qf-row { border-top: 1px dashed var(--paper-dark); margin-top: 0.3rem; padding-top: 0.6rem; }
+.qf-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  width: 4rem;
+  flex-shrink: 0;
+}
+.qf-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  background: var(--paper);
+  color: var(--ink-mute);
+  border: 1px solid var(--paper-dark);
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.qf-chip:hover {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.qf-chip.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.qf-chip-all.is-active {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+.qf-count {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+}

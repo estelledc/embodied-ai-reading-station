@@ -192,6 +192,7 @@ function page({ title, body, active, extraHead = "" }) {
   <script src="${url("/search.js")}" defer></script>
   <script src="${url("/outline.js")}" defer></script>
   <script src="${url("/reading-progress.js")}" defer></script>
+  <script src="${url("/quick-filter.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -256,12 +257,36 @@ function buildIndex(notes) {
     })))}</script>
     <hr/>`;
 
+  // 快筛工具栏
+  body += `<aside class="quick-filter" id="eai-quick-filter">
+    <div class="qf-row">
+      <span class="qf-label">主题</span>
+      <button type="button" class="qf-chip qf-chip-all is-active" data-filter-type="topic" data-value="">全部</button>
+      ${TOPIC_ORDER.map(t => `<button type="button" class="qf-chip" data-filter-type="topic" data-value="${t.id}">${t.roman}. ${t.label}</button>`).join("")}
+    </div>
+    <div class="qf-row">
+      <span class="qf-label">难度</span>
+      <button type="button" class="qf-chip qf-chip-all is-active" data-filter-type="difficulty" data-value="">全部</button>
+      <button type="button" class="qf-chip" data-filter-type="difficulty" data-value="2">★★ 入门</button>
+      <button type="button" class="qf-chip" data-filter-type="difficulty" data-value="3">★★★ 中</button>
+      <button type="button" class="qf-chip" data-filter-type="difficulty" data-value="4">★★★★ 进阶</button>
+    </div>
+    <div class="qf-row">
+      <span class="qf-label">era</span>
+      <button type="button" class="qf-chip qf-chip-all is-active" data-filter-type="era" data-value="">全部</button>
+      <button type="button" class="qf-chip" data-filter-type="era" data-value="founder">祖师爷</button>
+      <button type="button" class="qf-chip" data-filter-type="era" data-value="classic">经典</button>
+      <button type="button" class="qf-chip" data-filter-type="era" data-value="frontier">前沿</button>
+      <span class="qf-count" id="eai-qf-count" style="margin-left:auto"></span>
+    </div>
+  </aside>`;
+
   for (const t of TOPIC_ORDER) {
     const inTopic = notes.filter(n => n.topic === t.id);
     if (!inTopic.length) continue;
     const topicHeroPath = path.join(SITE, "src", "images", "topics", `${t.id}.webp`);
     const hasTopicHero = fs.existsSync(topicHeroPath);
-    body += `<section>
+    body += `<section data-topic-section="${t.id}">
       <div class="topic-row">
         <span class="topic-roman">${t.roman}</span>
         <h2>${t.label} <span style="color:var(--ink-faint);font-weight:400;font-size:0.7em;margin-left:0.5rem">${t.subtitle}</span></h2>
@@ -300,7 +325,7 @@ function buildIndex(notes) {
         : hasCard
           ? `<div class="thumb" style="background-image:url('${url(`/images/cards/${n.slug}.webp`)}')"></div>`
           : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
-      body += `<article class="paper-card" data-slug="${n.slug}">
+      body += `<article class="paper-card" data-slug="${n.slug}" data-topic="${n.topic}" data-difficulty="${(n.difficulty || "").length || 2}" data-era="${n.era || "classic"}">
         ${thumbDiv}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
@@ -996,6 +1021,7 @@ function build() {
   copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
   copy(path.join(SITE, "src", "reading-progress.js"), path.join(DIST, "reading-progress.js"));
+  copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");
