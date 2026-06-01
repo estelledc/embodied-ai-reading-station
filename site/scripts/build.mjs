@@ -445,7 +445,7 @@ function buildIndex(notes, latestIssue = null) {
 
     <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
       <span style="color:var(--coral)">→</span>
-      <span>从这里开始 · 学习路径 · 术语字典 · 实战教程</span>
+      <span>从这里开始 · 30 天路径 · FAQ · 公式速查</span>
     </a>
 
     ${lastCommits ? `<aside class="last-commits">
@@ -526,14 +526,7 @@ function buildIndex(notes, latestIssue = null) {
         </div>
       </a>
     </aside>
-    <script id="eai-papers-data" type="application/json">${JSON.stringify(notes.map(n => ({
-      slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",
-      difficulty: (n.difficulty || "").length || 2,
-      tldr: (n.tldr || "").slice(0, 120),
-      url: url(`/papers/${n.slug}/`),
-      year: n.year || null, venue: n.venue || "",
-      wordCount: n.wordCount || 0,
-    })))}</script>
+<!-- inline data island moved to /data/papers.json (fetched lazily by reading-progress.js) -->
     <hr/>`;
 
   // 快筛工具栏
@@ -1939,12 +1932,7 @@ function buildStats(notes, backlinkMap = new Map()) {
         <ul data-mb-list></ul>
       </div>
     </section>
-    <script id="eai-papers-data" type="application/json">${JSON.stringify(notes.map(n => ({
-      slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",
-      difficulty: (n.difficulty || "").length || 2,
-      tldr: (n.tldr || "").slice(0, 120),
-      url: url(`/papers/${n.slug}/`),
-    })))}</script>
+<!-- inline data island moved to /data/papers.json -->
   </main>`;
   return page({ title: "Stats — Embodied AI Reading", body, active: "stats" });
 }
@@ -3414,6 +3402,17 @@ function build() {
     for (const p of learnPages) {
       write(path.join(DIST, "learn", p.slug, "index.html"), buildLearnPage(p, learnPages));
     }
+    // /learn/glossary/ 已被 canonical /glossary/ 取代，保留 redirect 给旧链接
+    const glossaryRedirect = `<!doctype html>
+<html lang="zh-CN"><head>
+<meta charset="utf-8">
+<title>Redirecting to /glossary/</title>
+<link rel="canonical" href="${url("/glossary/")}">
+<meta http-equiv="refresh" content="0; url=${url("/glossary/")}">
+<script>location.replace(${JSON.stringify(url("/glossary/"))});</script>
+</head><body>Redirecting to <a href="${url("/glossary/")}">/glossary/</a>…</body></html>
+`;
+    write(path.join(DIST, "learn", "glossary", "index.html"), glossaryRedirect);
     if (issuePages.length > 0) {
       write(path.join(DIST, "issues", "index.html"), buildIssueIndex(issuePages));
       for (const p of issuePages) {

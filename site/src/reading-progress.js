@@ -72,6 +72,36 @@
     },
   };
 
+  // 共享 papers.json 加载器：优先用 inline JSON（向后兼容），否则 fetch /data/papers.json
+  let _papersCache = null;
+  let _papersPromise = null;
+  function loadPapers() {
+    if (_papersCache) return Promise.resolve(_papersCache);
+    if (_papersPromise) return _papersPromise;
+    // 尝试读 inline data island
+    const inline = document.getElementById("eai-papers-data");
+    if (inline) {
+      try {
+        _papersCache = JSON.parse(inline.textContent);
+        return Promise.resolve(_papersCache);
+      } catch {}
+    }
+    // fallback：fetch /data/papers.json (相对 base path)
+    const stylesLink = document.querySelector('link[href*="/styles.css"]');
+    const base = stylesLink ? stylesLink.getAttribute("href").replace(/\/styles\.css$/, "") : "";
+    _papersPromise = fetch(base + "/data/papers.json")
+      .then(r => r.json())
+      .then(d => { _papersCache = d; return d; })
+      .catch(() => { _papersCache = []; return []; });
+    return _papersPromise;
+  }
+  // 在 idle 时预加载（不阻塞首屏）
+  if ("requestIdleCallback" in window) {
+    requestIdleCallback(() => loadPapers(), { timeout: 3000 });
+  } else {
+    setTimeout(() => loadPapers(), 1500);
+  }
+
   // 跨 tab 同步：监听其他 tab 的 storage 写入
   const SYNCED_KEYS = new Set([
     "eaireading.read",
@@ -137,11 +167,9 @@
 
     const exportBtn = document.getElementById("eai-streak-export");
     if (exportBtn) {
-      exportBtn.addEventListener("click", () => {
-        const data = document.getElementById("eai-papers-data");
-        if (!data) return;
-        let papers = [];
-        try { papers = JSON.parse(data.textContent); } catch { return; }
+      exportBtn.addEventListener("click", async () => {
+        const papers = await loadPapers();
+        if (!papers.length) return;
         const read = load();
         const ts = loadTs();
         const readPapers = papers.filter(p => read.has(p.slug))
@@ -227,12 +255,12 @@
 
   function bindNextPick() {
     const aside = document.getElementById("eai-next-pick");
-    const data = document.getElementById("eai-papers-data");
-    if (!aside || !data) return;
+    if (!aside) return;
     let papers = [];
-    try { papers = JSON.parse(data.textContent); } catch { return; }
+    loadPapers().then(d => { papers = d; render(); });
 
     function render() {
+      if (!papers.length) return;
       const read = load();
       const unread = papers.filter(p => !read.has(p.slug));
       if (unread.length === 0) {
@@ -374,12 +402,14 @@
 
   function bindDailyPick() {
     const el = document.getElementById("eai-daily-pick");
-    const dataEl = document.getElementById("eai-papers-data");
-    if (!el || !dataEl) return;
-    let papers = [];
-    try { papers = JSON.parse(dataEl.textContent); } catch { return; }
-    if (papers.length === 0) return;
+    if (!el) return;
+    loadPapers().then(papers => {
+      if (papers.length === 0) return;
+      renderDailyPick(el, papers);
+    });
+  }
 
+  function renderDailyPick(el, papers) {
     // 从今日日期生成 hash
     const today = new Date();
     const ymd = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
@@ -410,12 +440,11 @@
   function bindMyStats() {
     const sec = document.getElementById("eai-my-stats");
     if (!sec) return;
-    const dataEl = document.getElementById("eai-papers-data");
-    if (!dataEl) return;
     let papers = [];
-    try { papers = JSON.parse(dataEl.textContent); } catch { return; }
+    loadPapers().then(d => { papers = d; render(); });
 
     function render() {
+      if (!papers.length) return;
       const read = load();
       if (read.size === 0) {
         sec.hidden = true;
