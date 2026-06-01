@@ -296,7 +296,7 @@ function footerHtml(active) {
       <a href="${url("/site-map/")}">site map</a>
       <a href="${url("/feed.xml")}" type="application/atom+xml">rss</a>
     </nav>
-    <time class="jx-footer__stamp" datetime="${new Date().toISOString().slice(0,10)}" lang="en">${new Date().toISOString().slice(0,10).replace(/-/g, "·")}</time>
+    <time class="jx-footer__stamp" datetime="${new Date().toISOString()}" lang="en" title="构建时间 (UTC)">${new Date().toISOString().slice(0,16).replace("T", " · ")}</time>
   </footer>`;
 }
 
