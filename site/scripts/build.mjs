@@ -800,7 +800,28 @@ function buildTopicLanding(t, notes) {
       <td class="cell-venue">${n.venue || ""}</td>
     </tr>`;
   }
-  body += `</tbody></table></section></main>`;
+  body += `</tbody></table></section>`;
+
+  // 主题间 prev/next
+  const idx = TOPIC_ORDER.findIndex(x => x.id === t.id);
+  const prevT = idx > 0 ? TOPIC_ORDER[idx - 1] : null;
+  const nextT = idx < TOPIC_ORDER.length - 1 ? TOPIC_ORDER[idx + 1] : null;
+  if (prevT || nextT) {
+    body += `<nav class="prev-next-nav" style="margin-top:3rem">
+      ${prevT ? `<a class="pn-card pn-prev" href="${url(`/topics/${prevT.id}/`)}">
+        <span class="pn-dir">← 上一主题</span>
+        <span class="pn-title">${prevT.roman}. ${prevT.label}</span>
+        <span class="pn-tldr">${prevT.subtitle}</span>
+      </a>` : `<div class="pn-card pn-empty"></div>`}
+      ${nextT ? `<a class="pn-card pn-next" href="${url(`/topics/${nextT.id}/`)}">
+        <span class="pn-dir">下一主题 →</span>
+        <span class="pn-title">${nextT.roman}. ${nextT.label}</span>
+        <span class="pn-tldr">${nextT.subtitle}</span>
+      </a>` : `<div class="pn-card pn-empty"></div>`}
+    </nav>`;
+  }
+
+  body += `</main>`;
 
   return page({ title: `${t.label} — Embodied AI Reading`, body, active: "topics" });
 }
