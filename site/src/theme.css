@@ -2386,3 +2386,41 @@ html.dark-theme body::after {
   font-weight: 700;
   text-align: right;
 }
+
+/* === auto-mark toast === */
+.auto-mark-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(2rem);
+  background: var(--olive);
+  color: var(--paper);
+  padding: 0.7rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  letter-spacing: 0.04em;
+  border-radius: 2px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.25s;
+}
+.auto-mark-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.auto-mark-toast button {
+  background: transparent;
+  border: 1px solid var(--paper);
+  color: var(--paper);
+  padding: 0.2em 0.6em;
+  font-family: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.auto-mark-toast button:hover { background: var(--paper); color: var(--olive); }
+@media print { .auto-mark-toast { display: none; } }

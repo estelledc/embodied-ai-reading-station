@@ -241,10 +241,48 @@
     window.addEventListener("eai:read-changed", render);
   }
 
+  function bindAutoMarkOnScroll() {
+    // 在论文页：当 endmark ◼ 进入视口时自动标记已读（如果还没）
+    const endmark = document.querySelector(".note-content .endmark");
+    if (!endmark) return;
+    const btn = document.querySelector(".read-btn[data-slug]");
+    if (!btn) return;
+    const slug = btn.dataset.slug;
+    if (!slug || window.EAI_READ.has(slug)) return;
+    let triggered = false;
+    const obs = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && !triggered) {
+          triggered = true;
+          window.EAI_READ.mark(slug);
+          // 显示一个轻量 toast
+          const toast = document.createElement("div");
+          toast.className = "auto-mark-toast";
+          toast.innerHTML = `✓ 已自动标记为已读 <button type="button" aria-label="撤销">撤销</button>`;
+          document.body.appendChild(toast);
+          requestAnimationFrame(() => toast.classList.add("show"));
+          const undoBtn = toast.querySelector("button");
+          undoBtn.addEventListener("click", () => {
+            window.EAI_READ.unmark(slug);
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 300);
+          });
+          setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 300);
+          }, 5000);
+          obs.disconnect();
+        }
+      }
+    }, { threshold: 0.5 });
+    obs.observe(endmark);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".read-btn[data-slug]").forEach(bindButton);
     bindCards();
     bindStats();
     bindNextPick();
+    bindAutoMarkOnScroll();
   });
 })();
