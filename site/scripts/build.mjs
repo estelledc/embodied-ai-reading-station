@@ -138,6 +138,7 @@ function masthead(active) {
     { href: url("/glossary/"), label: "Glossary", id: "glossary" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/tags/"), label: "Tags", id: "tags" },
+    { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -720,6 +721,75 @@ function buildTagPage(tag, notes) {
     </table>
   </main>`;
   return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+}
+
+// --- tag co-occurrence heatmap ---------------------------------------------
+function buildHeatmap(notes) {
+  // 收集所有 tag
+  const tagCounts = new Map();
+  for (const n of notes) for (const t of (n.tags || [])) tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+  const tags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]).map(([t]) => t);
+
+  // 共现矩阵
+  const co = new Map();
+  function key(a, b) { return a < b ? `${a}|${b}` : `${b}|${a}`; }
+  for (const n of notes) {
+    const ts = n.tags || [];
+    for (let i = 0; i < ts.length; i++) {
+      for (let j = i + 1; j < ts.length; j++) {
+        co.set(key(ts[i], ts[j]), (co.get(key(ts[i], ts[j])) || 0) + 1);
+      }
+    }
+  }
+  let maxCo = 0;
+  for (const v of co.values()) if (v > maxCo) maxCo = v;
+
+  // 构造单元格
+  const N = tags.length;
+  const cells = [];
+  for (let i = 0; i < N; i++) {
+    for (let j = 0; j < N; j++) {
+      let count;
+      if (i === j) count = tagCounts.get(tags[i]);
+      else count = co.get(key(tags[i], tags[j])) || 0;
+      const intensity = i === j ? Math.min(1, count / Math.max(...tagCounts.values()))
+                                : (maxCo > 0 ? count / maxCo : 0);
+      cells.push({ i, j, count, intensity, ti: tags[i], tj: tags[j] });
+    }
+  }
+
+  const SIZE = 28;
+  const PAD = 130;
+  const W = PAD + N * SIZE + 20;
+  const H = PAD + N * SIZE + 20;
+
+  let body = `<main class="shell" style="max-width:none;padding:1.5rem">
+    <span class="eyebrow">Heatmap · 标签共现矩阵</span>
+    <h1><em>${N} × ${N}</em> 共现强度。</h1>
+    <p style="font-size:1.05rem;line-height:1.55;color:var(--ink-soft);max-width:48ch">
+      格子越深，两个 tag 共同出现的论文越多。对角线 = 该 tag 自身论文数。看这页能发现"谁经常和谁一起出现"——比如 transformer × VLA 高，RF × tactile 几乎为零。
+    </p>
+    <div style="overflow-x:auto;margin-top:2rem">
+      <svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" style="max-width:100%">
+        ${tags.map((t, i) => `<text x="${PAD - 6}" y="${PAD + i * SIZE + SIZE / 2 + 4}" text-anchor="end" font-family="var(--font-mono)" font-size="11" fill="var(--ink-mute)">${t}</text>`).join("")}
+        ${tags.map((t, i) => `<g transform="translate(${PAD + i * SIZE + SIZE / 2}, ${PAD - 6}) rotate(-45)"><text font-family="var(--font-mono)" font-size="11" fill="var(--ink-mute)">${t}</text></g>`).join("")}
+        ${cells.map(c => {
+          const x = PAD + c.j * SIZE;
+          const y = PAD + c.i * SIZE;
+          const fillColor = c.i === c.j
+            ? `rgba(233, 185, 74, ${c.intensity})`  // mustard 对角线
+            : `rgba(237, 111, 92, ${c.intensity})`; // coral 共现
+          return `<rect x="${x}" y="${y}" width="${SIZE - 1}" height="${SIZE - 1}" fill="${fillColor}" stroke="var(--paper-dark)" stroke-width="0.5">
+            <title>${c.ti}${c.i === c.j ? "" : " × " + c.tj}: ${c.count}</title>
+          </rect>${c.count >= 3 ? `<text x="${x + SIZE / 2}" y="${y + SIZE / 2 + 3}" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink)">${c.count}</text>` : ""}`;
+        }).join("")}
+      </svg>
+    </div>
+    <p style="margin-top:1.5rem;color:var(--ink-faint);font-size:0.85rem;font-family:var(--font-mono)">
+      ★ 对角线 mustard = 该 tag 论文数 / 非对角 coral = 共现数 / 数字 ≥3 才显示
+    </p>
+  </main>`;
+  return page({ title: "Heatmap — Embodied AI Reading", body, active: "heatmap" });
 }
 
 // --- 404 page ---------------------------------------------------------------
@@ -1427,6 +1497,9 @@ function build() {
 
   // graph
   write(path.join(DIST, "graph", "index.html"), buildGraph(notes));
+
+  // tag co-occurrence heatmap
+  write(path.join(DIST, "heatmap", "index.html"), buildHeatmap(notes));
 
   // tags
   write(path.join(DIST, "tags", "index.html"), buildTagsIndex(notes));
