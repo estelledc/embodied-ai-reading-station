@@ -172,17 +172,50 @@
       sim.alpha(1).restart();
     }
 
+    // === URL hash 同步 ===
+    function readHash() {
+      const h = location.hash.replace(/^#/, "");
+      const out = { layout: "force", q: "" };
+      if (!h) return out;
+      h.split("&").forEach(p => {
+        const [k, v] = p.split("=");
+        if (k === "layout" && ["force", "cluster", "timeline"].includes(v)) out.layout = v;
+        if (k === "q") out.q = decodeURIComponent(v || "");
+      });
+      return out;
+    }
+    function writeHash(state) {
+      const parts = [];
+      if (state.layout && state.layout !== "force") parts.push("layout=" + state.layout);
+      if (state.q) parts.push("q=" + encodeURIComponent(state.q));
+      const h = parts.length ? "#" + parts.join("&") : "";
+      if (location.hash !== h) history.replaceState(null, "", location.pathname + location.search + h);
+    }
+
+    const initial = readHash();
+
     document.querySelectorAll(".gc-btn[data-layout]").forEach(btn => {
       btn.addEventListener("click", () => {
         document.querySelectorAll(".gc-btn[data-layout]").forEach(b => b.classList.remove("is-active"));
         btn.classList.add("is-active");
         applyLayout(btn.dataset.layout);
+        const cur = readHash();
+        cur.layout = btn.dataset.layout;
+        writeHash(cur);
       });
+      if (btn.dataset.layout === initial.layout) {
+        document.querySelectorAll(".gc-btn[data-layout]").forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        applyLayout(initial.layout);
+      }
     });
 
     // === 节点搜索 ===
     const searchInput = document.getElementById("graph-search");
     if (searchInput) {
+      if (initial.q) {
+        searchInput.value = initial.q;
+      }
       let raf = null;
       function applySearch() {
         raf = null;
@@ -201,8 +234,15 @@
       }
       searchInput.addEventListener("input", () => {
         if (raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(applySearch);
+        raf = requestAnimationFrame(() => {
+          applySearch();
+          const cur = readHash();
+          cur.q = searchInput.value.trim();
+          writeHash(cur);
+        });
       });
+      // 初始已有 query → 立即应用
+      if (initial.q) applySearch();
     }
 
     // === 已读节点视觉 ===
