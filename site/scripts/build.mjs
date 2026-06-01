@@ -1992,6 +1992,26 @@ function buildAbout(notes = []) {
         <li><strong>原论文 PDF + 论文 figure 图</strong>: 版权归原作者，本站只作学习摘要</li>
         <li><strong>codex 生成图片</strong>: CC BY 4.0（同笔记）</li>
       </ul>
+
+      <h2>Contact / 反馈</h2>
+      <p>有几种方式联系：</p>
+      <ul>
+        <li><strong>笔记错误 / 想加论文 / 想改风格</strong>：<a href="https://github.com/estelledc/embodied-ai-reading-station/issues/new">GitHub issue</a></li>
+        <li><strong>修正建议（你是原作者）</strong>：同上 issue 或 PR；引用论文 slug 即可</li>
+        <li><strong>讨论 / 想法</strong>：<a href="https://github.com/estelledc/embodied-ai-reading-station/discussions">GitHub Discussions</a></li>
+      </ul>
+      <p style="color:var(--ink-soft);font-size:0.9rem">这是个人项目，不保证回复速度。但每个 issue 都会读。</p>
+
+      <h2>Cite this site</h2>
+      <p>整站作为参考资料引用：</p>
+      <pre style="background:var(--bone);border:1px solid var(--paper-dark);padding:0.8rem 1rem;font-family:var(--font-mono);font-size:0.78rem;overflow-x:auto">@misc{embodied_ai_reading_station,
+  title  = {Embodied AI Reading Station},
+  author = {Jason},
+  year   = {2026},
+  url    = {https://estelledc.github.io/embodied-ai-reading-station/},
+  note   = {156 readable Chinese notes on embodied AI papers}
+}</pre>
+      <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
   </main>`;
   return page({ title: "About — Embodied AI Reading", body, active: "about" });
