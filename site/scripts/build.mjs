@@ -136,6 +136,7 @@ function masthead(active) {
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/glossary/"), label: "Glossary", id: "glossary" },
+    { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -716,6 +717,61 @@ ${entries.join("\n")}
 `;
 }
 
+// --- graph page (force-directed) --------------------------------------------
+function buildGraph(notes) {
+  // 构造图数据：每篇笔记一个节点，按 topic 着色；同 topic 内 era 升序两两连边
+  const nodes = notes.map(n => ({
+    id: n.slug,
+    title: n.title.split(":")[0].trim(),
+    topic: n.topic,
+    topicLabel: n.topicLabel,
+    era: n.era || "classic",
+    year: n.year || null,
+    num: n.num,
+    difficulty: (n.difficulty || "").length || 2,
+    tldr: (n.tldr || "").slice(0, 80),
+    url: url(`/papers/${n.slug}/`),
+  }));
+  const links = [];
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  for (const t of TOPIC_ORDER) {
+    const inTopic = nodes.filter(n => n.topic === t.id).sort((a, b) => {
+      const ea = eraRank[a.era] - eraRank[b.era];
+      if (ea !== 0) return ea;
+      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
+    });
+    for (let i = 0; i < inTopic.length - 1; i++) {
+      links.push({ source: inTopic[i].id, target: inTopic[i + 1].id, kind: "topic-chain" });
+    }
+  }
+  // 跨主题连：相邻 topic 的 founder 节点互连，串起'谁先有'
+  for (let i = 0; i < TOPIC_ORDER.length - 1; i++) {
+    const a = nodes.find(n => n.topic === TOPIC_ORDER[i].id && n.era === "founder");
+    const b = nodes.find(n => n.topic === TOPIC_ORDER[i + 1].id && n.era === "founder");
+    if (a && b) links.push({ source: a.id, target: b.id, kind: "cross-topic" });
+  }
+
+  const data = { nodes, links };
+  const body = `<main class="shell" style="max-width:none;padding:1.5rem 1.5rem 0">
+    <span class="eyebrow">Graph · 论文关系图</span>
+    <h1 style="margin-bottom:0.5rem">${nodes.length} 个<em>节点</em>，${links.length} 条<em>连线</em>。</h1>
+    <p style="color:var(--ink-soft);max-width:46ch;line-height:1.5">同主题按 era 串成链；不同主题的祖师爷之间也有链。颜色 = 主题；大小 = 难度；hover 看一句话简介；点击跳转笔记。</p>
+    <div id="graph-legend" class="graph-legend">${TOPIC_ORDER.map(t => `<span class="legend-item" data-topic="${t.id}"><span class="legend-dot" style="background:var(--topic-${t.id})"></span>${t.roman}. ${t.label}</span>`).join("")}</div>
+    <div id="graph-container" style="width:100%;height:75vh;min-height:520px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">
+      <svg id="graph-svg" width="100%" height="100%"></svg>
+      <div id="graph-tooltip" class="graph-tooltip" hidden></div>
+    </div>
+  </main>
+  <script id="graph-data" type="application/json">${JSON.stringify(data)}</script>`;
+  return page({
+    title: "Graph — Embodied AI Reading",
+    body,
+    active: "graph",
+    extraHead: `<script src="https://d3js.org/d3.v7.min.js" defer></script>
+    <script src="${url("/graph.js")}" defer></script>`,
+  });
+}
+
 // --- timeline page ----------------------------------------------------------
 function buildTimeline(notes) {
   // 按年聚合
@@ -1022,6 +1078,7 @@ function build() {
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
   copy(path.join(SITE, "src", "reading-progress.js"), path.join(DIST, "reading-progress.js"));
   copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
+  copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");
@@ -1053,6 +1110,9 @@ function build() {
   // glossary
   const glossaryHtml = buildGlossary(notes);
   if (glossaryHtml) write(path.join(DIST, "glossary", "index.html"), glossaryHtml);
+
+  // graph
+  write(path.join(DIST, "graph", "index.html"), buildGraph(notes));
 
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());

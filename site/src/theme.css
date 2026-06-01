@@ -1671,3 +1671,46 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   letter-spacing: 0.06em;
   color: var(--coral);
 }
+
+/* === graph === */
+.graph-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 1rem 0 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed var(--paper-dark);
+}
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: color 0.12s;
+}
+.legend-item:hover { color: var(--ink); }
+.legend-dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  display: inline-block;
+}
+.graph-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.6rem 0.8rem;
+  border-radius: 2px;
+  max-width: 280px;
+  font-size: 0.85rem;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.tt-title { font-family: var(--font-display); font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
+.tt-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--mustard); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
+.tt-tldr { font-size: 0.82rem; line-height: 1.4; opacity: 0.9; }
