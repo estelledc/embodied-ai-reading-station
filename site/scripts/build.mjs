@@ -1630,6 +1630,23 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
 
     ${navCardsHtml}
 
+    <details class="cite-block">
+      <summary>引用本笔记 / Cite this note</summary>
+      <div class="cite-content">
+        <div class="cite-tabs">
+          <span class="cite-tab-label">BibTeX</span>
+        </div>
+        <pre class="cite-code">@misc{eai_${note.slug.replace(/-/g, "_")}_${note.year || "2026"},
+  title  = {${note.title}},
+  author = {Jason},
+  year   = {${note.year || 2026}},
+  note   = {Embodied AI Reading Station — readable note},
+  url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}
+}</pre>
+        <button class="cite-copy" type="button" data-cite-target="cite-${note.slug}">复制 BibTeX</button>
+      </div>
+    </details>
+
     ${backlinksHtml}
 
     <hr class="ornament" style="margin-top:4rem"/>

@@ -90,3 +90,32 @@
   window.addEventListener("resize", update);
   update();
 })();
+
+// === cite copy button ===
+(() => {
+  document.querySelectorAll(".cite-copy").forEach(btn => {
+    const block = btn.closest(".cite-block");
+    if (!block) return;
+    const code = block.querySelector(".cite-code");
+    if (!code) return;
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(code.textContent.trim());
+        btn.classList.add("copied");
+        const orig = btn.textContent;
+        btn.textContent = "✓ 已复制";
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          btn.textContent = orig;
+        }, 1400);
+      } catch {
+        // fallback: 选中文本
+        const r = document.createRange();
+        r.selectNodeContents(code);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(r);
+      }
+    });
+  });
+})();

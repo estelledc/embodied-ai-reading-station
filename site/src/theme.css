@@ -2613,3 +2613,66 @@ html.dark-theme body::after {
   .rv-card:last-child { border-bottom: none; }
 }
 @media print { .related-views { display: none; } }
+
+/* === cite block === */
+.cite-block {
+  margin: 2rem 0 0;
+  border: 1px solid var(--paper-dark);
+  background: var(--bone);
+}
+.cite-block summary {
+  padding: 0.7rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  cursor: pointer;
+  list-style: none;
+}
+.cite-block summary::-webkit-details-marker { display: none; }
+.cite-block summary::before {
+  content: "›";
+  display: inline-block;
+  margin-right: 0.5em;
+  transition: transform 0.15s;
+}
+.cite-block[open] summary::before { transform: rotate(90deg); }
+.cite-content {
+  padding: 0 1.2rem 1.2rem;
+  position: relative;
+}
+.cite-tab-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.cite-code {
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  padding: 0.8rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  overflow-x: auto;
+  margin: 0 0 0.6rem;
+  white-space: pre;
+}
+.cite-copy {
+  background: transparent;
+  border: 1px solid var(--coral);
+  color: var(--coral);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.4em 0.9em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.cite-copy:hover { background: var(--coral); color: var(--paper); }
+.cite-copy.copied { background: var(--olive); border-color: var(--olive); color: var(--paper); }
