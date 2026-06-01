@@ -908,11 +908,20 @@ function injectInlineFigures(slug, body) {
   return result;
 }
 
-function buildNotePage(note) {
+function buildNotePage(note, backlinks = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
   const enrichedBody = injectInlineFigures(note.slug, note.body);
   const html = marked.parse(enrichedBody);
+
+  const backlinksHtml = backlinks.length ? `<aside class="backlinks">
+    <div class="backlinks-title">这些笔记也提到了它 (${backlinks.length})</div>
+    <ul class="backlinks-list">${backlinks.map(b => `<li><a href="${url(`/papers/${b.slug}/`)}">
+      <span class="bl-num">№ ${String(b.num).padStart(2, "0")}</span>
+      <span class="bl-title">${b.title}</span>
+      <span class="bl-topic">${b.topicLabel}</span>
+    </a></li>`).join("")}</ul>
+  </aside>` : "";
 
   const navItems = PAPERS.map(p => {
     const isCurrent = p.slug === note.slug;
@@ -945,6 +954,8 @@ function buildNotePage(note) {
       ${html}
       <p class="endmark">◼</p>
     </div>
+
+    ${backlinksHtml}
 
     <hr class="ornament" style="margin-top:4rem"/>
     <details style="margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-mute)">
@@ -1130,9 +1141,41 @@ function build() {
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());
 
+  // backlinks: 提名匹配 — 先取每篇 title 的 keyword（冒号前 + 已知 abbrev），扫所有正文里出现
+  // keywordOf("RT-1: Robotics Transformer") -> ["RT-1"]
+  // keywordOf("CLIP: ...") -> ["CLIP"]
+  function keywordsOf(note) {
+    const t = note.title || "";
+    const head = t.split(":")[0].trim();
+    const kws = new Set();
+    if (head) kws.add(head);
+    // 同时把 slug 大写化（CLIP / RT-1 等）
+    if (note.slug && note.slug.length >= 3) kws.add(note.slug.toUpperCase().replace(/-/g, "-"));
+    return [...kws].filter(k => k.length >= 3);
+  }
+  const kwIndex = notes.map(n => ({ n, kws: keywordsOf(n) }));
+  const backlinkMap = new Map();
+  for (const src of notes) {
+    const body = src.body || "";
+    const seen = new Set();
+    for (const { n: target, kws } of kwIndex) {
+      if (target.slug === src.slug) continue;
+      for (const kw of kws) {
+        // word-boundary，区分大小写
+        const re = new RegExp(`(?:^|[\\s>(\\[\\*"'，。、])${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=[\\s)\\].,!?:;，。、'\"]|$)`);
+        if (re.test(body)) { seen.add(target.slug); break; }
+      }
+    }
+    for (const ref of seen) {
+      if (!backlinkMap.has(ref)) backlinkMap.set(ref, []);
+      backlinkMap.get(ref).push({ slug: src.slug, num: src.num, title: src.title, topicLabel: src.topicLabel });
+    }
+  }
+
   // each note
   for (const n of notes) {
-    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n));
+    const bl = (backlinkMap.get(n.slug) || []).sort((a, b) => a.num - b.num);
+    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl));
   }
 
   // learn pages from site/content/*.md
