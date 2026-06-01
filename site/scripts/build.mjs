@@ -284,8 +284,9 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   ${extraHead}
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   ${masthead(active)}
-  ${body}
+  <div id="main-content" tabindex="-1">${body}</div>
   ${footerHtml(active)}
   <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
   <script src="${url("/search.js")}" defer></script>

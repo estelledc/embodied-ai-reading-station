@@ -3000,3 +3000,25 @@ html.dark-theme body::after {
 .q-no-tldr, .q-no-tags { background: rgba(233, 185, 74, 0.18); color: #8a6915; }
 .q-no-year, .q-no-venue { background: rgba(110, 116, 72, 0.15); color: var(--olive); }
 .q-no-scene-img, .q-no-method-img { background: var(--bone); color: var(--ink-mute); }
+
+/* === skip link === */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  padding: 0.6em 1.2em;
+  text-decoration: none;
+  z-index: 1000;
+}
+.skip-link:focus {
+  left: 0;
+  top: 0;
+  outline: 2px solid var(--coral);
+  outline-offset: -2px;
+}
+#main-content { outline: none; }
+#main-content:focus-visible { outline: 2px solid var(--coral); outline-offset: -2px; }
