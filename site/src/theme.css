@@ -1714,3 +1714,63 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
 .tt-title { font-family: var(--font-display); font-weight: 700; line-height: 1.2; margin-bottom: 0.3rem; }
 .tt-meta { font-family: var(--font-mono); font-size: 0.7rem; color: var(--mustard); letter-spacing: 0.04em; margin-bottom: 0.4rem; }
 .tt-tldr { font-size: 0.82rem; line-height: 1.4; opacity: 0.9; }
+
+/* === streak === */
+.streak-box {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1.5rem;
+  align-items: center;
+  margin: 1.5rem 0;
+  padding: 1rem 1.4rem;
+  background: var(--paper-warm);
+  border: 1px solid var(--coral);
+  border-left-width: 4px;
+}
+.streak-flame {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.streak-main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.streak-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: var(--coral);
+  line-height: 1;
+}
+.streak-label {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.streak-detail {
+  display: flex;
+  gap: 1.2rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+.streak-detail span:first-child {
+  font-weight: 700;
+  color: var(--ink);
+}
+.streak-detail .dl {
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  margin-left: 0.2em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+@media (max-width: 700px) {
+  .streak-box { grid-template-columns: auto 1fr; }
+  .streak-detail { grid-column: 1 / -1; padding-top: 0.5rem; border-top: 1px dashed var(--paper-dark); }
+}

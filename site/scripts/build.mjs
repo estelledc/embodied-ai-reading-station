@@ -235,6 +235,19 @@ function buildIndex(notes) {
       <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
     </div>
 
+    <aside class="streak-box" id="eai-streak-box" hidden>
+      <div class="streak-flame">·</div>
+      <div class="streak-main">
+        <span class="streak-num" data-streak-days>0</span>
+        <span class="streak-label">天连续阅读</span>
+      </div>
+      <div class="streak-detail">
+        <div><span data-streak-today>0</span> <span class="dl">今日</span></div>
+        <div><span data-streak-week>0</span> <span class="dl">本周</span></div>
+        <div><span data-streak-month>0</span> <span class="dl">本月</span></div>
+      </div>
+    </aside>
+
     <aside class="next-pick" id="eai-next-pick" hidden>
       <div class="next-pick-eyebrow">读完上一篇了？接着这篇 →</div>
       <a class="next-pick-card" href="#">

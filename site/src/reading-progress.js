@@ -18,10 +18,40 @@
     localStorage.setItem(TS_KEY, JSON.stringify(o));
   }
 
+  function dayKey(ts) {
+    const d = new Date(ts);
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+  }
+
+  function computeStreak() {
+    const ts = loadTs();
+    const days = new Set(Object.values(ts).map(dayKey));
+    if (days.size === 0) return { streak: 0, week: 0, month: 0, today: 0 };
+    const today = new Date();
+    let streak = 0;
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(today.getTime() - i * 86400000);
+      if (days.has(dayKey(d))) streak++;
+      else if (i === 0) continue; // today not yet read is OK, streak still counts from yesterday
+      else break;
+    }
+    const weekAgo = today.getTime() - 7 * 86400000;
+    const monthAgo = today.getTime() - 30 * 86400000;
+    const todayKey = dayKey(today);
+    let week = 0, month = 0, todayCount = 0;
+    for (const t of Object.values(ts)) {
+      if (t >= weekAgo) week++;
+      if (t >= monthAgo) month++;
+      if (dayKey(t) === todayKey) todayCount++;
+    }
+    return { streak, week, month, today: todayCount };
+  }
+
   window.EAI_READ = {
     has(slug) { return load().has(slug); },
     list() { return [...load()]; },
     count() { return load().size; },
+    streak() { return computeStreak(); },
     mark(slug) {
       const s = load(); s.add(slug); save(s);
       const t = loadTs(); t[slug] = Date.now(); saveTs(t);
@@ -74,15 +104,39 @@
 
   function bindStats() {
     const el = document.querySelector("[data-eai-read-count]");
-    if (!el) return;
-    function render() {
-      const n = window.EAI_READ.count();
-      el.textContent = n;
+    if (el) {
       const root = el.closest(".stat-cell");
-      if (root) root.style.opacity = n > 0 ? "1" : "0.55";
+      const renderCount = () => {
+        const n = window.EAI_READ.count();
+        el.textContent = n;
+        if (root) root.style.opacity = n > 0 ? "1" : "0.55";
+      };
+      renderCount();
+      window.addEventListener("eai:read-changed", renderCount);
     }
-    render();
-    window.addEventListener("eai:read-changed", render);
+
+    const streakBox = document.getElementById("eai-streak-box");
+    if (streakBox) {
+      const renderStreak = () => {
+        const s = window.EAI_READ.streak();
+        const total = window.EAI_READ.count();
+        if (total === 0) {
+          streakBox.hidden = true;
+          return;
+        }
+        streakBox.hidden = false;
+        streakBox.querySelector("[data-streak-days]").textContent = s.streak;
+        streakBox.querySelector("[data-streak-today]").textContent = s.today;
+        streakBox.querySelector("[data-streak-week]").textContent = s.week;
+        streakBox.querySelector("[data-streak-month]").textContent = s.month;
+        const flame = streakBox.querySelector(".streak-flame");
+        if (flame) {
+          flame.textContent = s.streak >= 7 ? "🔥🔥🔥" : s.streak >= 3 ? "🔥🔥" : s.streak >= 1 ? "🔥" : "·";
+        }
+      };
+      renderStreak();
+      window.addEventListener("eai:read-changed", renderStreak);
+    }
   }
 
   function bindNextPick() {
