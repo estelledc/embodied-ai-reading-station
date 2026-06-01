@@ -1110,6 +1110,15 @@ function buildAbout() {
         <li><strong>VII. Auditory & Acoustic</strong> — 让设备在嘈杂环境中听清</li>
       </ul>
 
+      <h2>Open data</h2>
+      <p>站点数据全部以 JSON 公开，CC BY 4.0 协议。如果你想做二次分析、可视化或 LLM 训练数据：</p>
+      <ul style="font-family:var(--font-mono);font-size:0.9rem">
+        <li><a href="${url("/data/index.json")}">/data/index.json</a> — manifest（计数 + endpoint URL）</li>
+        <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — 156 篇全部元数据 + tldr</li>
+        <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — 21 tag 频次 + 共现矩阵</li>
+        <li><a href="${url("/data/topics.json")}">/data/topics.json</a> — 11 主题 + primer</li>
+      </ul>
+
       <h2>Workflow</h2>
       <ol>
         <li><code>lr pdf bundle paper.pdf</code> — 把 PDF 转成带图 markdown</li>
@@ -1775,6 +1784,73 @@ function build() {
 
   // stats
   write(path.join(DIST, "stats", "index.html"), buildStats(notes));
+
+  // data endpoints (public JSON for research / external use)
+  const SITE_URL_DATA = "https://estelledc.github.io/embodied-ai-reading-station";
+  const papersJson = notes.map(n => ({
+    slug: n.slug,
+    num: n.num,
+    title: n.title,
+    topic: n.topic,
+    topicLabel: n.topicLabel,
+    era: n.era || "classic",
+    year: n.year || null,
+    venue: n.venue || "",
+    difficulty: (n.difficulty || "").length || 2,
+    tldr: n.tldr || "",
+    wordCount: n.wordCount || 0,
+    readingMinutes: n.readingTime || 0,
+    tags: n.tags || [],
+    url: `${SITE_URL_DATA}/papers/${n.slug}/`,
+  }));
+  write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
+
+  // tag co-occurrence
+  const coMatrix = {};
+  const tagFreq = {};
+  for (const n of notes) {
+    for (const t of (n.tags || [])) tagFreq[t] = (tagFreq[t] || 0) + 1;
+    const ts = n.tags || [];
+    for (let i = 0; i < ts.length; i++) {
+      coMatrix[ts[i]] = coMatrix[ts[i]] || {};
+      for (let j = 0; j < ts.length; j++) {
+        if (i === j) continue;
+        coMatrix[ts[i]][ts[j]] = (coMatrix[ts[i]][ts[j]] || 0) + 1;
+      }
+    }
+  }
+  write(path.join(DIST, "data", "tags.json"), JSON.stringify({ frequency: tagFreq, cooccurrence: coMatrix }, null, 2));
+
+  // topics summary
+  const topicsJson = TOPIC_ORDER.map(t => ({
+    id: t.id,
+    roman: t.roman,
+    label: t.label,
+    subtitle: t.subtitle,
+    count: notes.filter(n => n.topic === t.id).length,
+    primer: t.primer || [],
+    url: `${SITE_URL_DATA}/topics/${t.id}/`,
+  }));
+  write(path.join(DIST, "data", "topics.json"), JSON.stringify(topicsJson, null, 2));
+
+  // index manifest
+  const manifest = {
+    site: SITE_URL_DATA,
+    generated: new Date().toISOString(),
+    counts: {
+      papers: notes.length,
+      topics: TOPIC_ORDER.length,
+      tags: Object.keys(tagFreq).length,
+      total_words: notes.reduce((s, n) => s + (n.wordCount || 0), 0),
+    },
+    endpoints: {
+      papers: `${SITE_URL_DATA}/data/papers.json`,
+      tags: `${SITE_URL_DATA}/data/tags.json`,
+      topics: `${SITE_URL_DATA}/data/topics.json`,
+    },
+    license: "CC BY 4.0 — Attribution required",
+  };
+  write(path.join(DIST, "data", "index.json"), JSON.stringify(manifest, null, 2));
 
   // tags
   write(path.join(DIST, "tags", "index.html"), buildTagsIndex(notes));
