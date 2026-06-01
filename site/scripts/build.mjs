@@ -364,8 +364,19 @@ function buildIndex(notes) {
   const total = PAPERS.length;
   const done = notes.filter(n => n.status && n.status !== "stub" && n.status !== "missing").length;
 
+  // 最新 3 commit
+  let lastCommits = "";
+  try {
+    const lines = _execSync(`git -C "${ROOT}" log -3 --pretty=format:'%h|%ar|%s'`, { encoding: "utf8" }).split("\n");
+    lastCommits = lines.map(l => {
+      const [hash, ago, subject] = l.split("|");
+      const cleanSubj = subject.replace(/^(feat|fix|docs|chore|ci|perf|refactor)[:(].*?:\s*/, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      return `<li><span class="lc-ago">${ago}</span> <span class="lc-subject">${cleanSubj.slice(0, 60)}${cleanSubj.length > 60 ? "…" : ""}</span></li>`;
+    }).join("");
+  } catch {}
+
   let body = `<main class="shell">
-    <span class="eyebrow">Filed under · embodied AI · 2026</span>
+    <span class="eyebrow">Filed under · embodied AI · 2026 · ${notes.length} papers</span>
     <div class="hero-grid">
       <div class="hero-text">
         <h1><em>${total} 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
@@ -384,6 +395,12 @@ function buildIndex(notes) {
       <span style="color:var(--coral)">→</span>
       <span>从这里开始 · 学习路径 · 术语字典 · 实战教程</span>
     </a>
+
+    ${lastCommits ? `<aside class="last-commits">
+      <span class="lc-eyebrow">Recently updated ↘</span>
+      <ul>${lastCommits}</ul>
+      <a class="lc-more" href="${url("/changelog/")}">完整 changelog →</a>
+    </aside>` : ""}
 
     <div class="stats-grid">
       <div class="stat-cell"><span class="stat-num">${done}</span><span class="stat-denom"> / ${total}</span><span class="stat-label">papers noted</span></div>

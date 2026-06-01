@@ -3817,3 +3817,46 @@ html.dark-theme body::after {
   line-height: 1.45;
   color: var(--ink-soft);
 }
+
+/* === last commits on home === */
+.last-commits {
+  margin: 2rem 0 0;
+  padding: 1rem 1.2rem;
+  background: var(--bone);
+  border-left: 3px solid var(--olive);
+  font-size: 0.88rem;
+}
+.lc-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+.last-commits ul { list-style: none; padding: 0; margin: 0; }
+.last-commits li {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.2rem 0;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+.lc-ago {
+  flex-shrink: 0;
+  width: 6rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+.lc-subject { color: var(--ink); line-height: 1.4; }
+.lc-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--coral);
+  text-decoration: none;
+}
+.lc-more:hover { text-decoration: underline; }
