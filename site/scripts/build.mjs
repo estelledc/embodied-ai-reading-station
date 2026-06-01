@@ -294,6 +294,7 @@ function buildIndex(notes) {
         <div><span data-streak-week>0</span> <span class="dl">本周</span></div>
         <div><span data-streak-month>0</span> <span class="dl">本月</span></div>
       </div>
+      <button class="streak-export" id="eai-streak-export" type="button" title="导出已读清单为 markdown">↓ 导出</button>
     </aside>
 
     <aside class="next-pick" id="eai-next-pick" hidden>

@@ -115,6 +115,44 @@
       window.addEventListener("eai:read-changed", renderCount);
     }
 
+    const exportBtn = document.getElementById("eai-streak-export");
+    if (exportBtn) {
+      exportBtn.addEventListener("click", () => {
+        const data = document.getElementById("eai-papers-data");
+        if (!data) return;
+        let papers = [];
+        try { papers = JSON.parse(data.textContent); } catch { return; }
+        const read = load();
+        const ts = loadTs();
+        const readPapers = papers.filter(p => read.has(p.slug))
+          .sort((a, b) => (ts[b.slug] || 0) - (ts[a.slug] || 0));
+        const today = new Date().toISOString().slice(0, 10);
+        let md = `# 我的具身 AI 论文阅读清单\n\n`;
+        md += `> Exported from Embodied AI Reading Station · ${today}\n`;
+        md += `> 已读 ${readPapers.length} 篇 / 共 ${papers.length} 篇\n\n`;
+        const byTopic = new Map();
+        for (const p of readPapers) {
+          if (!byTopic.has(p.topic)) byTopic.set(p.topic, []);
+          byTopic.get(p.topic).push(p);
+        }
+        for (const [topic, ps] of byTopic) {
+          md += `## ${topic}\n\n`;
+          for (const p of ps) {
+            const date = ts[p.slug] ? new Date(ts[p.slug]).toISOString().slice(0, 10) : "";
+            md += `- [№ ${String(p.num).padStart(2, "0")} · ${p.title}](https://estelledc.github.io/embodied-ai-reading-station${p.url}) — ${p.tldr || ""}${date ? ` *(读于 ${date})*` : ""}\n`;
+          }
+          md += "\n";
+        }
+        const blob = new Blob([md], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `eai-reading-list-${today}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    }
+
     const streakBox = document.getElementById("eai-streak-box");
     if (streakBox) {
       const renderStreak = () => {

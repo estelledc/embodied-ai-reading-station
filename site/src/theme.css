@@ -2327,3 +2327,20 @@ html.dark-theme body::after {
   pointer-events: none;
 }
 @media print { .scroll-progress { display: none; } }
+
+.streak-export {
+  background: transparent;
+  border: 1px solid var(--coral);
+  color: var(--coral);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  padding: 0.4em 0.8em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.streak-export:hover {
+  background: var(--coral);
+  color: var(--paper);
+}
