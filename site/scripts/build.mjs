@@ -139,6 +139,7 @@ function masthead(active) {
   // 视图（折叠）
   const viewItems = [
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
+    { href: url("/eras/founder/"), label: "Eras", id: "eras" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
@@ -789,6 +790,94 @@ function buildTagPage(tag, notes) {
     </table>
   </main>`;
   return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+}
+
+// --- era landing pages ------------------------------------------------------
+const ERA_INFO = {
+  founder: {
+    label: "祖师爷 · Founder",
+    intro: "每个领域的第一篇——把这个研究方向第一次讲清楚的论文。RT-1 之于 VLA、CLIP 之于 VLM、Diffusion Policy 之于扩散策略。读懂这些，你就掌握了每个分支的'第一性'。",
+    color: "var(--coral)",
+    accent: "rgba(237, 111, 92, 0.12)",
+  },
+  classic: {
+    label: "经典 · Classic",
+    intro: "每个领域里被反复引用、几乎成事实标准的工作。它们不必是第一篇，但是绕不开的。读这一档你能拿到该领域的核心认知。",
+    color: "var(--olive)",
+    accent: "rgba(110, 116, 72, 0.12)",
+  },
+  frontier: {
+    label: "前沿 · Frontier",
+    intro: "2024-2025 还在火热推进的方向。架构试错、规模扩展、模态融合都还没有定论。这一档变化最快——今天的 SOTA 半年后就可能被新方法替代。",
+    color: "var(--mustard)",
+    accent: "rgba(233, 185, 74, 0.18)",
+  },
+};
+
+function buildEraPage(era, notes) {
+  const info = ERA_INFO[era];
+  if (!info) return null;
+  const inEra = notes.filter(n => (n.era || "classic") === era);
+  // 按主题分组，组内按年份升序
+  const byTopic = new Map();
+  for (const n of inEra) {
+    if (!byTopic.has(n.topic)) byTopic.set(n.topic, []);
+    byTopic.get(n.topic).push(n);
+  }
+  for (const arr of byTopic.values()) {
+    arr.sort((a, b) => (Number(a.year) || 9999) - (Number(b.year) || 9999));
+  }
+
+  let body = `<main class="shell">
+    <nav class="breadcrumbs">
+      <a href="${url("/")}">Home</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">${info.label}</span>
+    </nav>
+    <span class="eyebrow">Era</span>
+    <h1 style="color:${info.color}">${info.label}</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">${info.intro}</p>
+
+    <div class="big-stats" style="margin-top:2rem">
+      <div><span class="bs-num" style="color:${info.color}">${inEra.length}</span><span class="bs-label">总篇数</span></div>
+      <div><span class="bs-num" style="color:${info.color}">${byTopic.size}</span><span class="bs-label">覆盖主题</span></div>
+      <div><span class="bs-num" style="color:${info.color}">${Math.min(...inEra.map(n => Number(n.year)).filter(Boolean))}–${Math.max(...inEra.map(n => Number(n.year)).filter(Boolean))}</span><span class="bs-label">年份跨度</span></div>
+      <div><span class="bs-num" style="color:${info.color}">${inEra.reduce((s, n) => s + (n.wordCount || 0), 0).toLocaleString()}</span><span class="bs-label">字</span></div>
+    </div>
+
+    <hr class="ornament"/>`;
+
+  // 三 era 互链
+  body += `<div style="margin:2rem 0;display:flex;gap:0.6rem;font-family:var(--font-mono);font-size:0.78rem">
+    ${["founder", "classic", "frontier"].filter(e => e !== era).map(e => {
+      const ei = ERA_INFO[e];
+      return `<a href="${url(`/eras/${e}/`)}" style="padding:0.5rem 1rem;border:1px solid ${ei.color};color:${ei.color};text-decoration:none">${ei.label} →</a>`;
+    }).join("")}
+  </div>`;
+
+  for (const t of TOPIC_ORDER) {
+    const ns = byTopic.get(t.id);
+    if (!ns || !ns.length) continue;
+    body += `<section style="margin:2.5rem 0">
+      <h2 style="display:flex;align-items:baseline;gap:0.6rem;border-bottom:1px solid var(--paper-dark);padding-bottom:0.4rem">
+        <span class="topic-roman" style="color:${info.color}">${t.roman}</span>
+        <a href="${url(`/topics/${t.id}/`)}" style="color:inherit;text-decoration:none">${t.label}</a>
+        <span style="color:var(--ink-faint);font-weight:400;font-size:0.62em;margin-left:auto">${ns.length} 篇</span>
+      </h2>
+      <ul class="primer-list" style="margin-top:0.8rem">
+        ${ns.map(n => `<li class="primer-item">
+          <span class="primer-num" style="color:${info.color}">${n.year || "?"}</span>
+          <div class="primer-body">
+            <a href="${url(`/papers/${n.slug}/`)}" class="primer-title">${n.title}</a>
+            <span class="primer-meta">${n.venue || ""} ${n.difficulty ? `· ${n.difficulty}` : ""}</span>
+            ${n.tldr ? `<p class="primer-tldr">${n.tldr.slice(0, 140)}${n.tldr.length > 140 ? "…" : ""}</p>` : ""}
+          </div>
+        </li>`).join("")}
+      </ul>
+    </section>`;
+  }
+  body += `</main>`;
+  return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
 }
 
 // --- stats dashboard --------------------------------------------------------
@@ -1784,6 +1873,12 @@ function build() {
 
   // stats
   write(path.join(DIST, "stats", "index.html"), buildStats(notes));
+
+  // eras
+  for (const era of ["founder", "classic", "frontier"]) {
+    const html = buildEraPage(era, notes);
+    if (html) write(path.join(DIST, "eras", era, "index.html"), html);
+  }
 
   // data endpoints (public JSON for research / external use)
   const SITE_URL_DATA = "https://estelledc.github.io/embodied-ai-reading-station";
