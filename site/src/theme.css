@@ -2909,3 +2909,27 @@ html.dark-theme body::after {
   color: var(--paper);
   border-color: var(--ink);
 }
+
+/* === copy markdown button === */
+.copy-md-btn {
+  background: transparent;
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  padding: 0.2em 0.5em;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-left: 0.4rem;
+  transition: all 0.12s;
+}
+.copy-md-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+.copy-md-btn.copied {
+  background: var(--olive);
+  color: var(--paper);
+  border-color: var(--olive);
+}

@@ -1655,6 +1655,7 @@ function injectInlineFigures(slug, body) {
 function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
+  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const enrichedBody = injectInlineFigures(note.slug, note.body);
   const html = marked.parse(enrichedBody);
 
@@ -1712,6 +1713,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
       <span class="dot">·</span>
       <span>${note.status}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
+      <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接">⧉ MD</button>
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
     ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
@@ -1750,7 +1752,6 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
     </div>
     ${outlineHtml}
   </main>`;
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   // 优先 inline scene 图，其次 paper card 图，最后默认 hero
   const sceneImg = path.join(SITE, "src", "images", "inline", `${note.slug}-scene.webp`);
   const cardImg = path.join(SITE, "src", "images", "cards", `${note.slug}.webp`);

@@ -230,3 +230,21 @@
     img.addEventListener("click", () => open(img.currentSrc || img.src, img.alt));
   }
 })();
+
+// === copy markdown link button ===
+(() => {
+  document.querySelectorAll(".copy-md-btn[data-md]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.md);
+        const orig = btn.textContent;
+        btn.textContent = "✓";
+        btn.classList.add("copied");
+        setTimeout(() => {
+          btn.textContent = orig;
+          btn.classList.remove("copied");
+        }, 1100);
+      } catch {}
+    });
+  });
+})();
