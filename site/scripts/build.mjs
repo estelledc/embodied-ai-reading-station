@@ -2711,7 +2711,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
       <span class="dot">·</span>
       <span>${note.difficulty || ""}</span>
       <span class="dot">·</span>
-      <span>${note.status}</span>
+      <span class="status-chip status-${note.status === "deep-read" ? "deep" : note.status === "auto-summary" ? "summary" : "light"}" title="${note.status === "deep-read" ? "精读笔记 · 手写" : note.status === "auto-summary" ? "auto + 校对" : "auto 短摘要"}">${note.status === "deep-read" ? "深度精读" : note.status === "auto-summary" ? "auto 摘要" : "短摘要"}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
       <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接">⧉ MD</button>
       <button class="share-btn" type="button" data-share-title="${note.title.replace(/"/g, "&quot;")}" data-share-url="${SITE_URL}/papers/${note.slug}/" data-share-text="${(note.tldr || "").replace(/"/g, "&quot;").slice(0, 100)}" title="分享">⤴</button>

@@ -4316,3 +4316,17 @@ html.dark-theme body::after {
   color: var(--olive);
   margin-bottom: 0.3rem;
 }
+
+/* === status chip === */
+.status-chip {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15em 0.55em;
+  border-radius: 2px;
+  cursor: help;
+}
+.status-deep { background: var(--coral); color: var(--paper); }
+.status-summary { background: rgba(110, 116, 72, 0.18); color: var(--olive); }
+.status-light { background: var(--bone); color: var(--ink-faint); }
