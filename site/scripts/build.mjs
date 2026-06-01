@@ -2488,6 +2488,20 @@ function build() {
   }));
   write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
 
+  // CSV (R/Pandas 友好)
+  const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url"];
+  function csvEscape(v) {
+    if (v == null) return "";
+    const s = String(v);
+    if (/[",\n]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  }
+  const csvRows = [csvCols.join(",")];
+  for (const p of papersJson) {
+    csvRows.push(csvCols.map(c => csvEscape(c === "tags" ? (p[c] || []).join("|") : p[c])).join(","));
+  }
+  write(path.join(DIST, "data", "papers.csv"), csvRows.join("\n"));
+
   // tag co-occurrence
   const coMatrix = {};
   const tagFreq = {};
@@ -2528,6 +2542,7 @@ function build() {
     },
     endpoints: {
       papers: `${SITE_URL_DATA}/data/papers.json`,
+      papers_csv: `${SITE_URL_DATA}/data/papers.csv`,
       tags: `${SITE_URL_DATA}/data/tags.json`,
       topics: `${SITE_URL_DATA}/data/topics.json`,
     },
