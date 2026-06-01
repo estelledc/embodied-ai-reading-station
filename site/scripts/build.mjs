@@ -2546,6 +2546,8 @@ function copyAssets(notes) {
 }
 
 function build() {
+  const startTime = Date.now();
+  console.log("→ build start");
   // wipe dist
   if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
   ensure(DIST);
@@ -2577,11 +2579,15 @@ function build() {
 
   // load notes
   const notes = loadNotes();
+  console.log(`  loaded ${notes.length} notes`);
 
   // tags：自动推断（必须在所有 build 之前）
   for (const n of notes) {
     n.tags = inferTags(n);
   }
+  const tagSet = new Set();
+  for (const n of notes) (n.tags || []).forEach(t => tagSet.add(t));
+  console.log(`  inferred ${tagSet.size} tags across ${notes.length} notes`);
 
   // index
   write(path.join(DIST, "index.html"), buildIndex(notes));
@@ -2779,6 +2785,7 @@ function build() {
     sortedByTopic.set(t.id, inT);
   }
 
+  console.log(`  built index/topics/timeline/compare/eras/lists/glossary/tags/heatmap/venues/stats/contributors/changelog/random/next/quality/about/graph/404/sitemap.xml/robots.txt/feed.xml/opensearch.xml/data/*`);
   // each note
   // Load content (issues + learn) BEFORE paper pages so we can compute issue mentions
   const CONTENT_DIR = path.join(SITE, "content");
@@ -2833,6 +2840,7 @@ function build() {
     const issuesMentioning = paperIssues.get(n.slug) || [];
     write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning));
   }
+  console.log(`  built ${notes.length} paper pages with backlinks/prev-next/issue badges`);
 
   // 重新生成 stats，这次带 backlinks 数据
   write(path.join(DIST, "stats", "index.html"), buildStats(notes, backlinkMap));
@@ -2905,7 +2913,8 @@ Sitemap: ${SITE_URL}/sitemap.xml
     copyDir(DECK_SRC, deckDst);
   }
 
-  console.log(`✓ Built ${notes.length} note pages → ${DIST}`);
+  const elapsed = Math.round((Date.now() - startTime) / 1000 * 10) / 10;
+  console.log(`✓ Built ${notes.length} note pages in ${elapsed}s → ${DIST}`);
   console.log(`  Open: http://localhost:8080/   (run \`npm run serve\`)`);
 }
 
