@@ -576,6 +576,35 @@ function buildTopicLanding(t, notes) {
   return page({ title: `${t.label} — Embodied AI Reading`, body, active: "topics" });
 }
 
+// --- 404 page ---------------------------------------------------------------
+function build404(notes) {
+  const random6 = [...notes]
+    .filter(n => n.status !== "missing" && n.status !== "stub")
+    .slice(0, 6); // 用前 6 篇当 fallback 推荐
+  const body = `<main class="shell" style="text-align:center;padding-top:5rem;padding-bottom:5rem">
+    <div style="font-family:var(--font-display);font-style:italic;font-weight:800;font-size:9rem;line-height:1;color:var(--coral);margin-bottom:1rem">404</div>
+    <h1 style="margin-top:0">这页<em>没找到</em>。</h1>
+    <p style="font-size:1.15rem;line-height:1.55;color:var(--ink-soft);max-width:42ch;margin:1rem auto 2rem">
+      可能是链接拼错了，可能是页面被重命名了，也可能是这站还没那个内容。下面这几条入口或许能找到你要的。
+    </p>
+    <div style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem">
+      <a href="${url("/")}" style="display:inline-block;padding:0.7rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase">回首页</a>
+      <a href="${url("/topics/")}" style="display:inline-block;padding:0.7rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase">浏览主题</a>
+      <a href="${url("/glossary/")}" style="display:inline-block;padding:0.7rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase">查术语字典</a>
+      <a href="${url("/graph/")}" style="display:inline-block;padding:0.7rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase">看关系图</a>
+    </div>
+    <hr class="ornament"/>
+    <p class="eyebrow" style="margin-top:2rem">或者直接挑一篇读 ↘</p>
+    <div class="papers-grid" style="margin-top:1.5rem;text-align:left">
+      ${random6.map(n => `<article class="paper-card" style="min-height:auto;padding:1rem">
+        <h3 style="margin:0 0 0.4rem"><a href="${url(`/papers/${n.slug}/`)}">${n.title.split(":")[0]}</a></h3>
+        <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);line-height:1.4">${(n.tldr || "").slice(0, 80)}…</p>
+      </article>`).join("")}
+    </div>
+  </main>`;
+  return page({ title: "404 — 这页没找到 — Embodied AI Reading", body, active: "" });
+}
+
 // --- about page -------------------------------------------------------------
 function buildAbout() {
   const body = `<main class="note-shell">
@@ -1272,6 +1301,32 @@ function build() {
 
     // RSS / Atom feed
     write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
+
+    // 404
+    write(path.join(DIST, "404.html"), build404(notes));
+
+    // sitemap
+    const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
+    const today = new Date().toISOString().slice(0, 10);
+    const urls = [
+      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/", "/issues/", "/about/", "/learn/", "/deck/",
+      ...TOPIC_ORDER.map(t => `/topics/${t.id}/`),
+      ...notes.map(n => `/papers/${n.slug}/`),
+      ...issuePages.map(p => `/issues/${p.slug.replace("issue-", "")}/`),
+      ...learnPages.map(p => `/learn/${p.slug}/`),
+    ];
+    const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+</urlset>
+`;
+    write(path.join(DIST, "sitemap.xml"), sitemap);
+
+    // robots.txt
+    write(path.join(DIST, "robots.txt"), `User-agent: *
+Allow: /
+Sitemap: ${SITE_URL}/sitemap.xml
+`);
   }
 
   // assets
