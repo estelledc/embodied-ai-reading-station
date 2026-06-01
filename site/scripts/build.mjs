@@ -147,6 +147,7 @@ function masthead(active) {
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/eras/founder/"), label: "Eras", id: "eras" },
     { href: url("/lists/"), label: "Lists", id: "lists" },
+    { href: url("/changelog/"), label: "Changelog", id: "changelog" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
@@ -978,6 +979,64 @@ function buildEraPage(era, notes) {
   }
   body += `</main>`;
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+}
+
+// --- changelog (从 git log 自动生成) ---------------------------------------
+import { execSync as _execSync } from "node:child_process";
+function buildChangelog() {
+  let lines = "";
+  try {
+    const out = _execSync(
+      `git -C "${ROOT}" log -50 --pretty=format:'%h|%ad|%s' --date=short`,
+      { encoding: "utf8" }
+    );
+    lines = out;
+  } catch (e) {
+    return null; // 仓库外或 git 不可用
+  }
+  const entries = lines.split("\n").filter(Boolean).map(l => {
+    const [hash, date, subject] = l.split("|");
+    let kind = "other";
+    if (/^feat[:(]/.test(subject)) kind = "feat";
+    else if (/^fix[:(]/.test(subject)) kind = "fix";
+    else if (/^docs?[:(]/.test(subject)) kind = "docs";
+    else if (/^refactor[:(]/.test(subject)) kind = "refactor";
+    else if (/^perf[:(]/.test(subject)) kind = "perf";
+    else if (/^chore[:(]/.test(subject)) kind = "chore";
+    else if (/^ci[:(]/.test(subject)) kind = "ci";
+    return { hash, date, subject, kind };
+  });
+
+  // 按日期分组
+  const byDate = new Map();
+  for (const e of entries) {
+    if (!byDate.has(e.date)) byDate.set(e.date, []);
+    byDate.get(e.date).push(e);
+  }
+  const dates = [...byDate.keys()].sort((a, b) => b.localeCompare(a));
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Changelog · 站点更新日志</span>
+    <h1><em>${entries.length} 个</em>提交，最近 ${dates.length} 天。</h1>
+    <p style="color:var(--ink-soft);max-width:48ch;line-height:1.55">
+      自动从 git log 生成。前缀 feat / fix / docs / perf 标签自动着色。
+    </p>
+    <hr class="ornament"/>`;
+
+  for (const date of dates) {
+    body += `<section class="cl-day">
+      <h2 class="cl-date">${date}</h2>
+      <ul class="cl-list">
+        ${byDate.get(date).map(e => `<li class="cl-item">
+          <span class="cl-tag cl-tag-${e.kind}">${e.kind}</span>
+          <span class="cl-subject">${e.subject.replace(/^\w+[:(].*?:\s*/, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</span>
+          <a class="cl-hash" href="https://github.com/estelledc/embodied-ai-reading-station/commit/${e.hash}">${e.hash}</a>
+        </li>`).join("")}
+      </ul>
+    </section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Changelog — Embodied AI Reading", body, active: "changelog" });
 }
 
 // --- quality dashboard (作者用，不放主导航) ---------------------------------
@@ -2084,6 +2143,10 @@ function build() {
 
   // quality (作者用，不在导航)
   write(path.join(DIST, "quality", "index.html"), buildQuality(notes));
+
+  // changelog
+  const cl = buildChangelog();
+  if (cl) write(path.join(DIST, "changelog", "index.html"), cl);
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {

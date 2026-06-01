@@ -3158,3 +3158,61 @@ html.dark-theme body::after {
 }
 .share-btn:hover { border-color: var(--coral); color: var(--coral); }
 .share-btn.copied { background: var(--olive); color: var(--paper); border-color: var(--olive); }
+
+/* === changelog === */
+.cl-day { margin: 1.8rem 0; }
+.cl-date {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--coral);
+  margin: 0 0 0.6rem;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--paper-dark);
+  padding-bottom: 0.3rem;
+}
+.cl-list { list-style: none; padding: 0; margin: 0; }
+.cl-item {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap: 0.8rem;
+  align-items: baseline;
+  padding: 0.4rem 0;
+  border-bottom: 1px dashed var(--paper-dark);
+}
+.cl-item:last-child { border-bottom: none; }
+.cl-tag {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.15em 0.5em;
+  border-radius: 2px;
+  text-align: center;
+  background: var(--bone);
+  color: var(--ink-mute);
+}
+.cl-tag-feat { background: rgba(110, 116, 72, 0.15); color: var(--olive); }
+.cl-tag-fix { background: rgba(237, 111, 92, 0.15); color: var(--coral); }
+.cl-tag-perf { background: rgba(233, 185, 74, 0.18); color: #8a6915; }
+.cl-tag-docs { background: rgba(62, 98, 128, 0.15); color: #3e6280; }
+.cl-tag-ci { background: rgba(108, 96, 104, 0.15); color: #6c6068; }
+.cl-subject {
+  font-size: 0.92rem;
+  color: var(--ink);
+  line-height: 1.4;
+  word-break: break-word;
+}
+.cl-hash {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.cl-hash:hover { color: var(--coral); }
+@media (max-width: 700px) {
+  .cl-item { grid-template-columns: 1fr auto; }
+  .cl-tag { grid-row: 1; }
+}
