@@ -235,6 +235,28 @@ function buildIndex(notes) {
       <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
     </div>
 
+    <section class="whats-new">
+      <div class="wn-eyebrow">最新 ↘ what's new</div>
+      <div class="wn-grid">
+        <a class="wn-card wn-issue" href="${url("/issues/03/")}">
+          <div class="wn-tag">Issue Nº III</div>
+          <div class="wn-title">A field, drawn</div>
+          <div class="wn-tldr">312 张内嵌插画 + 156 篇文字优化 + Timeline 演化时间线</div>
+        </a>
+        ${(() => {
+          const recent = [...notes]
+            .filter(n => n.status !== "missing" && n.status !== "stub")
+            .sort((a, b) => (b.num || 0) - (a.num || 0))
+            .slice(0, 4);
+          return recent.map(n => `<a class="wn-card" href="${url(`/papers/${n.slug}/`)}" data-slug="${n.slug}">
+            <div class="wn-tag">${n.topicLabel}</div>
+            <div class="wn-title">${n.title.split(":")[0]}</div>
+            <div class="wn-tldr">${(n.tldr || "").slice(0, 70)}${(n.tldr || "").length > 70 ? "…" : ""}</div>
+          </a>`).join("");
+        })()}
+      </div>
+    </section>
+
     <aside class="streak-box" id="eai-streak-box" hidden>
       <div class="streak-flame">·</div>
       <div class="streak-main">
