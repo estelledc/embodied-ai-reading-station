@@ -1822,6 +1822,7 @@ function buildIssueIndex(issues) {
 }
 
 function buildIssuePage(issue, notes) {
+  headingIds.clear();
   const html = marked.parse(issue.body);
   // 把 13 篇按 num 排序生成 plate 网格
   const plates = notes.map(n => `<a class="issue-plate" href="${url(`/papers/${n.slug}/`)}">
@@ -1830,7 +1831,13 @@ function buildIssuePage(issue, notes) {
     <span class="plate-title">${n.title}</span>
   </a>`).join("");
 
-  const body = `<main class="issue-cover">
+  const outline = extractOutline(issue.body);
+  const outlineHtml = outline.length >= 4 ? `<aside class="outline">
+    <div class="outline-title">On this page</div>
+    <ul>${outline.map(o => `<li><a href="#${o.id}">${o.text}</a></li>`).join("")}</ul>
+  </aside>` : "";
+
+  const body = `<main class="issue-cover ${outlineHtml ? "has-outline" : ""}">
     <div class="issue-masthead">
       <span class="issue-title">Embodied AI Reading Station</span>
       <span>Issue Nº ${issue.issueNumber}</span>
@@ -1838,7 +1845,8 @@ function buildIssuePage(issue, notes) {
     </div>
     <div class="issue-num">${issue.issueNumber}</div>
     <h1 class="issue-headline">${issue.title.replace(/^Issue Nº \w+ — /, "")}</h1>
-    <div class="issue-editorial">${html}</div>
+    <div class="issue-editorial note-content" data-pagefind-body>${html}</div>
+    ${outlineHtml}
     <hr class="ornament"/>
     <h2 style="font-family:var(--font-mono);font-size:0.9rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute);margin:2rem 0 1rem">本期论文 · 13 plates</h2>
     <div class="issue-toc">${plates}</div>
