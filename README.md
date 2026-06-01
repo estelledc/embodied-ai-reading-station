@@ -1,71 +1,145 @@
-## Embodied AI Reading Station
+# Embodied AI Reading Station
 
-> 一个把"机器人 + AI"顶会论文翻译成入门读者能读懂版本的学习站。
+> **156 篇具身智能顶会论文，用零基础也能读懂的中文重写。**
+> 从 CLIP 到 π0，11 主题全景，零术语堆叠，30 分钟读一篇。
 
-### 这站想做什么
+🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
 
-这里收了 13 篇关于"让机器看懂世界、听懂指令、动起手来"的研究论文。它们原文都很硬：满屏数学符号、英文缩写、看一页要查二十次。
+---
 
-我做的事是：把每篇论文重写一遍，让一个**会基础数学和物理常识**的人就能看完。不会预先假设你懂任何"AI 黑话"。第一次出现的术语会用一句话解释，并配一个生活类比。
+## 这站是什么
 
-读到这里你应该懂了：这是一个面向入门读者的论文翻译站。
+具身智能（Embodied AI）= 让 AI 有身体地融入世界——看见、听懂、决定、动手。这站把 156 篇顶会论文（CoRL/RSS/NeurIPS/ICML/MobiCom/CVPR）翻译成入门读者也能跟下来的语言：
 
-### 怎么用
+- ✅ 第一次出现的术语必有一句话定义 + 生活类比
+- ✅ 公式后面必有人话翻译
+- ✅ 平均每篇 4000 字，30 分钟读完
+- ✅ 关键数字配生活语境（"13 万段示范" = "每天 8 小时连续示范 5 个月"）
 
-**第一次来**：先翻 `/learn/`。
+## 给读者
 
-那里有"零基础前置课"——把后面会反复出现的几个概念先讲透：
+### 不知道从哪开始？
 
-- **向量**：高中学过的那个，用 (a, b, c) 表示一个方向。两个向量夹角越小，越"像"。
-- **矩阵**：一张数字表格，可以理解成 Excel 的一块区域；表格之间相乘有"行列要对齐"的规则。
-- **概率分布**：一件事发生的可能性怎么散布在所有结果上，比如掷骰子是 1-6 各 1/6。
-- **模型**：一个把输入变成输出的"函数"，输入一张图，输出"这是猫"。
-- **Loss（损失）**：模型答题的扣分总和——越小越好。模型学习的目标就是想办法降这个分。
-- **梯度下降**：像下山找最低点，每一步都往最陡的下坡方向迈一小步，直到走不动为止。这就是模型"学习"的过程。
+- **[30 天学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)** — Week 1 VLM → Week 2 VLA → Week 3 模仿+扩散 → Week 4 周边
+- **[新人 FAQ](https://estelledc.github.io/embodied-ai-reading-station/learn/faq/)** — 12 题最常被问
+- **[5 套主题阅读包](https://estelledc.github.io/embodied-ai-reading-station/lists/)** — 50-90 分钟一包
 
-**前置课读完**，再去 `/papers/` 选一篇感兴趣的：想看机器人能不能听懂"把可乐递给我"，就读 SayCan；想看 AI 怎么"看见"3D 形状，就读 3DShape2VecSet；想看 WiFi 信号能不能当眼睛用，就读 RF-SLAM。
+### 想跨主题看？
 
-每篇论文笔记都有同样的结构：
+- **[Compare](https://estelledc.github.io/embodied-ai-reading-station/compare/)** — 同主题 era 并排对比表
+- **[Timeline](https://estelledc.github.io/embodied-ai-reading-station/timeline/)** — 2011→2025 演化时间线
+- **[Graph](https://estelledc.github.io/embodied-ai-reading-station/graph/)** — D3 力导图（Force / Cluster / Timeline 三种布局）
+- **[Heatmap](https://estelledc.github.io/embodied-ai-reading-station/heatmap/)** — 21 tag 共现矩阵
+- **[Eras](https://estelledc.github.io/embodied-ai-reading-station/eras/founder/)** — 祖师爷 / 经典 / 前沿三档
 
-- 这篇论文想解决什么问题（用一个生活场景说）
-- 之前的人怎么做、为什么不够好
-- 这篇论文的新点子是什么（一句话讲清）
-- 它怎么验证自己是对的（实验长什么样）
-- 留下了什么没解决
+### 工具
 
-读到这里你应该懂了：先去 `/learn/` 学概念，再去 `/papers/` 看具体论文。
+- **[Glossary](https://estelledc.github.io/embodied-ai-reading-station/glossary/)** — 60 个术语字典
+- **[Math primer](https://estelledc.github.io/embodied-ai-reading-station/learn/math-primer/)** — 公式符号速查
+- **[Tags](https://estelledc.github.io/embodied-ai-reading-station/tags/)** — 21 跨主题技术标签
+- **[Venues](https://estelledc.github.io/embodied-ai-reading-station/venues/)** — 37 会议按类别
+- **[Stats](https://estelledc.github.io/embodied-ai-reading-station/stats/)** — 5 维数据看板
 
-### 项目目录
+### 个性化（全前端 localStorage）
+
+- 读完点 ✓ "标记已读"，首页 stats 自动 +1
+- 阅读 streak 🔥 + 今日/本周/本月计数
+- 下一篇推荐（基于已读主题分布）
+- 阅读包进度条
+- 主题/难度/era 三轴快筛 (URL hash 可分享)
+- 12 个键盘快捷键 (`?` 看完整列表)
+- 暗色模式 toggle (☀ ☾ ⊙)
+- 论文页阅读计时器 + 顶部进度条
+- 已读清单导出 markdown
+
+## 给研究者
+
+### 数据 API（CC BY 4.0）
+
+```bash
+curl https://estelledc.github.io/embodied-ai-reading-station/data/papers.json   # 156 全元数据
+curl https://estelledc.github.io/embodied-ai-reading-station/data/tags.json     # 21 tag 频次 + 共现
+curl https://estelledc.github.io/embodied-ai-reading-station/data/topics.json   # 11 主题元数据
+curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    # manifest
+```
+
+### 引用
+
+每篇论文页底部有折叠 BibTeX 块，一键复制：
+
+```bibtex
+@misc{eai_rt_1_2022,
+  title  = {RT-1: Robotics Transformer for Real-World Control at Scale},
+  author = {Jason},
+  year   = {2022},
+  note   = {Embodied AI Reading Station — readable note},
+  url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/rt-1/}
+}
+```
+
+## 11 个主题
+
+| Roman | Topic | 篇数 | 主题入门 |
+|-------|-------|------|----------|
+| I | VLM Foundation | ~20 | CLIP → BLIP-2 → LLaVA |
+| II | High-Level Planning | ~5 | SayCan → Code-as-Policies → Inner Monologue |
+| III | End-to-End VLA | ~16 | RT-1 → RT-2 → OpenVLA |
+| IV | Diffusion Policy | ~10 | Diffusion Policy → 3D-DP → π0 |
+| V | Imitation Learning | ~10 | DAgger → ACT/ALOHA → UMI |
+| VI | World Model | ~10 | World Models → Dreamer → Genie |
+| VII | Multimodal | ~10 | ImageBind → OBELICS → AnyMAL |
+| VIII | RF Perception | ~12 | RF-Pose → milliMap → PanoRadar |
+| IX | Auditory | ~10 | Whisper → AudioLM → Acoustic Swarms |
+| X | Datasets & Benchmarks | ~10 | Open-X → DROID → BEHAVIOR-1K |
+| XI | Simulation | ~10 | Habitat → Isaac Gym → SIMPLER |
+
+完整列表 → [Topics](https://estelledc.github.io/embodied-ai-reading-station/topics/)
+
+## 技术栈
+
+- 静态站：Node.js + marked + gray-matter，无框架
+- 设计系统：atelier-zero（暖纸 ivory + coral + mustard + Inter Tight + Playfair Display + JetBrains Mono）
+- 搜索：Pagefind 全文索引
+- 数学：KaTeX
+- 可视化：D3.js（force-directed graph）
+- 部署：GitHub Pages + Actions
+- 图片生成：codex CLI generate_image + cwebp
+
+## 开发
+
+```bash
+git clone git@github.com:estelledc/embodied-ai-reading-station.git
+cd embodied-ai-reading-station/site
+npm install
+npm run build      # 输出到 dist/
+npm run serve      # 本地 dev server
+```
+
+## 项目结构
 
 ```
-embodied-ai-research/
-├── papers/    13 篇原 PDF + 转好的带图 markdown
-├── notes/     13 篇精读笔记（中文为主，重要术语保留英文）
-├── site/      把笔记渲染成网页的代码（这就是你看到的网站）
-└── deck/      最后产出的汇报 PPT（10-15 页中英对照）
+notes/             156 篇论文笔记 (.md, frontmatter + body)
+papers/            原 PDF + 解析图片
+site/
+  scripts/build.mjs   主构建脚本（discoverPapers + buildIndex + ...）
+  src/                CSS / JS / images / templates
+  content/            issues / learn 页 markdown
+  dist/               构建输出（git-ignored）
+explorations/       playground
 ```
 
-四个目录的关系像做一道菜：
+## 许可
 
-- `papers/` 是**生食材**（原论文）
-- `notes/` 是**切配好的半成品**（人话版笔记）
-- `site/` 是**装盘上桌**（变成网页）
-- `deck/` 是**饭后甜点**（汇报用的 PPT）
+- **笔记内容**：CC BY 4.0 — 引用请保留作者
+- **代码**：MIT
+- **原论文 PDF**：版权归原作者，本站只做学习摘要
 
-读到这里你应该懂了：源头是 PDF，中间是 markdown，最后是网站和 PPT。
+## 反馈
 
-### 论文清单速览
+- 笔记错误 / 想加论文 / 想改风格 → [GitHub issue](https://github.com/estelledc/embodied-ai-reading-station/issues)
+- 站点 bug / 设计建议 → 同上
 
-13 篇分成 7 个主题：
+---
 
-1. **VLM 基座**——让 AI 同时看图和读字（LLaVA / 3DShape2VecSet）
-2. **任务规划**——把"我饿了"翻译成机器人具体动作（SayCan）
-3. **端到端 VLA**——一个模型直接从画面输出关节角度（OpenVLA）
-4. **多模态**——加上声音、触觉一起决策（VLAS / MLA）
-5. **世界模型**——AI 在脑子里先模拟一遍再行动（Cosmos Policy）
-6. **射频感知**——用 WiFi、毫米波"看穿"墙壁（RF-SLAM / mmCLIP / NLOS）
-7. **听觉智能**——让助听器只放大你想听的人（Proactive Hearing / NeuralAids / Acoustic Swarms）
-
-### 进度
-
-精读进度看 [progress.md](progress.md)，每读完一篇划掉一行。
+> 这站是 Jason（编程零基础本科生）做的实验室科研任务的副产物。原任务是读 13 篇代表论文，扩展到 156 是因为 13 篇看不到全景。
+> 完全个人项目。如果你也是入门读者，希望它能让你少绕几个弯。
