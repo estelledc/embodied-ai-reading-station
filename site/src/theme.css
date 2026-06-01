@@ -1903,3 +1903,79 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   .wn-card { border-bottom: 1px solid var(--paper-dark); }
   .wn-issue { grid-column: 1 / -1; }
 }
+
+/* === print === */
+@media print {
+  /* 隐藏交互元素 */
+  .masthead,
+  .search-trigger,
+  .search-dialog,
+  .read-btn,
+  .quick-filter,
+  .next-pick,
+  .streak-box,
+  .whats-new,
+  .outline,
+  .jx-footer,
+  .topic-hero,
+  .hero-figure,
+  details summary,
+  details ol,
+  .graph-legend,
+  #graph-container {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 11pt;
+    line-height: 1.5;
+  }
+  .shell, .note-shell { max-width: none !important; padding: 0 !important; }
+  .note-main { width: 100% !important; }
+
+  h1 { font-size: 22pt; page-break-after: avoid; }
+  h2 { font-size: 14pt; page-break-after: avoid; margin-top: 1.6em; }
+  h3 { font-size: 12pt; page-break-after: avoid; }
+  p, li { orphans: 3; widows: 3; }
+  pre, blockquote, figure, table { page-break-inside: avoid; }
+
+  /* 链接显示 URL */
+  a[href^="/"]::after,
+  a[href^="https://"]::after,
+  a[href^="http://"]::after {
+    content: " <" attr(href) ">";
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    color: #666;
+    word-break: break-all;
+  }
+  /* 内部锚点链接不打印 URL */
+  a[href^="#"]::after { content: ""; }
+
+  img { max-width: 100% !important; height: auto !important; page-break-inside: avoid; }
+  figcaption { font-size: 9pt; color: #555; }
+
+  /* 在第一页顶部加打印水印 */
+  .note-content::before {
+    content: "Embodied AI Reading Station — printed copy. Source: estelledc.github.io/embodied-ai-reading-station";
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 8pt;
+    color: #888;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+  }
+
+  /* backlinks 简化 */
+  .backlinks {
+    border: none;
+    background: transparent;
+    padding: 0.5em 0;
+    border-top: 1px solid #ccc;
+  }
+  .reading-meta { color: #666; font-size: 9pt; }
+  .endmark { display: none; }
+}
