@@ -1507,6 +1507,12 @@ function buildGraph(notes) {
     <span class="eyebrow">Graph · 论文关系图</span>
     <h1 style="margin-bottom:0.5rem">${nodes.length} 个<em>节点</em>，${links.length} 条<em>连线</em>。</h1>
     <p style="color:var(--ink-soft);max-width:46ch;line-height:1.5">同主题按 era 串成链；不同主题的祖师爷之间也有链。颜色 = 主题；大小 = 难度；hover 看一句话简介；点击跳转笔记。</p>
+    <div class="graph-controls">
+      <span class="gc-label">layout</span>
+      <button type="button" class="gc-btn is-active" data-layout="force">Force</button>
+      <button type="button" class="gc-btn" data-layout="cluster">Cluster</button>
+      <button type="button" class="gc-btn" data-layout="timeline">Timeline</button>
+    </div>
     <div id="graph-legend" class="graph-legend">${TOPIC_ORDER.map(t => `<span class="legend-item" data-topic="${t.id}"><span class="legend-dot" style="background:var(--topic-${t.id})"></span>${t.roman}. ${t.label}</span>`).join("")}</div>
     <div id="graph-container" style="width:100%;height:75vh;min-height:520px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">
       <svg id="graph-svg" width="100%" height="100%"></svg>

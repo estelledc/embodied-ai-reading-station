@@ -2872,3 +2872,40 @@ html.dark-theme body::after {
 .primer-item-read .primer-num { color: var(--olive); }
 .primer-item-read .primer-num::after { content: " ✓"; font-size: 0.5em; }
 .primer-item-read .primer-title { color: var(--ink-faint); }
+
+/* === graph layout controls === */
+.graph-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 1rem 0 0.6rem;
+}
+.gc-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-right: 0.4rem;
+}
+.gc-btn {
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  padding: 0.3em 0.7em;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.gc-btn:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+.gc-btn.is-active {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}

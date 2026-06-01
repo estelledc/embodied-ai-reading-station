@@ -124,7 +124,6 @@
       .force("charge", d3.forceManyBody().strength(-50))
       .force("center", d3.forceCenter(W / 2, H / 2))
       .force("collide", d3.forceCollide().radius(d => 8 + d.difficulty * 1.5))
-      // 按主题分簇：每个 topic 给一个目标 (x,y)
       .force("topicX", d3.forceX(d => W * (0.1 + 0.8 * (Object.keys(TOPIC_COLORS).indexOf(d.topic) / 10))).strength(0.06))
       .force("topicY", d3.forceY(d => H * (0.5 + 0.25 * Math.sin(Object.keys(TOPIC_COLORS).indexOf(d.topic)))).strength(0.06))
       .on("tick", () => {
@@ -138,5 +137,47 @@
       .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
       .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
       .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+
+    // === 布局切换 ===
+    const TOPIC_KEYS = Object.keys(TOPIC_COLORS);
+    function applyLayout(layout) {
+      data.nodes.forEach(n => { n.fx = null; n.fy = null; });
+      if (layout === "force") {
+        sim.force("topicX", d3.forceX(d => W * (0.1 + 0.8 * (TOPIC_KEYS.indexOf(d.topic) / 10))).strength(0.06));
+        sim.force("topicY", d3.forceY(d => H * (0.5 + 0.25 * Math.sin(TOPIC_KEYS.indexOf(d.topic)))).strength(0.06));
+        sim.force("center", d3.forceCenter(W / 2, H / 2));
+        sim.force("link").strength(d => d.kind === "cross-topic" ? 0.05 : 0.4);
+      } else if (layout === "cluster") {
+        // 按 topic 分散到圆周排列的 11 个簇
+        const cx = W / 2, cy = H / 2;
+        const R = Math.min(W, H) * 0.32;
+        sim.force("center", null);
+        sim.force("topicX", d3.forceX(d => cx + R * Math.cos(2 * Math.PI * TOPIC_KEYS.indexOf(d.topic) / TOPIC_KEYS.length)).strength(0.25));
+        sim.force("topicY", d3.forceY(d => cy + R * Math.sin(2 * Math.PI * TOPIC_KEYS.indexOf(d.topic) / TOPIC_KEYS.length)).strength(0.25));
+        sim.force("link").strength(d => d.kind === "cross-topic" ? 0.02 : 0.6);
+      } else if (layout === "timeline") {
+        const years = data.nodes.map(n => Number(n.year)).filter(Boolean);
+        const minY = Math.min(...years), maxY = Math.max(...years);
+        const span = Math.max(1, maxY - minY);
+        const padX = 60, padY = 40;
+        sim.force("center", null);
+        sim.force("topicX", d3.forceX(d => {
+          if (!d.year) return W - padX;
+          return padX + ((Number(d.year) - minY) / span) * (W - 2 * padX);
+        }).strength(0.4));
+        // y: 主题分行
+        sim.force("topicY", d3.forceY(d => padY + (TOPIC_KEYS.indexOf(d.topic) / (TOPIC_KEYS.length - 1)) * (H - 2 * padY)).strength(0.4));
+        sim.force("link").strength(0.02);
+      }
+      sim.alpha(1).restart();
+    }
+
+    document.querySelectorAll(".gc-btn[data-layout]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".gc-btn[data-layout]").forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        applyLayout(btn.dataset.layout);
+      });
+    });
   }
 })();
