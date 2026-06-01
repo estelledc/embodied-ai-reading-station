@@ -2128,3 +2128,24 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   .pn-empty { display: none; }
   .pn-next { text-align: left; }
 }
+
+/* === topic mini timeline === */
+.topic-timeline-section { margin: 2.5rem 0; }
+.topic-timeline-wrap {
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  padding: 1rem 0.5rem;
+  margin: 1rem 0;
+}
+.topic-timeline { width: 100%; height: auto; max-height: 120px; }
+.topic-timeline circle { transition: r 0.15s; cursor: pointer; }
+.topic-timeline circle:hover { r: 7; }
+.timeline-legend {
+  display: flex;
+  gap: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-mute);
+}
+.lg-item { display: inline-flex; align-items: center; gap: 0.4rem; }
+.lg-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; display: inline-block; }

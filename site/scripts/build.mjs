@@ -558,7 +558,57 @@ function buildTopicLanding(t, notes) {
     body += `</ol></section>`;
   }
 
+  // 横轴 timeline
+  const yearsInTopic = inTopic.map(n => Number(n.year)).filter(Boolean);
+  const minYear = yearsInTopic.length ? Math.min(...yearsInTopic) : 2017;
+  const maxYear = yearsInTopic.length ? Math.max(...yearsInTopic) : 2025;
+  const yearSpan = Math.max(1, maxYear - minYear);
+  const W = 800, H = 90;
+  const padX = 50, padY = 30;
+  const innerW = W - 2 * padX;
+  const xOf = y => padX + ((Number(y) - minYear) / yearSpan) * innerW;
+  // 同年多篇时垂直分散
+  const yearBuckets = new Map();
+  for (const n of inTopic) {
+    if (!n.year) continue;
+    const y = Number(n.year);
+    if (!yearBuckets.has(y)) yearBuckets.set(y, []);
+    yearBuckets.get(y).push(n);
+  }
+  const dots = [];
+  for (const [y, ns] of yearBuckets) {
+    ns.forEach((n, i) => {
+      const offset = (i - (ns.length - 1) / 2) * 12;
+      dots.push({ n, cx: xOf(y), cy: padY + offset, era: n.era || "classic" });
+    });
+  }
+  const eraColor = { founder: "var(--coral)", classic: "var(--olive)", frontier: "var(--mustard)" };
+  const yearTicks = [];
+  for (let y = minYear; y <= maxYear; y++) yearTicks.push(y);
+  const timelineSvg = `<svg class="topic-timeline" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${t.label} 论文按年份分布">
+    <line x1="${padX}" y1="${padY}" x2="${W - padX}" y2="${padY}" stroke="var(--paper-dark)" stroke-width="1"/>
+    ${yearTicks.map(y => `<g>
+      <line x1="${xOf(y)}" y1="${padY - 4}" x2="${xOf(y)}" y2="${padY + 4}" stroke="var(--paper-dark)"/>
+      <text x="${xOf(y)}" y="${padY + 22}" text-anchor="middle" font-family="var(--font-mono)" font-size="9" fill="var(--ink-faint)">${y}</text>
+    </g>`).join("")}
+    ${dots.map(d => `<a href="${url(`/papers/${d.n.slug}/`)}">
+      <circle cx="${d.cx}" cy="${d.cy}" r="${d.era === "founder" ? 5 : 4}" fill="${eraColor[d.era]}" stroke="var(--paper)" stroke-width="1.5">
+        <title>${d.n.title.split(":")[0]} (${d.n.year || "?"})</title>
+      </circle>
+    </a>`).join("")}
+  </svg>`;
+
   body += `<hr class="ornament"/>
+    <section class="topic-timeline-section">
+      <span class="eyebrow">Distribution · 年份分布</span>
+      <h2 style="margin-top:0.4rem">${minYear} 到 ${maxYear}，<em>${inTopic.length} 篇</em>怎么排开。</h2>
+      <div class="topic-timeline-wrap">${timelineSvg}</div>
+      <div class="timeline-legend">
+        <span class="lg-item"><span class="lg-dot" style="background:var(--coral)"></span>祖师爷</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--olive)"></span>经典</span>
+        <span class="lg-item"><span class="lg-dot" style="background:var(--mustard)"></span>前沿</span>
+      </div>
+    </section>
     <section>
       <span class="eyebrow">All papers · 按 era 排</span>
       <h2 style="margin-top:0.4rem">${t.label} 全部 ${inTopic.length} 篇。</h2>
