@@ -38,3 +38,35 @@
 
   for (const h of headings) obs.observe(h);
 })();
+
+// === heading anchor copy: hover h2/h3 显示 #，点击复制 deep link ===
+(() => {
+  const content = document.querySelector(".note-content");
+  if (!content) return;
+  const headings = content.querySelectorAll("h2[id], h3[id]");
+  for (const h of headings) {
+    const link = document.createElement("a");
+    link.className = "heading-anchor";
+    link.href = "#" + h.id;
+    link.setAttribute("aria-label", "复制链接");
+    link.textContent = "#";
+    link.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const deepLink = location.origin + location.pathname + "#" + h.id;
+      try {
+        await navigator.clipboard.writeText(deepLink);
+        link.classList.add("copied");
+        link.textContent = "✓";
+        history.replaceState(null, "", "#" + h.id);
+        setTimeout(() => {
+          link.classList.remove("copied");
+          link.textContent = "#";
+        }, 1200);
+      } catch {
+        // fallback: 直接跳转
+        location.hash = h.id;
+      }
+    });
+    h.appendChild(link);
+  }
+})();

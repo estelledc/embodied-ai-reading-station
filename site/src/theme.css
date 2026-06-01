@@ -2280,3 +2280,34 @@ html.dark-theme body::after {
   color: var(--coral);
   font-weight: 700;
 }
+
+/* === heading anchor copy === */
+.note-content h2,
+.note-content h3 {
+  position: relative;
+  padding-right: 1.5em;
+}
+.heading-anchor {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.7em;
+  font-weight: 400;
+  color: var(--ink-faint);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+  padding: 0 0.3em;
+  cursor: pointer;
+}
+.note-content h2:hover .heading-anchor,
+.note-content h3:hover .heading-anchor {
+  opacity: 1;
+}
+.heading-anchor:hover { color: var(--coral); }
+.heading-anchor.copied {
+  color: var(--olive);
+  opacity: 1;
+}
