@@ -7,7 +7,7 @@
     const sections = [...document.querySelectorAll("[data-topic-section]")];
     const countEl = document.getElementById("eai-qf-count");
 
-    const state = { topic: "", difficulty: "", era: "" };
+    const state = { topic: "", difficulty: "", era: "", status: "" };
 
     function applyHash() {
       const h = location.hash.replace(/^#/, "");
@@ -31,7 +31,8 @@
         const okTopic = !state.topic || c.dataset.topic === state.topic;
         const okDiff = !state.difficulty || Number(c.dataset.difficulty) === Number(state.difficulty);
         const okEra = !state.era || c.dataset.era === state.era;
-        const show = okTopic && okDiff && okEra;
+        const okStatus = !state.status || c.dataset.status === state.status;
+        const show = okTopic && okDiff && okEra && okStatus;
         c.style.display = show ? "" : "none";
         if (show) visible++;
       }

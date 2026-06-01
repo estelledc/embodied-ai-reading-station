@@ -514,6 +514,13 @@ function buildIndex(notes, latestIssue = null) {
       <button type="button" class="qf-chip" data-filter-type="era" data-value="founder">祖师爷</button>
       <button type="button" class="qf-chip" data-filter-type="era" data-value="classic">经典</button>
       <button type="button" class="qf-chip" data-filter-type="era" data-value="frontier">前沿</button>
+    </div>
+    <div class="qf-row">
+      <span class="qf-label">深度</span>
+      <button type="button" class="qf-chip qf-chip-all is-active" data-filter-type="status" data-value="">全部</button>
+      <button type="button" class="qf-chip" data-filter-type="status" data-value="deep-read">深度精读</button>
+      <button type="button" class="qf-chip" data-filter-type="status" data-value="auto-summary">auto 摘要</button>
+      <button type="button" class="qf-chip" data-filter-type="status" data-value="auto-summary-light">短摘要</button>
       <span class="qf-count" id="eai-qf-count" style="margin-left:auto"></span>
     </div>
   </aside>`;
@@ -562,7 +569,7 @@ function buildIndex(notes, latestIssue = null) {
         : hasCard
           ? `<div class="thumb" style="background-image:url('${url(`/images/cards/${n.slug}.webp`)}')"></div>`
           : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
-      body += `<article class="paper-card" data-slug="${n.slug}" data-topic="${n.topic}" data-difficulty="${(n.difficulty || "").length || 2}" data-era="${n.era || "classic"}">
+      body += `<article class="paper-card" data-slug="${n.slug}" data-topic="${n.topic}" data-difficulty="${(n.difficulty || "").length || 2}" data-era="${n.era || "classic"}" data-status="${n.status || "auto-summary"}">
         ${thumbDiv}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
