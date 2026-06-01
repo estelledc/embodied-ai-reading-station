@@ -85,9 +85,74 @@
     window.addEventListener("eai:read-changed", render);
   }
 
+  function bindNextPick() {
+    const aside = document.getElementById("eai-next-pick");
+    const data = document.getElementById("eai-papers-data");
+    if (!aside || !data) return;
+    let papers = [];
+    try { papers = JSON.parse(data.textContent); } catch { return; }
+
+    function render() {
+      const read = load();
+      const unread = papers.filter(p => !read.has(p.slug));
+      if (unread.length === 0) {
+        aside.hidden = true;
+        return;
+      }
+      // 推荐策略：
+      // 1) 优先推同主题序列（已读最多的主题里挑下一篇）
+      // 2) 否则按 era + difficulty 升序挑入门 (founder, 难度低)
+      // 3) 全新读者 → 推荐 CLIP（vlm-foundation 起点）
+      let pick = null;
+      let reason = "";
+      if (read.size === 0) {
+        pick = unread.find(p => p.slug === "clip") || unread.find(p => p.era === "founder") || unread[0];
+        reason = "从这里开始入门";
+      } else {
+        const byTopic = new Map();
+        for (const p of papers) {
+          if (!read.has(p.slug)) continue;
+          byTopic.set(p.topic, (byTopic.get(p.topic) || 0) + 1);
+        }
+        const topicsByCount = [...byTopic.entries()].sort((a, b) => b[1] - a[1]);
+        for (const [topic] of topicsByCount) {
+          const candidates = unread.filter(p => p.topic === topic);
+          if (candidates.length) {
+            const eraOrder = { founder: 0, classic: 1, frontier: 2 };
+            candidates.sort((a, b) => (eraOrder[a.era] ?? 1) - (eraOrder[b.era] ?? 1));
+            pick = candidates[0];
+            reason = `继续 · ${topic}`;
+            break;
+          }
+        }
+        if (!pick) {
+          pick = unread.sort((a, b) => {
+            const eraOrder = { founder: 0, classic: 1, frontier: 2 };
+            const ea = (eraOrder[a.era] ?? 1) - (eraOrder[b.era] ?? 1);
+            return ea !== 0 ? ea : a.difficulty - b.difficulty;
+          })[0];
+          reason = "新主题 · 入门难度";
+        }
+      }
+
+      const link = aside.querySelector(".next-pick-card");
+      link.href = pick.url;
+      aside.querySelector(".next-pick-num").textContent = `№ ${String(pick.num).padStart(2, "0")}`;
+      aside.querySelector(".next-pick-topic").textContent = pick.topic;
+      aside.querySelector(".next-pick-title").textContent = pick.title;
+      aside.querySelector(".next-pick-tldr").textContent = pick.tldr || "";
+      aside.querySelector(".next-pick-difficulty").textContent = "★".repeat(Math.max(1, pick.difficulty));
+      aside.querySelector(".next-pick-reason").textContent = reason;
+      aside.hidden = false;
+    }
+    render();
+    window.addEventListener("eai:read-changed", render);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".read-btn[data-slug]").forEach(bindButton);
     bindCards();
     bindStats();
+    bindNextPick();
   });
 })();

@@ -1460,3 +1460,73 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   border-radius: 50%;
   z-index: 2;
 }
+
+/* === next pick widget === */
+.next-pick {
+  margin: 2rem 0;
+  border: 2px solid var(--ink);
+  background: var(--bone);
+  position: relative;
+}
+.next-pick::before {
+  content: "";
+  position: absolute;
+  top: -4px; left: -4px; right: -4px; bottom: -4px;
+  border: 1px solid var(--coral);
+  pointer-events: none;
+  z-index: -1;
+}
+.next-pick-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--coral);
+  padding: 0.7rem 1.2rem 0.3rem;
+  border-bottom: 1px solid var(--paper-dark);
+}
+.next-pick-card {
+  display: block;
+  padding: 1.2rem 1.4rem 1.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+}
+.next-pick-card:hover { background: var(--paper-warm); }
+.next-pick-meta {
+  display: flex;
+  gap: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.next-pick-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0.2rem 0 0.5rem;
+}
+.next-pick-tldr {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+.next-pick-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--paper-dark);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.next-pick-difficulty { color: var(--coral); letter-spacing: 0.1em; }
+.next-pick-reason { color: var(--ink-faint); text-transform: uppercase; }

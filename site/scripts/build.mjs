@@ -229,6 +229,28 @@ function buildIndex(notes) {
       <div class="stat-cell"><span class="stat-num">${Math.round(notes.reduce((s, n) => s + (n.readingTime || 0), 0) / 60)}</span><span class="stat-label">小时阅读</span></div>
       <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
     </div>
+
+    <aside class="next-pick" id="eai-next-pick" hidden>
+      <div class="next-pick-eyebrow">读完上一篇了？接着这篇 →</div>
+      <a class="next-pick-card" href="#">
+        <div class="next-pick-meta">
+          <span class="next-pick-num"></span>
+          <span class="next-pick-topic"></span>
+        </div>
+        <h3 class="next-pick-title"></h3>
+        <p class="next-pick-tldr"></p>
+        <div class="next-pick-foot">
+          <span class="next-pick-difficulty"></span>
+          <span class="next-pick-reason"></span>
+        </div>
+      </a>
+    </aside>
+    <script id="eai-papers-data" type="application/json">${JSON.stringify(notes.map(n => ({
+      slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",
+      difficulty: (n.difficulty || "").length || 2,
+      tldr: (n.tldr || "").slice(0, 120),
+      url: url(`/papers/${n.slug}/`),
+    })))}</script>
     <hr/>`;
 
   for (const t of TOPIC_ORDER) {
