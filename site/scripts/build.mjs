@@ -3296,6 +3296,50 @@ Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
 `);
 
+    // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
+    write(path.join(DIST, "llms.txt"), `# Embodied AI Reading Station
+
+> 156 篇具身智能顶会论文，用零基础也能读懂的中文重写。
+
+This is a static reading site for embodied AI papers. All content is hand-curated Chinese notes (CC BY 4.0).
+
+## Best entry points for AI agents
+
+- [Site index](${SITE_URL}/) — Hero + 156 paper cards grouped by topic
+- [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all 156 tldrs (best for quick scan)
+- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all 156 papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
+- [/data/papers.csv](${SITE_URL}/data/papers.csv) — Same data as CSV
+- [/data/tags.json](${SITE_URL}/data/tags.json) — 21 tag frequency + co-occurrence matrix
+- [/data/topics.json](${SITE_URL}/data/topics.json) — 11 topic metadata + primer slugs
+- [/sitemap.xml](${SITE_URL}/sitemap.xml) — Full URL list
+- [/feed.xml](${SITE_URL}/feed.xml) — Atom feed
+
+## Content structure
+
+- 156 papers in /papers/{slug}/
+- 11 topic landings in /topics/{id}/
+- 7 issues (editorial recaps) in /issues/{N}/
+- 5 reading lists in /lists/
+- 30-day learning path in /learn/path/
+- FAQ in /learn/faq/
+
+## License
+
+- Notes content: CC BY 4.0 (attribution required)
+- Site code: MIT
+- Original paper PDFs: copyright original authors (this site only summarizes)
+
+## Cite
+
+@misc{embodied_ai_reading_station,
+  title  = {Embodied AI Reading Station},
+  author = {Jason},
+  year   = {2026},
+  url    = {${SITE_URL}/},
+  note   = {156 readable Chinese notes on embodied AI papers}
+}
+`);
+
     // opensearch.xml (浏览器地址栏当搜索引擎)
     write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
