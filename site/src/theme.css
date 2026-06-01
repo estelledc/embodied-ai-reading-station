@@ -4301,3 +4301,18 @@ html.dark-theme body::after {
 }
 .my-blindspot a:hover { color: var(--coral); }
 .my-blindspot strong { color: var(--coral); font-weight: 700; }
+
+/* === backlinks era groups === */
+.bl-era-group { margin: 0.6rem 0; }
+.bl-era-group:not(:first-child) {
+  border-top: 1px dashed var(--paper-dark);
+  padding-top: 0.6rem;
+}
+.bl-era-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--olive);
+  margin-bottom: 0.3rem;
+}

@@ -2644,13 +2644,28 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   const enrichedBody = injectInlineFigures(note.slug, note.body, note.title);
   const html = marked.parse(enrichedBody);
 
+  // 按 era 分组 backlinks
+  function backlinksByEra(items) {
+    const groups = { founder: [], classic: [], frontier: [] };
+    for (const b of items) (groups[b.era] || groups.classic).push(b);
+    return groups;
+  }
+  const blGroups = backlinks.length ? backlinksByEra(backlinks) : null;
+  const eraLabels = { founder: "祖师爷引用", classic: "经典引用", frontier: "前沿引用" };
   const backlinksHtml = backlinks.length ? `<aside class="backlinks">
     <div class="backlinks-title">这些笔记也提到了它 (${backlinks.length})</div>
-    <ul class="backlinks-list">${backlinks.map(b => `<li><a href="${url(`/papers/${b.slug}/`)}">
-      <span class="bl-num">№ ${String(b.num).padStart(2, "0")}</span>
-      <span class="bl-title">${b.title}</span>
-      <span class="bl-topic">${b.topicLabel}</span>
-    </a></li>`).join("")}</ul>
+    ${["founder", "classic", "frontier"].map(era => {
+      const list = blGroups[era];
+      if (!list.length) return "";
+      return `<div class="bl-era-group">
+        <div class="bl-era-label">${eraLabels[era]} · ${list.length}</div>
+        <ul class="backlinks-list">${list.map(b => `<li><a href="${url(`/papers/${b.slug}/`)}">
+          <span class="bl-num">№ ${String(b.num).padStart(2, "0")}</span>
+          <span class="bl-title">${b.title}</span>
+          <span class="bl-topic">${b.topicLabel}</span>
+        </a></li>`).join("")}</ul>
+      </div>`;
+    }).join("")}
   </aside>` : "";
 
   const navCardsHtml = (prev || next) ? `<nav class="prev-next-nav">
@@ -3150,7 +3165,7 @@ function build() {
     }
     for (const ref of seen) {
       if (!backlinkMap.has(ref)) backlinkMap.set(ref, []);
-      backlinkMap.get(ref).push({ slug: src.slug, num: src.num, title: src.title, topicLabel: src.topicLabel });
+      backlinkMap.get(ref).push({ slug: src.slug, num: src.num, title: src.title, topicLabel: src.topicLabel, era: src.era || "classic" });
     }
   }
 
