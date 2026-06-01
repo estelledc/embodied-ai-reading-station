@@ -156,8 +156,13 @@
 
     // === 布局切换 ===
     const TOPIC_KEYS = Object.keys(TOPIC_COLORS);
+    // cluster 标签层
+    const clusterLabels = g.append("g").attr("class", "cluster-labels");
+
     function applyLayout(layout) {
       data.nodes.forEach(n => { n.fx = null; n.fy = null; });
+      // 清空旧标签
+      clusterLabels.selectAll("*").remove();
       if (layout === "force") {
         sim.force("topicX", d3.forceX(d => W * (0.1 + 0.8 * (TOPIC_KEYS.indexOf(d.topic) / 10))).strength(0.06));
         sim.force("topicY", d3.forceY(d => H * (0.5 + 0.25 * Math.sin(TOPIC_KEYS.indexOf(d.topic)))).strength(0.06));
@@ -171,6 +176,24 @@
         sim.force("topicX", d3.forceX(d => cx + R * Math.cos(2 * Math.PI * TOPIC_KEYS.indexOf(d.topic) / TOPIC_KEYS.length)).strength(0.25));
         sim.force("topicY", d3.forceY(d => cy + R * Math.sin(2 * Math.PI * TOPIC_KEYS.indexOf(d.topic) / TOPIC_KEYS.length)).strength(0.25));
         sim.force("link").strength(d => d.kind === "cross-topic" ? 0.02 : 0.6);
+        // 在每个簇中心放标签
+        const labelR = R * 1.32;
+        TOPIC_KEYS.forEach((topic, i) => {
+          const angle = 2 * Math.PI * i / TOPIC_KEYS.length;
+          const lx = cx + labelR * Math.cos(angle);
+          const ly = cy + labelR * Math.sin(angle);
+          // 找该 topic 的中文 label
+          const sample = data.nodes.find(n => n.topic === topic);
+          const lbl = sample ? sample.topicLabel : topic;
+          clusterLabels.append("text")
+            .attr("x", lx).attr("y", ly)
+            .attr("text-anchor", Math.abs(Math.cos(angle)) < 0.3 ? "middle" : (Math.cos(angle) > 0 ? "start" : "end"))
+            .attr("font-family", "var(--font-display)")
+            .attr("font-size", 11).attr("font-weight", 800)
+            .attr("font-style", "italic")
+            .attr("fill", TOPIC_COLORS[topic] || "#666")
+            .text(lbl);
+        });
       } else if (layout === "timeline") {
         const years = data.nodes.map(n => Number(n.year)).filter(Boolean);
         const minY = Math.min(...years), maxY = Math.max(...years);
