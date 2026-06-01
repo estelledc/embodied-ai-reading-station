@@ -135,6 +135,7 @@ function masthead(active) {
     { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
+    { href: url("/glossary/"), label: "Glossary", id: "glossary" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -360,6 +361,55 @@ function buildTopics(notes) {
   }
   body += `</main>`;
   return page({ title: "Topics — Embodied AI Reading", body, active: "topics" });
+}
+
+// --- glossary page ----------------------------------------------------------
+function buildGlossary(notes) {
+  const glossPath = path.join(NOTES_DIR, "glossary.json");
+  if (!fs.existsSync(glossPath)) return null;
+  const { terms } = JSON.parse(fs.readFileSync(glossPath, "utf8"));
+  // group by initial letter
+  const groups = new Map();
+  for (const t of terms) {
+    const first = t.term[0].toUpperCase();
+    const key = /[A-Z]/.test(first) ? first : "中";
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(t);
+  }
+  const sortedKeys = [...groups.keys()].sort((a, b) => {
+    if (a === "中") return 1;
+    if (b === "中") return -1;
+    return a.localeCompare(b);
+  });
+  for (const k of sortedKeys) {
+    groups.get(k).sort((a, b) => a.term.localeCompare(b.term));
+  }
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Glossary · 术语字典</span>
+    <h1>${terms.length} 个<em>术语</em>，每个一句话讲清楚。</h1>
+    <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin-top:1rem">
+      看论文最大障碍是术语雪崩。这页把 156 篇里反复出现的核心词收齐，一句话说清楚是什么、首次出现在哪篇。
+    </p>
+    <nav class="glossary-nav">${sortedKeys.map(k => `<a href="#g-${k}">${k}</a>`).join("")}</nav>
+    <hr class="ornament"/>`;
+
+  for (const k of sortedKeys) {
+    body += `<section class="glossary-section">
+      <h2 class="glossary-letter" id="g-${k}">${k}</h2>
+      <dl class="glossary-list">`;
+    for (const t of groups.get(k)) {
+      const linked = t.anchor ? notes.find(n => n.slug === t.anchor) : null;
+      body += `<dt class="glossary-term">
+        <span class="glossary-name">${t.term}</span>
+        ${t.full && t.full !== t.term ? `<span class="glossary-full">${t.full}</span>` : ""}
+      </dt>
+      <dd class="glossary-def">${t.def}${linked ? ` <a class="glossary-source" href="${url(`/papers/${linked.slug}/`)}">→ ${linked.title.split(":")[0]}</a>` : ""}</dd>`;
+    }
+    body += `</dl></section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Glossary — Embodied AI Reading", body, active: "glossary" });
 }
 
 // --- per-topic landing ------------------------------------------------------
@@ -973,6 +1023,10 @@ function build() {
 
   // compare
   write(path.join(DIST, "compare", "index.html"), buildCompare(notes));
+
+  // glossary
+  const glossaryHtml = buildGlossary(notes);
+  if (glossaryHtml) write(path.join(DIST, "glossary", "index.html"), glossaryHtml);
 
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());

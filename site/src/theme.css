@@ -1530,3 +1530,87 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
 }
 .next-pick-difficulty { color: var(--coral); letter-spacing: 0.1em; }
 .next-pick-reason { color: var(--ink-faint); text-transform: uppercase; }
+
+/* === glossary === */
+.glossary-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 1.5rem 0 0;
+  border: 1px solid var(--ink);
+  border-right: none;
+}
+.glossary-nav a {
+  flex: 1;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  padding: 0.6rem 0.4rem;
+  border-right: 1px solid var(--paper-dark);
+  text-decoration: none;
+  color: var(--ink);
+  background: var(--paper);
+  min-width: 2rem;
+  transition: background 0.15s;
+}
+.glossary-nav a:hover { background: var(--coral); color: var(--paper); }
+.glossary-section { margin: 3rem 0; }
+.glossary-letter {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 4rem;
+  color: var(--coral);
+  line-height: 1;
+  margin: 0 0 1rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.3rem;
+}
+.glossary-list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: minmax(10rem, 16rem) 1fr;
+  gap: 1rem 1.5rem;
+}
+.glossary-term {
+  font-family: var(--font-mono);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-top: 0.25rem;
+}
+.glossary-name {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.glossary-full {
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+.glossary-def {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  padding: 0.25rem 0 0.8rem;
+  border-bottom: 1px dashed var(--paper-dark);
+}
+.glossary-source {
+  display: inline-block;
+  margin-top: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+  text-decoration: none;
+}
+.glossary-source:hover { text-decoration: underline; }
+@media (max-width: 700px) {
+  .glossary-list { grid-template-columns: 1fr; gap: 0.4rem 0; }
+  .glossary-term { padding-top: 1rem; border-top: 1px solid var(--paper-dark); }
+  .glossary-def { border-bottom: none; padding-bottom: 0.4rem; }
+}
