@@ -149,6 +149,7 @@ function masthead(active) {
     { href: url("/lists/"), label: "Lists", id: "lists" },
     { href: url("/discover/"), label: "Discover", id: "discover" },
     { href: url("/cheatsheet/"), label: "Cheatsheet", id: "cheatsheet" },
+    { href: url("/syllabus/"), label: "Syllabus", id: "syllabus" },
     { href: url("/changelog/"), label: "Changelog", id: "changelog" },
     { href: url("/site-map/"), label: "Site map", id: "sitemap" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
@@ -1082,6 +1083,126 @@ function buildEraPage(era, notes) {
   }
   body += `</main>`;
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+}
+
+// --- /syllabus/ checkable 30-day course plan -------------------------------
+const SYLLABUS_WEEKS = [
+  {
+    week: 1, title: "Week 1 · 把视觉和语言连起来",
+    goal: "理解为什么所有 VLA 都先有一个 VLM",
+    days: [
+      { d: 1, slug: "clip", focus: "图文进入同一坐标系" },
+      { d: 2, slug: "blip", focus: "弱标注 + 自我清洗" },
+      { d: 3, slug: "blip-2", focus: "Q-Former 桥接冻结的 VLM/LLM" },
+      { d: 4, slug: "llava", focus: "MLP 把视觉特征注入 LLM" },
+      { d: 5, slug: "flamingo", focus: "交错图文 + Perceiver Resampler" },
+      { d: 6, slug: "siglip", focus: "sigmoid 替换 softmax" },
+      { d: 7, slug: null, focus: "复习 + 整理 [Glossary](/glossary/)" },
+    ],
+  },
+  {
+    week: 2, title: "Week 2 · 看懂 VLA 的进化",
+    goal: "讲清机器人怎么从看图直接出关节速度",
+    days: [
+      { d: 8, slug: "rt-1", focus: "把动作 token 化" },
+      { d: 9, slug: "saycan", focus: "LLM 给候选 + 可行性打分" },
+      { d: 10, slug: "code-as-policies", focus: "LLM 直接写 Python 调机器人" },
+      { d: 11, slug: "rt-2", focus: "网络知识 → robot policy" },
+      { d: 12, slug: "openvla", focus: "完全开源民主化" },
+      { d: 13, slug: "pi0", focus: "VLM + flow matching head" },
+      { d: 14, slug: null, focus: "复习 + 整理 [VLA topic page](/topics/vla/)" },
+    ],
+  },
+  {
+    week: 3, title: "Week 3 · 数据、模仿、扩散",
+    goal: "明白 Diffusion Policy 为什么赢了 transformer 在 manipulation",
+    days: [
+      { d: 15, slug: "dagger", focus: "误差累积 + 解决方案" },
+      { d: 16, slug: "act-aloha", focus: "双臂遥操作 + action chunking" },
+      { d: 17, slug: "umi", focus: "野外采数据无需机器人" },
+      { d: 18, slug: "open-x-embodiment", focus: "22 家机构数据合一" },
+      { d: 19, slug: "diffusion-policy", focus: "选动作 = 去噪" },
+      { d: 20, slug: "3d-diffusion-policy", focus: "加 3D 点云做眼睛" },
+      { d: 21, slug: null, focus: "复习 + 整理 [Imitation topic](/topics/imitation/)" },
+    ],
+  },
+  {
+    week: 4, title: "Week 4 · 周边生态",
+    goal: "具备读 2026 年新论文 abstract 不发蒙的能力",
+    days: [
+      { d: 22, slug: "world-models-ha", focus: "在脑子里预演" },
+      { d: 23, slug: "dreamer-v3", focus: "跨域固定超参世界模型" },
+      { d: 24, slug: "genie", focus: "无标签视频学潜在动作" },
+      { d: 25, slug: "habitat", focus: "室内仿真器照片级" },
+      { d: 26, slug: "isaac-gym", focus: "GPU 并行物理仿真" },
+      { d: 27, slug: "imagebind", focus: "六模态通过图像锚点" },
+      { d: 28, slug: "whisper", focus: "弱标注 + 大规模 = 零样本 ASR" },
+      { d: 29, slug: null, focus: "复习 + 看 [Compare](/compare/)" },
+      { d: 30, slug: null, focus: "写一篇自己的 review" },
+    ],
+  },
+];
+
+function buildSyllabus(notes) {
+  const slugMap = new Map(notes.map(n => [n.slug, n]));
+  let body = `<main class="shell">
+    <span class="eyebrow">Syllabus · 30 天课程提纲</span>
+    <h1>30 个<em>检查框</em>，30 天读完。</h1>
+    <p style="font-size:1.1rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
+      可勾选版本的 [30 天路径](/learn/path/)。每天勾完会存到浏览器，第二天回来自动恢复。完成度同步到顶部进度条。
+    </p>
+
+    <aside class="syl-progress" id="syl-progress">
+      <div class="syl-bar"><div class="syl-fill" style="width:0%"></div></div>
+      <div class="syl-num"><span data-syl-done>0</span> / 30 天</div>
+    </aside>
+    <hr class="ornament"/>`;
+  for (const w of SYLLABUS_WEEKS) {
+    body += `<section class="syl-week">
+      <h2 class="syl-week-h">${w.title}</h2>
+      <p class="syl-goal">本周收获 → ${w.goal}</p>
+      <ol class="syl-days">`;
+    for (const d of w.days) {
+      const note = d.slug ? slugMap.get(d.slug) : null;
+      const link = note ? `<a class="syl-paper" href="${url(`/papers/${d.slug}/`)}">${note.title.split(":")[0]}</a>` : "";
+      // focus 内嵌 markdown 链接转 html
+      const focusHtml = d.focus.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_, t, h) => `<a href="${url(h)}">${t}</a>`);
+      body += `<li class="syl-day">
+        <input type="checkbox" class="syl-check" data-syl-day="${d.d}" id="syl-${d.d}">
+        <label for="syl-${d.d}" class="syl-day-num">Day ${d.d}</label>
+        <div class="syl-day-body">
+          ${link ? link + "<br>" : ""}<span class="syl-focus">${focusHtml}</span>
+        </div>
+      </li>`;
+    }
+    body += `</ol></section>`;
+  }
+  body += `</main>
+  <script>
+  (function(){
+    var KEY = 'eaireading.syllabus';
+    var done = new Set();
+    try { done = new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch(e) {}
+    function save() { localStorage.setItem(KEY, JSON.stringify([...done])); render(); }
+    function render() {
+      var pct = (done.size / 30) * 100;
+      document.querySelector('.syl-fill').style.width = pct + '%';
+      document.querySelector('[data-syl-done]').textContent = done.size;
+    }
+    document.querySelectorAll('.syl-check').forEach(function(cb){
+      var d = parseInt(cb.dataset.sylDay, 10);
+      cb.checked = done.has(d);
+      cb.addEventListener('change', function(){
+        if (cb.checked) done.add(d); else done.delete(d);
+        save();
+        cb.closest('.syl-day').classList.toggle('syl-done', cb.checked);
+      });
+      if (cb.checked) cb.closest('.syl-day').classList.add('syl-done');
+    });
+    render();
+  })();
+  </script>`;
+  return page({ title: "Syllabus — Embodied AI Reading", body, active: "syllabus" });
 }
 
 // --- /cheatsheet/ all papers tldr in one page ------------------------------
@@ -2882,6 +3003,9 @@ function build() {
 
   // cheatsheet (single page all-tldr printable)
   write(path.join(DIST, "cheatsheet", "index.html"), buildCheatsheet(notes));
+
+  // syllabus (checkable 30-day plan)
+  write(path.join(DIST, "syllabus", "index.html"), buildSyllabus(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {

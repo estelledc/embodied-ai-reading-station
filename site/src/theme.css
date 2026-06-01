@@ -4139,3 +4139,96 @@ html.dark-theme body::after {
   color: var(--paper);
   border-color: var(--coral);
 }
+
+/* === syllabus === */
+.syl-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.7rem 1rem;
+  align-items: center;
+  margin: 1.2rem 0 1.5rem;
+  padding: 0.8rem 1.2rem;
+  background: var(--paper-warm);
+  border: 1px solid var(--coral);
+}
+.syl-bar {
+  height: 8px;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  overflow: hidden;
+}
+.syl-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
+  width: 0;
+  transition: width 0.3s;
+}
+.syl-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--coral);
+}
+.syl-week { margin: 2rem 0; }
+.syl-week-h {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.3rem;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.3rem;
+}
+.syl-goal {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--coral);
+  margin: 0 0 1rem;
+}
+.syl-days { list-style: none; padding: 0; margin: 0; }
+.syl-day {
+  display: grid;
+  grid-template-columns: 1.4rem 4rem 1fr;
+  gap: 0.7rem 1rem;
+  align-items: baseline;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed var(--paper-dark);
+  transition: opacity 0.2s;
+}
+.syl-day.syl-done { opacity: 0.5; }
+.syl-day.syl-done .syl-paper { text-decoration: line-through; }
+.syl-check {
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+  accent-color: var(--olive);
+}
+.syl-day-num {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--coral);
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+.syl-paper {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+.syl-paper:hover { color: var(--coral); }
+.syl-focus {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+}
+.syl-focus a { color: var(--coral); }
+@media (max-width: 700px) {
+  .syl-day { grid-template-columns: 1.4rem 1fr; }
+  .syl-day-num { grid-row: 1; grid-column: 2; margin-bottom: 0.2rem; }
+  .syl-day-body { grid-row: 2; grid-column: 2; }
+}
