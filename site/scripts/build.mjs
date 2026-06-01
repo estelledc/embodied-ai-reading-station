@@ -1560,6 +1560,12 @@ function build404(notes) {
       <a href="${url("/graph/")}" style="display:inline-block;padding:0.7rem 1.4rem;border:1px solid var(--ink);color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase">看关系图</a>
     </div>
     <hr class="ornament"/>
+
+    <aside id="eai-404-suggest" hidden style="margin:2rem auto;max-width:38rem;text-align:left;background:var(--paper-warm);border:1px solid var(--coral);padding:1.2rem 1.4rem">
+      <div class="eyebrow" style="color:var(--coral);margin-bottom:0.5rem">想找的可能是 ↓</div>
+      <ol id="eai-404-list" style="list-style:none;padding:0;margin:0"></ol>
+    </aside>
+
     <p class="eyebrow" style="margin-top:2rem">或者直接挑一篇读 ↘</p>
     <div class="papers-grid" style="margin-top:1.5rem;text-align:left">
       ${random6.map(n => `<article class="paper-card" style="min-height:auto;padding:1rem">
@@ -1567,6 +1573,46 @@ function build404(notes) {
         <p style="margin:0;font-size:0.86rem;color:var(--ink-soft);line-height:1.4">${(n.tldr || "").slice(0, 80)}…</p>
       </article>`).join("")}
     </div>
+
+    <script>
+    (function(){
+      var stylesLink = document.querySelector('link[href*="/styles.css"]');
+      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
+      // 提取 URL 末段当 query
+      var path = location.pathname.replace(base, '').replace(/\\/$/, '');
+      var seg = path.split('/').filter(Boolean).pop() || '';
+      if (!seg || seg === '404') return;
+      var q = seg.replace(/[-_]/g, ' ').toLowerCase();
+      fetch(base + '/data/papers.json')
+        .then(function(r){ return r.json(); })
+        .then(function(papers){
+          var scored = papers.map(function(p){
+            var hay = (p.title + ' ' + p.slug).toLowerCase();
+            var s = 0;
+            q.split(/\\s+/).forEach(function(w){
+              if (!w) return;
+              if (hay.indexOf(w) >= 0) s += w.length;
+            });
+            // slug 完全/部分匹配加权
+            if (p.slug === seg) s += 100;
+            else if (p.slug.indexOf(seg) >= 0 || seg.indexOf(p.slug) >= 0) s += 50;
+            return { p: p, s: s };
+          }).filter(function(x){ return x.s > 0; });
+          scored.sort(function(a,b){ return b.s - a.s; });
+          var top = scored.slice(0, 5);
+          if (!top.length) return;
+          var aside = document.getElementById('eai-404-suggest');
+          var list = document.getElementById('eai-404-list');
+          list.innerHTML = top.map(function(x){
+            return '<li style="padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)">' +
+              '<a href="' + x.p.url.replace('https://estelledc.github.io/embodied-ai-reading-station', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
+              '<span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem">' + x.p.topic + ' · ' + (x.p.year || '') + '</span></li>';
+          }).join('');
+          aside.hidden = false;
+        })
+        .catch(function(){});
+    })();
+    </script>
   </main>`;
   return page({ title: "404 — 这页没找到 — Embodied AI Reading", body, active: "" });
 }
