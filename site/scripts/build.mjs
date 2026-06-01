@@ -981,7 +981,7 @@ function injectInlineFigures(slug, body) {
   return result;
 }
 
-function buildNotePage(note, backlinks = []) {
+function buildNotePage(note, backlinks = [], prev = null, next = null) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
   const enrichedBody = injectInlineFigures(note.slug, note.body);
@@ -995,6 +995,19 @@ function buildNotePage(note, backlinks = []) {
       <span class="bl-topic">${b.topicLabel}</span>
     </a></li>`).join("")}</ul>
   </aside>` : "";
+
+  const navCardsHtml = (prev || next) ? `<nav class="prev-next-nav">
+    ${prev ? `<a class="pn-card pn-prev" href="${url(`/papers/${prev.slug}/`)}">
+      <span class="pn-dir">← 上一篇 · ${prev.topicLabel}</span>
+      <span class="pn-title">${prev.title.split(":")[0]}</span>
+      <span class="pn-tldr">${(prev.tldr || "").slice(0, 80)}${(prev.tldr || "").length > 80 ? "…" : ""}</span>
+    </a>` : `<div class="pn-card pn-empty"></div>`}
+    ${next ? `<a class="pn-card pn-next" href="${url(`/papers/${next.slug}/`)}">
+      <span class="pn-dir">下一篇 · ${next.topicLabel} →</span>
+      <span class="pn-title">${next.title.split(":")[0]}</span>
+      <span class="pn-tldr">${(next.tldr || "").slice(0, 80)}${(next.tldr || "").length > 80 ? "…" : ""}</span>
+    </a>` : `<div class="pn-card pn-empty"></div>`}
+  </nav>` : "";
 
   const navItems = PAPERS.map(p => {
     const isCurrent = p.slug === note.slug;
@@ -1027,6 +1040,8 @@ function buildNotePage(note, backlinks = []) {
       ${html}
       <p class="endmark">◼</p>
     </div>
+
+    ${navCardsHtml}
 
     ${backlinksHtml}
 
@@ -1263,10 +1278,26 @@ function build() {
     }
   }
 
+  // prev/next: 同主题内按 era + year 排序，跨主题就用 PAPERS 全局序
+  const eraRank2 = { founder: 0, classic: 1, frontier: 2 };
+  const sortedByTopic = new Map();
+  for (const t of TOPIC_ORDER) {
+    const inT = notes.filter(n => n.topic === t.id).sort((a, b) => {
+      const ea = eraRank2[a.era] - eraRank2[b.era];
+      if (ea !== 0) return ea;
+      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
+    });
+    sortedByTopic.set(t.id, inT);
+  }
+
   // each note
   for (const n of notes) {
     const bl = (backlinkMap.get(n.slug) || []).sort((a, b) => a.num - b.num);
-    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl));
+    const tList = sortedByTopic.get(n.topic) || [];
+    const idx = tList.findIndex(x => x.slug === n.slug);
+    const prev = idx > 0 ? tList[idx - 1] : null;
+    const next = idx >= 0 && idx < tList.length - 1 ? tList[idx + 1] : null;
+    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next));
   }
 
   // learn pages from site/content/*.md
