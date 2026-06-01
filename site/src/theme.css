@@ -3458,3 +3458,34 @@ html.dark-theme body::after {
 }
 .dp-difficulty { color: var(--coral); }
 .dp-date { color: var(--ink-faint); }
+
+/* === extended footer === */
+.footer-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem 2rem;
+  padding: 1rem 0;
+}
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.6rem;
+  font-weight: 500;
+}
+.footer-col a {
+  display: block;
+  padding: 0.18rem 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--ink-mute);
+  text-decoration: none;
+  transition: color 0.12s;
+}
+.footer-col a:hover { color: var(--coral); }
+@media (max-width: 700px) {
+  .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+}
+@media print { .footer-cols { display: none; } }

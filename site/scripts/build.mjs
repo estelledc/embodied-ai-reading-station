@@ -239,6 +239,38 @@ function relatedViewsHtml(active) {
 
 function footerHtml(active) {
   return `${relatedViewsHtml(active)}<footer class="jx-footer">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>路径</h4>
+        <a href="${url("/learn/path/")}">30 天路径</a>
+        <a href="${url("/learn/faq/")}">FAQ</a>
+        <a href="${url("/lists/")}">阅读包</a>
+        <a href="${url("/random/")}">随机一篇</a>
+      </div>
+      <div class="footer-col">
+        <h4>视图</h4>
+        <a href="${url("/topics/")}">Topics</a>
+        <a href="${url("/timeline/")}">Timeline</a>
+        <a href="${url("/compare/")}">Compare</a>
+        <a href="${url("/graph/")}">Graph</a>
+        <a href="${url("/heatmap/")}">Heatmap</a>
+      </div>
+      <div class="footer-col">
+        <h4>数据</h4>
+        <a href="${url("/data/papers.json")}">papers.json</a>
+        <a href="${url("/data/tags.json")}">tags.json</a>
+        <a href="${url("/feed.xml")}">Atom feed</a>
+        <a href="${url("/sitemap.xml")}">sitemap.xml</a>
+      </div>
+      <div class="footer-col">
+        <h4>关于</h4>
+        <a href="${url("/about/")}">About</a>
+        <a href="${url("/contributors/")}">Contributors</a>
+        <a href="${url("/changelog/")}">Changelog</a>
+        <a href="https://github.com/estelledc/embodied-ai-reading-station">GitHub</a>
+      </div>
+    </div>
+    <hr style="margin:1.5rem 0 1rem;border:none;border-top:1px solid var(--paper-dark)"/>
     <div class="jx-footer__colophon">
       <strong>Embodied AI Reading Station</strong>
       <span lang="en">VOL · MMXXVI</span>
@@ -246,7 +278,7 @@ function footerHtml(active) {
     <nav class="jx-footer__index">
       <a href="${url("/")}">index</a>
       <a href="${url("/topics/")}">topics</a>
-      <a href="https://github.com/estelledc/embodied-ai-reading-station">github</a>
+      <a href="${url("/site-map/")}">site map</a>
       <a href="${url("/feed.xml")}" type="application/atom+xml">rss</a>
     </nav>
     <time class="jx-footer__stamp" datetime="${new Date().toISOString().slice(0,10)}" lang="en">${new Date().toISOString().slice(0,10).replace(/-/g, "·")}</time>
