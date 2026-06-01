@@ -360,7 +360,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
 }
 
 // --- index page -------------------------------------------------------------
-function buildIndex(notes) {
+function buildIndex(notes, latestIssue = null) {
   const total = PAPERS.length;
   const done = notes.filter(n => n.status && n.status !== "stub" && n.status !== "missing").length;
 
@@ -424,11 +424,11 @@ function buildIndex(notes) {
     <section class="whats-new">
       <div class="wn-eyebrow">最新 ↘ what's new</div>
       <div class="wn-grid">
-        <a class="wn-card wn-issue" href="${url("/issues/07/")}">
-          <div class="wn-tag">Issue Nº VII</div>
-          <div class="wn-title">One hundred small things</div>
-          <div class="wn-tldr">从 0 到 100 件 enrichment 的总账：路径 / 视图 / 个性化 / 数据 / SEO / 离线</div>
-        </a>
+        ${latestIssue ? `<a class="wn-card wn-issue" href="${url(`/issues/${latestIssue.slug.replace("issue-", "")}/`)}">
+          <div class="wn-tag">Issue Nº ${latestIssue.issueNumber}</div>
+          <div class="wn-title">${latestIssue.title.replace(/^Issue Nº \w+ — /, "")}</div>
+          <div class="wn-tldr">${latestIssue.intro || ""}</div>
+        </a>` : ""}
         ${(() => {
           const recent = [...notes]
             .filter(n => n.status !== "missing" && n.status !== "stub")
@@ -2734,7 +2734,7 @@ function build() {
   for (const n of notes) (n.tags || []).forEach(t => tagSet.add(t));
   console.log(`  inferred ${tagSet.size} tags across ${notes.length} notes`);
 
-  // index
+  // index — 先用 null（最新 issue 还没加载），稍后加载完 issue 再覆盖
   write(path.join(DIST, "index.html"), buildIndex(notes));
 
   // topics
@@ -3003,6 +3003,10 @@ function build() {
       for (const p of issuePages) {
         write(path.join(DIST, "issues", p.slug.replace("issue-", ""), "index.html"), buildIssuePage(p, notes));
       }
+      // 用最新一期重写 index 的 What's new 模块
+      const sortedIssues = [...issuePages].sort((a, b) => b.order - a.order);
+      const latestIssue = sortedIssues[0];
+      write(path.join(DIST, "index.html"), buildIndex(notes, latestIssue));
     }
 
     // human-readable site map（needs issue + learn loaded first）
