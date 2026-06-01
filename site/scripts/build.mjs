@@ -162,6 +162,7 @@ function footerHtml() {
       <a href="${url("/")}">index</a>
       <a href="${url("/topics/")}">topics</a>
       <a href="https://github.com/estelledc/embodied-ai-reading-station">github</a>
+      <a href="${url("/feed.xml")}" type="application/atom+xml">rss</a>
     </nav>
     <time class="jx-footer__stamp" datetime="${new Date().toISOString().slice(0,10)}" lang="en">${new Date().toISOString().slice(0,10).replace(/-/g, "·")}</time>
   </footer>`;
@@ -179,6 +180,7 @@ function page({ title, body, active, extraHead = "" }) {
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
   ${extraHead}
 </head>
 <body>
@@ -585,6 +587,60 @@ function buildCompare(notes) {
   return page({ title: "Compare — Embodied AI Reading", body, active: "compare" });
 }
 
+// --- RSS / Atom feed --------------------------------------------------------
+function buildFeed(issuePages, notes) {
+  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
+  const updated = new Date().toISOString();
+  const xmlEscape = s => String(s)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+
+  const entries = [];
+  for (const p of issuePages) {
+    const slug = p.slug.replace("issue-", "");
+    const link = `${SITE_URL}/issues/${slug}/`;
+    const pubDate = p.issueDate || updated;
+    entries.push(`  <entry>
+    <title>${xmlEscape(p.title)}</title>
+    <link href="${link}"/>
+    <id>${link}</id>
+    <updated>${updated}</updated>
+    <summary>${xmlEscape(p.intro || "")}</summary>
+    <content type="html">${xmlEscape(`<p>${p.intro || ""}</p><p>Published: ${pubDate}</p><p><a href="${link}">Read full issue →</a></p>`)}</content>
+  </entry>`);
+  }
+
+  // 也把最近 10 篇笔记加进 feed（按 num 倒序，新加的在前）
+  const recentNotes = [...notes]
+    .filter(n => n.status !== "missing" && n.status !== "stub")
+    .sort((a, b) => (b.num || 0) - (a.num || 0))
+    .slice(0, 10);
+  for (const n of recentNotes) {
+    const link = `${SITE_URL}/papers/${n.slug}/`;
+    entries.push(`  <entry>
+    <title>${xmlEscape(`№ ${n.num} · ${n.title}`)}</title>
+    <link href="${link}"/>
+    <id>${link}</id>
+    <updated>${updated}</updated>
+    <category term="${xmlEscape(n.topicLabel)}"/>
+    <summary>${xmlEscape(n.tldr || "")}</summary>
+  </entry>`);
+  }
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
+  <title>Embodied AI Reading Station</title>
+  <subtitle>156 篇具身 AI 论文，用能读懂的语言重写</subtitle>
+  <link href="${SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
+  <link href="${SITE_URL}/" rel="alternate" type="text/html"/>
+  <id>${SITE_URL}/</id>
+  <updated>${updated}</updated>
+  <author><name>Jason</name></author>
+${entries.join("\n")}
+</feed>
+`;
+}
+
 // --- timeline page ----------------------------------------------------------
 function buildTimeline(notes) {
   // 按年聚合
@@ -960,6 +1016,9 @@ function build() {
         write(path.join(DIST, "issues", p.slug.replace("issue-", ""), "index.html"), buildIssuePage(p, notes));
       }
     }
+
+    // RSS / Atom feed
+    write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
   }
 
   // assets
