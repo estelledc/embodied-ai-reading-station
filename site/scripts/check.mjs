@@ -111,6 +111,22 @@ check("tags.json 有 frequency + cooccurrence", () => {
   return true;
 });
 
+console.log("\n=== PWA / icons / manifest ===");
+const pwaFiles = ["sw.js", "site.webmanifest", "favicon.svg"];
+for (const f of pwaFiles) {
+  check(`${f} 存在`, () => fs.existsSync(path.join(DIST, f)) || `missing`);
+}
+{
+  const sw = fs.readFileSync(path.join(DIST, "sw.js"), "utf8");
+  check("sw.js VERSION 已注入构建时间戳", () => /const VERSION = "\d{12}"/.test(sw) || `VERSION 未替换`);
+  const idx = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  check("index.html 引用 sw-register.js", () => idx.includes("sw-register.js") || `无 sw-register`);
+  check("index.html 含 theme-color", () => idx.includes('name="theme-color"') || `无 theme-color`);
+  check("index.html 引用 manifest", () => idx.includes("site.webmanifest") || `无 manifest link`);
+  check("index.html 引用 favicon.svg", () => idx.includes("favicon.svg") || `无 favicon link`);
+  check("index.html 含 OpenSearch link", () => idx.includes("opensearch.xml") || `无 opensearch`);
+}
+
 console.log("\n=== OG / Twitter meta ===");
 const sample = [
   "index.html",
