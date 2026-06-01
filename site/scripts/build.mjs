@@ -2468,6 +2468,12 @@ function buildGraph(notes) {
     <div id="graph-container" style="width:100%;height:75vh;min-height:520px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">
       <svg id="graph-svg" width="100%" height="100%"></svg>
       <div id="graph-tooltip" class="graph-tooltip" hidden></div>
+      <aside class="graph-stats-panel">
+        <div class="gsp-row"><span class="gsp-label">nodes</span><span class="gsp-num">${nodes.length}</span></div>
+        <div class="gsp-row"><span class="gsp-label">edges</span><span class="gsp-num">${links.length}</span></div>
+        <div class="gsp-row"><span class="gsp-label">topics</span><span class="gsp-num">${TOPIC_ORDER.length}</span></div>
+        <div class="gsp-row"><span class="gsp-label">avg degree</span><span class="gsp-num">${(2 * links.length / nodes.length).toFixed(1)}</span></div>
+      </aside>
     </div>
   </main>
   <script id="graph-data" type="application/json">${JSON.stringify(data)}</script>`;

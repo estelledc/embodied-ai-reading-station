@@ -4335,3 +4335,38 @@ html.dark-theme body::after {
 .status-deep { background: var(--coral); color: var(--paper); }
 .status-summary { background: rgba(110, 116, 72, 0.18); color: var(--olive); }
 .status-light { background: var(--bone); color: var(--ink-faint); }
+
+/* === graph stats panel === */
+.graph-stats-panel {
+  position: absolute;
+  left: 1rem;
+  bottom: 1rem;
+  background: rgba(239, 231, 210, 0.92);
+  border: 1px solid var(--paper-dark);
+  padding: 0.6rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  pointer-events: none;
+  border-radius: 2px;
+}
+.gsp-row {
+  display: flex;
+  gap: 0.7rem;
+  justify-content: space-between;
+}
+.gsp-label {
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-size: 0.66rem;
+}
+.gsp-num {
+  color: var(--coral);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) { .graph-stats-panel { display: none; } }
+@media print { .graph-stats-panel { display: none; } }
