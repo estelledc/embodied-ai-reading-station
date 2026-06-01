@@ -3988,3 +3988,40 @@ html.dark-theme body::after {
   .timeline-band { grid-template-columns: 1fr; }
   .tb-note { grid-column: 1; }
 }
+
+/* === lightbox prev/next === */
+.lb-prev, .lb-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(239, 231, 210, 0.1);
+  border: 1px solid rgba(239, 231, 210, 0.4);
+  color: var(--paper);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.lb-prev { left: 1.5rem; }
+.lb-next { right: 1.5rem; }
+.lb-prev:hover, .lb-next:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+.lb-counter {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin-left: 0.5rem;
+  color: var(--mustard);
+}
+@media (max-width: 700px) {
+  .lb-prev, .lb-next { width: 2.4rem; height: 2.4rem; font-size: 1.3rem; }
+  .lb-prev { left: 0.5rem; }
+  .lb-next { right: 0.5rem; }
+}

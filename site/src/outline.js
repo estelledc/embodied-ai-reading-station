@@ -202,44 +202,67 @@
   setInterval(tick, 2000);
 })();
 
-// === image lightbox：点击放大 ===
+// === image lightbox：点击放大 + 键盘左右翻图 ===
 (() => {
-  const imgs = document.querySelectorAll(".note-content img, .topic-landing-hero img, .hero-figure img");
+  const imgs = [...document.querySelectorAll(".note-content img, .topic-landing-hero img, .hero-figure img")];
   if (imgs.length === 0) return;
 
   let overlay = null;
-  function open(src, alt) {
-    if (overlay) overlay.remove();
-    overlay = document.createElement("div");
-    overlay.className = "img-lightbox";
+  let currentIdx = -1;
+
+  function show(idx) {
+    if (idx < 0 || idx >= imgs.length) return;
+    currentIdx = idx;
+    const img = imgs[idx];
+    const src = img.currentSrc || img.src;
+    const alt = img.alt;
+    if (!overlay) {
+      overlay = document.createElement("div");
+      overlay.className = "img-lightbox";
+      document.body.appendChild(overlay);
+    }
+    const hasMulti = imgs.length > 1;
     overlay.innerHTML = `
       <img src="${src}" alt="${(alt || "").replace(/"/g, "&quot;")}">
       <button class="lb-close" aria-label="关闭">×</button>
-      ${alt ? `<div class="lb-caption">${alt}</div>` : ""}
+      ${hasMulti ? `<button class="lb-prev" aria-label="上一张">‹</button><button class="lb-next" aria-label="下一张">›</button>` : ""}
+      ${alt ? `<div class="lb-caption">${alt}${hasMulti ? ` <span class="lb-counter">${idx + 1} / ${imgs.length}</span>` : ""}</div>` : (hasMulti ? `<div class="lb-caption"><span class="lb-counter">${idx + 1} / ${imgs.length}</span></div>` : "")}
     `;
-    document.body.appendChild(overlay);
     requestAnimationFrame(() => overlay.classList.add("show"));
-    function close() {
-      if (!overlay) return;
-      overlay.classList.remove("show");
-      const o = overlay; overlay = null;
-      setTimeout(() => o.remove(), 220);
-    }
-    overlay.addEventListener("click", (e) => {
-      if (e.target === overlay || e.target.classList.contains("lb-close")) close();
-    });
-    document.addEventListener("keydown", function onKey(e) {
-      if (e.key === "Escape") {
-        document.removeEventListener("keydown", onKey);
-        close();
-      }
+    overlay.querySelector(".lb-close").addEventListener("click", close);
+    overlay.querySelector(".lb-prev")?.addEventListener("click", (e) => { e.stopPropagation(); show((currentIdx - 1 + imgs.length) % imgs.length); });
+    overlay.querySelector(".lb-next")?.addEventListener("click", (e) => { e.stopPropagation(); show((currentIdx + 1) % imgs.length); });
+  }
+
+  function close() {
+    if (!overlay) return;
+    overlay.classList.remove("show");
+    const o = overlay; overlay = null;
+    currentIdx = -1;
+    setTimeout(() => o.remove(), 220);
+    document.removeEventListener("keydown", onKey);
+  }
+
+  function onKey(e) {
+    if (!overlay) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowLeft" && imgs.length > 1) { e.preventDefault(); show((currentIdx - 1 + imgs.length) % imgs.length); }
+    else if (e.key === "ArrowRight" && imgs.length > 1) { e.preventDefault(); show((currentIdx + 1) % imgs.length); }
+  }
+
+  for (let i = 0; i < imgs.length; i++) {
+    const img = imgs[i];
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => {
+      show(i);
+      document.addEventListener("keydown", onKey);
     });
   }
 
-  for (const img of imgs) {
-    img.style.cursor = "zoom-in";
-    img.addEventListener("click", () => open(img.currentSrc || img.src, img.alt));
-  }
+  // 点 overlay 空白处（不是 prev/next 按钮和 img）关闭
+  document.addEventListener("click", (e) => {
+    if (overlay && (e.target === overlay)) close();
+  });
 })();
 
 // === copy markdown link button ===
