@@ -1729,17 +1729,48 @@ function buildAbout() {
 
       <h2>Stack</h2>
       <ul>
-        <li>Pure HTML + CSS, no framework</li>
+        <li>Pure HTML + CSS, no framework — 156 张静态页面</li>
         <li>Markdown → HTML via <code>marked</code> + <code>gray-matter</code></li>
-        <li>Build script: ~250 lines of Node</li>
-        <li>Hosted on GitHub Pages</li>
+        <li>Build script: <code>site/scripts/build.mjs</code> 单文件 ~2400 行 Node</li>
+        <li>搜索: <a href="https://pagefind.app">Pagefind</a> 全文索引</li>
+        <li>数学: <a href="https://katex.org">KaTeX</a> CDN</li>
+        <li>可视化: <a href="https://d3js.org">D3.js v7</a>（force-directed graph）</li>
+        <li>PWA: 自定义 service worker 离线缓存</li>
+        <li>部署: GitHub Pages + Actions（每 push 自动 build → healthcheck → deploy）</li>
       </ul>
 
+      <h2>Colophon</h2>
+      <p>设计参照：<a href="https://github.com/open-design/open-design">open-design</a> 的 <strong>atelier-zero</strong> design system。</p>
+      <ul>
+        <li><strong>字体</strong>：Inter Tight（正文 sans）/ Playfair Display（display italic）/ JetBrains Mono（mono）— 全部 Google Fonts</li>
+        <li><strong>颜色</strong>：暖纸 ivory <code>#efe7d2</code> / 珊瑚红 <code>#ed6f5c</code> / 芥末黄 <code>#e9b94a</code> / 橄榄 <code>#6e7448</code> / 墨色 <code>#15140f</code></li>
+        <li><strong>图标记法</strong>：罗马数字章节（I-XI）/ Plate Nº 编号 / 章节末尾 ◼</li>
+      </ul>
+
+      <h2>AI 工具</h2>
+      <p>这站建成借助了几个 AI 工具：</p>
+      <ul>
+        <li><strong>Claude Code</strong>：主要的代码生成 + 笔记重写工具</li>
+        <li><strong>Codex CLI</strong>：${notes_count_estimate()}+ 张内嵌图片生成（场景图 + 方法图，全部 16:9 webp）</li>
+        <li><strong>MinerU + pdftotext</strong>：PDF → markdown 解析</li>
+        <li><strong>lr (LightRead)</strong>：arXiv 检索 + PDF bundle 工具</li>
+      </ul>
+      <p>所有 AI 输出都经过手动校对。错误归人不归 AI。</p>
+
       <h2>License</h2>
-      <p>笔记和站点代码 MIT。论文 PDF 与图片的版权归原作者。</p>
+      <ul>
+        <li><strong>笔记内容</strong>: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — 引用请保留作者名</li>
+        <li><strong>站点代码</strong>: <a href="https://opensource.org/licenses/MIT">MIT</a></li>
+        <li><strong>原论文 PDF + 论文 figure 图</strong>: 版权归原作者，本站只作学习摘要</li>
+        <li><strong>codex 生成图片</strong>: CC BY 4.0（同笔记）</li>
+      </ul>
     </div>
   </main>`;
   return page({ title: "About — Embodied AI Reading", body, active: "about" });
+}
+
+function notes_count_estimate() {
+  return 590;
 }
 
 // --- learn pages (beginner supplements) -------------------------------------
