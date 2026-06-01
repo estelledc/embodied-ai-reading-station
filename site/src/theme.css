@@ -3042,3 +3042,44 @@ html.dark-theme body::after {
   letter-spacing: 0;
 }
 .pn-card-read .pn-title { color: var(--ink-soft); }
+
+/* === topic landing progress === */
+.topic-progress {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 0.8rem 1rem;
+  align-items: center;
+  margin: 1rem 0 2rem;
+  padding: 0.8rem 1.2rem;
+  background: var(--bone);
+  border-left: 3px solid var(--coral);
+}
+.tp-label {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+.tp-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.4rem;
+  color: var(--coral);
+  letter-spacing: -0.02em;
+}
+.tp-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  overflow: hidden;
+  min-width: 8rem;
+}
+.tp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
+  width: 0;
+  transition: width 0.3s;
+}

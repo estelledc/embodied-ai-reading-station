@@ -616,6 +616,11 @@ function buildTopicLanding(t, notes) {
       <div><span class="stat-num">${classics}</span><span class="stat-label">classic</span></div>
       <div><span class="stat-num">${frontiers}</span><span class="stat-label">frontier</span></div>
     </div>
+    <aside class="topic-progress" data-topic="${t.id}" data-topic-slugs="${inTopic.map(n => n.slug).join(",")}" hidden>
+      <span class="tp-label">你在该主题已读</span>
+      <span class="tp-num"><span data-tp-done>0</span> / <span data-tp-total>${inTopic.length}</span></span>
+      <div class="tp-bar"><div class="tp-fill"></div></div>
+    </aside>
     ${t.intro ? `<p class="topic-intro">${t.intro}</p>` : ""}`;
 
   if (primerNotes.length) {

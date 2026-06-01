@@ -322,5 +322,26 @@
     bindNextPick();
     bindAutoMarkOnScroll();
     bindReadingLists();
+    bindTopicProgress();
   });
+
+  function bindTopicProgress() {
+    const el = document.querySelector(".topic-progress[data-topic-slugs]");
+    if (!el) return;
+    function render() {
+      const slugs = (el.dataset.topicSlugs || "").split(",").filter(Boolean);
+      const read = load();
+      const done = slugs.filter(s => read.has(s)).length;
+      const total = slugs.length;
+      if (done > 0) {
+        el.hidden = false;
+        el.querySelector("[data-tp-done]").textContent = done;
+        el.querySelector(".tp-fill").style.width = (total ? (done / total * 100) : 0) + "%";
+      } else {
+        el.hidden = true;
+      }
+    }
+    render();
+    window.addEventListener("eai:read-changed", render);
+  }
 })();
