@@ -32,6 +32,8 @@ jobs:
         env:
           SITE_BASE: /${{ github.event.repository.name }}
         run: npm run build
+      - name: Healthcheck
+        run: npm run check
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist
