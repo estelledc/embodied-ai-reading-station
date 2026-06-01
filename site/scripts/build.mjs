@@ -1728,12 +1728,12 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   </aside>` : "";
 
   const navCardsHtml = (prev || next) ? `<nav class="prev-next-nav">
-    ${prev ? `<a class="pn-card pn-prev" href="${url(`/papers/${prev.slug}/`)}">
+    ${prev ? `<a class="pn-card pn-prev" href="${url(`/papers/${prev.slug}/`)}" data-slug="${prev.slug}">
       <span class="pn-dir">← 上一篇 · ${prev.topicLabel}</span>
       <span class="pn-title">${prev.title.split(":")[0]}</span>
       <span class="pn-tldr">${(prev.tldr || "").slice(0, 80)}${(prev.tldr || "").length > 80 ? "…" : ""}</span>
     </a>` : `<div class="pn-card pn-empty"></div>`}
-    ${next ? `<a class="pn-card pn-next" href="${url(`/papers/${next.slug}/`)}">
+    ${next ? `<a class="pn-card pn-next" href="${url(`/papers/${next.slug}/`)}" data-slug="${next.slug}">
       <span class="pn-dir">下一篇 · ${next.topicLabel} →</span>
       <span class="pn-title">${next.title.split(":")[0]}</span>
       <span class="pn-tldr">${(next.tldr || "").slice(0, 80)}${(next.tldr || "").length > 80 ? "…" : ""}</span>

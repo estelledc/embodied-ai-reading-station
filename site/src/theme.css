@@ -3022,3 +3022,23 @@ html.dark-theme body::after {
 }
 #main-content { outline: none; }
 #main-content:focus-visible { outline: 2px solid var(--coral); outline-offset: -2px; }
+
+/* === pn-card read state === */
+.pn-card-read {
+  border-color: var(--olive) !important;
+  position: relative;
+}
+.pn-card-read::after {
+  content: "✓";
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  background: var(--olive);
+  color: var(--paper);
+  padding: 0.05em 0.4em;
+  border-radius: 2px;
+  letter-spacing: 0;
+}
+.pn-card-read .pn-title { color: var(--ink-soft); }

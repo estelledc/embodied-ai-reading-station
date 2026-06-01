@@ -94,8 +94,14 @@
     document.querySelectorAll("[data-slug]").forEach(card => {
       const slug = card.dataset.slug;
       if (!slug || card.tagName === "BUTTON") return;
+      // pn-card 用 pn-card-read 不要用 eai-card-read（避免角标重叠）
+      const isPnCard = card.classList.contains("pn-card");
       function render() {
-        card.classList.toggle("eai-card-read", window.EAI_READ.has(slug));
+        if (isPnCard) {
+          card.classList.toggle("pn-card-read", window.EAI_READ.has(slug));
+        } else {
+          card.classList.toggle("eai-card-read", window.EAI_READ.has(slug));
+        }
       }
       render();
       window.addEventListener("eai:read-changed", render);
