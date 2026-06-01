@@ -1650,10 +1650,17 @@ html.dark-theme body::after {
 /* === quick filter === */
 .quick-filter {
   margin: 1.5rem 0 2rem;
-  padding: 1rem 1.2rem;
-  background: var(--bone);
+  padding: 0.8rem 1.2rem;
+  background: rgba(217, 207, 178, 0.96);
   border: 1px solid var(--paper-dark);
   border-radius: 2px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(6px);
+}
+@media (max-width: 700px) {
+  .quick-filter { position: static; }
 }
 .qf-row {
   display: flex;
