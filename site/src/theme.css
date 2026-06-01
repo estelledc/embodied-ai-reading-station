@@ -3860,3 +3860,40 @@ html.dark-theme body::after {
   text-decoration: none;
 }
 .lc-more:hover { text-decoration: underline; }
+
+/* === search history === */
+.search-history {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed var(--paper-dark);
+}
+.sh-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.5rem;
+}
+.search-history ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.search-history button {
+  background: transparent;
+  border: 1px solid var(--paper-dark);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.2em 0.7em;
+  cursor: pointer;
+  color: var(--ink);
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.search-history button::before {
+  content: "↺ ";
+  color: var(--ink-faint);
+  margin-right: 0.2em;
+}
+.search-history button:hover {
+  background: var(--coral);
+  color: var(--paper);
+  border-color: var(--coral);
+}

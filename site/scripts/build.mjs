@@ -183,6 +183,7 @@ function masthead(active) {
   <dialog class="search-dialog" aria-label="站内搜索">
     <form method="dialog" class="search-close-form"><button class="search-close" aria-label="关闭">×</button></form>
     <div class="search-container" data-base="${BASE}"></div>
+    <div class="search-history" hidden></div>
     <div class="search-shortcuts">
       <div class="ss-eyebrow">没主意？快捷入口</div>
       <div class="ss-grid">
