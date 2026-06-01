@@ -347,6 +347,16 @@ function buildIndex(notes) {
       <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
     </div>
 
+    <aside class="daily-pick" id="eai-daily-pick" hidden>
+      <div class="dp-eyebrow">Today's pick · 今日推荐</div>
+      <a class="dp-card" href="#">
+        <div class="dp-meta"><span class="dp-num"></span><span class="dp-topic"></span></div>
+        <h3 class="dp-title"></h3>
+        <p class="dp-tldr"></p>
+        <div class="dp-foot"><span class="dp-difficulty"></span><span class="dp-date"></span></div>
+      </a>
+    </aside>
+
     <section class="whats-new">
       <div class="wn-eyebrow">最新 ↘ what's new</div>
       <div class="wn-grid">

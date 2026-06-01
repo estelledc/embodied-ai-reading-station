@@ -3397,3 +3397,64 @@ html.dark-theme body::after {
   .lf-card { border-right: none; border-bottom: 1px solid var(--paper-dark); }
   .lf-card:last-child { border-bottom: none; }
 }
+
+/* === daily pick === */
+.daily-pick {
+  margin: 1.5rem 0;
+  background: linear-gradient(135deg, var(--paper-warm) 0%, var(--paper) 100%);
+  border: 1px solid var(--mustard);
+}
+.dp-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mustard);
+  padding: 0.6rem 1.2rem 0.3rem;
+  border-bottom: 1px solid var(--paper-dark);
+  background: rgba(233, 185, 74, 0.08);
+}
+.dp-card {
+  display: block;
+  padding: 1.2rem 1.4rem 1.4rem;
+  text-decoration: none;
+  color: inherit;
+  transition: background 0.15s;
+}
+.dp-card:hover { background: rgba(233, 185, 74, 0.05); }
+.dp-meta {
+  display: flex;
+  gap: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.4rem;
+}
+.dp-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+  margin: 0.2rem 0 0.5rem;
+}
+.dp-tldr {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+.dp-foot {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.7rem;
+  padding-top: 0.7rem;
+  border-top: 1px dashed var(--paper-dark);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+}
+.dp-difficulty { color: var(--coral); }
+.dp-date { color: var(--ink-faint); }

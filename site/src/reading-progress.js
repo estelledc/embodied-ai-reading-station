@@ -324,7 +324,36 @@
     bindReadingLists();
     bindTopicProgress();
     bindMyStats();
+    bindDailyPick();
   });
+
+  function bindDailyPick() {
+    const el = document.getElementById("eai-daily-pick");
+    const dataEl = document.getElementById("eai-papers-data");
+    if (!el || !dataEl) return;
+    let papers = [];
+    try { papers = JSON.parse(dataEl.textContent); } catch { return; }
+    if (papers.length === 0) return;
+
+    // 从今日日期生成 hash
+    const today = new Date();
+    const ymd = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+    // simple hash
+    let h = ymd;
+    h = ((h * 9301) + 49297) % 233280;
+    const idx = h % papers.length;
+    const p = papers[idx];
+
+    el.querySelector(".dp-card").href = p.url;
+    el.querySelector(".dp-num").textContent = `№ ${String(p.num).padStart(2, "0")}`;
+    el.querySelector(".dp-topic").textContent = p.topic;
+    el.querySelector(".dp-title").textContent = p.title;
+    el.querySelector(".dp-tldr").textContent = p.tldr || "";
+    el.querySelector(".dp-difficulty").textContent = "★".repeat(p.difficulty || 2);
+    const dateStr = today.toISOString().slice(0, 10);
+    el.querySelector(".dp-date").textContent = dateStr;
+    el.hidden = false;
+  }
 
   function bindMyStats() {
     const sec = document.getElementById("eai-my-stats");
