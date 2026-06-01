@@ -128,6 +128,40 @@ site/
 explorations/       playground
 ```
 
+## 构建流程
+
+```
+notes/*.md ──┐
+             ├──▶ discoverPapers() ──▶ 156 paper objects
+papers/      │                              │
+  └─ images  │                              ▼
+             │                       inferTags() → 21 tags
+content/*.md ┤                              │
+  ├─ issue-* │                              ▼
+  └─ learn-* │                       buildIndex / buildTopics
+             │                       buildCompare / buildGraph
+             │                       buildStats / buildHeatmap
+             ▼                       ... (~30 view pages)
+        marked + gray-matter                │
+             │                              ▼
+             │                       buildNotePage × 156
+             │                              │
+             ▼                              ▼
+       Pagefind index ◀──────── dist/
+                                  │
+                                  ├─ data/papers.json + .csv
+                                  ├─ feed.xml + sitemap.xml
+                                  ├─ sw.js (PWA)
+                                  └─ index.html ... 2400+ files
+
+   ↓ npm run check (49 项)
+   ↓ GitHub Actions (build → check → deploy)
+   ↓
+   estelledc.github.io/embodied-ai-reading-station/
+```
+
+构建用时约 2 秒，dist 输出 ~120MB（71MB 是 590 张 webp 图）。
+
 ## 许可
 
 - **笔记内容**：CC BY 4.0 — 引用请保留作者
