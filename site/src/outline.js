@@ -140,6 +140,16 @@
   let visible = !document.hidden;
   let notified = sessionStorage.getItem(NOTIFIED_KEY) === "1";
 
+  function persistReading() {
+    try {
+      const data = JSON.parse(localStorage.getItem("eaireading.timing") || "{}");
+      const wcMatch = txt.match(/(\d+)\s*字/);
+      const wc = wcMatch ? parseInt(wcMatch[1], 10) : 0;
+      data[slug] = { seconds: Math.floor(elapsed), wordCount: wc };
+      localStorage.setItem("eaireading.timing", JSON.stringify(data));
+    } catch {}
+  }
+
   // 小角标：右下角显示 "已读 X / Y 分钟"
   const badge = document.createElement("div");
   badge.className = "read-timer-badge";
@@ -165,6 +175,7 @@
       const pct = Math.min(1, elapsed / targetSec);
       badge.style.setProperty("--p", pct);
     }
+    if (Math.floor(elapsed) % 10 < 2) persistReading();
     if (!notified && elapsed >= targetSec) {
       notified = true;
       sessionStorage.setItem(NOTIFIED_KEY, "1");
