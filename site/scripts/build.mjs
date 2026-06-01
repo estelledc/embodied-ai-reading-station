@@ -1334,7 +1334,7 @@ function buildQuality(notes) {
 }
 
 // --- stats dashboard --------------------------------------------------------
-function buildStats(notes) {
+function buildStats(notes, backlinkMap = new Map()) {
   const total = notes.length;
   const totalWords = notes.reduce((s, n) => s + (n.wordCount || 0), 0);
   const totalMinutes = notes.reduce((s, n) => s + (n.readingTime || 0), 0);
@@ -1460,6 +1460,45 @@ function buildStats(notes) {
         `).join("")}
       </div>
     </section>
+
+    ${(() => {
+      // Top reads: 按 backlinks 数排，取前 10
+      if (backlinkMap.size === 0) return "";
+      const ranked = notes
+        .map(n => ({ n, count: (backlinkMap.get(n.slug) || []).length }))
+        .filter(x => x.count > 0)
+        .sort((a, b) => b.count - a.count)
+        .slice(0, 10);
+      if (!ranked.length) return "";
+      const max = ranked[0].count;
+      return `<section class="stats-section">
+        <h2>被引用最多 top 10</h2>
+        <p style="color:var(--ink-soft);font-size:0.9rem;margin:0 0 1rem">在其他笔记里被提及次数</p>
+        <div class="stats-bars">
+          ${ranked.map(({ n, count }) => `<div class="stats-row">
+            <a class="stats-label" href="${url(`/papers/${n.slug}/`)}" style="font-family:var(--font-display);font-weight:700;font-size:0.95rem">${n.title.split(":")[0].slice(0, 40)}</a>
+            <div class="vbar"><div class="vbar-fill" style="width:${count/max*100}%"></div><span class="vbar-num">${count}</span></div>
+          </div>`).join("")}
+        </div>
+      </section>`;
+    })()}
+
+    ${(() => {
+      // 字数最多 top 10
+      const longest = [...notes].sort((a, b) => (b.wordCount || 0) - (a.wordCount || 0)).slice(0, 10);
+      if (!longest.length) return "";
+      const max = longest[0].wordCount || 1;
+      return `<section class="stats-section">
+        <h2>最长 top 10</h2>
+        <p style="color:var(--ink-soft);font-size:0.9rem;margin:0 0 1rem">字数最多的深度笔记</p>
+        <div class="stats-bars">
+          ${longest.map(n => `<div class="stats-row">
+            <a class="stats-label" href="${url(`/papers/${n.slug}/`)}" style="font-family:var(--font-display);font-weight:700;font-size:0.95rem">${n.title.split(":")[0].slice(0, 40)}</a>
+            <div class="vbar"><div class="vbar-fill" style="width:${(n.wordCount||0)/max*100}%"></div><span class="vbar-num">${n.wordCount || 0}</span></div>
+          </div>`).join("")}
+        </div>
+      </section>`;
+    })()}
 
     <hr class="ornament"/>
 
@@ -2487,6 +2526,7 @@ function build() {
   write(path.join(DIST, "venues", "index.html"), buildVenueStats(notes));
 
   // stats
+  // stats 在最初先出一份（无 backlinks），稍后会被覆盖
   write(path.join(DIST, "stats", "index.html"), buildStats(notes));
 
   // quality (作者用，不在导航)
@@ -2704,6 +2744,9 @@ function build() {
     const issuesMentioning = paperIssues.get(n.slug) || [];
     write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning));
   }
+
+  // 重新生成 stats，这次带 backlinks 数据
+  write(path.join(DIST, "stats", "index.html"), buildStats(notes, backlinkMap));
 
   if (fs.existsSync(CONTENT_DIR)) {
     write(path.join(DIST, "learn", "index.html"), buildLearnIndex(learnPages));
