@@ -406,10 +406,10 @@ function buildIndex(notes) {
     <section class="whats-new">
       <div class="wn-eyebrow">最新 ↘ what's new</div>
       <div class="wn-grid">
-        <a class="wn-card wn-issue" href="${url("/issues/06/")}">
-          <div class="wn-tag">Issue Nº VI</div>
-          <div class="wn-title">Bodies that learn</div>
-          <div class="wn-tldr">硬件视角看 VLA · ALOHA / HumanPlus / ANYmal / Sparsh / RF-Pose / mmEgo</div>
+        <a class="wn-card wn-issue" href="${url("/issues/07/")}">
+          <div class="wn-tag">Issue Nº VII</div>
+          <div class="wn-title">One hundred small things</div>
+          <div class="wn-tldr">从 0 到 100 件 enrichment 的总账：路径 / 视图 / 个性化 / 数据 / SEO / 离线</div>
         </a>
         ${(() => {
           const recent = [...notes]
