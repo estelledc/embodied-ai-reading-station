@@ -2344,3 +2344,45 @@ html.dark-theme body::after {
   background: var(--coral);
   color: var(--paper);
 }
+
+/* === venue stats === */
+.venue-bars { display: flex; flex-direction: column; gap: 0.3rem; }
+.venue-bar-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr 3rem;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.4rem 0.6rem;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 2px;
+  transition: background 0.12s;
+}
+.venue-bar-row:hover { background: var(--paper-warm); }
+.venue-name {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.venue-bar-track {
+  height: 1rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  position: relative;
+  overflow: hidden;
+}
+.venue-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--coral) 0%, var(--mustard) 100%);
+}
+.venue-count {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--coral);
+  font-weight: 700;
+  text-align: right;
+}

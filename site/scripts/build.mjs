@@ -139,6 +139,7 @@ function masthead(active) {
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/tags/"), label: "Tags", id: "tags" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
+    { href: url("/venues/"), label: "Venues", id: "venues" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -721,6 +722,76 @@ function buildTagPage(tag, notes) {
     </table>
   </main>`;
   return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+}
+
+// --- venue stats ------------------------------------------------------------
+function buildVenueStats(notes) {
+  const venueCount = new Map();
+  let unknown = 0;
+  for (const n of notes) {
+    const v = (n.venue || "").trim();
+    if (!v) unknown++;
+    else venueCount.set(v, (venueCount.get(v) || 0) + 1);
+  }
+  const venues = [...venueCount.entries()].sort((a, b) => b[1] - a[1]);
+  const max = Math.max(...venueCount.values(), 1);
+
+  // 按主题分类 venue（粗分）
+  const venueByCategory = {
+    "机器人 (CoRL/RSS/ICRA/IROS)": [],
+    "AI 大会 (NeurIPS/ICLR/ICML)": [],
+    "视觉 (CVPR/ICCV/ECCV)": [],
+    "NLP/语言": [],
+    "系统/网络 (MobiCom/SIGCOMM/UIST)": [],
+    "其他": [],
+  };
+  const robotRe = /CoRL|RSS|ICRA|IROS/i;
+  const aiRe = /NeurIPS|ICLR|ICML/i;
+  const cvRe = /CVPR|ICCV|ECCV|SIGGRAPH/i;
+  const nlpRe = /ACL|EMNLP|NAACL/i;
+  const sysRe = /MobiCom|SIGCOMM|UIST|CHI|MobiSys|SenSys|MM\s/i;
+  for (const [v, c] of venues) {
+    let cat = "其他";
+    if (robotRe.test(v)) cat = "机器人 (CoRL/RSS/ICRA/IROS)";
+    else if (aiRe.test(v)) cat = "AI 大会 (NeurIPS/ICLR/ICML)";
+    else if (cvRe.test(v)) cat = "视觉 (CVPR/ICCV/ECCV)";
+    else if (nlpRe.test(v)) cat = "NLP/语言";
+    else if (sysRe.test(v)) cat = "系统/网络 (MobiCom/SIGCOMM/UIST)";
+    venueByCategory[cat].push([v, c]);
+  }
+
+  const total = notes.length;
+  let body = `<main class="shell">
+    <span class="eyebrow">Venues · 发表场所分布</span>
+    <h1>${venueCount.size} 个会议/期刊，<em>${total - unknown} 篇</em>已标记。</h1>
+    <p style="font-size:1.05rem;line-height:1.55;color:var(--ink-soft);max-width:48ch">
+      具身 AI 横跨机器人会（CoRL/RSS/ICRA）、AI 大会（NeurIPS/ICLR/ICML）、视觉会（CVPR）、感知系统会（MobiCom/SIGCOMM）。
+      看这页能直观知道：你想发哪种 venue，得读哪几篇代表作。
+    </p>
+    <hr class="ornament"/>`;
+  for (const [cat, list] of Object.entries(venueByCategory)) {
+    if (list.length === 0) continue;
+    const catTotal = list.reduce((s, [, c]) => s + c, 0);
+    body += `<section style="margin:2rem 0">
+      <h2 style="margin-bottom:0.4rem">${cat} <span style="color:var(--ink-faint);font-size:0.6em">${catTotal} 篇</span></h2>
+      <div class="venue-bars">`;
+    for (const [v, c] of list) {
+      const pct = (c / max) * 100;
+      body += `<a class="venue-bar-row" href="${url("/compare/")}#venue-${encodeURIComponent(v)}">
+        <span class="venue-name">${v}</span>
+        <div class="venue-bar-track">
+          <div class="venue-bar-fill" style="width:${pct}%"></div>
+        </div>
+        <span class="venue-count">${c}</span>
+      </a>`;
+    }
+    body += `</div></section>`;
+  }
+  if (unknown > 0) {
+    body += `<p style="color:var(--ink-faint);font-size:0.85rem">${unknown} 篇 venue 未标记，未计入。</p>`;
+  }
+  body += `</main>`;
+  return page({ title: "Venues — Embodied AI Reading", body, active: "venues" });
 }
 
 // --- tag co-occurrence heatmap ---------------------------------------------
@@ -1500,6 +1571,9 @@ function build() {
 
   // tag co-occurrence heatmap
   write(path.join(DIST, "heatmap", "index.html"), buildHeatmap(notes));
+
+  // venues
+  write(path.join(DIST, "venues", "index.html"), buildVenueStats(notes));
 
   // tags
   write(path.join(DIST, "tags", "index.html"), buildTagsIndex(notes));
