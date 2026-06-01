@@ -3897,3 +3897,10 @@ html.dark-theme body::after {
   color: var(--paper);
   border-color: var(--coral);
 }
+
+.streak-goal {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  margin-left: 0.6rem;
+}

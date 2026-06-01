@@ -159,6 +159,21 @@
       });
     }
 
+    // 每日目标
+    const goalKey = "eaireading.dailygoal";
+    const goalBtn = document.getElementById("eai-set-goal");
+    if (goalBtn) {
+      goalBtn.addEventListener("click", () => {
+        const cur = parseInt(localStorage.getItem(goalKey) || "0", 10);
+        const v = prompt("每天想读多少篇？(1-10，输 0 取消)", cur || "1");
+        if (v === null) return;
+        const n = Math.max(0, Math.min(10, parseInt(v, 10) || 0));
+        if (n === 0) localStorage.removeItem(goalKey);
+        else localStorage.setItem(goalKey, String(n));
+        window.EAI_READ._notify();
+      });
+    }
+
     const streakBox = document.getElementById("eai-streak-box");
     if (streakBox) {
       const renderStreak = () => {
@@ -176,6 +191,19 @@
         const flame = streakBox.querySelector(".streak-flame");
         if (flame) {
           flame.textContent = s.streak >= 7 ? "🔥🔥🔥" : s.streak >= 3 ? "🔥🔥" : s.streak >= 1 ? "🔥" : "·";
+        }
+        // 每日目标 vs 今日
+        const goal = parseInt(localStorage.getItem("eaireading.dailygoal") || "0", 10);
+        const goalEl = streakBox.querySelector(".streak-goal");
+        if (goalEl) {
+          if (goal > 0) {
+            const ok = s.today >= goal;
+            goalEl.hidden = false;
+            goalEl.textContent = `${ok ? "✓" : "·"} 今日 ${s.today}/${goal}`;
+            goalEl.style.color = ok ? "var(--olive)" : "var(--ink-faint)";
+          } else {
+            goalEl.hidden = true;
+          }
         }
       };
       renderStreak();
