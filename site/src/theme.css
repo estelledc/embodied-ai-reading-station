@@ -3347,3 +3347,53 @@ html.dark-theme body::after {
   .back-top-btn { bottom: 1rem; right: 1rem; }
 }
 @media print { .back-top-btn { display: none; } }
+
+/* === learn featured cards === */
+.learn-featured { margin: 2rem 0; }
+.lf-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 2px solid var(--ink);
+}
+.lf-card {
+  padding: 2rem 1.6rem;
+  border-right: 1px solid var(--paper-dark);
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background 0.15s;
+  background: var(--paper-warm);
+}
+.lf-card:last-child { border-right: none; }
+.lf-card:hover { background: var(--paper); }
+.lf-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.4rem;
+  color: var(--coral);
+  line-height: 1;
+}
+.lf-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+.lf-card:hover .lf-title { color: var(--coral); }
+.lf-sub {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) {
+  .lf-grid { grid-template-columns: 1fr; }
+  .lf-card { border-right: none; border-bottom: 1px solid var(--paper-dark); }
+  .lf-card:last-child { border-bottom: none; }
+}

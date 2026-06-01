@@ -1627,22 +1627,42 @@ function buildAbout() {
 
 // --- learn pages (beginner supplements) -------------------------------------
 function buildLearnIndex(pages) {
+  // 优先卡：30-day path / FAQ / Math primer 突出推荐
+  const featured = ["path", "faq", "math-primer"];
+  const featuredPages = featured.map(s => pages.find(p => p.slug === s)).filter(Boolean);
+  const others = pages.filter(p => !featured.includes(p.slug));
+
   const body = `<main class="shell">
     <span class="eyebrow">Start here · 入门轨道</span>
     <h1>论文是<em>终点</em>，不是起点。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
-      13 篇顶会论文堆在那里，原本是博士看的。要让入门读者也能读懂，先在这里把<strong>路径、术语、全景、动手、社区</strong>这五件事捋顺，再回头读论文，事半功倍。
+      156 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
     </p>
-    ${pageHeroHtml("learn-index", "A compass with paths radiating to multiple peaks")}
-    <hr style="margin-top:2rem"/>
-    <div class="papers-grid" style="margin-top:2rem">
-      ${pages.map((p, i) => `<article class="paper-card" style="background:var(--paper-warm)">
+
+    ${featuredPages.length ? `<section class="learn-featured">
+      <div class="lf-grid">
+        ${featuredPages.map((p, i) => {
+          const labels = { "path": "30 天路径", "faq": "新人 FAQ", "math-primer": "公式速查" };
+          const subs = { "path": "每天读什么", "faq": "12 题最常问", "math-primer": "Σ ∇ 怎么读" };
+          return `<a class="lf-card" href="${url(`/learn/${p.slug}/`)}">
+            <span class="lf-num">${["I","II","III"][i] || ""}</span>
+            <span class="lf-title">${labels[p.slug] || p.title}</span>
+            <span class="lf-sub">${subs[p.slug] || p.intro || ""}</span>
+          </a>`;
+        }).join("")}
+      </div>
+    </section>` : ""}
+
+    ${others.length ? `<hr class="ornament"/>
+    <h2 style="font-family:var(--font-mono);font-size:0.9rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute);margin:2rem 0 1rem">其他入门资料</h2>
+    <div class="papers-grid">
+      ${others.map((p, i) => `<article class="paper-card" style="background:var(--paper-warm)">
         <span class="num">№ ${String(i + 1).padStart(2, "0")}</span>
         <span class="topic">Beginner Track</span>
         <h3><a href="${url(`/learn/${p.slug}/`)}">${p.title}</a></h3>
         <p>${p.intro || ""}</p>
       </article>`).join("")}
-    </div>
+    </div>` : ""}
   </main>`;
   return page({ title: "Learn — Embodied AI Reading", body, active: "learn" });
 }
