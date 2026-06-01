@@ -111,6 +111,26 @@ check("tags.json 有 frequency + cooccurrence", () => {
   return true;
 });
 
+console.log("\n=== OG / Twitter meta ===");
+const sample = [
+  "index.html",
+  "papers/clip/index.html",
+  "topics/index.html",
+  "issues/01/index.html",
+  "stats/index.html",
+];
+let metaMissing = 0;
+for (const p of sample) {
+  const f = path.join(DIST, p);
+  if (!fs.existsSync(f)) continue;
+  const html = fs.readFileSync(f, "utf8");
+  const need = [`property="og:title"`, `property="og:description"`, `property="og:image"`, `name="twitter:card"`];
+  for (const k of need) {
+    if (!html.includes(k)) { metaMissing++; console.log(`  ✗ ${p} missing ${k}`); }
+  }
+}
+check(`5 sample pages 全有 OG/Twitter meta`, () => metaMissing === 0 || `${metaMissing} 缺失`);
+
 console.log("\n=== Internal link health ===");
 const htmlFiles = [];
 function walkHtml(dir) {
