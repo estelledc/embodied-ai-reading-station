@@ -228,7 +228,13 @@
 
     // === 节点搜索 ===
     const searchInput = document.getElementById("graph-search");
+    let countLabel = null;
     if (searchInput) {
+      // 加 count label 紧贴 input
+      countLabel = document.createElement("span");
+      countLabel.className = "gc-count";
+      searchInput.after(countLabel);
+
       if (initial.q) {
         searchInput.value = initial.q;
       }
@@ -239,6 +245,7 @@
         if (!q) {
           nodeG.style("opacity", 1);
           linkSel.style("opacity", null);
+          countLabel.textContent = "";
           return;
         }
         const matched = new Set();
@@ -247,6 +254,7 @@
         }
         nodeG.style("opacity", d => matched.has(d.id) ? 1 : 0.1);
         linkSel.style("opacity", l => (matched.has(l.source.id) || matched.has(l.target.id)) ? 0.3 : 0.03);
+        countLabel.textContent = `${matched.size} / ${data.nodes.length}`;
       }
       searchInput.addEventListener("input", () => {
         if (raf) cancelAnimationFrame(raf);
