@@ -2322,6 +2322,18 @@ function buildTimeline(notes) {
     <hr class="ornament"/>
   `;
 
+  // 按 era 区段标注
+  const ERA_BANDS = [
+    { from: 2024, to: 2025, label: "Foundation models 时代", note: "VLA 工业化 / 数据集成熟 / 评测体系建立" },
+    { from: 2022, to: 2023, label: "VLA 元年", note: "RT-1/RT-2 / Diffusion Policy / OpenVLA" },
+    { from: 2018, to: 2021, label: "VLM 基座建立", note: "CLIP / Habitat / 早期 RL 仿真" },
+    { from: 1900, to: 2017, label: "前 transformer 时期", note: "World Models / GAIL / DAgger" },
+  ];
+  function bandFor(y) {
+    const yn = Number(y);
+    return ERA_BANDS.find(b => yn >= b.from && yn <= b.to);
+  }
+  let lastBand = null;
   const eraRank = { founder: 0, classic: 1, frontier: 2 };
   for (const y of years) {
     const yearNotes = byYear.get(y).sort((a, b) => {
@@ -2330,6 +2342,15 @@ function buildTimeline(notes) {
       if (ea !== eb) return ea - eb;
       return a.num - b.num;
     });
+    const band = bandFor(y);
+    if (band && band !== lastBand) {
+      body += `<div class="timeline-band" data-from="${band.from}" data-to="${band.to}">
+        <span class="tb-range">${band.from === band.to ? band.from : (band.from === 1900 ? `≤ ${band.to}` : `${band.from}–${band.to}`)}</span>
+        <span class="tb-label">${band.label}</span>
+        <span class="tb-note">${band.note}</span>
+      </div>`;
+      lastBand = band;
+    }
     body += `<section class="timeline-year">
       <h2 class="timeline-year-label"><span class="year-num">${y}</span><span class="year-count">· ${yearNotes.length} paper${yearNotes.length > 1 ? "s" : ""}</span></h2>
       <ul class="timeline-list">`;

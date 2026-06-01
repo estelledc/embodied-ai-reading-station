@@ -3949,3 +3949,42 @@ html.dark-theme body::after {
   font-weight: 700;
   white-space: nowrap;
 }
+
+/* === timeline era bands === */
+.timeline-band {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 0.5rem 1rem;
+  align-items: baseline;
+  margin: 2rem 0 1rem;
+  padding: 1rem 1.2rem;
+  background: linear-gradient(90deg, var(--paper-warm) 0%, var(--paper) 100%);
+  border-left: 3px solid var(--mustard);
+}
+.tb-range {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  color: var(--coral);
+  font-weight: 700;
+}
+.tb-label {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+.tb-note {
+  grid-column: 2;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.02em;
+  margin-top: 0.2rem;
+}
+@media (max-width: 700px) {
+  .timeline-band { grid-template-columns: 1fr; }
+  .tb-note { grid-column: 1; }
+}
