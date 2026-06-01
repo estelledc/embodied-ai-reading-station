@@ -1474,7 +1474,11 @@ html.dark-theme body::after {
 }
 .eai-card-read {
   position: relative;
+  border-color: var(--olive) !important;
 }
+.eai-card-read .thumb { opacity: 0.7; filter: saturate(0.7); }
+.eai-card-read h3 { opacity: 0.75; }
+.eai-card-read p { opacity: 0.65; }
 .eai-card-read::after {
   content: "✓";
   position: absolute;
@@ -1492,6 +1496,10 @@ html.dark-theme body::after {
   border-radius: 50%;
   z-index: 2;
 }
+.eai-card-read:hover { opacity: 1; }
+.eai-card-read:hover .thumb,
+.eai-card-read:hover h3,
+.eai-card-read:hover p { opacity: 1; filter: none; }
 
 /* === next pick widget === */
 .next-pick {
