@@ -207,6 +207,36 @@
         // y: 主题分行
         sim.force("topicY", d3.forceY(d => padY + (TOPIC_KEYS.indexOf(d.topic) / (TOPIC_KEYS.length - 1)) * (H - 2 * padY)).strength(0.4));
         sim.force("link").strength(0.02);
+        // 画年份刻度
+        for (let y = minY; y <= maxY; y++) {
+          const x = padX + ((y - minY) / span) * (W - 2 * padX);
+          clusterLabels.append("line")
+            .attr("x1", x).attr("y1", padY - 8)
+            .attr("x2", x).attr("y2", H - padY + 8)
+            .attr("stroke", "var(--paper-dark)")
+            .attr("stroke-width", 0.5)
+            .attr("stroke-dasharray", "2,3");
+          clusterLabels.append("text")
+            .attr("x", x).attr("y", padY - 14)
+            .attr("text-anchor", "middle")
+            .attr("font-family", "var(--font-mono)")
+            .attr("font-size", 9)
+            .attr("fill", "var(--ink-faint)")
+            .text(y);
+        }
+        // 画 topic 行标签（左侧）
+        TOPIC_KEYS.forEach((topic, i) => {
+          const ly = padY + (i / (TOPIC_KEYS.length - 1)) * (H - 2 * padY);
+          const sample = data.nodes.find(n => n.topic === topic);
+          const lbl = sample ? sample.topicLabel : topic;
+          clusterLabels.append("text")
+            .attr("x", padX - 12).attr("y", ly + 3)
+            .attr("text-anchor", "end")
+            .attr("font-family", "var(--font-mono)")
+            .attr("font-size", 9)
+            .attr("fill", TOPIC_COLORS[topic] || "#666")
+            .text(lbl);
+        });
       }
       sim.alpha(1).restart();
     }
