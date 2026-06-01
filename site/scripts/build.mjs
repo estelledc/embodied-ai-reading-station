@@ -1073,6 +1073,13 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
 
   const body = `<main class="note-shell ${outlineHtml ? "has-outline" : ""}">
     <div class="note-main">
+    <nav class="breadcrumbs" aria-label="breadcrumb">
+      <a href="${url("/")}">Home</a>
+      <span class="bc-sep">›</span>
+      <a href="${url(`/topics/${note.topic}/`)}">${note.topicLabel}</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">№ ${note.num}</span>
+    </nav>
     <span class="eyebrow">${note.topicLabel} · Plate Nº ${note.num}</span>
     <h1>${note.title}</h1>
     ${note.dek ? `<p class="dek">${note.dek}</p>` : ""}

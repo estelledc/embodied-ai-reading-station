@@ -2149,3 +2149,33 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
 }
 .lg-item { display: inline-flex; align-items: center; gap: 0.4rem; }
 .lg-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; display: inline-block; }
+
+/* === breadcrumbs === */
+.breadcrumbs {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.breadcrumbs a {
+  color: var(--ink-mute);
+  text-decoration: none;
+  border-bottom: 1px dotted transparent;
+  transition: all 0.12s;
+}
+.breadcrumbs a:hover {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+.bc-sep {
+  color: var(--paper-dark);
+}
+.bc-current {
+  color: var(--coral);
+  font-weight: 600;
+}
