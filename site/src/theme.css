@@ -3738,3 +3738,15 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .milestone-row { grid-template-columns: repeat(2, 1fr); }
 }
+
+.auto-mark-toast .amt-next {
+  margin-left: 0.5rem;
+  color: var(--paper);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  border-bottom: 1px solid var(--paper);
+  padding-bottom: 1px;
+}
+.auto-mark-toast .amt-next:hover { border-bottom-color: var(--mustard); color: var(--mustard); }

@@ -261,10 +261,13 @@
         if (e.isIntersecting && !triggered) {
           triggered = true;
           window.EAI_READ.mark(slug);
-          // 显示一个轻量 toast
+          // 显示 toast，含撤销 + 下一篇
           const toast = document.createElement("div");
           toast.className = "auto-mark-toast";
-          toast.innerHTML = `✓ 已自动标记为已读 <button type="button" aria-label="撤销">撤销</button>`;
+          // 计算 base
+          const stylesLink = document.querySelector('link[href*="/styles.css"]');
+          const base = stylesLink ? stylesLink.getAttribute("href").replace(/\/styles\.css$/, "") : "";
+          toast.innerHTML = `✓ 已读 <button type="button" aria-label="撤销">撤销</button> <a href="${base}/next/" class="amt-next">下一篇 →</a>`;
           document.body.appendChild(toast);
           requestAnimationFrame(() => toast.classList.add("show"));
           const undoBtn = toast.querySelector("button");

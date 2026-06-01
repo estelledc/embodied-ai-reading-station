@@ -1041,6 +1041,56 @@ function buildEraPage(era, notes) {
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
 }
 
+// --- /next/ smart next paper redirect --------------------------------------
+function buildNext(notes) {
+  const slugs = JSON.stringify(notes.map(n => ({ slug: n.slug, topic: n.topicLabel, era: n.era || "classic" })));
+  const body = `<main class="shell" style="text-align:center;padding-top:6rem">
+    <span class="eyebrow">Next · 帮你挑下一篇</span>
+    <h1>正在<em>选下一篇</em>...</h1>
+    <p style="color:var(--ink-soft);font-size:1.05rem;margin-top:1rem">基于你已读的主题分布。</p>
+    <p style="margin-top:2rem"><a id="eai-next-fallback" href="${url("/")}" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">没自动跳转？回首页 →</a></p>
+    <script>
+    (function(){
+      var stylesLink = document.querySelector('link[href*="/styles.css"]');
+      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
+      var papers = ${slugs};
+      try {
+        var read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]'));
+        var unread = papers.filter(function(p){ return !read.has(p.slug); });
+        if (!unread.length) {
+          location.replace(base + '/lists/');
+          return;
+        }
+        var pick = null;
+        if (read.size === 0) {
+          // 0 已读：CLIP 优先
+          pick = unread.find(function(p){ return p.slug === 'clip'; }) || unread[0];
+        } else {
+          // 已读最多某主题 → 推同主题下一篇
+          var byTopic = {};
+          papers.forEach(function(p){ if (read.has(p.slug)) byTopic[p.topic] = (byTopic[p.topic] || 0) + 1; });
+          var sorted = Object.keys(byTopic).sort(function(a,b){ return byTopic[b] - byTopic[a]; });
+          for (var i = 0; i < sorted.length; i++) {
+            var cands = unread.filter(function(p){ return p.topic === sorted[i]; });
+            if (cands.length) {
+              var eraOrder = { founder: 0, classic: 1, frontier: 2 };
+              cands.sort(function(a,b){ return (eraOrder[a.era] || 1) - (eraOrder[b.era] || 1); });
+              pick = cands[0];
+              break;
+            }
+          }
+          if (!pick) pick = unread[0];
+        }
+        location.replace(base + '/papers/' + pick.slug + '/');
+      } catch(e) {
+        location.replace(base + '/');
+      }
+    })();
+    </script>
+  </main>`;
+  return page({ title: "Next — Embodied AI Reading", body, active: "" });
+}
+
 // --- random paper redirect --------------------------------------------------
 function buildRandom(notes) {
   const slugs = JSON.stringify(notes.map(n => n.slug));
@@ -2574,6 +2624,9 @@ function build() {
 
   // random paper redirect
   write(path.join(DIST, "random", "index.html"), buildRandom(notes));
+
+  // smart next paper
+  write(path.join(DIST, "next", "index.html"), buildNext(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {
