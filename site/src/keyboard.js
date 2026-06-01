@@ -23,6 +23,7 @@
     { keys: "j", desc: "下一篇论文（在论文页上）" },
     { keys: "k", desc: "上一篇论文（在论文页上）" },
     { keys: "m", desc: "切换'已读'（在论文页上）" },
+    { keys: "r", desc: "随机跳一篇（优先未读）" },
     { keys: "Esc", desc: "关闭弹窗" },
   ];
 
@@ -113,6 +114,7 @@
     if (e.key === "j") { if (navigateRelative(1)) e.preventDefault(); return; }
     if (e.key === "k") { if (navigateRelative(-1)) e.preventDefault(); return; }
     if (e.key === "m") { e.preventDefault(); toggleRead(); return; }
+    if (e.key === "r") { e.preventDefault(); location.href = BASE + "/random/"; return; }
     if (e.key === "Escape") {
       if (helpDlg && helpDlg.open) helpDlg.close();
       return;

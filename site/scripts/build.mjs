@@ -985,6 +985,33 @@ function buildEraPage(era, notes) {
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
 }
 
+// --- random paper redirect --------------------------------------------------
+function buildRandom(notes) {
+  const slugs = JSON.stringify(notes.map(n => n.slug));
+  const body = `<main class="shell" style="text-align:center;padding-top:6rem">
+    <span class="eyebrow">Random · 随机一篇</span>
+    <h1>正在<em>抽签</em>...</h1>
+    <p style="color:var(--ink-soft);font-size:1.05rem;margin-top:1rem">从 ${notes.length} 篇里随机挑一篇给你。</p>
+    <p style="margin-top:2rem"><a id="eai-random-fallback" href="${url("/")}" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">没自动跳转？点这里手动选 →</a></p>
+    <script>
+    (function(){
+      var stylesLink = document.querySelector('link[href*="/styles.css"]');
+      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
+      var slugs = ${slugs};
+      // 优先未读
+      try {
+        var read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]'));
+        var unread = slugs.filter(function(s){ return !read.has(s); });
+        if (unread.length > 0) slugs = unread;
+      } catch(e) {}
+      var pick = slugs[Math.floor(Math.random() * slugs.length)];
+      location.replace(base + '/papers/' + pick + '/');
+    })();
+    </script>
+  </main>`;
+  return page({ title: "Random — Embodied AI Reading", body, active: "" });
+}
+
 // --- human-readable site map -----------------------------------------------
 function buildSiteMap(notes, issuePages, learnPages) {
   const sections = [
@@ -2384,6 +2411,9 @@ function build() {
 
   // contributors
   write(path.join(DIST, "contributors", "index.html"), buildContributors(notes));
+
+  // random paper redirect
+  write(path.join(DIST, "random", "index.html"), buildRandom(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {
