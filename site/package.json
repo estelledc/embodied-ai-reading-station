@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs && pagefind --site dist --output-subdir pagefind",
+    "check": "node scripts/check.mjs",
     "serve": "python3 -m http.server -d dist 8080"
   },
   "devDependencies": {
