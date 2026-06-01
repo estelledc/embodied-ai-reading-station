@@ -72,6 +72,20 @@
     },
   };
 
+  // 跨 tab 同步：监听其他 tab 的 storage 写入
+  const SYNCED_KEYS = new Set([
+    "eaireading.read",
+    "eaireading.readts",
+    "eaireading.dailygoal",
+    "eaireading.timing",
+    "eaireading.syllabus",
+  ]);
+  window.addEventListener("storage", (e) => {
+    if (e.key && SYNCED_KEYS.has(e.key)) {
+      window.EAI_READ._notify();
+    }
+  });
+
   function bindButton(btn) {
     const slug = btn.dataset.slug;
     if (!slug) return;

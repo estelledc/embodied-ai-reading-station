@@ -74,7 +74,14 @@
 
   function toggleRead() {
     const btn = document.querySelector(".read-btn[data-slug]");
-    if (btn) btn.click();
+    if (!btn) return;
+    const slug = btn.dataset.slug;
+    // 直接调 EAI_READ API 避免依赖 bindButton 已挂上 click（race-free）
+    if (slug && window.EAI_READ && typeof window.EAI_READ.toggle === "function") {
+      window.EAI_READ.toggle(slug);
+    } else {
+      btn.click();
+    }
   }
 
   function openSearch() {

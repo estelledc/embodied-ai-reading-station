@@ -2763,7 +2763,7 @@ html.dark-theme body::after {
 .read-timer-badge {
   position: fixed;
   bottom: 1rem;
-  right: 1rem;
+  left: 1rem;
   background: var(--paper);
   border: 1px solid var(--coral);
   padding: 0.4rem 0.8rem;

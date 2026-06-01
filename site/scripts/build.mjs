@@ -139,6 +139,30 @@ renderer.heading = function (token) {
   return `<h${depth}>${inner}</h${depth}>\n`;
 };
 
+// 段落只含一张图时不包 <p>（避免 <figure> 在 <p> 内被浏览器 split 出空 p）
+renderer.paragraph = function (token) {
+  const tokens = token.tokens || [];
+  // 只有一个 image token，或恰好是单个 image 加可忽略空白
+  const meaningful = tokens.filter(t => !(t.type === "text" && /^\s*$/.test(t.text || "")));
+  if (meaningful.length === 1 && meaningful[0].type === "image") {
+    return (this && this.parser ? this.parser.parseInline(tokens) : "") + "\n";
+  }
+  const inner = this && this.parser ? this.parser.parseInline(tokens) : (token.text || "");
+  return `<p>${inner}</p>\n`;
+};
+
+// 内部绝对链接 (/papers/x/ /topics/y/ 等) 自动加 BASE prefix；外链不动
+renderer.link = function (token) {
+  const { href, title, tokens } = token;
+  const inner = (tokens && this && this.parser) ? this.parser.parseInline(tokens) : (token.text || href);
+  let finalHref = href;
+  if (href && href.startsWith("/") && !href.startsWith("//")) {
+    finalHref = BASE + href;
+  }
+  const titleAttr = title ? ` title="${title}"` : "";
+  return `<a href="${finalHref}"${titleAttr}>${inner}</a>`;
+};
+
 marked.use({ renderer, gfm: true, breaks: false });
 
 // --- layout templates -------------------------------------------------------
@@ -2655,13 +2679,38 @@ function buildIssueIndex(issues) {
   return page({ title: "Issues — Embodied AI Reading", body, active: "issues" });
 }
 
+function toRoman(n) {
+  const map = [
+    [1000, "M"], [900, "CM"], [500, "D"], [400, "CD"],
+    [100, "C"], [90, "XC"], [50, "L"], [40, "XL"],
+    [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"],
+  ];
+  let s = "", x = n;
+  for (const [v, sym] of map) { while (x >= v) { s += sym; x -= v; } }
+  return s || String(n);
+}
+
+// 抽取 issue body 引用的论文 slugs（papers/<slug>/ 形式）
+function issuePaperSlugs(body, notes) {
+  const refs = new Set();
+  for (const n of notes) {
+    const esc = n.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`papers/${esc}/`);
+    if (re.test(body)) refs.add(n.slug);
+  }
+  return refs;
+}
+
 function buildIssuePage(issue, notes) {
   figureCounter = 0;
   headingIds.clear();
   const html = marked.parse(issue.body);
-  // 把 13 篇按 num 排序生成 plate 网格
-  const plates = notes.map(n => `<a class="issue-plate" href="${url(`/papers/${n.slug}/`)}">
-    <span class="plate-num">${["I","II","III","IV","V","VI","VII","VIII","IX","X","XI","XII","XIII"][n.num - 1]}</span>
+
+  // 仅渲染该 issue 实际引用的论文，不再硬编码 13
+  const refs = issuePaperSlugs(issue.body, notes);
+  const issuePapers = notes.filter(n => refs.has(n.slug)).sort((a, b) => (a.num || 0) - (b.num || 0));
+  const plates = issuePapers.map((n, i) => `<a class="issue-plate" href="${url(`/papers/${n.slug}/`)}">
+    <span class="plate-num">${toRoman(i + 1)}</span>
     <span class="plate-topic">${n.topicLabel}</span>
     <span class="plate-title">${n.title}</span>
   </a>`).join("");
@@ -2671,6 +2720,10 @@ function buildIssuePage(issue, notes) {
     <div class="outline-title">On this page</div>
     <ul>${outline.map(o => `<li><a href="#${o.id}">${o.text}</a></li>`).join("")}</ul>
   </aside>` : "";
+
+  const platesSection = issuePapers.length > 0 ? `<hr class="ornament"/>
+    <h2 style="font-family:var(--font-mono);font-size:0.9rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute);margin:2rem 0 1rem">本期论文 · ${issuePapers.length} plate${issuePapers.length > 1 ? "s" : ""}</h2>
+    <div class="issue-toc">${plates}</div>` : "";
 
   const body = `<main class="issue-cover ${outlineHtml ? "has-outline" : ""}">
     <div class="issue-masthead">
@@ -2682,9 +2735,7 @@ function buildIssuePage(issue, notes) {
     <h1 class="issue-headline">${issue.title.replace(/^Issue Nº \w+ — /, "")}</h1>
     <div class="issue-editorial note-content" data-pagefind-body>${html}</div>
     ${outlineHtml}
-    <hr class="ornament"/>
-    <h2 style="font-family:var(--font-mono);font-size:0.9rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink-mute);margin:2rem 0 1rem">本期论文 · 13 plates</h2>
-    <div class="issue-toc">${plates}</div>
+    ${platesSection}
   </main>`;
   return page({ title: `${issue.title} — Embodied AI Reading`, body, active: "issues" });
 }
@@ -3230,20 +3281,23 @@ function build() {
     const head = t.split(":")[0].trim();
     const kws = new Set();
     if (head) kws.add(head);
-    // 同时把 slug 大写化（CLIP / RT-1 等）
-    if (note.slug && note.slug.length >= 3) kws.add(note.slug.toUpperCase().replace(/-/g, "-"));
+    // 注：之前 .toUpperCase().replace(/-/g, "-") 是 no-op；删掉避免误导
     return [...kws].filter(k => k.length >= 3);
   }
-  const kwIndex = notes.map(n => ({ n, kws: keywordsOf(n) }));
+  // 预编译：每个 target 一组 RegExp，避免 O(N²·K) 内编译
+  const kwIndex = notes.map(n => ({
+    n,
+    res: keywordsOf(n).map(kw => new RegExp(
+      `(?:^|[\\s>(\\[\\*"'，。、])${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=[\\s)\\].,!?:;，。、'\"]|$)`
+    )),
+  }));
   const backlinkMap = new Map();
   for (const src of notes) {
     const body = src.body || "";
     const seen = new Set();
-    for (const { n: target, kws } of kwIndex) {
+    for (const { n: target, res } of kwIndex) {
       if (target.slug === src.slug) continue;
-      for (const kw of kws) {
-        // word-boundary，区分大小写
-        const re = new RegExp(`(?:^|[\\s>(\\[\\*"'，。、])${kw.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?=[\\s)\\].,!?:;，。、'\"]|$)`);
+      for (const re of res) {
         if (re.test(body)) { seen.add(target.slug); break; }
       }
     }
@@ -3255,10 +3309,11 @@ function build() {
 
   // prev/next: 同主题内按 era + year 排序，跨主题就用 PAPERS 全局序
   const eraRank2 = { founder: 0, classic: 1, frontier: 2 };
+  const rankEra = e => eraRank2[e] ?? eraRank2.classic;
   const sortedByTopic = new Map();
   for (const t of TOPIC_ORDER) {
     const inT = notes.filter(n => n.topic === t.id).sort((a, b) => {
-      const ea = eraRank2[a.era] - eraRank2[b.era];
+      const ea = rankEra(a.era) - rankEra(b.era);
       if (ea !== 0) return ea;
       return (Number(a.year) || 9999) - (Number(b.year) || 9999);
     });
@@ -3294,12 +3349,13 @@ function build() {
   }
 
   // 计算 issue → 提到的 slugs；反向给每个 paper 一份 issue 列表
+  // 仅用 papers/<slug>/ 形式匹配 — \b<slug>\b 在 issue editorial 散文里太容易误判
   const paperIssues = new Map(); // slug → [{number, slug, title}]
   for (const issue of issuePages) {
     const body = issue.body || "";
     for (const n of notes) {
-      // 匹配 (/papers/<slug>/) 形式或显式 slug
-      const re = new RegExp(`papers/${n.slug.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}/|\\b${n.slug}\\b`, "i");
+      const esc = n.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const re = new RegExp(`papers/${esc}/`);
       if (re.test(body)) {
         if (!paperIssues.has(n.slug)) paperIssues.set(n.slug, []);
         paperIssues.get(n.slug).push({
@@ -3312,7 +3368,7 @@ function build() {
   }
 
   for (const n of notes) {
-    const bl = (backlinkMap.get(n.slug) || []).sort((a, b) => a.num - b.num);
+    const bl = [...(backlinkMap.get(n.slug) || [])].sort((a, b) => a.num - b.num);
     const tList = sortedByTopic.get(n.topic) || [];
     const idx = tList.findIndex(x => x.slug === n.slug);
     const prev = idx > 0 ? tList[idx - 1] : null;
