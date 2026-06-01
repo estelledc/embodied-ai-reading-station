@@ -2405,6 +2405,8 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
       },
     ],
   };
+  const linkRel = `${prev ? `<link rel="prev" href="${SITE_URL}/papers/${prev.slug}/">` : ""}
+${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
   return page({
     title: `${note.title} — Embodied AI Reading`,
     body,
@@ -2414,6 +2416,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
     ogImage,
     ogUrl: `${SITE_URL}/papers/${note.slug}/`,
     jsonLd,
+    extraHead: linkRel,
   });
 }
 
