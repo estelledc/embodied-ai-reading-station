@@ -3125,3 +3125,16 @@ html.dark-theme body::after {
   .link-preview { display: none; }
 }
 @media print { .link-preview { display: none; } }
+
+/* === graph read badge === */
+.graph-read-badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  color: var(--olive);
+  font-weight: 700;
+  padding: 0.3em 0.6em;
+  border: 1px solid var(--olive);
+  border-radius: 2px;
+}

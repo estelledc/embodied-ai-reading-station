@@ -179,5 +179,38 @@
         applyLayout(btn.dataset.layout);
       });
     });
+
+    // === 已读节点视觉 ===
+    function applyReadState() {
+      try {
+        const read = new Set(JSON.parse(localStorage.getItem("eaireading.read") || "[]"));
+        nodeG.each(function (d) {
+          const isRead = read.has(d.id);
+          d3.select(this).classed("node-read", isRead);
+          d3.select(this).select("circle")
+            .attr("stroke", d.era === "founder" ? "#e9b94a" : (isRead ? "#6e7448" : "#efe7d2"))
+            .attr("stroke-width", isRead ? 2.6 : (d.era === "founder" ? 2.4 : 1.2))
+            .attr("opacity", isRead ? 0.65 : 1);
+        });
+        // 顶部计数
+        const total = data.nodes.length;
+        const done = data.nodes.filter(n => read.has(n.id)).length;
+        let badge = document.getElementById("graph-read-badge");
+        if (!badge) {
+          badge = document.createElement("div");
+          badge.id = "graph-read-badge";
+          badge.className = "graph-read-badge";
+          const controls = document.querySelector(".graph-controls");
+          if (controls) controls.appendChild(badge);
+        }
+        badge.textContent = `${done} / ${total} 已读`;
+        badge.hidden = done === 0;
+      } catch {}
+    }
+    applyReadState();
+    window.addEventListener("eai:read-changed", applyReadState);
+    window.addEventListener("storage", (e) => {
+      if (e.key === "eaireading.read") applyReadState();
+    });
   }
 })();
