@@ -140,6 +140,7 @@ function masthead(active) {
   const viewItems = [
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/eras/founder/"), label: "Eras", id: "eras" },
+    { href: url("/lists/"), label: "Lists", id: "lists" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
@@ -790,6 +791,84 @@ function buildTagPage(tag, notes) {
     </table>
   </main>`;
   return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+}
+
+// --- reading lists ----------------------------------------------------------
+const READING_LISTS = [
+  {
+    id: "vla-starter",
+    title: "VLA 入门 6 篇",
+    subtitle: "从动作 token 到产业基础模型",
+    intro: "想理解'机器人怎么直接看图听话出动作'？这 6 篇按 era 升序排，读完你能自己讲清 VLA 路线。",
+    slugs: ["clip", "rt-1", "rt-2", "openvla", "openvla-oft", "pi0"],
+    estMinutes: 90,
+  },
+  {
+    id: "diffusion-policy",
+    title: "扩散策略 5 篇",
+    subtitle: "从'选动作'变成'去噪'",
+    intro: "Diffusion Policy 把控制问题重新定义。读完知道为什么扩散赢过 transformer 在 manipulation 上。",
+    slugs: ["diffusion-policy", "3d-diffusion-policy", "consistency-policy", "dit-policy", "pi0"],
+    estMinutes: 70,
+  },
+  {
+    id: "world-models",
+    title: "世界模型 4 篇",
+    subtitle: "在脑子里预演",
+    intro: "教 AI 在想象里走一遍。这 4 篇覆盖从 World Models 鼻祖到 Genie/Cosmos 工业级。",
+    slugs: ["world-models-ha", "dreamer-v3", "genie", "cosmos-world-foundation"],
+    estMinutes: 55,
+  },
+  {
+    id: "rf-perception",
+    title: "射频感知 5 篇",
+    subtitle: "WiFi 和毫米波看世界",
+    intro: "电磁波怎么穿墙、抗烟雾、画出 LiDAR 级 3D。这 5 篇讲清射频感知的核心套路。",
+    slugs: ["rf-pose-through-wall", "person-in-wifi", "millimap", "panoradar", "argus-mmego"],
+    estMinutes: 60,
+  },
+  {
+    id: "imitation-hardware",
+    title: "模仿学习硬件 4 篇",
+    subtitle: "怎么采到好数据",
+    intro: "VLA 的瓶颈是数据。这 4 篇讲明白：ALOHA、UMI、DexCap、HumanPlus 各解决了什么采集问题。",
+    slugs: ["act-aloha", "umi", "dexcap", "humanplus"],
+    estMinutes: 50,
+  },
+];
+
+function buildReadingLists(notes) {
+  let body = `<main class="shell">
+    <span class="eyebrow">Reading lists · 主题精选</span>
+    <h1><em>${READING_LISTS.length} 套</em>策划好的<em>读书包</em>。</h1>
+    <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
+      不知道 156 篇该从哪开始？挑一个你最感兴趣的方向，按 era 顺序读完一个包。每包 50-90 分钟，读完能在那个细分领域跟人聊起。
+    </p>
+    <hr class="ornament"/>`;
+  for (const list of READING_LISTS) {
+    const items = list.slugs.map(s => notes.find(n => n.slug === s)).filter(Boolean);
+    body += `<section class="reading-list">
+      <header class="rl-header">
+        <span class="rl-tag">${list.id}</span>
+        <h2 class="rl-title">${list.title}</h2>
+        <p class="rl-subtitle">${list.subtitle}</p>
+        <span class="rl-meta">${items.length} 篇 · ~${list.estMinutes} 分钟</span>
+      </header>
+      <p class="rl-intro">${list.intro}</p>
+      <ol class="primer-list">
+        ${items.map((n, i) => `<li class="primer-item">
+          <span class="primer-num">${i + 1}</span>
+          <div class="primer-body">
+            <a href="${url(`/papers/${n.slug}/`)}" class="primer-title">${n.title}</a>
+            <span class="primer-meta">${n.year || ""} ${n.venue ? `· ${n.venue}` : ""} ${n.difficulty ? `· ${n.difficulty}` : ""} · ${n.topicLabel}</span>
+            ${n.tldr ? `<p class="primer-tldr">${n.tldr.slice(0, 120)}${n.tldr.length > 120 ? "…" : ""}</p>` : ""}
+          </div>
+        </li>`).join("")}
+      </ol>
+    </section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Reading lists — Embodied AI Reading", body, active: "lists" });
 }
 
 // --- era landing pages ------------------------------------------------------
@@ -1896,6 +1975,9 @@ function build() {
     const html = buildEraPage(era, notes);
     if (html) write(path.join(DIST, "eras", era, "index.html"), html);
   }
+
+  // reading lists
+  write(path.join(DIST, "lists", "index.html"), buildReadingLists(notes));
 
   // data endpoints (public JSON for research / external use)
   const SITE_URL_DATA = "https://estelledc.github.io/embodied-ai-reading-station";
