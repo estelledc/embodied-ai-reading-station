@@ -724,6 +724,137 @@ function buildTagPage(tag, notes) {
   return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
 }
 
+// --- stats dashboard --------------------------------------------------------
+function buildStats(notes) {
+  const total = notes.length;
+  const totalWords = notes.reduce((s, n) => s + (n.wordCount || 0), 0);
+  const totalMinutes = notes.reduce((s, n) => s + (n.readingTime || 0), 0);
+  const years = notes.map(n => Number(n.year)).filter(Boolean);
+  const yearMin = Math.min(...years);
+  const yearMax = Math.max(...years);
+
+  // 按 era
+  const eraCount = { founder: 0, classic: 0, frontier: 0 };
+  for (const n of notes) eraCount[n.era || "classic"]++;
+
+  // 按 topic
+  const topicCount = new Map();
+  for (const n of notes) topicCount.set(n.topic, (topicCount.get(n.topic) || 0) + 1);
+
+  // 按 year
+  const yearCount = new Map();
+  for (const n of notes) {
+    if (!n.year) continue;
+    yearCount.set(Number(n.year), (yearCount.get(Number(n.year)) || 0) + 1);
+  }
+
+  // 按 difficulty
+  const diffCount = new Map();
+  for (const n of notes) {
+    const d = (n.difficulty || "").length || 2;
+    diffCount.set(d, (diffCount.get(d) || 0) + 1);
+  }
+
+  // 按 wordCount 桶
+  const lengthBuckets = { "<2k": 0, "2-4k": 0, "4-6k": 0, "6k+": 0 };
+  for (const n of notes) {
+    const w = n.wordCount || 0;
+    if (w < 2000) lengthBuckets["<2k"]++;
+    else if (w < 4000) lengthBuckets["2-4k"]++;
+    else if (w < 6000) lengthBuckets["4-6k"]++;
+    else lengthBuckets["6k+"]++;
+  }
+
+  function bar(count, max) {
+    const pct = (count / max) * 100;
+    return `<div class="vbar"><div class="vbar-fill" style="width:${pct}%"></div><span class="vbar-num">${count}</span></div>`;
+  }
+
+  const maxYear = Math.max(...yearCount.values(), 1);
+  const maxTopic = Math.max(...topicCount.values(), 1);
+  const maxDiff = Math.max(...diffCount.values(), 1);
+  const maxLen = Math.max(...Object.values(lengthBuckets), 1);
+  const maxEra = Math.max(...Object.values(eraCount), 1);
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Stats · 站点数据</span>
+    <h1>${total} 篇笔记的<em>多角度</em>切片。</h1>
+    <p style="font-size:1.05rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
+      整站宏观看上去什么样：年代分布、字数长度、难度梯度、era 比例、topic 比例。
+      每条直方都点击后跳转对应入口。
+    </p>
+
+    <hr class="ornament"/>
+
+    <div class="big-stats">
+      <div><span class="bs-num">${total}</span><span class="bs-label">总笔记数</span></div>
+      <div><span class="bs-num">${totalWords.toLocaleString()}</span><span class="bs-label">总字数</span></div>
+      <div><span class="bs-num">${Math.round(totalMinutes / 60)}h</span><span class="bs-label">总阅读时长</span></div>
+      <div><span class="bs-num">${yearMin}–${yearMax}</span><span class="bs-label">年份跨度</span></div>
+    </div>
+
+    <hr class="ornament"/>
+
+    <section class="stats-section">
+      <h2>按年份</h2>
+      <div class="stats-bars">
+        ${[...yearCount.entries()].sort((a, b) => a[0] - b[0]).map(([y, c]) => `
+          <div class="stats-row">
+            <span class="stats-label">${y}</span>
+            ${bar(c, maxYear)}
+          </div>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <h2>按 era</h2>
+      <div class="stats-bars">
+        <div class="stats-row"><span class="stats-label">祖师爷</span>${bar(eraCount.founder, maxEra)}</div>
+        <div class="stats-row"><span class="stats-label">经典</span>${bar(eraCount.classic, maxEra)}</div>
+        <div class="stats-row"><span class="stats-label">前沿</span>${bar(eraCount.frontier, maxEra)}</div>
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <h2>按主题</h2>
+      <div class="stats-bars">
+        ${TOPIC_ORDER.map(t => `
+          <div class="stats-row">
+            <a class="stats-label" href="${url(`/topics/${t.id}/`)}">${t.roman}. ${t.label}</a>
+            ${bar(topicCount.get(t.id) || 0, maxTopic)}
+          </div>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <h2>按难度</h2>
+      <div class="stats-bars">
+        ${[...diffCount.entries()].sort((a, b) => a[0] - b[0]).map(([d, c]) => `
+          <div class="stats-row">
+            <span class="stats-label">${"★".repeat(d)}</span>
+            ${bar(c, maxDiff)}
+          </div>
+        `).join("")}
+      </div>
+    </section>
+
+    <section class="stats-section">
+      <h2>按字数</h2>
+      <div class="stats-bars">
+        ${Object.entries(lengthBuckets).map(([k, c]) => `
+          <div class="stats-row">
+            <span class="stats-label">${k}</span>
+            ${bar(c, maxLen)}
+          </div>
+        `).join("")}
+      </div>
+    </section>
+  </main>`;
+  return page({ title: "Stats — Embodied AI Reading", body, active: "stats" });
+}
+
 // --- venue stats ------------------------------------------------------------
 function buildVenueStats(notes) {
   const venueCount = new Map();
@@ -1574,6 +1705,9 @@ function build() {
 
   // venues
   write(path.join(DIST, "venues", "index.html"), buildVenueStats(notes));
+
+  // stats
+  write(path.join(DIST, "stats", "index.html"), buildStats(notes));
 
   // tags
   write(path.join(DIST, "tags", "index.html"), buildTagsIndex(notes));

@@ -2424,3 +2424,85 @@ html.dark-theme body::after {
 }
 .auto-mark-toast button:hover { background: var(--paper); color: var(--olive); }
 @media print { .auto-mark-toast { display: none; } }
+
+/* === stats dashboard === */
+.big-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 2px solid var(--ink);
+  margin: 1.5rem 0;
+}
+.big-stats > div {
+  padding: 1rem 1.2rem;
+  border-right: 1px solid var(--paper-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.big-stats > div:last-child { border-right: none; }
+.bs-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--coral);
+  line-height: 1;
+}
+.bs-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.stats-section { margin: 2rem 0; }
+.stats-section h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin: 0 0 0.7rem;
+  border-bottom: 1px solid var(--paper-dark);
+  padding-bottom: 0.3rem;
+}
+.stats-bars { display: flex; flex-direction: column; gap: 0.25rem; }
+.stats-row {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 0.2rem 0;
+}
+.stats-label {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+}
+.stats-label:hover { color: var(--coral); }
+.vbar {
+  position: relative;
+  height: 1.4rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+}
+.vbar-fill {
+  height: 100%;
+  background: var(--coral);
+  opacity: 0.55;
+}
+.vbar-num {
+  position: absolute;
+  right: 0.5em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+@media (max-width: 700px) {
+  .big-stats { grid-template-columns: 1fr 1fr; }
+  .big-stats > div:nth-child(2) { border-right: none; }
+}
