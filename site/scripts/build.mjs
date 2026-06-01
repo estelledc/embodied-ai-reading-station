@@ -1725,6 +1725,7 @@ function buildGraph(notes) {
       <button type="button" class="gc-btn is-active" data-layout="force">Force</button>
       <button type="button" class="gc-btn" data-layout="cluster">Cluster</button>
       <button type="button" class="gc-btn" data-layout="timeline">Timeline</button>
+      <input type="search" id="graph-search" class="gc-search" placeholder="搜节点（按 title 模糊匹配）" aria-label="搜索 graph 节点">
     </div>
     <div id="graph-legend" class="graph-legend">${TOPIC_ORDER.map(t => `<span class="legend-item" data-topic="${t.id}"><span class="legend-dot" style="background:var(--topic-${t.id})"></span>${t.roman}. ${t.label}</span>`).join("")}</div>
     <div id="graph-container" style="width:100%;height:75vh;min-height:520px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">

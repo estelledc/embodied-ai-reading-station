@@ -180,6 +180,31 @@
       });
     });
 
+    // === 节点搜索 ===
+    const searchInput = document.getElementById("graph-search");
+    if (searchInput) {
+      let raf = null;
+      function applySearch() {
+        raf = null;
+        const q = searchInput.value.trim().toLowerCase();
+        if (!q) {
+          nodeG.style("opacity", 1);
+          linkSel.style("opacity", null);
+          return;
+        }
+        const matched = new Set();
+        for (const n of data.nodes) {
+          if (n.title.toLowerCase().includes(q) || n.id.toLowerCase().includes(q)) matched.add(n.id);
+        }
+        nodeG.style("opacity", d => matched.has(d.id) ? 1 : 0.1);
+        linkSel.style("opacity", l => (matched.has(l.source.id) || matched.has(l.target.id)) ? 0.3 : 0.03);
+      }
+      searchInput.addEventListener("input", () => {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(applySearch);
+      });
+    }
+
     // === 已读节点视觉 ===
     function applyReadState() {
       try {

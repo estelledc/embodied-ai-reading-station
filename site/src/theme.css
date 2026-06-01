@@ -3216,3 +3216,22 @@ html.dark-theme body::after {
   .cl-item { grid-template-columns: 1fr auto; }
   .cl-tag { grid-row: 1; }
 }
+
+/* === graph search input === */
+.gc-search {
+  margin-left: auto;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.3em 0.7em;
+  color: var(--ink);
+  border-radius: 2px;
+  min-width: 14rem;
+  outline: none;
+}
+.gc-search:focus { border-color: var(--coral); }
+.gc-search::placeholder { color: var(--ink-faint); }
+@media (max-width: 700px) {
+  .gc-search { min-width: 0; flex: 1; margin-left: 0; }
+}
