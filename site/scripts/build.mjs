@@ -147,6 +147,7 @@ function masthead(active) {
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/eras/founder/"), label: "Eras", id: "eras" },
     { href: url("/lists/"), label: "Lists", id: "lists" },
+    { href: url("/discover/"), label: "Discover", id: "discover" },
     { href: url("/changelog/"), label: "Changelog", id: "changelog" },
     { href: url("/site-map/"), label: "Site map", id: "sitemap" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
@@ -1039,6 +1040,113 @@ function buildEraPage(era, notes) {
   }
   body += `</main>`;
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+}
+
+// --- /discover/ exploration page -------------------------------------------
+function buildDiscover(notes) {
+  const dataPapers = notes.map(n => ({
+    slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",
+    difficulty: (n.difficulty || "").length || 2,
+    tldr: (n.tldr || "").slice(0, 110),
+    url: url(`/papers/${n.slug}/`),
+    year: n.year || null,
+  }));
+
+  const body = `<main class="shell">
+    <span class="eyebrow">Discover · 漫游模式</span>
+    <h1>不知道读什么？让<em>站点替你挑</em>。</h1>
+    <p style="color:var(--ink-soft);font-size:1.1rem;line-height:1.55;max-width:46ch">
+      4 种推荐策略并行：今日固定一篇 / 5 篇随机预览 / 一段你没读过的 era / 一个你没碰过的主题。每次刷新都不同（除了今日）。
+    </p>
+    <hr class="ornament"/>
+
+    <section class="discover-section" id="dis-today">
+      <h2>① 今日推荐</h2>
+      <p class="ds-hint">基于日期 hash，全站统一。</p>
+      <div class="ds-card" data-discover-mode="today"></div>
+    </section>
+
+    <section class="discover-section" id="dis-shuffle">
+      <h2>② 随机 5 篇</h2>
+      <p class="ds-hint">每次刷新换一组。</p>
+      <div class="ds-list" data-discover-mode="shuffle"></div>
+    </section>
+
+    <section class="discover-section" id="dis-newera">
+      <h2>③ 未读 era 推荐</h2>
+      <p class="ds-hint">从你读得最少的 era 里挑一篇。</p>
+      <div class="ds-card" data-discover-mode="newera"></div>
+    </section>
+
+    <section class="discover-section" id="dis-newtopic">
+      <h2>④ 没碰过的主题</h2>
+      <p class="ds-hint">如果你只读了 VLA，这里给你看世界模型或 RF。</p>
+      <div class="ds-card" data-discover-mode="newtopic"></div>
+    </section>
+
+    <script id="eai-discover-data" type="application/json">${JSON.stringify(dataPapers)}</script>
+    <script>
+    (function(){
+      var papers = JSON.parse(document.getElementById('eai-discover-data').textContent);
+      var read = new Set();
+      try { read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]')); } catch(e) {}
+
+      function cardHtml(p) {
+        return '<a class="ds-link" href="' + p.url + '">' +
+          '<span class="ds-meta">№ ' + String(p.num).padStart(2,'0') + ' · ' + p.topic + ' · ' + (p.year||'') + '</span>' +
+          '<h3 class="ds-title">' + p.title.split(':')[0] + '</h3>' +
+          (p.tldr ? '<p class="ds-tldr">' + p.tldr + '…</p>' : '') +
+          '</a>';
+      }
+
+      // ① today
+      var today = new Date();
+      var ymd = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
+      var h = ((ymd * 9301) + 49297) % 233280;
+      var pToday = papers[h % papers.length];
+      var todayEl = document.querySelector('[data-discover-mode="today"]');
+      if (todayEl) todayEl.innerHTML = cardHtml(pToday);
+
+      // ② shuffle 5
+      var pool = papers.slice();
+      pool.sort(function(){ return Math.random() - 0.5; });
+      var shuf = pool.slice(0, 5);
+      var shufEl = document.querySelector('[data-discover-mode="shuffle"]');
+      if (shufEl) shufEl.innerHTML = shuf.map(cardHtml).join('');
+
+      // ③ unread era：找用户读得最少的 era
+      var eraCount = { founder: 0, classic: 0, frontier: 0 };
+      for (var i = 0; i < papers.length; i++) {
+        if (read.has(papers[i].slug)) eraCount[papers[i].era]++;
+      }
+      var leastEra = Object.keys(eraCount).sort(function(a,b){ return eraCount[a] - eraCount[b]; })[0];
+      var unreadInEra = papers.filter(function(p){ return p.era === leastEra && !read.has(p.slug); });
+      if (unreadInEra.length) {
+        var pEra = unreadInEra[Math.floor(Math.random() * unreadInEra.length)];
+        var eraEl = document.querySelector('[data-discover-mode="newera"]');
+        if (eraEl) eraEl.innerHTML = cardHtml(pEra);
+      }
+
+      // ④ unread topic：找用户没读过的主题
+      var topicSeen = {};
+      for (var i = 0; i < papers.length; i++) {
+        if (read.has(papers[i].slug)) topicSeen[papers[i].topic] = true;
+      }
+      var allTopics = {};
+      papers.forEach(function(p){ allTopics[p.topic] = true; });
+      var unseenTopics = Object.keys(allTopics).filter(function(t){ return !topicSeen[t]; });
+      var pickTopic = unseenTopics.length ? unseenTopics[Math.floor(Math.random() * unseenTopics.length)] : Object.keys(allTopics)[0];
+      var inTopic = papers.filter(function(p){ return p.topic === pickTopic && p.era === 'founder'; });
+      if (!inTopic.length) inTopic = papers.filter(function(p){ return p.topic === pickTopic; });
+      if (inTopic.length) {
+        var pTopic = inTopic[0];
+        var topEl = document.querySelector('[data-discover-mode="newtopic"]');
+        if (topEl) topEl.innerHTML = cardHtml(pTopic);
+      }
+    })();
+    </script>
+  </main>`;
+  return page({ title: "Discover — Embodied AI Reading", body, active: "discover" });
 }
 
 // --- /next/ smart next paper redirect --------------------------------------
@@ -2636,6 +2744,9 @@ function build() {
 
   // smart next paper
   write(path.join(DIST, "next", "index.html"), buildNext(notes));
+
+  // discover page
+  write(path.join(DIST, "discover", "index.html"), buildDiscover(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {
