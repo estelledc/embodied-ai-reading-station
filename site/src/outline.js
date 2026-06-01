@@ -119,3 +119,74 @@
     });
   });
 })();
+
+// === 阅读计时器：可见时累计，达 reading-time 时弹 toast 一次 ===
+(() => {
+  const meta = document.querySelector(".reading-meta");
+  if (!meta) return;
+  const txt = meta.textContent || "";
+  const m = txt.match(/(\d+)\s*min/);
+  if (!m) return;
+  const targetSec = parseInt(m[1], 10) * 60;
+  if (targetSec <= 30) return;
+
+  const slug = (location.pathname.match(/\/papers\/([^/]+)\//) || [])[1];
+  if (!slug) return;
+  const KEY = `eaireading.timer.${slug}`;
+  const NOTIFIED_KEY = `${KEY}.notified`;
+
+  let elapsed = parseInt(sessionStorage.getItem(KEY) || "0", 10);
+  let lastTick = Date.now();
+  let visible = !document.hidden;
+  let notified = sessionStorage.getItem(NOTIFIED_KEY) === "1";
+
+  // 小角标：右下角显示 "已读 X / Y 分钟"
+  const badge = document.createElement("div");
+  badge.className = "read-timer-badge";
+  badge.hidden = true;
+  document.body.appendChild(badge);
+
+  function fmt(s) {
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return `${m}:${String(sec).padStart(2, "0")}`;
+  }
+
+  function tick() {
+    if (!visible) return;
+    const now = Date.now();
+    const dt = (now - lastTick) / 1000;
+    lastTick = now;
+    elapsed += dt;
+    sessionStorage.setItem(KEY, String(Math.floor(elapsed)));
+    if (elapsed > 5) {
+      badge.hidden = false;
+      badge.textContent = `${fmt(elapsed)} / ${fmt(targetSec)}`;
+      const pct = Math.min(1, elapsed / targetSec);
+      badge.style.setProperty("--p", pct);
+    }
+    if (!notified && elapsed >= targetSec) {
+      notified = true;
+      sessionStorage.setItem(NOTIFIED_KEY, "1");
+      const toast = document.createElement("div");
+      toast.className = "auto-mark-toast show";
+      toast.textContent = `⏱ ${Math.round(targetSec / 60)} 分钟到了。`;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.classList.remove("show");
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      tick();
+      visible = false;
+    } else {
+      lastTick = Date.now();
+      visible = true;
+    }
+  });
+  setInterval(tick, 2000);
+})();

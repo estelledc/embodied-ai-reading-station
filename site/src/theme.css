@@ -2737,3 +2737,33 @@ html.dark-theme body::after {
   .rl-header { grid-template-columns: 1fr auto; }
   .rl-subtitle { grid-column: 1 / -1; }
 }
+
+/* === reading timer badge === */
+.read-timer-badge {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--paper);
+  border: 1px solid var(--coral);
+  padding: 0.4rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--coral);
+  letter-spacing: 0.06em;
+  border-radius: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  z-index: 95;
+  pointer-events: none;
+}
+.read-timer-badge::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--coral);
+  transform: scaleX(var(--p, 0));
+  transform-origin: 0 50%;
+  transition: transform 0.3s ease-out;
+}
+@media print { .read-timer-badge { display: none; } }
