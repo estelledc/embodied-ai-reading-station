@@ -276,6 +276,9 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
+  <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
+  <link rel="manifest" href="${url("/site.webmanifest")}">
+  <meta name="theme-color" content="#ed6f5c">
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
   <script>(function(){var m=localStorage.getItem("eaireading.theme");if(m==="dark")document.documentElement.classList.add("dark-theme");else if(m==="light")document.documentElement.classList.add("light-theme");})();</script>
   ${extraHead}
@@ -1926,6 +1929,8 @@ function build() {
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
   copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
   copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
+  copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
+  copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");

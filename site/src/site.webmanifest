@@ -1,0 +1,16 @@
+{
+  "name": "Embodied AI Reading Station",
+  "short_name": "EAI Reading",
+  "description": "156 篇具身智能论文，用零基础也能读懂的中文重写",
+  "start_url": "/embodied-ai-reading-station/",
+  "display": "standalone",
+  "background_color": "#efe7d2",
+  "theme_color": "#ed6f5c",
+  "icons": [
+    {
+      "src": "/embodied-ai-reading-station/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
