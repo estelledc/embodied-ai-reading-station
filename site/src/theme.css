@@ -2933,3 +2933,70 @@ html.dark-theme body::after {
   color: var(--paper);
   border-color: var(--olive);
 }
+
+/* === quality dashboard === */
+.quality-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 1.2rem 0;
+  border: 1px solid var(--ink);
+}
+.qs-cell {
+  flex: 1;
+  min-width: 8rem;
+  padding: 0.7rem 1rem;
+  border-right: 1px solid var(--paper-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.qs-cell:last-child { border-right: none; }
+.qs-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.6rem;
+  color: var(--coral);
+  line-height: 1;
+}
+.qs-kind {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+.quality-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+.quality-table thead th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--ink);
+}
+.quality-table td {
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--paper-dark);
+  vertical-align: top;
+}
+.q-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  padding: 0.15em 0.5em;
+  margin-right: 0.3em;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.q-thin, .q-thick { background: rgba(237, 111, 92, 0.15); color: var(--coral); }
+.q-no-tldr, .q-no-tags { background: rgba(233, 185, 74, 0.18); color: #8a6915; }
+.q-no-year, .q-no-venue { background: rgba(110, 116, 72, 0.15); color: var(--olive); }
+.q-no-scene-img, .q-no-method-img { background: var(--bone); color: var(--ink-mute); }

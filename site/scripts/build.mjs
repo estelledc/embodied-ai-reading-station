@@ -966,6 +966,64 @@ function buildEraPage(era, notes) {
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
 }
 
+// --- quality dashboard (作者用，不放主导航) ---------------------------------
+function buildQuality(notes) {
+  function inspect(n) {
+    const issues = [];
+    const wc = n.wordCount || 0;
+    if (wc < 1500) issues.push({ kind: "thin", desc: `字数偏少 (${wc})` });
+    else if (wc > 8000) issues.push({ kind: "thick", desc: `字数过多 (${wc})` });
+    if (!n.tldr || n.tldr.length < 20) issues.push({ kind: "no-tldr", desc: "缺 TL;DR" });
+    if (!n.year) issues.push({ kind: "no-year", desc: "缺 year frontmatter" });
+    if (!n.venue) issues.push({ kind: "no-venue", desc: "缺 venue frontmatter" });
+    const sceneImg = path.join(SITE, "src", "images", "inline", `${n.slug}-scene.webp`);
+    const methodImg = path.join(SITE, "src", "images", "inline", `${n.slug}-method.webp`);
+    if (!fs.existsSync(sceneImg)) issues.push({ kind: "no-scene-img", desc: "缺 scene 图" });
+    if (!fs.existsSync(methodImg)) issues.push({ kind: "no-method-img", desc: "缺 method 图" });
+    if (!n.tags || n.tags.length === 0) issues.push({ kind: "no-tags", desc: "无 tag 命中" });
+    return issues;
+  }
+
+  const flagged = notes.map(n => ({ n, issues: inspect(n) })).filter(x => x.issues.length > 0);
+  flagged.sort((a, b) => b.issues.length - a.issues.length);
+
+  const issueTypeCount = new Map();
+  for (const { issues } of flagged) for (const i of issues) issueTypeCount.set(i.kind, (issueTypeCount.get(i.kind) || 0) + 1);
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Quality · 作者返工清单</span>
+    <h1><em>${flagged.length} 篇</em>笔记需要<em>关注</em>。</h1>
+    <p style="font-size:1rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
+      这是给作者看的页，扫所有笔记的字数/前置元数据/图片，列出可改进项。读者不需要看这页。
+    </p>
+
+    <div class="quality-summary">
+      ${[...issueTypeCount.entries()].sort((a, b) => b[1] - a[1]).map(([kind, count]) => `
+        <div class="qs-cell">
+          <span class="qs-num">${count}</span>
+          <span class="qs-kind">${kind}</span>
+        </div>
+      `).join("")}
+    </div>
+
+    <hr class="ornament"/>
+
+    <table class="quality-table">
+      <thead><tr><th>№</th><th>title</th><th>topic</th><th>字数</th><th>问题</th></tr></thead>
+      <tbody>
+        ${flagged.map(({ n, issues }) => `<tr>
+          <td class="cell-year">${String(n.num).padStart(3, "0")}</td>
+          <td class="cell-title"><a href="${url(`/papers/${n.slug}/`)}">${n.title.slice(0, 60)}${n.title.length > 60 ? "…" : ""}</a></td>
+          <td class="cell-venue">${n.topicLabel || ""}</td>
+          <td class="cell-year">${n.wordCount || 0}</td>
+          <td class="cell-tldr">${issues.map(i => `<span class="q-tag q-${i.kind}">${i.desc}</span>`).join(" ")}</td>
+        </tr>`).join("")}
+      </tbody>
+    </table>
+  </main>`;
+  return page({ title: "Quality — Embodied AI Reading", body, active: "quality" });
+}
+
 // --- stats dashboard --------------------------------------------------------
 function buildStats(notes) {
   const total = notes.length;
@@ -1986,6 +2044,9 @@ function build() {
 
   // stats
   write(path.join(DIST, "stats", "index.html"), buildStats(notes));
+
+  // quality (作者用，不在导航)
+  write(path.join(DIST, "quality", "index.html"), buildQuality(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {
