@@ -1323,3 +1323,91 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   .cell-title { width: auto; }
   .cell-venue { width: auto; }
 }
+
+/* === Topic landing === */
+.topic-landing-hero {
+  display: block;
+  margin: 2rem 0 2.5rem;
+  border: 1px solid var(--paper-dark);
+}
+.topic-landing-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.topic-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  margin: 2rem 0;
+}
+.topic-meta-grid > div {
+  padding: 1rem 1.2rem;
+  border-right: 1px solid var(--paper-dark);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.topic-meta-grid > div:last-child { border-right: none; }
+.topic-intro {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 52ch;
+  margin: 1.5rem 0;
+}
+.primer-list {
+  counter-reset: primer;
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.primer-item {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1.2rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--paper-dark);
+  align-items: start;
+}
+.primer-num {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--coral);
+  line-height: 1;
+}
+.primer-body { display: flex; flex-direction: column; gap: 0.4rem; }
+.primer-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1.25;
+}
+.primer-title:hover { color: var(--coral); }
+.primer-meta {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+.primer-tldr {
+  margin: 0.3rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+@media (max-width: 700px) {
+  .topic-meta-grid { grid-template-columns: repeat(2, 1fr); }
+  .topic-meta-grid > div:nth-child(2) { border-right: none; }
+  .topic-meta-grid > div:nth-child(1), .topic-meta-grid > div:nth-child(2) {
+    border-bottom: 1px solid var(--paper-dark);
+  }
+}

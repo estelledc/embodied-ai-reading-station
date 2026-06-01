@@ -317,10 +317,10 @@ function buildTopics(notes) {
     body += `<section>
       <div class="topic-row">
         <span class="topic-roman">${t.roman}</span>
-        <h2>${t.label}</h2>
+        <h2><a href="${url(`/topics/${t.id}/`)}" style="color:inherit">${t.label}</a></h2>
         <span class="count">${inTopic.length} paper${inTopic.length > 1 ? "s" : ""}</span>
       </div>
-      <p style="margin-left:0.5rem;color:var(--ink-mute);font-size:0.95rem">${t.subtitle}</p>
+      <p style="margin-left:0.5rem;color:var(--ink-mute);font-size:0.95rem">${t.subtitle} · <a href="${url(`/topics/${t.id}/`)}" style="color:var(--coral)">read primer →</a></p>
       <ul style="list-style:none;margin:0">`;
     for (const n of inTopic) {
       body += `<li style="border-bottom:1px solid var(--paper-dark);padding:0.7rem 0;display:flex;align-items:baseline;gap:0.8rem;font-family:var(--font-mono);font-size:0.92rem">
@@ -334,6 +334,91 @@ function buildTopics(notes) {
   }
   body += `</main>`;
   return page({ title: "Topics — Embodied AI Reading", body, active: "topics" });
+}
+
+// --- per-topic landing ------------------------------------------------------
+function buildTopicLanding(t, notes) {
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  const inTopic = notes.filter(n => n.topic === t.id).sort((a, b) => {
+    const aPin = a.num <= 13 ? 0 : 1;
+    const bPin = b.num <= 13 ? 0 : 1;
+    if (aPin !== bPin) return aPin - bPin;
+    if (aPin === 0) return a.num - b.num;
+    const ea = eraRank[a.era] ?? 1;
+    const eb = eraRank[b.era] ?? 1;
+    if (ea !== eb) return ea - eb;
+    return (Number(a.year) || 9999) - (Number(b.year) || 9999);
+  });
+
+  const primerSlugs = t.primer || [];
+  const primerNotes = primerSlugs.map(s => notes.find(n => n.slug === s)).filter(Boolean);
+
+  const heroPath = path.join(SITE, "src", "images", "topics", `${t.id}.webp`);
+  const hasHero = fs.existsSync(heroPath);
+  const heroHtml = hasHero ? `<picture class="topic-landing-hero">
+    <source type="image/webp" srcset="${url(`/images/topics/${t.id}-800.webp`)} 800w, ${url(`/images/topics/${t.id}.webp`)} 1672w" sizes="(max-width: 900px) 100vw, 1200px">
+    <img src="${url(`/images/topics/${t.id}.webp`)}" alt="${t.label} — ${t.subtitle}" loading="eager" width="1672" height="941">
+  </picture>` : "";
+
+  const founders = inTopic.filter(n => n.era === "founder").length;
+  const frontiers = inTopic.filter(n => n.era === "frontier").length;
+  const classics = inTopic.filter(n => !n.era || n.era === "classic").length;
+
+  let body = `<main class="shell">
+    <nav style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);margin-bottom:1rem">
+      <a href="${url("/topics/")}" style="color:var(--ink-faint)">← all topics</a>
+    </nav>
+    <span class="eyebrow">Topic ${t.roman} · ${t.subtitle}</span>
+    <h1>${t.label}</h1>
+    ${heroHtml}
+    <div class="topic-meta-grid">
+      <div><span class="stat-num">${inTopic.length}</span><span class="stat-label">papers</span></div>
+      <div><span class="stat-num">${founders}</span><span class="stat-label">founder</span></div>
+      <div><span class="stat-num">${classics}</span><span class="stat-label">classic</span></div>
+      <div><span class="stat-num">${frontiers}</span><span class="stat-label">frontier</span></div>
+    </div>
+    ${t.intro ? `<p class="topic-intro">${t.intro}</p>` : ""}`;
+
+  if (primerNotes.length) {
+    body += `<hr class="ornament"/>
+    <section>
+      <span class="eyebrow">Primer · 入门 3 篇</span>
+      <h2 style="margin-top:0.4rem">先读这<em>三篇</em>。</h2>
+      ${t.primerNote ? `<p style="color:var(--ink-soft);font-size:1.02rem;line-height:1.55;max-width:46ch">${t.primerNote}</p>` : ""}
+      <ol class="primer-list">`;
+    primerNotes.forEach((n, i) => {
+      body += `<li class="primer-item">
+        <span class="primer-num">${i + 1}</span>
+        <div class="primer-body">
+          <a href="${url(`/papers/${n.slug}/`)}" class="primer-title">${n.title}</a>
+          <span class="primer-meta">${n.year || ""} ${n.venue ? `· ${n.venue}` : ""} ${n.difficulty ? `· ${n.difficulty}` : ""}</span>
+          ${n.tldr ? `<p class="primer-tldr">${n.tldr.slice(0, 140)}${n.tldr.length > 140 ? "…" : ""}</p>` : ""}
+        </div>
+      </li>`;
+    });
+    body += `</ol></section>`;
+  }
+
+  body += `<hr class="ornament"/>
+    <section>
+      <span class="eyebrow">All papers · 按 era 排</span>
+      <h2 style="margin-top:0.4rem">${t.label} 全部 ${inTopic.length} 篇。</h2>
+      <table class="compare-table">
+        <thead><tr><th>era</th><th>year</th><th>title</th><th>venue</th></tr></thead>
+        <tbody>`;
+  for (const n of inTopic) {
+    const eraLabel = n.era === "founder" ? "祖师爷" : n.era === "frontier" ? "前沿" : "经典";
+    const eraClass = n.era === "founder" ? "era-founder" : n.era === "frontier" ? "era-frontier" : "era-classic";
+    body += `<tr>
+      <td><span class="era-badge ${eraClass}">${eraLabel}</span></td>
+      <td class="cell-year">${n.year || "—"}</td>
+      <td class="cell-title"><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></td>
+      <td class="cell-venue">${n.venue || ""}</td>
+    </tr>`;
+  }
+  body += `</tbody></table></section></main>`;
+
+  return page({ title: `${t.label} — Embodied AI Reading`, body, active: "topics" });
 }
 
 // --- about page -------------------------------------------------------------
@@ -797,6 +882,9 @@ function build() {
 
   // topics
   write(path.join(DIST, "topics", "index.html"), buildTopics(notes));
+  for (const t of TOPIC_ORDER) {
+    write(path.join(DIST, "topics", t.id, "index.html"), buildTopicLanding(t, notes));
+  }
 
   // timeline
   write(path.join(DIST, "timeline", "index.html"), buildTimeline(notes));

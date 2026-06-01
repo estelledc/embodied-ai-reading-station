@@ -1,15 +1,70 @@
 {
   "topics": [
-    { "id": "vlm-foundation", "roman": "I", "label": "VLM Foundation", "subtitle": "视觉-语言基座" },
-    { "id": "planning", "roman": "II", "label": "High-Level Planning", "subtitle": "高层任务规划" },
-    { "id": "vla", "roman": "III", "label": "End-to-End VLA", "subtitle": "端到端视觉-语言-动作" },
-    { "id": "diffusion-policy", "roman": "IV", "label": "Diffusion Policy", "subtitle": "扩散策略与流匹配" },
-    { "id": "imitation", "roman": "V", "label": "Imitation Learning", "subtitle": "模仿学习与遥操作" },
-    { "id": "world-model", "roman": "VI", "label": "World Model & Video Policy", "subtitle": "世界模型与视频策略" },
-    { "id": "multimodal", "roman": "VII", "label": "Multimodal Ecology", "subtitle": "多模态交互与数据生态" },
-    { "id": "rf", "roman": "VIII", "label": "RF Perception & Mapping", "subtitle": "射频感知与空间建图" },
-    { "id": "auditory", "roman": "IX", "label": "Auditory & Acoustic", "subtitle": "听觉智能与声学空间交互" },
-    { "id": "dataset-eval", "roman": "X", "label": "Datasets & Benchmarks", "subtitle": "数据集与评测基准" },
-    { "id": "sim", "roman": "XI", "label": "Simulation & Sim2Real", "subtitle": "仿真与真实迁移" }
+    {
+      "id": "vlm-foundation", "roman": "I", "label": "VLM Foundation", "subtitle": "视觉-语言基座",
+      "intro": "把图片和文字塞进同一个坐标系——这是具身智能的视觉地基。先有 CLIP 把'狗'这个词和狗的样子绑在一起，后面所有'机器人看着图听人说话'的模型，骨子里都是这套对齐。",
+      "primer": ["clip", "blip-2", "llava-1-5"],
+      "primerNote": "CLIP 看懂 → BLIP-2 桥接 LLM → LLaVA 把视觉变成对话的一部分。"
+    },
+    {
+      "id": "planning", "roman": "II", "label": "High-Level Planning", "subtitle": "高层任务规划",
+      "intro": "把'去厨房热一杯牛奶'拆成一长串可执行步骤——LLM 当大脑，机器人当手脚。这一族研究关心：怎么让大模型只输出可执行命令，并对失败做出反应。",
+      "primer": ["saycan", "code-as-policies", "inner-monologue"],
+      "primerNote": "SayCan 教 LLM 看清自己能做什么 → Code-as-Policies 让它直接写代码 → Inner Monologue 让它反思失败。"
+    },
+    {
+      "id": "vla", "roman": "III", "label": "End-to-End VLA", "subtitle": "端到端视觉-语言-动作",
+      "intro": "VLA = 视觉-语言-动作模型。一个端到端神经网络：左边输入摄像头画面 + 自然语言指令，右边输出关节速度。这是过去三年具身 AI 最热的赛道。",
+      "primer": ["rt-1", "rt-2", "openvla"],
+      "primerNote": "RT-1 把动作 token 化 → RT-2 把网络知识带进来 → OpenVLA 把整个范式开源民主化。"
+    },
+    {
+      "id": "diffusion-policy", "roman": "IV", "label": "Diffusion Policy", "subtitle": "扩散策略与流匹配",
+      "intro": "把'选动作'重新定义成'去噪'。从一团随机数开始，一步步擦回到平滑可执行的动作序列——结果是模仿学习里少见的稳定多模态策略。",
+      "primer": ["diffusion-policy", "3d-diffusion-policy", "pi0"],
+      "primerNote": "Diffusion Policy 把扩散搬进控制 → 3D-DP 给它装 3D 眼睛 → π0 把流匹配做到产业级基础模型。"
+    },
+    {
+      "id": "imitation", "roman": "V", "label": "Imitation Learning", "subtitle": "模仿学习与遥操作",
+      "intro": "机器人怎么学技能？最朴素的答案：抄作业。研究员用遥操作设备演示，机器人从轨迹里学。这一族关心：演示怎么采、怎么编码、怎么少演示几次也能学会。",
+      "primer": ["dagger", "act-aloha", "umi"],
+      "primerNote": "DAgger 解决误差累积 → ACT/ALOHA 把遥操作做成标配 → UMI 用手持夹爪+GoPro 采野外数据。"
+    },
+    {
+      "id": "world-model", "roman": "VI", "label": "World Model & Video Policy", "subtitle": "世界模型与视频策略",
+      "intro": "教 AI 在脑子里预演：给它当前画面和一个动作，它能脑补出'下一秒会发生什么'。这个能力一旦建立，规划就能在想象里跑，不必撞坏真机器人。",
+      "primer": ["world-models-ha", "dreamer-v3", "genie"],
+      "primerNote": "World Models 开宗 → Dreamer-v3 跨域训练范式 → Genie 从无标签视频学潜在动作空间。"
+    },
+    {
+      "id": "multimodal", "roman": "VII", "label": "Multimodal Ecology", "subtitle": "多模态交互与数据生态",
+      "intro": "图、文、音、触、IMU——把更多通道塞进同一个嵌入空间。这一族不直接做机器人，但提供了关键基础设施：跨模态预训练、感知融合、Web-scale 图文数据。",
+      "primer": ["imagebind", "obelics", "anymal"],
+      "primerNote": "ImageBind 用图像作锚点联通六模态 → OBELICS 把交错图文文档做成数据集 → AnyMAL 把任意模态注入 LLaMA。"
+    },
+    {
+      "id": "rf", "roman": "VIII", "label": "RF Perception & Mapping", "subtitle": "射频感知与空间建图",
+      "intro": "WiFi、毫米波、雷达——这些电磁波看不见摸不着，却能穿墙、抗烟雾、不受光照影响。研究问题是：怎么把它们变成像摄像头一样可读的'画面'。",
+      "primer": ["rf-pose-through-wall", "millimap", "panoradar"],
+      "primerNote": "RF-Pose 用 WiFi 看人骨架 → milliMap 用毫米波建室内地图 → PanoRadar 把毫米波做到 LiDAR 级 3D。"
+    },
+    {
+      "id": "auditory", "roman": "IX", "label": "Auditory & Acoustic", "subtitle": "听觉智能与声学空间交互",
+      "intro": "让机器人听懂世界——从语音识别到环境声音分离到声学定位。这是具身感知里最被低估的一块，但所有家务机器人都需要它。",
+      "primer": ["whisper", "audiolm", "acoustic-swarms"],
+      "primerNote": "Whisper 用 68 万小时弱标注做 ASR → AudioLM 把音频建模成 token 序列 → Acoustic Swarms 用一群麦克风分离声源。"
+    },
+    {
+      "id": "dataset-eval", "roman": "X", "label": "Datasets & Benchmarks", "subtitle": "数据集与评测基准",
+      "intro": "没有数据集，模型就是空中楼阁。这一族提供具身 AI 的'地基'：从早期 RLBench/Meta-World 到工业级 Open X-Embodiment 和 DROID。",
+      "primer": ["open-x-embodiment", "droid", "libero"],
+      "primerNote": "Open X 把 22 家机构的数据合一 → DROID 用 13 国采集真实野外数据 → LIBERO 做终身学习评测。"
+    },
+    {
+      "id": "sim", "roman": "XI", "label": "Simulation & Sim2Real", "subtitle": "仿真与真实迁移",
+      "intro": "在真机器人上跑数据成本太高，所以先在仿真里训练。这一族关心：仿真器怎么做得真、怎么并行加速、训练完的策略怎么不水土不服。",
+      "primer": ["habitat", "isaac-gym", "simpler-env"],
+      "primerNote": "Habitat 把室内仿真做到照片级 → Isaac Gym 用 GPU 跑数千个并行环境 → SIMPLER 做仿真复刻真实 VLA 评测。"
+    }
   ]
 }
