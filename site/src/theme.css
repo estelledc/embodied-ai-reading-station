@@ -2841,3 +2841,34 @@ html.dark-theme body::after {
   background: var(--coral);
   color: var(--paper);
 }
+
+/* === reading list progress === */
+.rl-progress {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+.rl-progress-track {
+  flex: 1;
+  height: 6px;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  overflow: hidden;
+}
+.rl-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
+  width: 0;
+  transition: width 0.3s;
+}
+.rl-progress-text {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--coral);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.primer-item-read .primer-num { color: var(--olive); }
+.primer-item-read .primer-num::after { content: " ✓"; font-size: 0.5em; }
+.primer-item-read .primer-title { color: var(--ink-faint); }

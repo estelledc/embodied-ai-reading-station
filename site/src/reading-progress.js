@@ -278,11 +278,43 @@
     obs.observe(endmark);
   }
 
+  function bindReadingLists() {
+    const sections = document.querySelectorAll(".reading-list[data-list-slugs]");
+    if (!sections.length) return;
+    function render() {
+      const read = load();
+      for (const sec of sections) {
+        const slugs = (sec.dataset.listSlugs || "").split(",").filter(Boolean);
+        const total = slugs.length;
+        if (!total) continue;
+        const done = slugs.filter(s => read.has(s)).length;
+        const wrap = sec.querySelector(".rl-progress");
+        if (!wrap) continue;
+        if (done > 0) {
+          wrap.hidden = false;
+          const fill = wrap.querySelector(".rl-progress-fill");
+          const text = wrap.querySelector(".rl-progress-text");
+          fill.style.width = (done / total * 100) + "%";
+          text.textContent = `${done} / ${total} 已读`;
+        } else {
+          wrap.hidden = true;
+        }
+        // 已读 item 视觉
+        sec.querySelectorAll(".primer-item[data-slug]").forEach(item => {
+          item.classList.toggle("primer-item-read", read.has(item.dataset.slug));
+        });
+      }
+    }
+    render();
+    window.addEventListener("eai:read-changed", render);
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".read-btn[data-slug]").forEach(bindButton);
     bindCards();
     bindStats();
     bindNextPick();
     bindAutoMarkOnScroll();
+    bindReadingLists();
   });
 })();

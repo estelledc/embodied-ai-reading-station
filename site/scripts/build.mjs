@@ -847,7 +847,7 @@ function buildReadingLists(notes) {
     <hr class="ornament"/>`;
   for (const list of READING_LISTS) {
     const items = list.slugs.map(s => notes.find(n => n.slug === s)).filter(Boolean);
-    body += `<section class="reading-list">
+    body += `<section class="reading-list" data-list-id="${list.id}" data-list-slugs="${items.map(n => n.slug).join(",")}">
       <header class="rl-header">
         <span class="rl-tag">${list.id}</span>
         <h2 class="rl-title">${list.title}</h2>
@@ -855,8 +855,12 @@ function buildReadingLists(notes) {
         <span class="rl-meta">${items.length} 篇 · ~${list.estMinutes} 分钟</span>
       </header>
       <p class="rl-intro">${list.intro}</p>
+      <div class="rl-progress" hidden>
+        <div class="rl-progress-track"><div class="rl-progress-fill"></div></div>
+        <span class="rl-progress-text"></span>
+      </div>
       <ol class="primer-list">
-        ${items.map((n, i) => `<li class="primer-item">
+        ${items.map((n, i) => `<li class="primer-item" data-slug="${n.slug}">
           <span class="primer-num">${i + 1}</span>
           <div class="primer-body">
             <a href="${url(`/papers/${n.slug}/`)}" class="primer-title">${n.title}</a>
