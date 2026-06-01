@@ -295,6 +295,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/quick-filter.js")}" defer></script>
   <script src="${url("/keyboard.js")}" defer></script>
   <script src="${url("/theme-toggle.js")}" defer></script>
+  <script src="${url("/link-preview.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -392,6 +393,7 @@ function buildIndex(notes) {
       difficulty: (n.difficulty || "").length || 2,
       tldr: (n.tldr || "").slice(0, 120),
       url: url(`/papers/${n.slug}/`),
+      year: n.year || null, venue: n.venue || "",
     })))}</script>
     <hr/>`;
 
@@ -2001,6 +2003,7 @@ function build() {
   copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
   copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
+  copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
 
   // images（codex 生成 + cwebp 转换）
