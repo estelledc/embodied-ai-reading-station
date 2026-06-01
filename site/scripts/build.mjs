@@ -173,7 +173,7 @@ function footerHtml() {
   </footer>`;
 }
 
-function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null }) {
+function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null, jsonLd = null }) {
   const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const _ogTitle = ogTitle || title;
   const _ogDesc = ogDescription || "156 篇具身智能论文，用零基础也能读懂的中文重写。从 CLIP 到 π0，11 主题全景。";
@@ -204,6 +204,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
+  ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
   ${extraHead}
 </head>
 <body>
@@ -1112,6 +1113,31 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
     : fs.existsSync(cardImg)
       ? `${SITE_URL}/images/cards/${note.slug}.webp`
       : `${SITE_URL}/images/hero.webp`;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Article",
+        "headline": note.title,
+        "description": note.tldr || "",
+        "author": { "@type": "Person", "name": "Jason" },
+        "publisher": { "@type": "Organization", "name": "Embodied AI Reading Station" },
+        "datePublished": (note.year || 2026) + "-01-01",
+        "image": ogImage,
+        "url": `${SITE_URL}/papers/${note.slug}/`,
+        "wordCount": note.wordCount || 0,
+        "keywords": [note.topicLabel, note.era, note.venue, "embodied AI"].filter(Boolean).join(", "),
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/" },
+          { "@type": "ListItem", "position": 2, "name": note.topicLabel, "item": `${SITE_URL}/topics/${note.topic}/` },
+          { "@type": "ListItem", "position": 3, "name": note.title, "item": `${SITE_URL}/papers/${note.slug}/` },
+        ],
+      },
+    ],
+  };
   return page({
     title: `${note.title} — Embodied AI Reading`,
     body,
@@ -1120,6 +1146,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
     ogDescription: note.tldr || `${note.topicLabel} · ${note.year || ""} ${note.venue || ""} · ${note.readingTime} min read`,
     ogImage,
     ogUrl: `${SITE_URL}/papers/${note.slug}/`,
+    jsonLd,
   });
 }
 
