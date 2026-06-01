@@ -170,13 +170,31 @@ function footerHtml() {
   </footer>`;
 }
 
-function page({ title, body, active, extraHead = "" }) {
+function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null }) {
+  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
+  const _ogTitle = ogTitle || title;
+  const _ogDesc = ogDescription || "156 篇具身智能论文，用零基础也能读懂的中文重写。从 CLIP 到 π0，11 主题全景。";
+  const _ogImg = ogImage || `${SITE_URL}/images/hero.webp`;
+  const _ogUrl = ogUrl || SITE_URL + "/";
+  const escAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   return `<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${title}</title>
+  <meta name="description" content="${escAttr(_ogDesc)}">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="${escAttr(_ogTitle)}">
+  <meta property="og:description" content="${escAttr(_ogDesc)}">
+  <meta property="og:image" content="${escAttr(_ogImg)}">
+  <meta property="og:url" content="${escAttr(_ogUrl)}">
+  <meta property="og:site_name" content="Embodied AI Reading Station">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${escAttr(_ogTitle)}">
+  <meta name="twitter:description" content="${escAttr(_ogDesc)}">
+  <meta name="twitter:image" content="${escAttr(_ogImg)}">
   <link rel="stylesheet" href="${url("/jx/tokens.css")}">
   <link rel="stylesheet" href="${url("/jx/components.css")}">
   <link rel="stylesheet" href="${url("/styles.css")}">
@@ -987,7 +1005,24 @@ function buildNotePage(note, backlinks = []) {
     </div>
     ${outlineHtml}
   </main>`;
-  return page({ title: `${note.title} — Embodied AI Reading`, body, active: "papers" });
+  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
+  // 优先 inline scene 图，其次 paper card 图，最后默认 hero
+  const sceneImg = path.join(SITE, "src", "images", "inline", `${note.slug}-scene.webp`);
+  const cardImg = path.join(SITE, "src", "images", "cards", `${note.slug}.webp`);
+  const ogImage = fs.existsSync(sceneImg)
+    ? `${SITE_URL}/images/inline/${note.slug}-scene.webp`
+    : fs.existsSync(cardImg)
+      ? `${SITE_URL}/images/cards/${note.slug}.webp`
+      : `${SITE_URL}/images/hero.webp`;
+  return page({
+    title: `${note.title} — Embodied AI Reading`,
+    body,
+    active: "papers",
+    ogTitle: `№ ${note.num} · ${note.title.split(":")[0]}`,
+    ogDescription: note.tldr || `${note.topicLabel} · ${note.year || ""} ${note.venue || ""} · ${note.readingTime} min read`,
+    ogImage,
+    ogUrl: `${SITE_URL}/papers/${note.slug}/`,
+  });
 }
 
 // --- main -------------------------------------------------------------------
