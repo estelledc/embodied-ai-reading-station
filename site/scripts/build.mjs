@@ -981,6 +981,67 @@ function buildEraPage(era, notes) {
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
 }
 
+// --- contributors page ------------------------------------------------------
+function buildContributors(notes) {
+  const venueCount = new Map();
+  for (const n of notes) {
+    const v = (n.venue || "Unknown").trim() || "Unknown";
+    venueCount.set(v, (venueCount.get(v) || 0) + 1);
+  }
+  const topVenues = [...venueCount.entries()].sort((a, b) => b[1] - a[1]);
+  const totalLab = topVenues.reduce((s, [, c]) => s + c, 0);
+
+  const body = `<main class="shell">
+    <span class="eyebrow">Contributors · 谁的工作让这站存在</span>
+    <h1>致<em>所有原作者</em>。</h1>
+    <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
+      这站的 156 篇笔记不是原创研究——它们是 ${topVenues.length} 个会议/期刊上 ${totalLab} 篇论文的入门转写。
+      所有的科学贡献都属于这些原论文的作者。
+    </p>
+    <hr class="ornament"/>
+
+    <section>
+      <h2>原始论文出处</h2>
+      <p style="color:var(--ink-soft);font-size:0.95rem">每条 venue 对应一群作者，他们的工作让这站有内容可写。点击跳到该 venue 在 [/venues/](/venues/) 的对应位置。</p>
+      <div class="venue-bars" style="margin-top:1rem">
+        ${topVenues.map(([v, c]) => {
+          const pct = (c / topVenues[0][1]) * 100;
+          return `<div class="venue-bar-row" style="cursor:default">
+            <span class="venue-name">${v}</span>
+            <div class="venue-bar-track"><div class="venue-bar-fill" style="width:${pct}%"></div></div>
+            <span class="venue-count">${c}</span>
+          </div>`;
+        }).join("")}
+      </div>
+    </section>
+
+    <hr class="ornament"/>
+
+    <section>
+      <h2>怎么找到原作者</h2>
+      <p style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6">每篇笔记顶部的 <strong>来源</strong> 字段都指向 PDF。在论文 PDF 第 1 页能看到完整作者列表。如果你引用某个想法，请引用<strong>原论文</strong>而不是这站。</p>
+      <p style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6">如果你是其中一位原作者，希望调整笔记内容（比如更准确的定义、补充关键引用、纠正误解）：</p>
+      <ul style="font-family:var(--font-mono);font-size:0.9rem;color:var(--ink-mute)">
+        <li><a href="https://github.com/estelledc/embodied-ai-reading-station/issues">提 GitHub issue</a></li>
+        <li>或 fork + PR</li>
+      </ul>
+    </section>
+
+    <hr class="ornament"/>
+
+    <section>
+      <h2>这站本身的贡献</h2>
+      <p style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6">
+        这站做的事是<strong>翻译 + 重组</strong>：把论文的核心思想拆成入门读者能消化的语言，配生活类比，标关键数字。所有功劳归原作者；所有笔记错误归这站。
+      </p>
+      <p style="color:var(--ink-soft);font-size:0.95rem;line-height:1.6">
+        基础设施（构建系统、设计、可视化）由 Jason 开发，开源 MIT 协议。
+      </p>
+    </section>
+  </main>`;
+  return page({ title: "Contributors — Embodied AI Reading", body, active: "about" });
+}
+
 // --- changelog (从 git log 自动生成) ---------------------------------------
 import { execSync as _execSync } from "node:child_process";
 function buildChangelog() {
@@ -2147,6 +2208,9 @@ function build() {
   // changelog
   const cl = buildChangelog();
   if (cl) write(path.join(DIST, "changelog", "index.html"), cl);
+
+  // contributors
+  write(path.join(DIST, "contributors", "index.html"), buildContributors(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {
