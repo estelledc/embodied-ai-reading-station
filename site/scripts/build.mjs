@@ -175,8 +175,60 @@ function masthead(active) {
   </dialog>`;
 }
 
-function footerHtml() {
-  return `<footer class="jx-footer">
+// active page id → 3 个相关视图（不含自身）
+const RELATED_VIEWS_MAP = {
+  index: ["topics", "timeline", "issues"],
+  topics: ["compare", "graph", "heatmap"],
+  timeline: ["compare", "stats", "venues"],
+  compare: ["topics", "timeline", "tags"],
+  graph: ["heatmap", "tags", "topics"],
+  heatmap: ["graph", "tags", "stats"],
+  tags: ["heatmap", "glossary", "graph"],
+  glossary: ["tags", "learn", "venues"],
+  venues: ["stats", "compare", "timeline"],
+  stats: ["timeline", "venues", "compare"],
+  learn: ["glossary", "issues", "topics"],
+  issues: ["learn", "stats", "timeline"],
+  about: ["learn", "issues", "topics"],
+  deck: ["learn", "issues", "topics"],
+};
+const VIEW_DESC = {
+  index: { label: "Index 首页", desc: "156 篇卡片网格按主题分组" },
+  topics: { label: "Topics 主题", desc: "11 个主题深度页 + primer 入门 3 篇" },
+  timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
+  compare: { label: "Compare", desc: "同主题 era 并排对比表" },
+  graph: { label: "Graph", desc: "D3 力导论文关系图" },
+  heatmap: { label: "Heatmap", desc: "21 × 21 标签共现矩阵" },
+  tags: { label: "Tags", desc: "21 个跨主题技术标签" },
+  glossary: { label: "Glossary", desc: "60 个术语字典" },
+  venues: { label: "Venues", desc: "37 个会议按类别分布" },
+  stats: { label: "Stats", desc: "5 维度数据看板" },
+  learn: { label: "Learn", desc: "学习路径 + math primer" },
+  issues: { label: "Issues", desc: "4 期编辑总结" },
+  about: { label: "About", desc: "项目说明" },
+  deck: { label: "Deck", desc: "LLaVA 演讲" },
+};
+
+function relatedViewsHtml(active) {
+  const ids = RELATED_VIEWS_MAP[active] || [];
+  if (!ids.length) return "";
+  return `<aside class="related-views">
+    <div class="rv-eyebrow">Related views ↘</div>
+    <div class="rv-grid">
+      ${ids.map(id => {
+        const v = VIEW_DESC[id];
+        if (!v) return "";
+        return `<a class="rv-card" href="${url("/" + (id === "index" ? "" : id + "/"))}">
+          <span class="rv-label">${v.label}</span>
+          <span class="rv-desc">${v.desc}</span>
+        </a>`;
+      }).join("")}
+    </div>
+  </aside>`;
+}
+
+function footerHtml(active) {
+  return `${relatedViewsHtml(active)}<footer class="jx-footer">
     <div class="jx-footer__colophon">
       <strong>Embodied AI Reading Station</strong>
       <span lang="en">VOL · MMXXVI</span>
@@ -229,7 +281,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
 <body>
   ${masthead(active)}
   ${body}
-  ${footerHtml()}
+  ${footerHtml(active)}
   <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
   <script src="${url("/search.js")}" defer></script>
   <script src="${url("/outline.js")}" defer></script>
