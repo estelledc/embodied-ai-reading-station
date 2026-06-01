@@ -331,6 +331,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
   <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
   <link rel="manifest" href="${url("/site.webmanifest")}">
+  <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI Reading" href="${url("/opensearch.xml")}">
   <meta name="theme-color" content="#ed6f5c">
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
   <script>(function(){var m=localStorage.getItem("eaireading.theme");if(m==="dark")document.documentElement.classList.add("dark-theme");else if(m==="light")document.documentElement.classList.add("light-theme");})();</script>
@@ -2807,6 +2808,19 @@ ${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></u
     write(path.join(DIST, "robots.txt"), `User-agent: *
 Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
+`);
+
+    // opensearch.xml (浏览器地址栏当搜索引擎)
+    write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>EAI Reading</ShortName>
+  <LongName>Embodied AI Reading Station</LongName>
+  <Description>156 篇具身智能论文搜索</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image type="image/svg+xml">${SITE_URL}/favicon.svg</Image>
+  <Url type="text/html" template="${SITE_URL}/?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="${SITE_URL}/opensearch.xml"/>
+</OpenSearchDescription>
 `);
   }
 

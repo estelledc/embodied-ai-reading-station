@@ -46,6 +46,22 @@
 
   trigger.addEventListener("click", open);
 
+  // ?q= URL param auto-open + 预填 (OpenSearch 来的)
+  const params = new URLSearchParams(location.search);
+  const q = params.get("q");
+  if (q) {
+    setTimeout(() => {
+      open();
+      setTimeout(() => {
+        const input = container.querySelector("input");
+        if (input) {
+          input.value = q;
+          input.dispatchEvent(new Event("input", { bubbles: true }));
+        }
+      }, 200);
+    }, 100);
+  }
+
   document.addEventListener("keydown", (e) => {
     if (e.key === "/" && document.activeElement?.tagName !== "INPUT" && document.activeElement?.tagName !== "TEXTAREA") {
       e.preventDefault();
