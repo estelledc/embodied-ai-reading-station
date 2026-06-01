@@ -404,6 +404,7 @@ function buildIndex(notes) {
       tldr: (n.tldr || "").slice(0, 120),
       url: url(`/papers/${n.slug}/`),
       year: n.year || null, venue: n.venue || "",
+      wordCount: n.wordCount || 0,
     })))}</script>
     <hr/>`;
 
@@ -2364,6 +2365,8 @@ function build() {
     readingMinutes: n.readingTime || 0,
     tags: n.tags || [],
     url: `${SITE_URL_DATA}/papers/${n.slug}/`,
+    sourcePath: n.sourcePath || "",
+    status: n.status || "auto-summary",
   }));
   write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
 

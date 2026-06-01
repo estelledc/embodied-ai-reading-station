@@ -342,8 +342,8 @@
       }
       sec.hidden = false;
       const readPapers = papers.filter(p => read.has(p.slug));
-      // 已读字数估算：用 difficulty 反推 (没有 wordCount 在 data 里 — 估算 4000 平均)
-      const totalWords = readPapers.length * 4000;
+      // 已读字数：直接累加 wordCount（如果存在），否则按 4000 估算
+      const totalWords = readPapers.reduce((s, p) => s + (p.wordCount || 4000), 0);
       const pct = Math.round(readPapers.length / papers.length * 100);
       const streakInfo = computeStreak();
       sec.querySelector("[data-my-read]").textContent = readPapers.length;
