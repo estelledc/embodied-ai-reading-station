@@ -406,10 +406,10 @@ function buildIndex(notes) {
     <section class="whats-new">
       <div class="wn-eyebrow">最新 ↘ what's new</div>
       <div class="wn-grid">
-        <a class="wn-card wn-issue" href="${url("/issues/05/")}">
-          <div class="wn-tag">Issue Nº V</div>
-          <div class="wn-title">Routes through the field</div>
-          <div class="wn-tldr">14 工具：30 天路径 / FAQ / Lists / Eras / Heatmap / Graph 多布局 / 数据 API</div>
+        <a class="wn-card wn-issue" href="${url("/issues/06/")}">
+          <div class="wn-tag">Issue Nº VI</div>
+          <div class="wn-title">Bodies that learn</div>
+          <div class="wn-tldr">硬件视角看 VLA · ALOHA / HumanPlus / ANYmal / Sparsh / RF-Pose / mmEgo</div>
         </a>
         ${(() => {
           const recent = [...notes]
