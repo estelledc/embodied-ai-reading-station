@@ -3142,3 +3142,19 @@ html.dark-theme body::after {
 /* === my stats === */
 .my-stats { background: var(--paper-warm); padding: 1.5rem 1.8rem; border-left: 3px solid var(--coral); }
 .my-topic-bars { margin-top: 1rem; }
+
+/* === share button === */
+.share-btn {
+  background: transparent;
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  font-size: 0.92rem;
+  line-height: 1;
+  padding: 0.2em 0.55em;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-left: 0.4rem;
+  transition: all 0.12s;
+}
+.share-btn:hover { border-color: var(--coral); color: var(--coral); }
+.share-btn.copied { background: var(--olive); color: var(--paper); border-color: var(--olive); }

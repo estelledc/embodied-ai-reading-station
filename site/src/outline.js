@@ -248,3 +248,30 @@
     });
   });
 })();
+
+// === share button ===
+(() => {
+  document.querySelectorAll(".share-btn[data-share-url]").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const title = btn.dataset.shareTitle || "";
+      const url = btn.dataset.shareUrl || location.href;
+      const text = btn.dataset.shareText || "";
+      if (navigator.share) {
+        try {
+          await navigator.share({ title, url, text });
+          return;
+        } catch (e) {
+          // 用户取消，直接 fallback
+        }
+      }
+      // fallback: 复制 URL
+      try {
+        await navigator.clipboard.writeText(url);
+        const orig = btn.textContent;
+        btn.textContent = "✓";
+        btn.classList.add("copied");
+        setTimeout(() => { btn.textContent = orig; btn.classList.remove("copied"); }, 1100);
+      } catch {}
+    });
+  });
+})();

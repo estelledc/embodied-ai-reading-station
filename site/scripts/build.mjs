@@ -1801,6 +1801,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
       <span>${note.status}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
       <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接">⧉ MD</button>
+      <button class="share-btn" type="button" data-share-title="${note.title.replace(/"/g, "&quot;")}" data-share-url="${SITE_URL}/papers/${note.slug}/" data-share-text="${(note.tldr || "").replace(/"/g, "&quot;").slice(0, 100)}" title="分享">⤴</button>
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
     ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
