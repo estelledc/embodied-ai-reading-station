@@ -54,6 +54,7 @@
 html {
   font-size: 17px;
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* 锚点跳转避开顶部 masthead */
   -webkit-text-size-adjust: 100%;
 }
 
