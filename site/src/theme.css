@@ -2506,3 +2506,48 @@ html.dark-theme body::after {
   .big-stats { grid-template-columns: 1fr 1fr; }
   .big-stats > div:nth-child(2) { border-right: none; }
 }
+
+/* === more-nav dropdown === */
+.more-nav { display: inline; position: relative; }
+.more-nav summary {
+  list-style: none;
+  cursor: pointer;
+  display: inline;
+  font-size: inherit;
+  letter-spacing: inherit;
+  color: var(--ink-mute);
+}
+.more-nav summary::-webkit-details-marker { display: none; }
+.more-nav summary::marker { content: ""; }
+.more-nav summary:hover { color: var(--coral); }
+.more-nav-panel {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--paper);
+  border: 1px solid var(--ink);
+  padding: 0.6rem 0;
+  min-width: 12rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 0.4rem;
+}
+.more-nav-panel a {
+  padding: 0.4rem 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  color: var(--ink-mute);
+  transition: background 0.1s, color 0.1s;
+}
+.more-nav-panel a:hover {
+  background: var(--paper-warm);
+  color: var(--coral);
+}
+@media (max-width: 700px) {
+  .more-nav-panel { right: auto; left: 0; min-width: 9rem; }
+}

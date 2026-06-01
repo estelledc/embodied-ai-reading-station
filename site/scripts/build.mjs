@@ -129,24 +129,39 @@ marked.use({ renderer, gfm: true, breaks: false });
 
 // --- layout templates -------------------------------------------------------
 function masthead(active) {
-  const items = [
+  // 主导航：4 项关键入口
+  const primaryItems = [
     { href: url("/"), label: "Index", id: "index" },
-    { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
+    { href: url("/learn/"), label: "Learn", id: "learn" },
+    { href: url("/issues/"), label: "Issues", id: "issues" },
+  ];
+  // 视图（折叠）
+  const viewItems = [
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
-    { href: url("/glossary/"), label: "Glossary", id: "glossary" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
-    { href: url("/tags/"), label: "Tags", id: "tags" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
+    { href: url("/stats/"), label: "Stats", id: "stats" },
     { href: url("/venues/"), label: "Venues", id: "venues" },
-    { href: url("/issues/"), label: "Issues", id: "issues" },
+    { href: url("/tags/"), label: "Tags", id: "tags" },
+    { href: url("/glossary/"), label: "Glossary", id: "glossary" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
   ];
+  const allItems = [...primaryItems, ...viewItems];
+  // 当前 active 是否在折叠区，决定 More 是否高亮
+  const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
     <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
-    <nav>${items.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}</nav>
+    <nav>${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}
+      <details class="more-nav"${moreActive ? " open" : ""}>
+        <summary${moreActive ? ' style="color:var(--coral)"' : ""}>More ▾</summary>
+        <div class="more-nav-panel">
+          ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)"' : ""}>${i.label}</a>`).join("")}
+        </div>
+      </details>
+    </nav>
     <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
       <span class="search-icon">⌕</span><span class="search-hint">/</span>
     </button>
