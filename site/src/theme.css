@@ -3235,3 +3235,48 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .gc-search { min-width: 0; flex: 1; margin-left: 0; }
 }
+
+/* === human site map === */
+.sm-section { margin: 2rem 0; }
+.sm-section h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: -0.02em;
+  margin: 0 0 0.6rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.3rem;
+}
+.sm-list { list-style: none; padding: 0; margin: 0; }
+.sm-list li {
+  display: grid;
+  grid-template-columns: 13rem 1fr auto;
+  gap: 0.8rem 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--paper-dark);
+  align-items: baseline;
+}
+.sm-label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+.sm-label:hover { color: var(--coral); }
+.sm-desc {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+.sm-url {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) {
+  .sm-list li { grid-template-columns: 1fr; gap: 0.2rem; }
+  .sm-url { display: none; }
+}

@@ -148,6 +148,7 @@ function masthead(active) {
     { href: url("/eras/founder/"), label: "Eras", id: "eras" },
     { href: url("/lists/"), label: "Lists", id: "lists" },
     { href: url("/changelog/"), label: "Changelog", id: "changelog" },
+    { href: url("/site-map/"), label: "Site map", id: "sitemap" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
     { href: url("/heatmap/"), label: "Heatmap", id: "heatmap" },
@@ -979,6 +980,95 @@ function buildEraPage(era, notes) {
   }
   body += `</main>`;
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+}
+
+// --- human-readable site map -----------------------------------------------
+function buildSiteMap(notes, issuePages, learnPages) {
+  const sections = [
+    {
+      title: "入口",
+      items: [
+        { url: "/", label: "Index", desc: "156 张论文卡 + 主题分组 + 快筛" },
+        { url: "/learn/path/", label: "30 天路径", desc: "零基础入门推荐顺序" },
+        { url: "/learn/faq/", label: "FAQ", desc: "新人 12 题" },
+        { url: "/lists/", label: "Reading lists", desc: "5 套主题精选包" },
+      ],
+    },
+    {
+      title: "视图",
+      items: [
+        { url: "/topics/", label: "Topics", desc: "11 个主题概览" },
+        { url: "/timeline/", label: "Timeline", desc: "2011→2025 演化时间线" },
+        { url: "/compare/", label: "Compare", desc: "同主题 era 并排对比" },
+        { url: "/graph/", label: "Graph", desc: "D3 力导论文关系图（3 种布局）" },
+        { url: "/heatmap/", label: "Heatmap", desc: "21 tag 共现矩阵" },
+        { url: "/eras/founder/", label: "Eras", desc: "祖师爷 / 经典 / 前沿三档" },
+      ],
+    },
+    {
+      title: "分类",
+      items: [
+        { url: "/tags/", label: "Tags", desc: "21 跨主题技术标签" },
+        { url: "/glossary/", label: "Glossary", desc: "60 术语字典" },
+        { url: "/venues/", label: "Venues", desc: "37 会议按类别" },
+        { url: "/stats/", label: "Stats", desc: "5 维数据看板 + 你的快照" },
+      ],
+    },
+    {
+      title: "11 个主题",
+      items: TOPIC_ORDER.map(t => ({ url: `/topics/${t.id}/`, label: `${t.roman}. ${t.label}`, desc: t.subtitle })),
+    },
+    {
+      title: "Issues 期刊",
+      items: issuePages.map(p => ({
+        url: `/issues/${p.slug.replace("issue-", "")}/`,
+        label: `Issue Nº ${p.issueNumber}`,
+        desc: p.title.replace(/^Issue Nº \w+ — /, ""),
+      })),
+    },
+    {
+      title: "学习",
+      items: learnPages.map(p => ({
+        url: `/learn/${p.slug}/`,
+        label: p.title,
+        desc: p.intro || "",
+      })),
+    },
+    {
+      title: "数据 + 元",
+      items: [
+        { url: "/data/index.json", label: "Data manifest", desc: "JSON 数据 manifest" },
+        { url: "/data/papers.json", label: "papers.json", desc: "156 篇全元数据" },
+        { url: "/data/tags.json", label: "tags.json", desc: "21 tag + 共现矩阵" },
+        { url: "/data/topics.json", label: "topics.json", desc: "11 主题元数据" },
+        { url: "/feed.xml", label: "Atom feed", desc: "RSS 订阅" },
+        { url: "/sitemap.xml", label: "sitemap.xml", desc: "搜索引擎用" },
+        { url: "/changelog/", label: "Changelog", desc: "git log 自动" },
+        { url: "/contributors/", label: "Contributors", desc: "原作者致谢" },
+      ],
+    },
+  ];
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Site map · 站点地图</span>
+    <h1><em>${notes.length} 篇笔记</em>，<em>${[...sections.reduce((s, sec) => sec.items.forEach(_ => s.add(true)) || s, new Set())].length} +</em>个入口。</h1>
+    <p style="color:var(--ink-soft);max-width:48ch;line-height:1.55">人可读版的站点地图。机器版在 <a href="${url("/sitemap.xml")}">/sitemap.xml</a>。</p>
+    <hr class="ornament"/>`;
+  for (const sec of sections) {
+    if (!sec.items.length) continue;
+    body += `<section class="sm-section">
+      <h2>${sec.title}</h2>
+      <ul class="sm-list">
+        ${sec.items.map(i => `<li>
+          <a class="sm-label" href="${url(i.url)}">${i.label}</a>
+          <span class="sm-desc">${i.desc}</span>
+          <span class="sm-url">${i.url}</span>
+        </li>`).join("")}
+      </ul>
+    </section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Site map — Embodied AI Reading", body, active: "sitemap" });
 }
 
 // --- contributors page ------------------------------------------------------
@@ -2420,6 +2510,9 @@ function build() {
         write(path.join(DIST, "issues", p.slug.replace("issue-", ""), "index.html"), buildIssuePage(p, notes));
       }
     }
+
+    // human-readable site map（needs issue + learn loaded first）
+    write(path.join(DIST, "site-map", "index.html"), buildSiteMap(notes, issuePages, learnPages));
 
     // RSS / Atom feed
     write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
