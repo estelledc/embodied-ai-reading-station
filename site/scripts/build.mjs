@@ -2991,10 +2991,18 @@ function copyAssets(notes) {
 
 function build() {
   const startTime = Date.now();
+  let stageStart = startTime;
+  function stage(name) {
+    const now = Date.now();
+    const ms = now - stageStart;
+    if (name) console.log(`  ${name}: ${ms}ms`);
+    stageStart = now;
+  }
   console.log("→ build start");
   // wipe dist
   if (fs.existsSync(DIST)) fs.rmSync(DIST, { recursive: true });
   ensure(DIST);
+  stage("wipe dist");
 
   // theme + JS
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
@@ -3030,6 +3038,7 @@ function build() {
   // load notes
   const notes = loadNotes();
   console.log(`  loaded ${notes.length} notes`);
+  stage("load notes");
 
   // tags：自动推断（必须在所有 build 之前）
   for (const n of notes) {
@@ -3038,6 +3047,7 @@ function build() {
   const tagSet = new Set();
   for (const n of notes) (n.tags || []).forEach(t => tagSet.add(t));
   console.log(`  inferred ${tagSet.size} tags across ${notes.length} notes`);
+  stage("infer tags");
 
   // index — 先用 null（最新 issue 还没加载），稍后加载完 issue 再覆盖
   write(path.join(DIST, "index.html"), buildIndex(notes));
@@ -3300,6 +3310,7 @@ function build() {
     write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning));
   }
   console.log(`  built ${notes.length} paper pages with backlinks/prev-next/issue badges`);
+  stage("paper pages");
 
   // 重新生成 stats，这次带 backlinks 数据
   write(path.join(DIST, "stats", "index.html"), buildStats(notes, backlinkMap));
@@ -3442,6 +3453,7 @@ This is a static reading site for embodied AI papers. All content is hand-curate
 
   // assets
   copyAssets(notes);
+  stage("copy assets");
 
   // deck (LLaVA presentation)
   const DECK_SRC = path.resolve(ROOT, "deck");
