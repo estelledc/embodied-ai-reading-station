@@ -137,6 +137,7 @@ function masthead(active) {
     { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/glossary/"), label: "Glossary", id: "glossary" },
     { href: url("/graph/"), label: "Graph", id: "graph" },
+    { href: url("/tags/"), label: "Tags", id: "tags" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -633,6 +634,93 @@ function buildTopicLanding(t, notes) {
   return page({ title: `${t.label} — Embodied AI Reading`, body, active: "topics" });
 }
 
+// --- tags -------------------------------------------------------------------
+// 自动从笔记 title + body 关键词推断 tag（每篇 0-5 个）
+const TAG_RULES = [
+  { tag: "diffusion", keywords: /\b(diffusion|denoising|noise schedul|ddpm|ddim|score-based)\b/i },
+  { tag: "flow-matching", keywords: /flow.?matching|consistency model|rectified flow/i },
+  { tag: "transformer", keywords: /\btransformer\b|self.?attention|multi.?head/i },
+  { tag: "mamba-ssm", keywords: /\bmamba\b|state.?space model|\bSSM\b/i },
+  { tag: "3D", keywords: /point cloud|3D point|voxel|nerf|3D shape|mesh|sapien|3d-vla|3d-diffusion/i },
+  { tag: "language", keywords: /\bLLM\b|language model|natural language|instruct|GPT|PaLM|LLaMA/i },
+  { tag: "vision", keywords: /\bvisual\b|image encoder|RGB|camera|ViT|CLIP|SigLIP/i },
+  { tag: "tactile", keywords: /tactile|haptic|GelSight|DIGIT|sparsh/i },
+  { tag: "audio-speech", keywords: /\baudio\b|speech|ASR|whisper|microphone|acoustic/i },
+  { tag: "RF-radar", keywords: /\bradar\b|mmWave|WiFi|RF |electromagnetic|panoradar|millimap/i },
+  { tag: "manipulation", keywords: /manipulat|grasp|pick.?and.?place|gripper|dexterous/i },
+  { tag: "locomotion", keywords: /locomotion|legged|walk|gait|quadruped|humanoid/i },
+  { tag: "navigation", keywords: /navigat|exploration|SLAM|mapping/i },
+  { tag: "RL", keywords: /reinforcement learning|\bRL\b|policy gradient|Q-learning/i },
+  { tag: "imitation", keywords: /imitation|behavior clon|teleoperat|demonstration/i },
+  { tag: "world-model", keywords: /world model|latent dynamics|imagined rollout/i },
+  { tag: "VLA", keywords: /vision.?language.?action|\bVLA\b/i },
+  { tag: "VLM", keywords: /vision.?language model|\bVLM\b|multimodal LLM/i },
+  { tag: "sim2real", keywords: /sim.?to.?real|domain randomi|sim2real/i },
+  { tag: "dataset", keywords: /\bdataset\b|benchmark|trajector|episodes/i },
+  { tag: "open-source", keywords: /open.?source|publicly released|github\.com/i },
+];
+
+function inferTags(note) {
+  const text = (note.title + " " + (note.body || "").slice(0, 4000)).toLowerCase();
+  const tags = [];
+  for (const r of TAG_RULES) {
+    if (r.keywords.test(text)) tags.push(r.tag);
+  }
+  return tags.slice(0, 6); // 最多 6 个
+}
+
+function buildTagsIndex(notes) {
+  const tagMap = new Map();
+  for (const n of notes) {
+    for (const tag of (n.tags || [])) {
+      if (!tagMap.has(tag)) tagMap.set(tag, []);
+      tagMap.get(tag).push(n);
+    }
+  }
+  const sortedTags = [...tagMap.entries()].sort((a, b) => b[1].length - a[1].length);
+  let body = `<main class="shell">
+    <span class="eyebrow">Tags · 跨主题标签</span>
+    <h1><em>${sortedTags.length} 个</em>tag，把 ${notes.length} 篇笔记<em>横切</em>。</h1>
+    <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
+      主题(topic)按研究领域分。tag 按技术手段或物理形态分——一篇 VLA 论文也可能同时是"transformer"和"manipulation"。
+    </p>
+    <hr class="ornament"/>
+    <div class="tag-cloud">`;
+  for (const [tag, ns] of sortedTags) {
+    body += `<a class="tag-cloud-item" href="${url(`/tags/${tag}/`)}">
+      <span class="tag-name">${tag}</span>
+      <span class="tag-count">${ns.length}</span>
+    </a>`;
+  }
+  body += `</div></main>`;
+  return page({ title: "Tags — Embodied AI Reading", body, active: "tags" });
+}
+
+function buildTagPage(tag, notes) {
+  const inTag = [...notes].sort((a, b) => (b.year || 0) - (a.year || 0));
+  let body = `<main class="shell">
+    <nav class="breadcrumbs">
+      <a href="${url("/")}">Home</a>
+      <span class="bc-sep">›</span>
+      <a href="${url("/tags/")}">Tags</a>
+      <span class="bc-sep">›</span>
+      <span class="bc-current">${tag}</span>
+    </nav>
+    <span class="eyebrow">Tag</span>
+    <h1>#${tag} <span style="color:var(--ink-faint);font-weight:400;font-size:0.6em">(${inTag.length} 篇)</span></h1>
+    <table class="compare-table" style="margin-top:1.5rem">
+      <thead><tr><th>year</th><th>title</th><th>topic</th><th>venue</th></tr></thead>
+      <tbody>${inTag.map(n => `<tr>
+        <td class="cell-year">${n.year || "—"}</td>
+        <td class="cell-title"><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></td>
+        <td class="cell-venue" style="color:var(--ink-mute)">${n.topicLabel}</td>
+        <td class="cell-venue">${n.venue || ""}</td>
+      </tr>`).join("")}</tbody>
+    </table>
+  </main>`;
+  return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+}
+
 // --- 404 page ---------------------------------------------------------------
 function build404(notes) {
   const random6 = [...notes]
@@ -1095,6 +1183,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
       <span>${note.status}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
     </div>
+    ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
 
     <div class="note-content" data-pagefind-body>
       ${html}
@@ -1182,6 +1271,8 @@ function loadNotes() {
       era: data.era || "classic",
       year: data.year || null,
       venue: data.venue || "",
+      tags: [], // 待 build 后注入
+
       tldr: extractTLDR(content),
       wordCount: wc,
       readingTime: readingTime(wc),
@@ -1309,6 +1400,11 @@ function build() {
   // load notes
   const notes = loadNotes();
 
+  // tags：自动推断（必须在所有 build 之前）
+  for (const n of notes) {
+    n.tags = inferTags(n);
+  }
+
   // index
   write(path.join(DIST, "index.html"), buildIndex(notes));
 
@@ -1330,6 +1426,15 @@ function build() {
 
   // graph
   write(path.join(DIST, "graph", "index.html"), buildGraph(notes));
+
+  // tags
+  write(path.join(DIST, "tags", "index.html"), buildTagsIndex(notes));
+  const allTags = new Set();
+  for (const n of notes) (n.tags || []).forEach(t => allTags.add(t));
+  for (const tag of allTags) {
+    const nsForTag = notes.filter(n => (n.tags || []).includes(tag));
+    write(path.join(DIST, "tags", tag, "index.html"), buildTagPage(tag, nsForTag));
+  }
 
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());

@@ -2227,3 +2227,56 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .theme-toggle { font-size: 0.9rem; min-width: 1.8rem; }
 }
+
+/* === tags === */
+.note-tags {
+  margin: 0.5rem 0 1rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.note-tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  background: var(--bone);
+  color: var(--ink-mute);
+  text-decoration: none;
+  padding: 0.2em 0.6em;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.note-tag:hover { background: var(--coral); color: var(--paper); }
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+}
+.tag-cloud-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+}
+.tag-cloud-item:hover {
+  border-color: var(--coral);
+  background: var(--paper-warm);
+  transform: translateY(-2px);
+}
+.tag-name {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--ink);
+}
+.tag-count {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--coral);
+  font-weight: 700;
+}
