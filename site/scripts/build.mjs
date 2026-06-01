@@ -147,6 +147,9 @@ function masthead(active) {
     <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
       <span class="search-icon">⌕</span><span class="search-hint">/</span>
     </button>
+    <button class="kb-trigger" type="button" aria-label="键盘快捷键 (按 ? 唤起)" onclick="document.dispatchEvent(new KeyboardEvent('keydown', {key: '?'}))">
+      <span class="search-hint">?</span>
+    </button>
   </header>
   <dialog class="search-dialog" aria-label="站内搜索">
     <form method="dialog" class="search-close-form"><button class="search-close" aria-label="关闭">×</button></form>
@@ -212,6 +215,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/outline.js")}" defer></script>
   <script src="${url("/reading-progress.js")}" defer></script>
   <script src="${url("/quick-filter.js")}" defer></script>
+  <script src="${url("/keyboard.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -1189,6 +1193,7 @@ function build() {
   copy(path.join(SITE, "src", "reading-progress.js"), path.join(DIST, "reading-progress.js"));
   copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
+  copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");
