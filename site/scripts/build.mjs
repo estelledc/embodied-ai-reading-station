@@ -148,6 +148,7 @@ function masthead(active) {
     { href: url("/eras/founder/"), label: "Eras", id: "eras" },
     { href: url("/lists/"), label: "Lists", id: "lists" },
     { href: url("/discover/"), label: "Discover", id: "discover" },
+    { href: url("/cheatsheet/"), label: "Cheatsheet", id: "cheatsheet" },
     { href: url("/changelog/"), label: "Changelog", id: "changelog" },
     { href: url("/site-map/"), label: "Site map", id: "sitemap" },
     { href: url("/compare/"), label: "Compare", id: "compare" },
@@ -1081,6 +1082,48 @@ function buildEraPage(era, notes) {
   }
   body += `</main>`;
   return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+}
+
+// --- /cheatsheet/ all papers tldr in one page ------------------------------
+function buildCheatsheet(notes) {
+  // 按主题分组
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  const sortInTopic = (a, b) => {
+    const ea = eraRank[a.era] ?? 1;
+    const eb = eraRank[b.era] ?? 1;
+    if (ea !== eb) return ea - eb;
+    return (Number(a.year) || 9999) - (Number(b.year) || 9999);
+  };
+  let body = `<main class="shell">
+    <span class="eyebrow">Cheatsheet · 156 篇 tldr 速查</span>
+    <h1><em>156 篇</em>论文一句话<em>速览</em>。</h1>
+    <p style="font-size:1.05rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
+      把 156 篇全部 tldr 放在一页。Cmd+F 即可全文搜索。打印（Cmd+P）输出 ~10 页 A4 cheatsheet。
+    </p>
+    <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);letter-spacing:0.04em">
+      显示模式：每行 编号 · 标题 / 一句话 / 主题 · 年份
+    </p>
+    <hr class="ornament"/>`;
+  for (const t of TOPIC_ORDER) {
+    const inTopic = notes.filter(n => n.topic === t.id).sort(sortInTopic);
+    if (!inTopic.length) continue;
+    body += `<section class="cs-section">
+      <h2 class="cs-topic-h"><span class="cs-roman">${t.roman}</span> <a href="${url(`/topics/${t.id}/`)}">${t.label}</a> <span class="cs-count">${inTopic.length}</span></h2>
+      <ol class="cs-list">`;
+    for (const n of inTopic) {
+      const eraTag = n.era === "founder" ? "F" : n.era === "frontier" ? "→" : "·";
+      body += `<li class="cs-item">
+        <span class="cs-num">${String(n.num).padStart(3, "0")}</span>
+        <span class="cs-era cs-era-${n.era || "classic"}">${eraTag}</span>
+        <a href="${url(`/papers/${n.slug}/`)}" class="cs-title">${n.title.split(":")[0]}</a>
+        <span class="cs-tldr">${n.tldr || ""}</span>
+        <span class="cs-meta">${n.year || ""}${n.venue ? " · " + n.venue : ""}</span>
+      </li>`;
+    }
+    body += `</ol></section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Cheatsheet — Embodied AI Reading", body, active: "cheatsheet" });
 }
 
 // --- /discover/ exploration page -------------------------------------------
@@ -2835,6 +2878,9 @@ function build() {
 
   // discover page
   write(path.join(DIST, "discover", "index.html"), buildDiscover(notes));
+
+  // cheatsheet (single page all-tldr printable)
+  write(path.join(DIST, "cheatsheet", "index.html"), buildCheatsheet(notes));
 
   // eras
   for (const era of ["founder", "classic", "frontier"]) {

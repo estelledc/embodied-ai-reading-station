@@ -4025,3 +4025,89 @@ html.dark-theme body::after {
   .lb-prev { left: 0.5rem; }
   .lb-next { right: 0.5rem; }
 }
+
+/* === cheatsheet === */
+.cs-section { margin: 1.5rem 0; page-break-inside: avoid; }
+.cs-topic-h {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--ink);
+  padding-bottom: 0.3rem;
+  margin: 0 0 0.5rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.cs-topic-h a { color: var(--ink); text-decoration: none; }
+.cs-topic-h a:hover { color: var(--coral); }
+.cs-roman {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--coral);
+}
+.cs-count {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+  margin-left: auto;
+}
+.cs-list { list-style: none; padding: 0; margin: 0; }
+.cs-item {
+  display: grid;
+  grid-template-columns: 3rem 1.2rem minmax(8rem, 14rem) 1fr 6rem;
+  gap: 0.6rem;
+  align-items: baseline;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed var(--paper-dark);
+  font-size: 0.86rem;
+}
+.cs-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+.cs-era {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  text-align: center;
+  font-weight: 700;
+}
+.cs-era-founder { color: var(--coral); }
+.cs-era-classic { color: var(--ink-mute); }
+.cs-era-frontier { color: var(--olive); }
+.cs-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+.cs-title:hover { color: var(--coral); }
+.cs-tldr {
+  color: var(--ink-soft);
+  line-height: 1.4;
+  font-size: 0.84rem;
+}
+.cs-meta {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  text-align: right;
+}
+@media (max-width: 800px) {
+  .cs-item { grid-template-columns: 2.5rem 1rem 1fr; gap: 0.4rem; }
+  .cs-tldr, .cs-meta { grid-column: 3; }
+  .cs-meta { font-size: 0.65rem; }
+}
+@media print {
+  .cs-section { font-size: 9pt; }
+  .cs-item { padding: 0.15rem 0; gap: 0.4rem; grid-template-columns: 2.5rem 1rem 12rem 1fr 5rem; }
+  .cs-title, .cs-tldr { font-size: 8.5pt; }
+}
