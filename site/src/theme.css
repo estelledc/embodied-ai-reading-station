@@ -809,8 +809,6 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   background-size: cover;
   background-position: center;
 }
-.paper-card .thumb-empty { display: none; }
-
 /* === Era hint === */
 .era-hint {
   font-family: var(--font-serif);
@@ -1017,10 +1015,6 @@ html.dark-theme body::after {
   mix-blend-mode: screen;
   opacity: 0.06;
 }
-@media (prefers-color-scheme: dark) {
-  /* preserved for any system-only overrides */
-}
-
 /* === Paper card thumbnail placeholder === */
 .paper-card .thumb-placeholder {
   background: linear-gradient(135deg, var(--bone) 0%, var(--paper-warm) 100%);

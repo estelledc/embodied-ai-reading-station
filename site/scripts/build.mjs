@@ -359,6 +359,10 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <meta property="og:title" content="${escAttr(_ogTitle)}">
   <meta property="og:description" content="${escAttr(_ogDesc)}">
   <meta property="og:image" content="${escAttr(_ogImg)}">
+  <meta property="og:image:width" content="1672">
+  <meta property="og:image:height" content="941">
+  <meta property="og:image:type" content="image/webp">
+  <meta property="og:image:alt" content="${escAttr(_ogTitle)}">
   <meta property="og:url" content="${escAttr(_ogUrl)}">
   <meta property="og:site_name" content="Embodied AI Reading Station">
   <meta property="og:locale" content="zh_CN">
@@ -372,6 +376,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
+  <link rel="canonical" href="${escAttr(_ogUrl)}">
   <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
   <link rel="manifest" href="${url("/site.webmanifest")}">
   <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI Reading" href="${url("/opensearch.xml")}">
@@ -2895,7 +2900,19 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
         "description": note.tldr || "",
         "author": { "@type": "Person", "name": "Jason" },
         "publisher": { "@type": "Organization", "name": "Embodied AI Reading Station" },
-        "datePublished": (note.year || 2026) + "-01-01",
+        // 笔记的发布时间用 build 时间戳；论文原始年份用 about 字段单独保留
+        "datePublished": new Date().toISOString().slice(0, 10),
+        "dateModified": new Date().toISOString().slice(0, 10),
+        "about": note.year ? {
+          "@type": "ScholarlyArticle",
+          "name": note.title,
+          "datePublished": note.year + "-01-01",
+        } : undefined,
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": `${SITE_URL}/papers/${note.slug}/`,
+        },
         "image": ogImage,
         "url": `${SITE_URL}/papers/${note.slug}/`,
         "wordCount": note.wordCount || 0,
@@ -3281,7 +3298,11 @@ function build() {
     const head = t.split(":")[0].trim();
     const kws = new Set();
     if (head) kws.add(head);
-    // 注：之前 .toUpperCase().replace(/-/g, "-") 是 no-op；删掉避免误导
+    // slug 大写形式作 abbreviation（CLIP / RT-1 / DP3）— 让标题没冒号的 paper
+    // (e.g. "Implicit Behavior Cloning") 也能通过 slug 匹配被反向链接
+    if (note.slug && note.slug.length >= 3) {
+      kws.add(note.slug.toUpperCase());
+    }
     return [...kws].filter(k => k.length >= 3);
   }
   // 预编译：每个 target 一组 RegExp，避免 O(N²·K) 内编译

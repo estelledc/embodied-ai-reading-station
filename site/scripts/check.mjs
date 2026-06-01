@@ -136,16 +136,47 @@ const sample = [
   "stats/index.html",
 ];
 let metaMissing = 0;
+let metaMissingFiles = 0;
 for (const p of sample) {
   const f = path.join(DIST, p);
-  if (!fs.existsSync(f)) continue;
+  if (!fs.existsSync(f)) {
+    metaMissingFiles++;
+    console.log(`  ✗ sample missing: ${p}`);
+    continue;
+  }
   const html = fs.readFileSync(f, "utf8");
-  const need = [`property="og:title"`, `property="og:description"`, `property="og:image"`, `name="twitter:card"`];
+  const need = [`property="og:title"`, `property="og:description"`, `property="og:image"`, `name="twitter:card"`, `rel="canonical"`];
   for (const k of need) {
     if (!html.includes(k)) { metaMissing++; console.log(`  ✗ ${p} missing ${k}`); }
   }
 }
-check(`5 sample pages 全有 OG/Twitter meta`, () => metaMissing === 0 || `${metaMissing} 缺失`);
+check(`5 sample pages 全有 OG/Twitter/canonical meta`, () => (metaMissing === 0 && metaMissingFiles === 0) || `${metaMissing} 缺失 + ${metaMissingFiles} 文件不存在`);
+
+console.log("\n=== Issue plate count consistency ===");
+{
+  const issueDir = path.join(DIST, "issues");
+  if (fs.existsSync(issueDir)) {
+    let bad = 0;
+    for (const d of fs.readdirSync(issueDir)) {
+      const f = path.join(issueDir, d, "index.html");
+      if (!fs.existsSync(f) || d === "index.html") continue;
+      const html = fs.readFileSync(f, "utf8");
+      const plates = (html.match(/class="plate-num"/g) || []).length;
+      const undefCount = (html.match(/plate-num">undefined/g) || []).length;
+      if (undefCount > 0) {
+        bad++;
+        console.log(`  ✗ issues/${d}/ has ${undefCount} undefined plates`);
+      }
+      // header 应说 N plates 与实际 plate 数匹配
+      const headerMatch = html.match(/本期论文 · (\d+) plate/);
+      if (headerMatch && Number(headerMatch[1]) !== plates) {
+        bad++;
+        console.log(`  ✗ issues/${d}/ header says ${headerMatch[1]} plates but renders ${plates}`);
+      }
+    }
+    check("issue plates 无 undefined 且 header 匹配", () => bad === 0 || `${bad} issue 不一致`);
+  }
+}
 
 console.log("\n=== Internal link health ===");
 const htmlFiles = [];
@@ -170,7 +201,31 @@ const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
 if (m) prefix = m[1];
 
-for (const file of htmlFiles.slice(0, 30)) { // 抽 30 个 html 检查（全部 2400+ 太慢）
+// stratified sample：papers/issues/topics/eras/learn/lists 各取若干 + 根级所有
+const sampled = (() => {
+  const buckets = { paper: [], issue: [], topic: [], era: [], learn: [], list: [], root: [] };
+  for (const f of htmlFiles) {
+    const rel = path.relative(DIST, f);
+    if (rel.startsWith("papers/")) buckets.paper.push(f);
+    else if (rel.startsWith("issues/")) buckets.issue.push(f);
+    else if (rel.startsWith("topics/")) buckets.topic.push(f);
+    else if (rel.startsWith("eras/")) buckets.era.push(f);
+    else if (rel.startsWith("learn/")) buckets.learn.push(f);
+    else if (rel.startsWith("lists/")) buckets.list.push(f);
+    else buckets.root.push(f);
+  }
+  return [
+    ...buckets.root,                      // 全部根级页
+    ...buckets.paper.slice(0, 20),        // 20 papers
+    ...buckets.issue.slice(0, 7),         // 全部 7 issues
+    ...buckets.topic.slice(0, 5),
+    ...buckets.era.slice(0, 3),
+    ...buckets.learn.slice(0, 3),
+    ...buckets.list.slice(0, 1),
+  ];
+})();
+console.log(`  sampled ${sampled.length} files (stratified) for link check`);
+for (const file of sampled) {
   const html = fs.readFileSync(file, "utf8");
   let match;
   linkRe.lastIndex = 0;
