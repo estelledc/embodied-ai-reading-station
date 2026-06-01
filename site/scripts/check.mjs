@@ -111,6 +111,57 @@ check("tags.json 有 frequency + cooccurrence", () => {
   return true;
 });
 
+console.log("\n=== Internal link health ===");
+const htmlFiles = [];
+function walkHtml(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, f.name);
+    if (f.isDirectory()) walkHtml(full);
+    else if (f.name.endsWith(".html")) htmlFiles.push(full);
+  }
+}
+walkHtml(DIST);
+
+const linkRe = /href="([^"#?]+)"/g;
+const broken = [];
+let totalLinks = 0;
+const seenLinks = new Set();
+
+// 探测 prefix（GitHub Pages 的 SITE_BASE）
+let prefix = "";
+const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
+if (m) prefix = m[1];
+
+for (const file of htmlFiles.slice(0, 30)) { // 抽 30 个 html 检查（全部 2400+ 太慢）
+  const html = fs.readFileSync(file, "utf8");
+  let match;
+  linkRe.lastIndex = 0;
+  while ((match = linkRe.exec(html))) {
+    const href = match[1];
+    if (href.startsWith("http") || href.startsWith("//") || href.startsWith("mailto:") || href.startsWith("#")) continue;
+    if (href.endsWith(".js") || href.endsWith(".css") || href.endsWith(".xml") || href.endsWith(".json") || href.endsWith(".webmanifest")) continue;
+    totalLinks++;
+    if (seenLinks.has(href)) continue;
+    seenLinks.add(href);
+    // 去 prefix
+    let target = href;
+    if (prefix && target.startsWith(prefix)) target = target.slice(prefix.length);
+    if (!target.startsWith("/")) continue;
+    // 解析候选路径
+    let candidate = path.join(DIST, target);
+    if (target.endsWith("/")) candidate = path.join(candidate, "index.html");
+    if (!fs.existsSync(candidate)) {
+      // 试 .html
+      const altHtml = candidate + ".html";
+      if (fs.existsSync(altHtml)) continue;
+      broken.push({ file: path.relative(DIST, file), href });
+    }
+  }
+}
+check(`${seenLinks.size} 唯一链接均可达`, () => broken.length === 0 || `${broken.length} 个死链 (sample): ${broken.slice(0, 3).map(b => b.href).join(", ")}`);
+
 console.log("\n=== Asset sizes ===");
 function dirSize(dir) {
   let total = 0;
