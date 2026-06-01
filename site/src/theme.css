@@ -3751,3 +3751,18 @@ html.dark-theme body::after {
   padding-bottom: 1px;
 }
 .auto-mark-toast .amt-next:hover { border-bottom-color: var(--mustard); color: var(--mustard); }
+
+/* === reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* 保留必要的 transform（避免 broken state） */
+  .skip-link:focus { transform: none; }
+}
