@@ -372,7 +372,14 @@
     // simple hash
     let h = ymd;
     h = ((h * 9301) + 49297) % 233280;
-    const idx = h % papers.length;
+    let idx = h % papers.length;
+    // 跳过已读：从 idx 顺序往后找第一个未读
+    const read = load();
+    let attempts = 0;
+    while (read.has(papers[idx].slug) && attempts < papers.length) {
+      idx = (idx + 1) % papers.length;
+      attempts++;
+    }
     const p = papers[idx];
 
     el.querySelector(".dp-card").href = p.url;
