@@ -3529,3 +3529,56 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .ss-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* === completion medal === */
+.completion-medal {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  padding: 1.6rem 1.8rem;
+  background: linear-gradient(135deg, var(--mustard) 0%, var(--coral) 100%);
+  color: var(--paper);
+  border: 2px solid var(--ink);
+}
+.cm-icon {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-style: italic;
+  font-weight: 800;
+  line-height: 1;
+  align-self: center;
+  text-shadow: 2px 2px 0 rgba(0,0,0,0.15);
+}
+.cm-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper);
+  opacity: 0.85;
+  margin-bottom: 0.3rem;
+}
+.cm-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 1.8rem;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+}
+.cm-text {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+  opacity: 0.95;
+}
+.cm-text a {
+  color: var(--paper);
+  text-decoration: underline;
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+@media (max-width: 700px) {
+  .completion-medal { grid-template-columns: 1fr; text-align: center; }
+}
