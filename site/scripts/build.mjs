@@ -1639,7 +1639,7 @@ function injectInlineFigures(slug, body) {
   return result;
 }
 
-function buildNotePage(note, backlinks = [], prev = null, next = null) {
+function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
   const enrichedBody = injectInlineFigures(note.slug, note.body);
@@ -1701,6 +1701,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null) {
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
+    ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
 
     <div class="note-content" data-pagefind-body>
       ${html}
@@ -2102,16 +2103,7 @@ function build() {
   }
 
   // each note
-  for (const n of notes) {
-    const bl = (backlinkMap.get(n.slug) || []).sort((a, b) => a.num - b.num);
-    const tList = sortedByTopic.get(n.topic) || [];
-    const idx = tList.findIndex(x => x.slug === n.slug);
-    const prev = idx > 0 ? tList[idx - 1] : null;
-    const next = idx >= 0 && idx < tList.length - 1 ? tList[idx + 1] : null;
-    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next));
-  }
-
-  // learn pages from site/content/*.md
+  // Load content (issues + learn) BEFORE paper pages so we can compute issue mentions
   const CONTENT_DIR = path.join(SITE, "content");
   const learnPages = [];
   const issuePages = [];
@@ -2134,11 +2126,42 @@ function build() {
       else learnPages.push(entry);
     }
     learnPages.sort((a, b) => a.order - b.order);
+    issuePages.sort((a, b) => a.order - b.order);
+  }
+
+  // 计算 issue → 提到的 slugs；反向给每个 paper 一份 issue 列表
+  const paperIssues = new Map(); // slug → [{number, slug, title}]
+  for (const issue of issuePages) {
+    const body = issue.body || "";
+    for (const n of notes) {
+      // 匹配 (/papers/<slug>/) 形式或显式 slug
+      const re = new RegExp(`papers/${n.slug.replace(/[.*+?^${}()|[\\]\\\\]/g, "\\$&")}/|\\b${n.slug}\\b`, "i");
+      if (re.test(body)) {
+        if (!paperIssues.has(n.slug)) paperIssues.set(n.slug, []);
+        paperIssues.get(n.slug).push({
+          number: issue.issueNumber,
+          slug: issue.slug.replace("issue-", ""),
+          title: issue.title.replace(/^Issue Nº \d+ — /, ""),
+        });
+      }
+    }
+  }
+
+  for (const n of notes) {
+    const bl = (backlinkMap.get(n.slug) || []).sort((a, b) => a.num - b.num);
+    const tList = sortedByTopic.get(n.topic) || [];
+    const idx = tList.findIndex(x => x.slug === n.slug);
+    const prev = idx > 0 ? tList[idx - 1] : null;
+    const next = idx >= 0 && idx < tList.length - 1 ? tList[idx + 1] : null;
+    const issuesMentioning = paperIssues.get(n.slug) || [];
+    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning));
+  }
+
+  if (fs.existsSync(CONTENT_DIR)) {
     write(path.join(DIST, "learn", "index.html"), buildLearnIndex(learnPages));
     for (const p of learnPages) {
       write(path.join(DIST, "learn", p.slug, "index.html"), buildLearnPage(p, learnPages));
     }
-    issuePages.sort((a, b) => a.order - b.order);
     if (issuePages.length > 0) {
       write(path.join(DIST, "issues", "index.html"), buildIssueIndex(issuePages));
       for (const p of issuePages) {

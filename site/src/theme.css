@@ -2817,3 +2817,27 @@ html.dark-theme body::after {
   text-align: center;
 }
 @media print { .img-lightbox { display: none; } }
+
+/* === issue badges === */
+.issue-badges {
+  margin: 0.5rem 0 1rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.issue-badge {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 0.84rem;
+  letter-spacing: -0.01em;
+  background: var(--ink);
+  color: var(--mustard);
+  text-decoration: none;
+  padding: 0.3em 0.8em;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.issue-badge:hover {
+  background: var(--coral);
+  color: var(--paper);
+}
