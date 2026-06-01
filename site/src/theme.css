@@ -3032,11 +3032,11 @@ html.dark-theme body::after {
 .skip-link:focus {
   left: 0;
   top: 0;
-  outline: 2px solid var(--coral);
+  outline: 2px solid var(--coral-text);
   outline-offset: -2px;
 }
 #main-content { outline: none; }
-#main-content:focus-visible { outline: 2px solid var(--coral); outline-offset: -2px; }
+#main-content:focus-visible { outline: 2px solid var(--coral-text); outline-offset: -2px; }
 
 /* === pn-card read state === */
 .pn-card-read {
@@ -4421,7 +4421,7 @@ summary:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid var(--coral);
+  outline: 2px solid var(--coral-text);
   outline-offset: 2px;
   border-radius: 2px;
 }

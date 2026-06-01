@@ -111,6 +111,32 @@ check("tags.json 有 frequency + cooccurrence", () => {
   return true;
 });
 
+// CSV / JSON 字段对齐
+const csvPath = path.join(DIST, "data", "papers.csv");
+if (fs.existsSync(csvPath)) {
+  const csv = fs.readFileSync(csvPath, "utf8");
+  const headerLine = csv.split("\n")[0];
+  const csvCols = headerLine.split(",");
+  const sampleJson = papersJson[0] || {};
+  const jsonKeys = Object.keys(sampleJson);
+  const missingFromCsv = jsonKeys.filter(k => !csvCols.includes(k));
+  check("CSV 列与 JSON 字段对齐（差异 ≤ 0）", () => missingFromCsv.length === 0 || `CSV 缺: ${missingFromCsv.join(",")}`);
+  check("CSV 行数 = JSON 数量", () => {
+    const lines = csv.split("\n").filter(l => l.length > 0);
+    return lines.length === papersJson.length + 1 || `${lines.length - 1} vs ${papersJson.length}`;
+  });
+}
+
+// topicLabel drift between papers.json and topics.json (data API endpoint)
+const topicsApiJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "topics.json"), "utf8"));
+const topicLabelMap = new Map(topicsApiJson.map(t => [t.id, t.label]));
+let drifted = 0;
+for (const p of papersJson) {
+  const expected = topicLabelMap.get(p.topic);
+  if (expected && p.topicLabel !== expected) drifted++;
+}
+check("papers.json topicLabel 与 topics.json label 一致", () => drifted === 0 || `${drifted} 篇 drift`);
+
 console.log("\n=== PWA / icons / manifest ===");
 const pwaFiles = ["sw.js", "site.webmanifest", "favicon.svg"];
 for (const f of pwaFiles) {

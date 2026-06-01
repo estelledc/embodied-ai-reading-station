@@ -377,6 +377,8 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
   <link rel="canonical" href="${escAttr(_ogUrl)}">
+  <link rel="alternate" hreflang="zh-CN" href="${escAttr(_ogUrl)}">
+  <link rel="alternate" hreflang="x-default" href="${escAttr(_ogUrl)}">
   <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
   <link rel="manifest" href="${url("/site.webmanifest")}">
   <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI Reading" href="${url("/opensearch.xml")}">
@@ -3217,7 +3219,7 @@ function build() {
   write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
 
   // CSV (R/Pandas 友好)
-  const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url"];
+  const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url", "sourcePath", "status"];
   function csvEscape(v) {
     if (v == null) return "";
     const s = String(v);
