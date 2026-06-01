@@ -1459,6 +1459,7 @@ function buildStats(notes) {
         <div><span class="bs-num" data-my-streak>0</span><span class="bs-label">连续天数</span></div>
         <div><span class="bs-num" data-my-words>0</span><span class="bs-label">已读字数</span></div>
         <div><span class="bs-num" data-my-pct>0%</span><span class="bs-label">完成度</span></div>
+        <div style="opacity:0.45"><span class="bs-num" data-my-speed>—</span><span class="bs-label">字 / 分钟</span></div>
       </div>
       <div class="my-topic-bars" data-my-topic-bars></div>
     </section>

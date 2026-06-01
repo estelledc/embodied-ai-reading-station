@@ -379,6 +379,28 @@
       sec.querySelector("[data-my-streak]").textContent = streakInfo.streak;
       sec.querySelector("[data-my-words]").textContent = totalWords.toLocaleString();
       sec.querySelector("[data-my-pct]").textContent = pct + "%";
+
+      // 个人阅读速度估算
+      try {
+        const timing = JSON.parse(localStorage.getItem("eaireading.timing") || "{}");
+        let totalSec = 0, totalWc = 0;
+        for (const slug of Object.keys(timing)) {
+          const t = timing[slug];
+          if (t.seconds > 30 && t.wordCount > 100) {
+            totalSec += t.seconds;
+            totalWc += t.wordCount;
+          }
+        }
+        const speedEl = sec.querySelector("[data-my-speed]");
+        if (speedEl && totalSec > 60) {
+          const wpm = Math.round((totalWc / totalSec) * 60);
+          speedEl.textContent = wpm;
+          speedEl.parentElement.style.opacity = "1";
+        } else if (speedEl) {
+          speedEl.textContent = "—";
+          speedEl.parentElement.style.opacity = "0.45";
+        }
+      } catch {}
       // 按 topic 分布
       const topicCount = new Map();
       for (const p of readPapers) topicCount.set(p.topic, (topicCount.get(p.topic) || 0) + 1);
