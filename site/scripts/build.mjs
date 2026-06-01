@@ -26,14 +26,19 @@ const TOPIC_ORDER = JSON.parse(fs.readFileSync(TOPICS_JSON, "utf8")).topics;
 const TOPIC_BY_ID = new Map(TOPIC_ORDER.map(t => [t.id, t]));
 
 // 自动发现：扫 notes/*.md 的 frontmatter，按 num 排序生成 PAPERS
+// 缓存：discoverPapers 已经读了文件，loadNotes 不要再读一次
+const NOTE_CACHE = new Map(); // slug -> { raw, data, content }
+
 function discoverPapers() {
   const files = fs.readdirSync(NOTES_DIR).filter(f => f.endsWith(".md"));
   const papers = [];
   for (const f of files) {
     const slug = f.replace(/\.md$/, "");
     const raw = fs.readFileSync(path.join(NOTES_DIR, f), "utf8");
-    const { data } = matter(raw);
-    if (!data.num || !data.topic) continue; // 没补全的跳过
+    const parsed = matter(raw);
+    NOTE_CACHE.set(slug, { raw, data: parsed.data, content: parsed.content });
+    const { data } = parsed;
+    if (!data.num || !data.topic) continue;
     const t = TOPIC_BY_ID.get(data.topic);
     if (!t) {
       console.warn(`unknown topic '${data.topic}' for ${slug}, skip`);
@@ -2868,13 +2873,13 @@ ${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
 function loadNotes() {
   const notes = [];
   for (const p of PAPERS) {
-    const notePath = path.join(NOTES_DIR, `${p.slug}.md`);
-    const raw = read(notePath);
-    if (!raw) {
+    // 复用 discoverPapers 缓存的 raw + parsed
+    const cached = NOTE_CACHE.get(p.slug);
+    if (!cached) {
       notes.push({ ...p, status: "missing", body: "# 笔记尚未生成\n\n请稍后回来看。" });
       continue;
     }
-    const { data, content } = matter(raw);
+    const { data, content } = cached;
     const stripped = stripFirstH1(rewriteImagePaths(content, p.slug));
     const wc = countWords(stripped);
     notes.push({
