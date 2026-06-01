@@ -4232,3 +4232,44 @@ html.dark-theme body::after {
   .syl-day-num { grid-row: 1; grid-column: 2; margin-bottom: 0.2rem; }
   .syl-day-body { grid-row: 2; grid-column: 2; }
 }
+
+/* === footer star CTA === */
+.footer-star-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 1rem 0 0.6rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px dashed var(--paper-dark);
+}
+.star-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ink);
+  color: var(--mustard);
+  padding: 0.35rem 0.9rem;
+  border-radius: 2px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  transition: all 0.15s;
+}
+.star-cta:hover {
+  background: var(--coral);
+  color: var(--paper);
+}
+.star-icon {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  line-height: 1;
+}
+.star-mood {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+@media print { .footer-star-row { display: none; } }

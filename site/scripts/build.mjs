@@ -288,6 +288,13 @@ function footerHtml(active) {
       </div>
     </div>
     <hr style="margin:1.5rem 0 1rem;border:none;border-top:1px solid var(--paper-dark)"/>
+    <div class="footer-star-row">
+      <a class="star-cta" href="https://github.com/estelledc/embodied-ai-reading-station" target="_blank" rel="noopener">
+        <span class="star-icon">★</span>
+        <span class="star-text">如果有帮到你，给个 star</span>
+      </a>
+      <span class="star-mood">— 没有更新订阅，没有广告，只是一个学生的笔记。</span>
+    </div>
     <div class="jx-footer__colophon">
       <strong>Embodied AI Reading Station</strong>
       <span lang="en">VOL · MMXXVI</span>
