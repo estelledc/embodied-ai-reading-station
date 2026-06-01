@@ -133,6 +133,7 @@ function masthead(active) {
     { href: url("/"), label: "Index", id: "index" },
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
+    { href: url("/timeline/"), label: "Timeline", id: "timeline" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -218,9 +219,12 @@ function buildIndex(notes) {
       <span>从这里开始 · 学习路径 · 术语字典 · 实战教程</span>
     </a>
 
-    <div style="display:flex;gap:2rem;margin:2.5rem 0 1rem;font-family:var(--font-mono);font-size:0.85rem">
-      <div><span style="color:var(--coral);font-size:1.6rem;font-family:var(--font-serif);font-style:italic">${done}</span><span style="color:var(--ink-faint)"> / ${total}</span> papers noted</div>
-      <div><span style="color:var(--coral);font-size:1.6rem;font-family:var(--font-serif);font-style:italic">${TOPIC_ORDER.length}</span><span style="color:var(--ink-faint)"> topics</span></div>
+    <div class="stats-grid">
+      <div class="stat-cell"><span class="stat-num">${done}</span><span class="stat-denom"> / ${total}</span><span class="stat-label">papers noted</span></div>
+      <div class="stat-cell"><span class="stat-num">${TOPIC_ORDER.length}</span><span class="stat-label">topics</span></div>
+      <div class="stat-cell"><span class="stat-num">${notes.reduce((s, n) => s + (n.wordCount || 0), 0).toLocaleString()}</span><span class="stat-label">total 字</span></div>
+      <div class="stat-cell"><span class="stat-num">${Math.round(notes.reduce((s, n) => s + (n.readingTime || 0), 0) / 60)}</span><span class="stat-label">小时阅读</span></div>
+      <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
     </div>
     <hr/>`;
 
@@ -422,6 +426,62 @@ function buildLearnPage(p, allPages) {
   return page({ title: `${p.title} — Learn`, body, active: "learn" });
 }
 
+// --- timeline page ----------------------------------------------------------
+function buildTimeline(notes) {
+  // 按年聚合
+  const byYear = new Map();
+  for (const n of notes) {
+    const y = n.year || "?";
+    if (!byYear.has(y)) byYear.set(y, []);
+    byYear.get(y).push(n);
+  }
+  // 排序：已知年份倒序，"?" 放最后
+  const years = [...byYear.keys()].sort((a, b) => {
+    if (a === "?") return 1;
+    if (b === "?") return -1;
+    return Number(b) - Number(a);
+  });
+
+  const total = notes.filter(n => n.year).length;
+  const yearMin = Math.min(...notes.filter(n => n.year).map(n => Number(n.year)));
+  const yearMax = Math.max(...notes.filter(n => n.year).map(n => Number(n.year)));
+
+  let body = `<main class="shell">
+    <span class="eyebrow">Timeline · 演化时间线</span>
+    <h1>从 <em>${yearMin}</em> 到 <em>${yearMax}</em>，<em>${total} 篇</em>论文连成的演化路径。</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin-top:1rem">
+      把 ${total} 篇笔记按年份排开。同一年内按主题分组，颜色对应主题。
+      看这一页，你会看到具身智能这五年里"先有什么、后有什么"的真实顺序。
+    </p>
+    <hr class="ornament"/>
+  `;
+
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  for (const y of years) {
+    const yearNotes = byYear.get(y).sort((a, b) => {
+      const ea = eraRank[a.era] ?? 1;
+      const eb = eraRank[b.era] ?? 1;
+      if (ea !== eb) return ea - eb;
+      return a.num - b.num;
+    });
+    body += `<section class="timeline-year">
+      <h2 class="timeline-year-label"><span class="year-num">${y}</span><span class="year-count">· ${yearNotes.length} paper${yearNotes.length > 1 ? "s" : ""}</span></h2>
+      <ul class="timeline-list">`;
+    for (const n of yearNotes) {
+      body += `<li class="timeline-item">
+        <a href="${url(`/papers/${n.slug}/`)}">
+          <span class="timeline-topic" data-topic="${n.topic}">${n.topicRoman}</span>
+          <span class="timeline-title">${n.title}</span>
+          <span class="timeline-venue">${n.venue || ""}</span>
+        </a>
+      </li>`;
+    }
+    body += `</ul></section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Timeline — Embodied AI Reading", body, active: "timeline" });
+}
+
 // --- issue cover pages ------------------------------------------------------
 function buildIssueIndex(issues) {
   const body = `<main class="shell">
@@ -558,6 +618,8 @@ function loadNotes() {
       sourcePath: data["来源"] || data.source || "",
       dek: data.dek || "",
       era: data.era || "classic",
+      year: data.year || null,
+      venue: data.venue || "",
       tldr: extractTLDR(content),
       wordCount: wc,
       readingTime: readingTime(wc),
@@ -685,6 +747,9 @@ function build() {
 
   // topics
   write(path.join(DIST, "topics", "index.html"), buildTopics(notes));
+
+  // timeline
+  write(path.join(DIST, "timeline", "index.html"), buildTimeline(notes));
 
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());
