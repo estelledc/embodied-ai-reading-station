@@ -2711,7 +2711,13 @@ function build() {
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
   copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
-  copy(path.join(SITE, "src", "sw.js"), path.join(DIST, "sw.js"));
+  // sw.js: 注入 build timestamp 作版本号
+  {
+    const swSrc = fs.readFileSync(path.join(SITE, "src", "sw.js"), "utf8");
+    const buildId = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
+    const swOut = swSrc.replace(/const VERSION = "[^"]*";/, `const VERSION = "${buildId}";`);
+    fs.writeFileSync(path.join(DIST, "sw.js"), swOut);
+  }
   copy(path.join(SITE, "src", "sw-register.js"), path.join(DIST, "sw-register.js"));
 
   // images（codex 生成 + cwebp 转换）
