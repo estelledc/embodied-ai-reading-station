@@ -66,13 +66,29 @@
         tooltip.innerHTML = `<div class="tt-title">${d.title}</div>
           <div class="tt-meta">${d.topicLabel} · ${d.era} · ${d.year || ""}</div>
           ${d.tldr ? `<div class="tt-tldr">${d.tldr}…</div>` : ""}`;
+        // 高亮邻居
+        const neighbors = new Set([d.id]);
+        for (const l of data.links) {
+          if (l.source.id === d.id) neighbors.add(l.target.id);
+          if (l.target.id === d.id) neighbors.add(l.source.id);
+        }
+        nodeG.style("opacity", x => neighbors.has(x.id) ? 1 : 0.18);
+        linkSel.style("opacity", l =>
+          (l.source.id === d.id || l.target.id === d.id) ? 0.7 : 0.04
+        ).style("stroke", l =>
+          (l.source.id === d.id || l.target.id === d.id) ? "var(--coral)" : null
+        );
       })
       .on("mousemove", (e) => {
         const cr = container.getBoundingClientRect();
         tooltip.style.left = (e.clientX - cr.left + 14) + "px";
         tooltip.style.top = (e.clientY - cr.top + 14) + "px";
       })
-      .on("mouseleave", () => { tooltip.hidden = true; });
+      .on("mouseleave", () => {
+        tooltip.hidden = true;
+        nodeG.style("opacity", 1);
+        linkSel.style("opacity", null).style("stroke", null);
+      });
 
     nodeG.append("circle")
       .attr("r", d => 4 + d.difficulty * 1.4)
