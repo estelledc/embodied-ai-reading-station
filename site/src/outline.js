@@ -70,3 +70,23 @@
     h.appendChild(link);
   }
 })();
+
+// === scroll progress bar：仅在论文页 ===
+(() => {
+  if (!document.querySelector(".note-content")) return;
+  const bar = document.createElement("div");
+  bar.className = "scroll-progress";
+  document.body.appendChild(bar);
+  let raf = null;
+  function update() {
+    raf = null;
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    if (max <= 0) { bar.style.transform = "scaleX(0)"; return; }
+    const pct = Math.min(1, Math.max(0, h.scrollTop / max));
+    bar.style.transform = `scaleX(${pct})`;
+  }
+  window.addEventListener("scroll", () => { if (!raf) raf = requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener("resize", update);
+  update();
+})();
