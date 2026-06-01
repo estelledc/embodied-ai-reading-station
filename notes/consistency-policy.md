@@ -2,7 +2,7 @@
 title: "Consistency Policy: Accelerated Visuomotor Policies via Consistency Distillation"
 slug: consistency-policy
 topic: diffusion-policy
-difficulty: ★★★
+difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/consistency-policy/paper.pdf
 venue: RSS

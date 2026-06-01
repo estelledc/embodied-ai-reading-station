@@ -4417,3 +4417,91 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .sb-row { grid-template-columns: 1fr; gap: 0.2rem; }
 }
+
+/* === a11y: focus-visible 全局 (WCAG 2.4.7) === */
+button:focus-visible,
+a:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+/* 卡片类内描边（避免外边距裁掉） */
+.paper-card:focus-visible,
+.pn-card:focus-visible,
+.lf-card:focus-visible,
+.rv-card:focus-visible,
+.wn-card:focus-visible,
+.qf-chip:focus-visible {
+  outline-offset: -2px;
+}
+
+/* === a11y: WCAG AA 文本对比 ===
+   coral #ed6f5c on paper #efe7d2 ≈ 3.0:1，对正常字号 < 4.5:1。
+   --coral-text 用于正常字号文本/链接（约 5:1）；--coral 留给 ≥18px 或 bold ≥14px。 */
+:root {
+  --coral-text: #c44a36;
+}
+html.dark-theme,
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) {
+    --coral-text: #f08775;
+  }
+}
+
+/* nav 当前页 不再仅靠颜色（违反 WCAG 1.4.1）— 加 underline + bold */
+.masthead nav a[aria-current="page"] {
+  color: var(--coral-text) !important;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 700;
+}
+
+/* === dark-mode 修补：写死 rgba/hex 替换为 token 派生 === */
+html.dark-theme .quick-filter,
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) .quick-filter {
+    background: color-mix(in srgb, var(--paper) 96%, transparent);
+  }
+}
+html.dark-theme {
+  --quick-filter-bg: color-mix(in srgb, var(--paper) 96%, transparent);
+}
+.quick-filter { background: var(--quick-filter-bg, rgba(217, 207, 178, 0.96)); }
+
+html.dark-theme .graph-stats-panel,
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) .graph-stats-panel {
+    background: color-mix(in srgb, var(--paper) 92%, transparent);
+  }
+}
+
+/* lightbox 暗模式：背景已经是黑色不变；prev/next/close 按钮在暗底变浅 */
+html.dark-theme .lb-close,
+html.dark-theme .lb-prev,
+html.dark-theme .lb-next,
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) .lb-close,
+  html:not(.light-theme) .lb-prev,
+  html:not(.light-theme) .lb-next {
+    border-color: rgba(235, 225, 201, 0.5);
+  }
+}
+
+/* changelog/quality tag 暗模式补色 */
+html.dark-theme .cl-tag-perf,
+html.dark-theme .q-no-tldr,
+html.dark-theme .q-no-tags {
+  color: var(--mustard);
+}
+html.dark-theme .cl-tag-docs {
+  color: #8aaed4;
+}
+html.dark-theme .cl-tag-ci {
+  color: var(--ink-mute);
+}

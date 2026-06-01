@@ -312,7 +312,7 @@
 
 // === code block copy ===
 (() => {
-  document.querySelectorAll(".note-content pre, .note-content blockquote pre").forEach(pre => {
+  document.querySelectorAll(".note-content pre").forEach(pre => {
     if (pre.closest(".cite-content")) return; // BibTeX 已有自己的复制按钮
     const code = pre.querySelector("code") || pre;
     const wrap = pre.parentElement;

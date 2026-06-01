@@ -1,13 +1,17 @@
 // D3 force-directed graph for paper relationships
 (function () {
-  document.addEventListener("DOMContentLoaded", () => {
+  function tryInit() {
     if (typeof d3 === "undefined") {
-      // d3 still loading, try again shortly
-      setTimeout(arguments.callee, 100);
+      setTimeout(tryInit, 100);
       return;
     }
     init();
-  });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", tryInit);
+  } else {
+    tryInit();
+  }
 
   function init() {
     const dataEl = document.getElementById("graph-data");

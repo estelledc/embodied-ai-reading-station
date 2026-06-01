@@ -122,18 +122,21 @@ function slugify(s) {
     .slice(0, 50) || "section";
 }
 const headingIds = new Map();
-renderer.heading = (token) => {
+renderer.heading = function (token) {
   const { tokens, depth, text } = token;
-  const inner = tokens ? this?.parser?.parseInline?.(tokens) ?? text : text;
+  // marked v14: this.parser.parseInline 渲染 inline tokens（含 bold/code/link）
+  const inner = (tokens && this && this.parser)
+    ? this.parser.parseInline(tokens)
+    : text;
   if (depth === 2 || depth === 3) {
     let base = slugify(text);
     let id = base;
     let n = 2;
     while (headingIds.has(id)) id = `${base}-${n++}`;
     headingIds.set(id, true);
-    return `<h${depth} id="${id}">${text}</h${depth}>\n`;
+    return `<h${depth} id="${id}">${inner}</h${depth}>\n`;
   }
-  return `<h${depth}>${text}</h${depth}>\n`;
+  return `<h${depth}>${inner}</h${depth}>\n`;
 };
 
 marked.use({ renderer, gfm: true, breaks: false });
@@ -183,8 +186,8 @@ function masthead(active) {
     <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
       <span class="search-icon">⌕</span><span class="search-hint">/</span>
     </button>
-    <button class="kb-trigger" type="button" aria-label="键盘快捷键 (按 ? 唤起)" onclick="document.dispatchEvent(new KeyboardEvent('keydown', {key: '?'}))">
-      <span class="search-hint">?</span>
+    <button class="kb-trigger" type="button" aria-label="键盘快捷键帮助 (按 ? 唤起)" aria-haspopup="dialog" onclick="document.dispatchEvent(new KeyboardEvent('keydown', {key: '?'}))">
+      <span class="search-hint" aria-hidden="true">?</span>
     </button>
   </header>
   <dialog class="search-dialog" aria-label="站内搜索">
@@ -2342,6 +2345,8 @@ function buildLearnIndex(pages) {
 }
 
 function buildLearnPage(p, allPages) {
+  figureCounter = 0;
+  headingIds.clear();
   const html = marked.parse(p.body);
   const otherLinks = allPages.filter(x => x.slug !== p.slug).map(x =>
     `<li style="margin-bottom:0.5rem"><a href="${url(`/learn/${x.slug}/`)}">${x.title}</a></li>`
@@ -2651,6 +2656,7 @@ function buildIssueIndex(issues) {
 }
 
 function buildIssuePage(issue, notes) {
+  figureCounter = 0;
   headingIds.clear();
   const html = marked.parse(issue.body);
   // 把 13 篇按 num 排序生成 plate 网格
@@ -2781,8 +2787,8 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
       <span class="dot">·</span>
       <span class="status-chip status-${note.status === "deep-read" ? "deep" : note.status === "auto-summary" ? "summary" : "light"}" title="${note.status === "deep-read" ? "精读笔记 · 手写" : note.status === "auto-summary" ? "auto + 校对" : "auto 短摘要"}">${note.status === "deep-read" ? "深度精读" : note.status === "auto-summary" ? "auto 摘要" : "短摘要"}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
-      <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接">⧉ MD</button>
-      <button class="share-btn" type="button" data-share-title="${note.title.replace(/"/g, "&quot;")}" data-share-url="${SITE_URL}/papers/${note.slug}/" data-share-text="${(note.tldr || "").replace(/"/g, "&quot;").slice(0, 100)}" title="分享">⤴</button>
+      <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接" aria-label="复制 markdown 链接到剪贴板"><span aria-hidden="true">⧉</span> MD</button>
+      <button class="share-btn" type="button" data-share-title="${note.title.replace(/"/g, "&quot;")}" data-share-url="${SITE_URL}/papers/${note.slug}/" data-share-text="${(note.tldr || "").replace(/"/g, "&quot;").slice(0, 100)}" title="分享" aria-label="分享这篇笔记"><span aria-hidden="true">⤴</span></button>
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
     ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
@@ -2815,7 +2821,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
 
     <hr class="ornament" style="margin-top:4rem"/>
     <details style="margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-mute)">
-      <summary style="cursor:pointer">All 13 papers</summary>
+      <summary style="cursor:pointer">All ${PAPERS.length} papers (full index)</summary>
       <ol style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem">${navItems}</ol>
     </details>
     </div>

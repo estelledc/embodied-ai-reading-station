@@ -66,7 +66,7 @@ self.addEventListener("fetch", (event) => {
           const networkPromise = fetch(req).then(res => {
             if (res.ok) cache.put(req, res.clone());
             return res;
-          }).catch(() => hit);
+          }).catch(() => hit || new Response("", { status: 504 }));
           return hit || networkPromise;
         })
       )
@@ -74,13 +74,20 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 核心壳：cache-first
-  if (SHELL_URLS.some(u => url.pathname.endsWith(u.replace(/^\.\//, "/")))) {
+  // 核心壳：cache-first（精确路径匹配，不再用 endsWith 误吞所有目录页）
+  // 解析 SHELL_URLS 成 scope 路径前缀 + 文件名集合
+  const scope = new URL(self.registration.scope).pathname; // 形如 "/embodied-ai-reading-station/"
+  const isShell = SHELL_URLS.some(u => {
+    const file = u.replace(/^\.\//, "");
+    if (file === "") return url.pathname === scope || url.pathname === scope.slice(0, -1);
+    return url.pathname === scope + file;
+  });
+  if (isShell) {
     event.respondWith(
       caches.match(req).then(hit => hit || fetch(req).then(res => {
         if (res.ok) caches.open(SHELL_CACHE).then(c => c.put(req, res.clone()));
         return res;
-      }))
+      }).catch(() => hit || new Response("", { status: 504 })))
     );
     return;
   }

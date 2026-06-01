@@ -453,7 +453,7 @@
           <div class="cm-body">
             <div class="cm-eyebrow">CONGRATULATIONS</div>
             <h3 class="cm-title">读完 156 篇了。</h3>
-            <p class="cm-text">你刚刚完成 ${papers.reduce((s, p) => s + (p.wordCount || 0), 0).toLocaleString()} 字的具身智能 reading marathon。打开 <a href="${(document.querySelector('link[href*="/styles.css"]')?.getAttribute("href") || "").replace(/\\/styles\\.css$/, "")}/lists/">/lists/</a> 开始重读你最感兴趣的方向。</p>
+            <p class="cm-text">你刚刚完成 ${papers.reduce((s, p) => s + (p.wordCount || 0), 0).toLocaleString()} 字的具身智能 reading marathon。打开 <a href="${(document.querySelector('link[href*="/styles.css"]')?.getAttribute("href") || "").replace(/\/styles\.css$/, "")}/lists/">/lists/</a> 开始重读你最感兴趣的方向。</p>
           </div>
         `;
         sec.insertBefore(medal, sec.querySelector(".big-stats").nextSibling);

@@ -2,7 +2,7 @@
 title: "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion"
 slug: diffusion-policy
 topic: diffusion-policy
-difficulty: ★★★
+difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/diffusion-policy/paper.pdf
 venue: RSS

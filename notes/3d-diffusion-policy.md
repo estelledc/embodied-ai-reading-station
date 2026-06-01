@@ -2,7 +2,7 @@
 title: "3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations"
 slug: 3d-diffusion-policy
 topic: diffusion-policy
-difficulty: ★★★
+difficulty: ⭐⭐⭐
 status: auto-summary
 来源: papers/3d-diffusion-policy/paper.pdf
 venue: RSS
