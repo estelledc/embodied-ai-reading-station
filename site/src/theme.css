@@ -3489,3 +3489,43 @@ html.dark-theme body::after {
   .footer-cols { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 }
 @media print { .footer-cols { display: none; } }
+
+/* === search shortcuts === */
+.search-shortcuts {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed var(--paper-dark);
+}
+.ss-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.6rem;
+}
+.ss-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.4rem;
+}
+.ss-grid a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.5rem 0.7rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  text-decoration: none;
+  color: var(--ink);
+  border-radius: 2px;
+  transition: all 0.12s;
+  text-align: center;
+}
+.ss-grid a:hover {
+  background: var(--coral);
+  color: var(--paper);
+  border-color: var(--coral);
+}
+@media (max-width: 700px) {
+  .ss-grid { grid-template-columns: repeat(2, 1fr); }
+}

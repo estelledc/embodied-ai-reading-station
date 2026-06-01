@@ -182,6 +182,19 @@ function masthead(active) {
   <dialog class="search-dialog" aria-label="站内搜索">
     <form method="dialog" class="search-close-form"><button class="search-close" aria-label="关闭">×</button></form>
     <div class="search-container" data-base="${BASE}"></div>
+    <div class="search-shortcuts">
+      <div class="ss-eyebrow">没主意？快捷入口</div>
+      <div class="ss-grid">
+        <a href="${url("/learn/path/")}">📖 30 天路径</a>
+        <a href="${url("/learn/faq/")}">❓ FAQ</a>
+        <a href="${url("/lists/")}">📚 阅读包</a>
+        <a href="${url("/random/")}">🎲 随机一篇</a>
+        <a href="${url("/topics/")}">🏷 主题</a>
+        <a href="${url("/glossary/")}">📔 术语</a>
+        <a href="${url("/timeline/")}">📅 时间线</a>
+        <a href="${url("/graph/")}">🔗 关系图</a>
+      </div>
+    </div>
   </dialog>`;
 }
 
