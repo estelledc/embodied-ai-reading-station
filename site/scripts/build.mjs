@@ -264,10 +264,10 @@ function buildIndex(notes) {
     <section class="whats-new">
       <div class="wn-eyebrow">最新 ↘ what's new</div>
       <div class="wn-grid">
-        <a class="wn-card wn-issue" href="${url("/issues/03/")}">
-          <div class="wn-tag">Issue Nº III</div>
-          <div class="wn-title">A field, drawn</div>
-          <div class="wn-tldr">312 张内嵌插画 + 156 篇文字优化 + Timeline 演化时间线</div>
+        <a class="wn-card wn-issue" href="${url("/issues/04/")}">
+          <div class="wn-tag">Issue Nº IV</div>
+          <div class="wn-title">Tools for the long read</div>
+          <div class="wn-tldr">18 个工具：compare / graph / tags / streak / 快筛 / 快键 / 暗色</div>
         </a>
         ${(() => {
           const recent = [...notes]
