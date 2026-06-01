@@ -3296,6 +3296,36 @@ Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
 `);
 
+    // /humans.txt — 谁做的（humanstxt.org spec）
+    write(path.join(DIST, "humans.txt"), `/* TEAM */
+Author: Jason
+Site: ${SITE_URL}
+GitHub: github.com/estelledc/embodied-ai-reading-station
+Twitter / X: not yet
+
+/* THANKS */
+原作者 (papers): all original authors of the ~156 cited papers
+Design system: open-design / atelier-zero
+AI tools: Claude Code, Codex CLI, MinerU, lr (LightRead)
+Static stack: Node.js, marked, gray-matter, Pagefind, KaTeX, D3.js v7
+
+/* SITE */
+Last update: ${new Date().toISOString().slice(0, 10)}
+Language: zh-CN (Chinese, simplified)
+Doctype: HTML5
+Components: pure HTML + CSS, no framework
+Build: ~2 seconds
+Deployed: GitHub Pages via Actions
+`);
+
+    // /.well-known/security.txt — RFC 9116
+    const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
+    write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
+Expires: ${expiryISO}
+Preferred-Languages: zh-CN, en
+Canonical: ${SITE_URL}/.well-known/security.txt
+`);
+
     // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
     write(path.join(DIST, "llms.txt"), `# Embodied AI Reading Station
 
