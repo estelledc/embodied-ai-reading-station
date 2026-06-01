@@ -2131,20 +2131,35 @@ function buildTimeline(notes) {
 
 // --- issue cover pages ------------------------------------------------------
 function buildIssueIndex(issues) {
+  const sortedDesc = [...issues].sort((a, b) => b.order - a.order);
+  const latest = sortedDesc[0];
+  const rest = sortedDesc.slice(1);
   const body = `<main class="shell">
     <span class="eyebrow">Issues · 期刊合订本</span>
     <h1>每一期是一个 <em>整体</em>，不只是论文堆。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch;margin-top:1rem">
       把笔记打包成"期"，是为了让你像翻一本杂志一样翻完——有目录、有编辑前言、有完结。
     </p>
-    ${pageHeroHtml("issues-index", "Stack of vintage magazine issues")}
+
+    ${latest ? `<a class="issue-hero-card" href="${url(`/issues/${latest.slug.replace("issue-", "")}/`)}">
+      <div class="ihc-meta">
+        <span class="ihc-tag">Latest</span>
+        <span class="ihc-num">Issue Nº ${latest.issueNumber}</span>
+        <span class="ihc-date">${latest.issueDate}</span>
+      </div>
+      <h2 class="ihc-title">${latest.title.replace(/^Issue Nº \w+ — /, "")}</h2>
+      <p class="ihc-intro">${latest.intro}</p>
+      <span class="ihc-cta">阅读最新一期 →</span>
+    </a>` : ""}
+
     <hr class="ornament"/>
-    <div class="papers-grid" style="margin-top:2rem">
-      ${issues.map(i => `<a class="paper-card" href="${url(`/issues/${i.slug.replace("issue-", "")}/`)}" style="text-decoration:none;color:inherit">
-        <span class="num">Issue Nº ${i.issueNumber}</span>
-        <h3>${i.title}</h3>
-        <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);letter-spacing:0.06em;text-transform:uppercase">${i.issueDate}</p>
-        <p>${i.intro}</p>
+
+    <div class="issue-archive">
+      <div class="ia-eyebrow">往期 ↓</div>
+      ${rest.map(i => `<a class="ia-row" href="${url(`/issues/${i.slug.replace("issue-", "")}/`)}">
+        <span class="ia-num">Nº ${i.issueNumber}</span>
+        <span class="ia-title">${i.title.replace(/^Issue Nº \w+ — /, "")}</span>
+        <span class="ia-date">${i.issueDate}</span>
       </a>`).join("")}
     </div>
   </main>`;

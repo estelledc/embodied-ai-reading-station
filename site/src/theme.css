@@ -3582,3 +3582,108 @@ html.dark-theme body::after {
 @media (max-width: 700px) {
   .completion-medal { grid-template-columns: 1fr; text-align: center; }
 }
+
+/* === issue index hero + archive === */
+.issue-hero-card {
+  display: block;
+  margin: 2rem 0;
+  padding: 2.5rem 2rem;
+  background: linear-gradient(135deg, var(--ink) 0%, #2c2820 100%);
+  color: var(--paper);
+  text-decoration: none;
+  border: 2px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+.issue-hero-card::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, var(--coral) 0%, transparent 70%);
+  opacity: 0.25;
+  pointer-events: none;
+}
+.issue-hero-card:hover { background: linear-gradient(135deg, #2c2820 0%, var(--ink) 100%); }
+.ihc-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ihc-tag { background: var(--coral); color: var(--paper); padding: 0.2em 0.6em; border-radius: 2px; }
+.ihc-num { color: var(--mustard); }
+.ihc-date { color: var(--paper); opacity: 0.6; }
+.ihc-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0 0 0.7rem;
+  color: var(--paper);
+}
+.ihc-intro {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin: 0 0 1.2rem;
+  max-width: 52ch;
+  opacity: 0.9;
+}
+.ihc-cta {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  color: var(--mustard);
+  display: inline-block;
+}
+
+.issue-archive { margin-top: 1.5rem; }
+.ia-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 0.7rem;
+}
+.ia-row {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  align-items: baseline;
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 1px solid var(--paper-dark);
+  transition: background 0.12s;
+}
+.ia-row:hover { background: var(--paper-warm); }
+.ia-num {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--coral);
+  letter-spacing: 0.04em;
+}
+.ia-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.ia-date {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) {
+  .ihc-title { font-size: 1.8rem; }
+  .ia-row { grid-template-columns: 4rem 1fr; }
+  .ia-date { grid-column: 2; }
+}
