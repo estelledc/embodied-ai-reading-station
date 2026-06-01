@@ -111,6 +111,56 @@ check("tags.json 有 frequency + cooccurrence", () => {
   return true;
 });
 
+console.log("\n=== Asset sizes ===");
+function dirSize(dir) {
+  let total = 0;
+  let files = 0;
+  function walk(p) {
+    for (const f of fs.readdirSync(p, { withFileTypes: true })) {
+      const full = path.join(p, f.name);
+      if (f.isDirectory()) walk(full);
+      else {
+        total += fs.statSync(full).size;
+        files++;
+      }
+    }
+  }
+  if (fs.existsSync(dir)) walk(dir);
+  return { total, files };
+}
+
+const distSize = dirSize(DIST);
+const distMB = (distSize.total / 1024 / 1024).toFixed(1);
+check(`dist 总大小 ${distMB}MB / ${distSize.files} files`, () => distSize.total < 200 * 1024 * 1024 || `超过 200MB`);
+
+const imagesDir = path.join(DIST, "images");
+const imagesSize = dirSize(imagesDir);
+const imagesMB = (imagesSize.total / 1024 / 1024).toFixed(1);
+console.log(`  images: ${imagesMB}MB / ${imagesSize.files} files`);
+
+// largest 5 files
+const allFiles = [];
+function walkAll(dir) {
+  if (!fs.existsSync(dir)) return;
+  for (const f of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, f.name);
+    if (f.isDirectory()) walkAll(full);
+    else allFiles.push({ path: full, size: fs.statSync(full).size });
+  }
+}
+walkAll(DIST);
+const top5 = allFiles.sort((a, b) => b.size - a.size).slice(0, 5);
+console.log("  largest 5 files:");
+for (const f of top5) {
+  const rel = path.relative(DIST, f.path);
+  const kb = (f.size / 1024).toFixed(0);
+  console.log(`    ${kb}KB  ${rel}`);
+}
+
+// HTML 单页超过 350KB 警告（index 因 156 卡片必然较重）
+const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
+check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
+
 console.log(`\n=== Summary ===`);
 console.log(`  ${pass} passed, ${fail} failed`);
 process.exit(fail === 0 ? 0 : 1);
