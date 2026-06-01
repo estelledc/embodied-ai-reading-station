@@ -12,6 +12,7 @@
 
   const SHORTCUTS = [
     { keys: "?", desc: "显示这个帮助" },
+    { keys: "Cmd K", desc: "唤起搜索 (任何位置)" },
     { keys: "g h", desc: "回首页" },
     { keys: "g t", desc: "去 Topics 主题列表" },
     { keys: "g l", desc: "去 Timeline 时间线" },
@@ -84,6 +85,13 @@
   let pendingTimeout = null;
 
   document.addEventListener("keydown", (e) => {
+    // Cmd+K / Ctrl+K：在任何状态唤起搜索（不受 isTyping 限制）
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      openSearch();
+      return;
+    }
+
     if (isTyping()) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
 
