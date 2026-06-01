@@ -726,7 +726,7 @@ const TAG_RULES = [
   { tag: "locomotion", keywords: /locomotion|legged|walk|gait|quadruped|humanoid/i },
   { tag: "navigation", keywords: /navigat|exploration|SLAM|mapping/i },
   { tag: "RL", keywords: /reinforcement learning|\bRL\b|policy gradient|Q-learning/i },
-  { tag: "imitation", keywords: /imitation|behavior clon|teleoperat|demonstration/i },
+  { tag: "imitation", keywords: /imitation|behavior\s*clon|behavioral\s*clon|teleoperat|demonstration|模仿/i },
   { tag: "world-model", keywords: /world model|latent dynamics|imagined rollout/i },
   { tag: "VLA", keywords: /vision.?language.?action|\bVLA\b/i },
   { tag: "VLM", keywords: /vision.?language model|\bVLM\b|multimodal LLM/i },
@@ -972,7 +972,7 @@ function buildQuality(notes) {
     const issues = [];
     const wc = n.wordCount || 0;
     if (wc < 1500) issues.push({ kind: "thin", desc: `字数偏少 (${wc})` });
-    else if (wc > 8000) issues.push({ kind: "thick", desc: `字数过多 (${wc})` });
+    else if (wc > 12000) issues.push({ kind: "thick", desc: `字数过多 (${wc})` });
     if (!n.tldr || n.tldr.length < 20) issues.push({ kind: "no-tldr", desc: "缺 TL;DR" });
     if (!n.year) issues.push({ kind: "no-year", desc: "缺 year frontmatter" });
     if (!n.venue) issues.push({ kind: "no-venue", desc: "缺 venue frontmatter" });
