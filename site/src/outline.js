@@ -337,3 +337,23 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 })();
+
+// === feedback floating button (论文页 + 视图页都有) ===
+(() => {
+  // 不在 about/changelog/contributors 页面（避免重复）
+  if (/\/(about|changelog|contributors|404)\//.test(location.pathname)) return;
+  const btn = document.createElement("a");
+  btn.className = "feedback-fab";
+  btn.title = "送反馈 / 报错";
+  btn.setAttribute("aria-label", "Send feedback");
+  btn.textContent = "✎";
+  // 构造预填的 issue URL
+  const path = location.pathname;
+  const title = document.title;
+  const issueTitle = encodeURIComponent("反馈：" + title);
+  const issueBody = encodeURIComponent(`## 页面\n${location.href}\n\n## 内容\n（请描述问题或建议）\n\n---\n*Sent from EAI Reading feedback button*`);
+  btn.href = `https://github.com/estelledc/embodied-ai-reading-station/issues/new?title=${issueTitle}&body=${issueBody}`;
+  btn.target = "_blank";
+  btn.rel = "noopener";
+  document.body.appendChild(btn);
+})();

@@ -3904,3 +3904,37 @@ html.dark-theme body::after {
   letter-spacing: 0.04em;
   margin-left: 0.6rem;
 }
+
+/* === feedback FAB === */
+.feedback-fab {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 2.4rem;
+  height: 2.4rem;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink-mute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  z-index: 40;
+  transition: all 0.15s;
+}
+.feedback-fab:hover {
+  background: var(--coral);
+  color: var(--paper);
+  border-color: var(--coral);
+  transform: translateY(-2px);
+}
+/* 当 back-top-btn 也在时往下移 */
+.back-top-btn ~ .feedback-fab,
+.feedback-fab + .back-top-btn { bottom: 4rem; }
+@media print { .feedback-fab { display: none; } }
+@media (max-width: 700px) {
+  .feedback-fab { width: 2.2rem; height: 2.2rem; font-size: 0.9rem; }
+}
