@@ -2362,6 +2362,7 @@ function buildTimeline(notes) {
       把 ${total} 篇笔记按年份排开。同一年内按主题分组，颜色对应主题。
       看这一页，你会看到具身智能这五年里"先有什么、后有什么"的真实顺序。
     </p>
+    <nav class="year-nav">${years.filter(y => y !== "?").map(y => `<a href="#y-${y}">${y}</a>`).join("")}</nav>
     <hr class="ornament"/>
   `;
 
@@ -2394,7 +2395,7 @@ function buildTimeline(notes) {
       </div>`;
       lastBand = band;
     }
-    body += `<section class="timeline-year">
+    body += `<section class="timeline-year" id="y-${y}">
       <h2 class="timeline-year-label"><span class="year-num">${y}</span><span class="year-count">· ${yearNotes.length} paper${yearNotes.length > 1 ? "s" : ""}</span></h2>
       <ul class="timeline-list">`;
     for (const n of yearNotes) {

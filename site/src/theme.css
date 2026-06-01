@@ -4111,3 +4111,31 @@ html.dark-theme body::after {
   .cs-item { padding: 0.15rem 0; gap: 0.4rem; grid-template-columns: 2.5rem 1rem 12rem 1fr 5rem; }
   .cs-title, .cs-tldr { font-size: 8.5pt; }
 }
+
+/* === timeline year nav === */
+.year-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.5rem 0 0.5rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+}
+.year-nav a {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  padding: 0.25em 0.6em;
+  background: var(--paper);
+  border: 1px solid var(--paper-dark);
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 2px;
+  transition: all 0.12s;
+}
+.year-nav a:hover {
+  background: var(--coral);
+  color: var(--paper);
+  border-color: var(--coral);
+}
