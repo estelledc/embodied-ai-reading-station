@@ -190,3 +190,43 @@
   });
   setInterval(tick, 2000);
 })();
+
+// === image lightbox：点击放大 ===
+(() => {
+  const imgs = document.querySelectorAll(".note-content img, .topic-landing-hero img, .hero-figure img");
+  if (imgs.length === 0) return;
+
+  let overlay = null;
+  function open(src, alt) {
+    if (overlay) overlay.remove();
+    overlay = document.createElement("div");
+    overlay.className = "img-lightbox";
+    overlay.innerHTML = `
+      <img src="${src}" alt="${(alt || "").replace(/"/g, "&quot;")}">
+      <button class="lb-close" aria-label="关闭">×</button>
+      ${alt ? `<div class="lb-caption">${alt}</div>` : ""}
+    `;
+    document.body.appendChild(overlay);
+    requestAnimationFrame(() => overlay.classList.add("show"));
+    function close() {
+      if (!overlay) return;
+      overlay.classList.remove("show");
+      const o = overlay; overlay = null;
+      setTimeout(() => o.remove(), 220);
+    }
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay || e.target.classList.contains("lb-close")) close();
+    });
+    document.addEventListener("keydown", function onKey(e) {
+      if (e.key === "Escape") {
+        document.removeEventListener("keydown", onKey);
+        close();
+      }
+    });
+  }
+
+  for (const img of imgs) {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => open(img.currentSrc || img.src, img.alt));
+  }
+})();
