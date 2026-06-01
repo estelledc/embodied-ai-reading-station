@@ -1885,6 +1885,10 @@ function buildStats(notes, backlinkMap = new Map()) {
         <div style="opacity:0.45"><span class="bs-num" data-my-speed>—</span><span class="bs-label">字 / 分钟</span></div>
       </div>
       <div class="my-topic-bars" data-my-topic-bars></div>
+      <div class="my-blindspot" data-my-blindspot hidden>
+        <div class="mb-eyebrow">阅读盲点 → 这些主题你还没碰</div>
+        <ul data-mb-list></ul>
+      </div>
     </section>
     <script id="eai-papers-data" type="application/json">${JSON.stringify(notes.map(n => ({
       slug: n.slug, num: n.num, title: n.title, topic: n.topicLabel, era: n.era || "classic",

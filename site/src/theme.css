@@ -4273,3 +4273,31 @@ html.dark-theme body::after {
   letter-spacing: 0.04em;
 }
 @media print { .footer-star-row { display: none; } }
+
+/* === blindspot === */
+.my-blindspot {
+  margin-top: 1.5rem;
+  padding: 1rem 1.2rem;
+  background: var(--bone);
+  border-left: 3px solid var(--mustard);
+}
+.mb-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #8a6915;
+  margin-bottom: 0.6rem;
+}
+.my-blindspot ul { list-style: none; padding: 0; margin: 0; }
+.my-blindspot li { padding: 0.3rem 0; border-bottom: 1px dashed var(--paper-dark); }
+.my-blindspot li:last-child { border-bottom: none; }
+.my-blindspot a {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+.my-blindspot a:hover { color: var(--coral); }
+.my-blindspot strong { color: var(--coral); font-weight: 700; }

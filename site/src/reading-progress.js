@@ -494,6 +494,24 @@
           <div class="vbar"><div class="vbar-fill" style="width:${count / max * 100}%"></div><span class="vbar-num">${count}</span></div>
         </div>
       `).join("");
+
+      // 盲点：用户读过的主题 vs 全部主题
+      const allTopics = new Set(papers.map(p => p.topic));
+      const seenTopics = new Set(readPapers.map(p => p.topic));
+      const blind = [...allTopics].filter(t => !seenTopics.has(t));
+      const blindBox = sec.querySelector("[data-my-blindspot]");
+      const blindList = sec.querySelector("[data-mb-list]");
+      if (blind.length > 0 && readPapers.length >= 3 && blindBox && blindList) {
+        // 给每个盲点主题挑一篇 founder（如果没有就第一篇）
+        blindList.innerHTML = blind.slice(0, 3).map(topic => {
+          const inT = papers.filter(p => p.topic === topic);
+          const founder = inT.find(p => p.era === "founder") || inT[0];
+          return `<li><a href="${founder.url}"><strong>${topic}</strong> · 起点 → ${founder.title.split(":")[0]}</a></li>`;
+        }).join("");
+        blindBox.hidden = false;
+      } else if (blindBox) {
+        blindBox.hidden = true;
+      }
     }
     render();
     window.addEventListener("eai:read-changed", render);
