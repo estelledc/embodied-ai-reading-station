@@ -100,7 +100,13 @@ renderer.image = (token) => {
   const { href, title, text } = token;
   figureCounter++;
   const roman = ["i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii"][figureCounter - 1] ?? String(figureCounter);
-  return `<figure><img src="${href}" alt="${text || ""}"${title ? ` title="${title}"` : ""}/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${text || title || ""}</figcaption></figure>`;
+  // codex 生图全部 16:9，1672×941。给 inline / cards 默认尺寸避免 CLS
+  let dims = "";
+  if (href && (href.includes("/images/inline/") || href.includes("/images/cards/") || href.includes("/images/topics/"))) {
+    dims = ` width="1672" height="941"`;
+  }
+  // lazy 加载 + decoding async（首屏图片可能例外，但 inline figures 都在首屏下方）
+  return `<figure><img src="${href}" alt="${text || ""}"${title ? ` title="${title}"` : ""}${dims} loading="lazy" decoding="async"/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${text || title || ""}</figcaption></figure>`;
 };
 
 // 给 H2/H3 加 id（让 outline 能锚点跳转）
