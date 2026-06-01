@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: frontier
 num: 7
 topic: world-model
+year: 2025
+venue: arXiv
 ---
 
 # Cosmos Policy：把"会脑补下一秒视频"的模型，训成会动手的机器人

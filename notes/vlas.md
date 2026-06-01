@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: frontier
 num: 5
 topic: multimodal
+year: 2025
+venue: ICLR
 ---
 
 # VLAS: VLA Model With Speech Instructions

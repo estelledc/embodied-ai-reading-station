@@ -10,6 +10,7 @@ generated_at: 2026-05-30
 era: classic
 num: 8
 topic: rf
+year: 2023
 ---
 
 # CartoRadar: RF-Based 3D SLAM Rivaling Vision Approaches

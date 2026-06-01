@@ -1223,3 +1223,103 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   font-size: 0.7rem;
   margin-top: 0.4rem;
 }
+
+/* === Compare page === */
+.compare-section {
+  margin: 3rem 0 4rem;
+}
+.compare-topic {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.6rem;
+  margin: 0 0 1.2rem;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.compare-table thead th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding: 0.4rem 0.7rem;
+  border-bottom: 1px solid var(--paper-dark);
+  font-weight: 500;
+}
+.compare-table tbody td {
+  padding: 0.7rem 0.7rem;
+  border-bottom: 1px solid var(--paper-dark);
+  vertical-align: top;
+}
+.compare-table tbody tr:hover {
+  background: var(--bone);
+}
+.cell-year {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  white-space: nowrap;
+  width: 4rem;
+}
+.cell-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  width: 30%;
+}
+.cell-title a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.cell-title a:hover {
+  color: var(--coral);
+}
+.cell-venue {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  width: 6rem;
+}
+.cell-tldr {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+.era-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  padding: 0.15em 0.55em;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  white-space: nowrap;
+}
+.era-badge.era-founder { color: var(--coral); }
+.era-badge.era-classic { color: var(--ink-mute); }
+.era-badge.era-frontier { color: var(--olive); }
+
+@media (max-width: 700px) {
+  .compare-table thead { display: none; }
+  .compare-table tbody td { display: block; padding: 0.2rem 0; border: none; }
+  .compare-table tbody tr {
+    display: block;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--paper-dark);
+  }
+  .cell-title { width: auto; }
+  .cell-venue { width: auto; }
+}

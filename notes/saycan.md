@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: founder
 num: 3
 topic: planning
+year: 2022
+venue: CoRL
 ---
 
 # SayCan: Do As I Can, Not As I Say

@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: frontier
 num: 6
 topic: multimodal
+year: 2024
+venue: arXiv
 ---
 
 # MLA: 让机器人同时用眼睛、距离感、指尖去做事

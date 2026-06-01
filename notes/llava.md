@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: founder
 num: 1
 topic: vlm-foundation
+year: 2023
+venue: NeurIPS
 ---
 
 # LLaVA: Visual Instruction Tuning

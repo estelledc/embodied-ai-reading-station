@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: classic
 num: 4
 topic: vla
+year: 2024
+venue: CoRL
 ---
 
 # OpenVLA：让机械臂"看一眼 + 听一句话"就动起来

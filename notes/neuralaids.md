@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: classic
 num: 12
 topic: auditory
+year: 2024
+venue: MobiCom
 ---
 
 # NeuralAids: 把"AI 降噪"塞进一只助听器里

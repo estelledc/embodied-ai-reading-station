@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: frontier
 num: 11
 topic: auditory
+year: 2024
+venue: UIST
 ---
 
 # Proactive Hearing Assistants that Isolate Egocentric Conversations

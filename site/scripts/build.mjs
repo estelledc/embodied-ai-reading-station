@@ -134,6 +134,7 @@ function masthead(active) {
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/timeline/"), label: "Timeline", id: "timeline" },
+    { href: url("/compare/"), label: "Compare", id: "compare" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
@@ -424,6 +425,55 @@ function buildLearnPage(p, allPages) {
     </details>
   </main>`;
   return page({ title: `${p.title} — Learn`, body, active: "learn" });
+}
+
+// --- compare page (per-topic side-by-side) ----------------------------------
+function buildCompare(notes) {
+  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  let body = `<main class="shell">
+    <span class="eyebrow">Compare · 同主题对比</span>
+    <h1>同一<em>主题</em>下，<em>哪几篇</em>该先读？</h1>
+    <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin-top:1rem">
+      把每个主题里的论文按 era 排一排，每条带年份和一句话定位。一眼看到"祖师爷 → 经典 → 前沿"的关系。
+    </p>
+    <hr class="ornament"/>`;
+
+  for (const t of TOPIC_ORDER) {
+    const inTopic = notes.filter(n => n.topic === t.id).sort((a, b) => {
+      const aPin = a.num <= 13 ? 0 : 1;
+      const bPin = b.num <= 13 ? 0 : 1;
+      if (aPin !== bPin) return aPin - bPin;
+      if (aPin === 0) return a.num - b.num;
+      const ea = eraRank[a.era] ?? 1;
+      const eb = eraRank[b.era] ?? 1;
+      if (ea !== eb) return ea - eb;
+      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
+    });
+    if (!inTopic.length) continue;
+    body += `<section class="compare-section">
+      <h2 class="compare-topic"><span class="topic-roman">${t.roman}</span> ${t.label} <span style="color:var(--ink-faint);font-weight:400;font-size:0.7em;margin-left:0.5rem">${t.subtitle}</span></h2>
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>era</th><th>year</th><th>title</th><th>venue</th><th>tldr</th>
+          </tr>
+        </thead>
+        <tbody>`;
+    for (const n of inTopic) {
+      const eraLabel = n.era === "founder" ? "祖师爷" : n.era === "frontier" ? "前沿" : "经典";
+      const eraClass = n.era === "founder" ? "era-founder" : n.era === "frontier" ? "era-frontier" : "era-classic";
+      body += `<tr>
+        <td><span class="era-badge ${eraClass}">${eraLabel}</span></td>
+        <td class="cell-year">${n.year || "—"}</td>
+        <td class="cell-title"><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></td>
+        <td class="cell-venue">${n.venue || ""}</td>
+        <td class="cell-tldr">${n.tldr || ""}</td>
+      </tr>`;
+    }
+    body += `</tbody></table></section>`;
+  }
+  body += `</main>`;
+  return page({ title: "Compare — Embodied AI Reading", body, active: "compare" });
 }
 
 // --- timeline page ----------------------------------------------------------
@@ -750,6 +800,9 @@ function build() {
 
   // timeline
   write(path.join(DIST, "timeline", "index.html"), buildTimeline(notes));
+
+  // compare
+  write(path.join(DIST, "compare", "index.html"), buildCompare(notes));
 
   // about
   write(path.join(DIST, "about", "index.html"), buildAbout());

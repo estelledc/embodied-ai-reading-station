@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: founder
 num: 13
 topic: auditory
+year: 2023
+venue: Nature
 ---
 
 # Creating speech zones with self-distributing acoustic swarms

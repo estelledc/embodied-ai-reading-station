@@ -10,6 +10,7 @@ generated_at: 2026-05-30
 era: frontier
 num: 10
 topic: rf
+year: 2023
 ---
 
 # mmNorm：隔着纸箱"看清"里面的东西

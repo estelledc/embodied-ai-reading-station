@@ -10,6 +10,7 @@ generated_at: 2026-05-30
 era: classic
 num: 9
 topic: rf
+year: 2024
 ---
 
 # mmCLIP：让一种"看不见人脸的雷达"也能认出新动作

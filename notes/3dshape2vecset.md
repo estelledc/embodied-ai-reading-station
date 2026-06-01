@@ -8,6 +8,8 @@ generated_at: 2026-05-30
 era: classic
 num: 2
 topic: vlm-foundation
+year: 2023
+venue: SIGGRAPH
 ---
 
 # 3DShape2VecSet：把 3D 模型「装进卡片盒」的论文
