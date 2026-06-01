@@ -2123,6 +2123,48 @@ function build404(notes) {
 
 // --- about page -------------------------------------------------------------
 function buildAbout(notes = []) {
+  // Compute dist size by category
+  function dirCatSize(dir) {
+    let html = 0, image = 0, code = 0, data = 0, other = 0;
+    function walk(p) {
+      if (!fs.existsSync(p)) return;
+      for (const f of fs.readdirSync(p, { withFileTypes: true })) {
+        const full = path.join(p, f.name);
+        if (f.isDirectory()) walk(full);
+        else {
+          const sz = fs.statSync(full).size;
+          if (/\.html$/.test(f.name)) html += sz;
+          else if (/\.(webp|jpg|jpeg|png|gif|svg)$/i.test(f.name)) image += sz;
+          else if (/\.(js|css)$/.test(f.name)) code += sz;
+          else if (/\.(json|csv|xml|txt)$/.test(f.name)) data += sz;
+          else other += sz;
+        }
+      }
+    }
+    walk(dir);
+    return { html, image, code, data, other };
+  }
+  const cats = fs.existsSync(DIST) ? dirCatSize(DIST) : null;
+  let sizeBars = "";
+  if (cats) {
+    const total = cats.html + cats.image + cats.code + cats.data + cats.other;
+    const items = [
+      { k: "Images (webp/jpg)", v: cats.image, c: "var(--coral)" },
+      { k: "HTML pages", v: cats.html, c: "var(--olive)" },
+      { k: "JS / CSS", v: cats.code, c: "var(--mustard)" },
+      { k: "Data (JSON/CSV/XML)", v: cats.data, c: "var(--ink-mute)" },
+      { k: "Other", v: cats.other, c: "var(--ink-faint)" },
+    ];
+    sizeBars = `<h2>dist 体积分布</h2>
+      <p style="color:var(--ink-soft);font-size:0.92rem">总 <strong>${(total/1024/1024).toFixed(1)} MB</strong>。</p>
+      <div class="size-bars">
+        ${items.map(it => `<div class="sb-row">
+          <span class="sb-label">${it.k}</span>
+          <div class="sb-track"><div class="sb-fill" style="width:${(it.v/total*100).toFixed(1)}%;background:${it.c}"></div></div>
+          <span class="sb-num">${(it.v/1024/1024).toFixed(1)} MB</span>
+        </div>`).join("")}
+      </div>`;
+  }
   // Compute numbers from notes if available
   let bigNums = "";
   if (notes.length) {
@@ -2207,6 +2249,8 @@ function buildAbout(notes = []) {
         <li><strong>lr (LightRead)</strong>：arXiv 检索 + PDF bundle 工具</li>
       </ul>
       <p>所有 AI 输出都经过手动校对。错误归人不归 AI。</p>
+
+      ${sizeBars}
 
       <h2>License</h2>
       <ul>

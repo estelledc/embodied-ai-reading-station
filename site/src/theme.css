@@ -4377,3 +4377,35 @@ html.dark-theme body::after {
 }
 @media (max-width: 700px) { .graph-stats-panel { display: none; } }
 @media print { .graph-stats-panel { display: none; } }
+
+/* === about size bars === */
+.size-bars { display: flex; flex-direction: column; gap: 0.4rem; margin: 1rem 0; }
+.sb-row {
+  display: grid;
+  grid-template-columns: 12rem 1fr 5rem;
+  gap: 0.8rem;
+  align-items: center;
+}
+.sb-label {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--ink);
+}
+.sb-track {
+  height: 1rem;
+  background: var(--bone);
+  border: 1px solid var(--paper-dark);
+  position: relative;
+  overflow: hidden;
+}
+.sb-fill { height: 100%; }
+.sb-num {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: var(--coral);
+  font-weight: 700;
+  text-align: right;
+}
+@media (max-width: 700px) {
+  .sb-row { grid-template-columns: 1fr; gap: 0.2rem; }
+}
