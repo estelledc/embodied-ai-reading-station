@@ -299,11 +299,16 @@ figcaption .plate {
   flex-direction: column;
   gap: 0.7rem;
   position: relative;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.18s ease, box-shadow 0.18s ease;
 }
 
 .paper-card:hover {
   background: var(--paper-warm);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 0 -1px var(--ink);
+}
+@media (prefers-reduced-motion: reduce) {
+  .paper-card:hover { transform: none; box-shadow: none; }
 }
 
 .paper-card .num {
