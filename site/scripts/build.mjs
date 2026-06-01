@@ -188,6 +188,7 @@ function page({ title, body, active, extraHead = "" }) {
   <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
   <script src="${url("/search.js")}" defer></script>
   <script src="${url("/outline.js")}" defer></script>
+  <script src="${url("/reading-progress.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -222,6 +223,7 @@ function buildIndex(notes) {
 
     <div class="stats-grid">
       <div class="stat-cell"><span class="stat-num">${done}</span><span class="stat-denom"> / ${total}</span><span class="stat-label">papers noted</span></div>
+      <div class="stat-cell"><span class="stat-num" data-eai-read-count>0</span><span class="stat-denom"> / ${total}</span><span class="stat-label">你已读</span></div>
       <div class="stat-cell"><span class="stat-num">${TOPIC_ORDER.length}</span><span class="stat-label">topics</span></div>
       <div class="stat-cell"><span class="stat-num">${notes.reduce((s, n) => s + (n.wordCount || 0), 0).toLocaleString()}</span><span class="stat-label">total 字</span></div>
       <div class="stat-cell"><span class="stat-num">${Math.round(notes.reduce((s, n) => s + (n.readingTime || 0), 0) / 60)}</span><span class="stat-label">小时阅读</span></div>
@@ -273,7 +275,7 @@ function buildIndex(notes) {
         : hasCard
           ? `<div class="thumb" style="background-image:url('${url(`/images/cards/${n.slug}.webp`)}')"></div>`
           : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
-      body += `<article class="paper-card">
+      body += `<article class="paper-card" data-slug="${n.slug}">
         ${thumbDiv}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
@@ -714,6 +716,7 @@ function buildNotePage(note) {
       <span>${note.difficulty || ""}</span>
       <span class="dot">·</span>
       <span>${note.status}</span>
+      <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
     </div>
 
     <div class="note-content" data-pagefind-body>
@@ -864,6 +867,7 @@ function build() {
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
   copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
+  copy(path.join(SITE, "src", "reading-progress.js"), path.join(DIST, "reading-progress.js"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");

@@ -1411,3 +1411,52 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
     border-bottom: 1px solid var(--paper-dark);
   }
 }
+
+/* === reading progress === */
+.read-btn {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  padding: 0.3em 0.8em;
+  border-radius: 2px;
+  cursor: pointer;
+  margin-left: auto;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.read-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.read-btn.is-read {
+  background: var(--olive);
+  color: var(--paper);
+  border-color: var(--olive);
+}
+.read-btn.is-read:hover {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+.eai-card-read {
+  position: relative;
+}
+.eai-card-read::after {
+  content: "✓";
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--olive);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  border-radius: 50%;
+  z-index: 2;
+}
