@@ -205,6 +205,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
+  <script>(function(){var m=localStorage.getItem("eaireading.theme");if(m==="dark")document.documentElement.classList.add("dark-theme");else if(m==="light")document.documentElement.classList.add("light-theme");})();</script>
   ${extraHead}
 </head>
 <body>
@@ -217,6 +218,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/reading-progress.js")}" defer></script>
   <script src="${url("/quick-filter.js")}" defer></script>
   <script src="${url("/keyboard.js")}" defer></script>
+  <script src="${url("/theme-toggle.js")}" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
 </body>
@@ -1293,6 +1295,7 @@ function build() {
   copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
   copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
+  copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
 
   // images（codex 生成 + cwebp 转换）
   const IMG_SRC = path.join(SITE, "src", "images");

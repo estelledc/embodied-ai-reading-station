@@ -965,9 +965,9 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
   text-decoration: none;
 }
 
-/* —— Dark mode (system-following only) —— */
+/* —— Dark mode：system + manual override (.dark-theme on html) —— */
 @media (prefers-color-scheme: dark) {
-  :root {
+  html:not(.light-theme) {
     color-scheme: dark;
     --paper: #1f1b14;
     --paper-warm: #241f17;
@@ -982,11 +982,37 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
     --mustard: #e6c068;
     --olive: #a8b07a;
   }
+}
+html.dark-theme {
+  color-scheme: dark;
+  --paper: #1f1b14;
+  --paper-warm: #241f17;
+  --paper-dark: #15120c;
+  --bone: #2a241b;
+  --ink: #ebe1c9;
+  --ink-soft: #cdc3ad;
+  --ink-mute: #a39a86;
+  --ink-faint: #6f685a;
+  --coral: #f08775;
+  --coral-soft: rgba(240, 135, 117, 0.22);
+  --mustard: #e6c068;
+  --olive: #a8b07a;
+}
+@media (prefers-color-scheme: dark) {
   /* noise/grain overlay：暗底要切 screen 不然黑成一片 */
-  body::before, body::after {
+  html:not(.light-theme) body::before,
+  html:not(.light-theme) body::after {
     mix-blend-mode: screen;
     opacity: 0.06;
   }
+}
+html.dark-theme body::before,
+html.dark-theme body::after {
+  mix-blend-mode: screen;
+  opacity: 0.06;
+}
+@media (prefers-color-scheme: dark) {
+  /* preserved for any system-only overrides */
 }
 
 /* === Paper card thumbnail placeholder === */
@@ -2178,4 +2204,26 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
 .bc-current {
   color: var(--coral);
   font-weight: 600;
+}
+
+/* === theme toggle button === */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--paper-dark);
+  padding: 0.3em 0.6em;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--ink-mute);
+  border-radius: 2px;
+  transition: all 0.12s;
+  margin-left: 0.4rem;
+  min-width: 2.2rem;
+}
+.theme-toggle:hover {
+  border-color: var(--coral);
+  color: var(--coral);
+}
+@media (max-width: 700px) {
+  .theme-toggle { font-size: 0.9rem; min-width: 1.8rem; }
 }
