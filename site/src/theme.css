@@ -33,7 +33,8 @@
   --ink-mute: #5a5448;
   --ink-faint: #8b8676;
   --coral: #ed6f5c;
-  --coral-soft: #f08e7c;
+  --coral-soft: #f08e7c;       /* solid 文本色 (不透明) */
+  --coral-tint: rgba(237, 111, 92, 0.22); /* 半透明背景 */
   --mustard: #e9b94a;
   --olive: #6e7448;
 
@@ -728,6 +729,10 @@ hr.ornament::before {
 .pagefind-ui__result-link { color: var(--ink) !important; text-decoration: none; }
 .pagefind-ui__result-link:hover { color: var(--coral) !important; }
 mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
+html.dark-theme mark { background: var(--coral); color: var(--paper); }
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) mark { background: var(--coral); color: var(--paper); }
+}
 
 /* === Outline 右栏 === */
 .note-shell.has-outline {
@@ -982,7 +987,8 @@ mark { background: var(--mustard); color: var(--ink); padding: 0 0.1em; }
     --ink-mute: #a39a86;
     --ink-faint: #6f685a;
     --coral: #f08775;
-    --coral-soft: rgba(240, 135, 117, 0.22);
+    --coral-soft: #f5a092;     /* 暗模式：solid 文本色保留可读对比 */
+    --coral-tint: rgba(240, 135, 117, 0.22);
     --mustard: #e6c068;
     --olive: #a8b07a;
   }
@@ -998,7 +1004,8 @@ html.dark-theme {
   --ink-mute: #a39a86;
   --ink-faint: #6f685a;
   --coral: #f08775;
-  --coral-soft: rgba(240, 135, 117, 0.22);
+  --coral-soft: #f5a092;
+  --coral-tint: rgba(240, 135, 117, 0.22);
   --mustard: #e6c068;
   --olive: #a8b07a;
 }
@@ -3603,7 +3610,7 @@ html.dark-theme body::after {
   display: block;
   margin: 2rem 0;
   padding: 2.5rem 2rem;
-  background: linear-gradient(135deg, var(--ink) 0%, #2c2820 100%);
+  background: linear-gradient(135deg, var(--ink) 0%, color-mix(in srgb, var(--ink) 80%, black) 100%);
   color: var(--paper);
   text-decoration: none;
   border: 2px solid var(--ink);
@@ -3619,7 +3626,24 @@ html.dark-theme body::after {
   opacity: 0.25;
   pointer-events: none;
 }
-.issue-hero-card:hover { background: linear-gradient(135deg, #2c2820 0%, var(--ink) 100%); }
+.issue-hero-card:hover { background: linear-gradient(135deg, color-mix(in srgb, var(--ink) 80%, black) 0%, var(--ink) 100%); }
+/* 暗模式下 ink 已经接近浅色 → 翻转为高对比 paper-warm 背景 */
+html.dark-theme .issue-hero-card {
+  background: var(--paper-warm);
+  color: var(--ink);
+  border-color: var(--coral);
+}
+html.dark-theme .issue-hero-card:hover {
+  background: var(--bone);
+}
+@media (prefers-color-scheme: dark) {
+  html:not(.light-theme) .issue-hero-card {
+    background: var(--paper-warm);
+    color: var(--ink);
+    border-color: var(--coral);
+  }
+  html:not(.light-theme) .issue-hero-card:hover { background: var(--bone); }
+}
 .ihc-meta {
   display: flex;
   gap: 1rem;

@@ -341,7 +341,9 @@ function footerHtml(active) {
   </footer>`;
 }
 
-function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null, jsonLd = null }) {
+function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null, jsonLd = null, hasMath = null }) {
+  // 自动检测：有 $ 或 $$ 的页面才加载 KaTeX
+  if (hasMath === null) hasMath = /\$[^$\n]+\$|\$\$[\s\S]+?\$\$/.test(body);
   const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const _ogTitle = ogTitle || title;
   const _ogDesc = ogDescription || "156 篇具身智能论文，用零基础也能读懂的中文重写。从 CLIP 到 π0，11 主题全景。";
@@ -374,11 +376,12 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/jx/components.css")}">
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  ${hasMath ? `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">` : ""}
   <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
   <link rel="canonical" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="zh-CN" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="x-default" href="${escAttr(_ogUrl)}">
+  ${active === "index" ? `<link rel="preload" as="image" href="${url("/images/hero.webp")}" fetchpriority="high">` : ""}
   <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
   <link rel="manifest" href="${url("/site.webmanifest")}">
   <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI Reading" href="${url("/opensearch.xml")}">
@@ -402,8 +405,8 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
   <script src="${url("/svg-export.js")}" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
+  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>` : ""}
+  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
 </body>
 </html>`;
 }
@@ -434,7 +437,7 @@ function buildIndex(notes, latestIssue = null) {
       <figure class="hero-figure">
         <picture>
           <source type="image/webp" srcset="${url("/images/hero-1200.webp")} 1200w, ${url("/images/hero.webp")} 1672w" sizes="(max-width: 900px) 100vw, 50vw">
-          <img src="${url("/images/hero.webp")}" alt="A robotic hand reaching toward floating eyes, text fragments, and arrows — abstract editorial illustration of embodied AI" loading="eager" width="1672" height="941">
+          <img src="${url("/images/hero.webp")}" alt="A robotic hand reaching toward floating eyes, text fragments, and arrows — abstract editorial illustration of embodied AI" loading="eager" fetchpriority="high" decoding="async" width="1672" height="941">
         </picture>
         <figcaption><span class="plate">Plate Nº 0</span>— A robotic hand reaching for vision, language, and action.</figcaption>
       </figure>
@@ -2310,12 +2313,12 @@ function buildAbout(notes = []) {
 
       <h2>Cite this site</h2>
       <p>整站作为参考资料引用：</p>
-      <pre style="background:var(--bone);border:1px solid var(--paper-dark);padding:0.8rem 1rem;font-family:var(--font-mono);font-size:0.78rem;overflow-x:auto">@misc{embodied_ai_reading_station,
-  title  = {Embodied AI Reading Station},
-  author = {Jason},
-  year   = {2026},
-  url    = {https://estelledc.github.io/embodied-ai-reading-station/},
-  note   = {156 readable Chinese notes on embodied AI papers}
+      <pre style="background:var(--bone);border:1px solid var(--paper-dark);padding:0.8rem 1rem;font-family:var(--font-mono);font-size:0.78rem;overflow-x:auto">@online{embodied_ai_reading_station_2026,
+  title       = {Embodied AI Reading Station},
+  author      = {Zhou, Jason},
+  year        = {2026},
+  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/}},
+  note        = {156 readable Chinese notes on embodied AI papers}
 }</pre>
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
@@ -2550,7 +2553,7 @@ function buildGraph(notes) {
       <input type="search" id="graph-search" class="gc-search" placeholder="搜节点（按 title 模糊匹配）" aria-label="搜索 graph 节点">
     </div>
     <div id="graph-legend" class="graph-legend">${TOPIC_ORDER.map(t => `<span class="legend-item" data-topic="${t.id}"><span class="legend-dot" style="background:var(--topic-${t.id})"></span>${t.roman}. ${t.label}</span>`).join("")}</div>
-    <div id="graph-container" style="width:100%;height:75vh;min-height:520px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">
+    <div id="graph-container" style="width:100%;height:80vh;min-height:880px;border:1px solid var(--paper-dark);background:var(--paper-warm);position:relative;overflow:hidden">
       <svg id="graph-svg" width="100%" height="100%"></svg>
       <div id="graph-tooltip" class="graph-tooltip" hidden></div>
       <aside class="graph-stats-panel">
@@ -2864,12 +2867,13 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
         <div class="cite-tabs">
           <span class="cite-tab-label">BibTeX</span>
         </div>
-        <pre class="cite-code">@misc{eai_${note.slug.replace(/-/g, "_")}_${note.year || "2026"},
-  title  = {${note.title}},
-  author = {Jason},
-  year   = {${note.year || 2026}},
-  note   = {Embodied AI Reading Station — readable note},
-  url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}
+        <pre class="cite-code">@online{eai_${note.slug.replace(/-/g, "_")}_2026,
+  title       = {(readable note) ${note.title}},
+  author      = {Zhou, Jason},
+  year        = {2026},${note.year ? `
+  note        = {Note on a ${note.year} paper},` : ""}
+  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}},
+  organization = {Embodied AI Reading Station}
 }</pre>
         <button class="cite-copy" type="button" data-cite-target="cite-${note.slug}">复制 BibTeX</button>
       </div>

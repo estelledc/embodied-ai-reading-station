@@ -32,9 +32,11 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
+  const KEEP = new Set([SHELL_CACHE, PAGES_CACHE, IMAGES_CACHE]);
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
-      keys.filter(k => !k.endsWith(VERSION)).map(k => caches.delete(k))
+      // 仅删属于本应用 (eai-) 但不在 KEEP 集合的旧版本
+      keys.filter(k => k.startsWith("eai-") && !KEEP.has(k)).map(k => caches.delete(k))
     )).then(() => self.clients.claim())
   );
 });
