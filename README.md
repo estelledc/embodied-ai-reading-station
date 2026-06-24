@@ -16,9 +16,29 @@
 - ✅ 平均每篇 4000 字，30 分钟读完
 - ✅ 关键数字配生活语境（"13 万段示范" = "每天 8 小时连续示范 5 个月"）
 
+### 内容质量说明
+
+156 篇笔记**不是**同等深度——它们分三个层次：
+
+| 层次 | 数量 | 标志 | 含义 |
+|------|------|------|------|
+| **deep-read** (深度精读) | 少量 | 站内标签"深度精读" | 有完整 deck / 逐段批注 / 导读章节覆盖，可作为汇报材料 |
+| **auto-summary** (auto 摘要) | 46 篇 | 有本地 PDF 全文解析 + 人工校对 | 4000 字级别，含架构图、实验数据、踩坑提醒 |
+| **auto-summary-light** (短摘要) | 110 篇 | 基于摘要 + 公开资料 | 1500-2500 字概览，未读全文，适合快速了解一篇论文在做什么 |
+
+这站起源于导师布置的 **13 篇精读任务**（详见 [research-task.md](research-task.md)），扩展到 156 篇是为了看到全景。13 篇任务论文在站内标有 `task: required` 标记。
+
 ## 给读者
 
-### 不知道从哪开始？
+### 从这里开始
+
+**根据你的目标选一条路径**：
+
+1. **任务驱动**（有科研任务要交 / 6-30 截止）→ [research-task.md](research-task.md) 看 13 篇任务论文 → [22 章导读 Task 1 路径](guide/README.md)（Ch01→Ch03→Ch04→Ch08→Ch09→Ch10→Ch12→Ch22）→ [学习进度](progress.md)
+2. **30 天系统学习**（想全面入门）→ [30 天学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)（Week 1 VLM → Week 2 VLA → Week 3 模仿+扩散 → Week 4 周边）
+3. **按主题浏览**（对特定方向感兴趣）→ [11 主题入门三连](https://estelledc.github.io/embodied-ai-reading-station/topics/)，每个主题 3 篇 primer 带你入门
+
+### 更多导航
 
 - **[30 天学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)** — Week 1 VLM → Week 2 VLA → Week 3 模仿+扩散 → Week 4 周边
 - **[新人 FAQ](https://estelledc.github.io/embodied-ai-reading-station/learn/faq/)** — 12 题最常被问
@@ -154,7 +174,7 @@ content/*.md ┤                              │
                                   ├─ sw.js (PWA)
                                   └─ index.html ... 2400+ files
 
-   ↓ npm run check (49 项)
+   ↓ npm run check (63 项)
    ↓ GitHub Actions (build → check → deploy)
    ↓
    estelledc.github.io/embodied-ai-reading-station/
