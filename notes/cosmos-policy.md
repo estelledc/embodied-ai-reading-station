@@ -3,6 +3,7 @@ title: "Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control"
 slug: cosmos-policy
 difficulty: ⭐⭐⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/cosmos-policy/paper.pdf
 generated_at: 2026-05-30
 era: frontier

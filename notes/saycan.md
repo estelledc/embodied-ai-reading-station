@@ -3,6 +3,7 @@ title: "SayCan: Do As I Can, Not As I Say"
 slug: saycan
 difficulty: ⭐⭐
 status: auto-summary
+task: required
 来源: papers/saycan/paper.pdf
 generated_at: 2026-05-30
 era: founder

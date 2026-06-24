@@ -3,6 +3,7 @@ title: "NeuralAids: Wireless Hearables With Programmable Speech AI Accelerators"
 slug: neuralaids
 difficulty: ⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/neuralaids/paper.pdf
 generated_at: 2026-05-30
 era: classic

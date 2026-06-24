@@ -3,6 +3,7 @@ title: "mmCLIP: Boosting mmWave-based Zero-shot HAR via Signal-Text Alignment"
 slug: mmclip
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/mmclip/paper.pdf
 venue: SenSys 2024
 authors: "Cao, Xue, Liu, Wang, Wang, Zhang, Su (Purdue + UNC Charlotte)"

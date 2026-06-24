@@ -3,6 +3,7 @@ title: "OpenVLA: An Open-Source Vision-Language-Action Model"
 slug: openvla
 difficulty: ⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/openvla/paper.pdf
 generated_at: 2026-05-30
 era: classic

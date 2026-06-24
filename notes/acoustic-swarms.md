@@ -3,6 +3,7 @@ title: Creating speech zones with self-distributing acoustic swarms
 slug: acoustic-swarms
 difficulty: ⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/acoustic-swarms/paper.md
 generated_at: 2026-05-30
 era: founder

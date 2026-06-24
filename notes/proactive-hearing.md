@@ -3,6 +3,7 @@ title: Proactive Hearing Assistants that Isolate Egocentric Conversations
 slug: proactive-hearing
 difficulty: ⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/proactive-hearing/paper.pdf
 generated_at: 2026-05-30
 era: frontier

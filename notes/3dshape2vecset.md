@@ -3,6 +3,7 @@ title: "3DShape2VecSet: 3D Shape Representation for Diffusion Models"
 slug: 3dshape2vecset
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/3dshape2vecset/paper.pdf
 generated_at: 2026-05-30
 era: classic

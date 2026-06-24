@@ -3,6 +3,7 @@ title: "MLA: Multisensory Language-Action Model"
 slug: mla
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/mla/paper.pdf
 generated_at: 2026-05-30
 era: frontier

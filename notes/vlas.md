@@ -3,6 +3,7 @@ title: "VLAS: VLA Model With Speech Instructions"
 slug: vlas
 difficulty: ⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/vlas/paper.pdf
 generated_at: 2026-05-30
 era: frontier

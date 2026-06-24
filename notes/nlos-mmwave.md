@@ -3,6 +3,7 @@ title: "mmNorm: Non-Line-of-Sight 3D Object Reconstruction via mmWave Surface No
 slug: nlos-mmwave
 difficulty: ⭐⭐⭐⭐
 status: auto-summary
+task: required
 来源: papers/nlos-mmwave/paper.pdf
 venue: MobiSys 2025
 authors: "Dodds, Boroushaki, Zhou, Adib (MIT)"

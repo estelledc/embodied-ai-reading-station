@@ -2,7 +2,8 @@
 title: "LLaVA: Visual Instruction Tuning"
 slug: llava
 difficulty: ⭐⭐
-status: auto-summary
+status: deep-read
+task: required
 来源: papers/llava/paper.pdf
 generated_at: 2026-05-30
 era: founder
