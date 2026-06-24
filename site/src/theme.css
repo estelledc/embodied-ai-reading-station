@@ -40,8 +40,8 @@
 
   /* === fonts === */
   --font-sans: "Inter", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
-  --font-display: "Inter", "Inter Tight", -apple-system, sans-serif;
-  --font-serif: "Playfair Display", "Source Han Serif SC", Georgia, serif;
+  --font-display: "Inter", "Inter Tight", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-serif: "Playfair Display", "Source Han Serif SC", "Songti SC", "SimSun", Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
   /* === scale === */
@@ -142,7 +142,7 @@ h1 {
 }
 
 h1 em, .display-italic {
-  font-family: var(--font-serif);
+  font-family: "Playfair Display", "PingFang SC", "Microsoft YaHei", Georgia, serif;
   font-style: italic;
   font-weight: 500;
   letter-spacing: -0.02em;
