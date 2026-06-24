@@ -12,6 +12,7 @@ const SITE = path.resolve(__dirname, "..");
 const ROOT = path.resolve(SITE, "..");
 const NOTES_DIR = path.join(ROOT, "notes");
 const PAPERS_DIR = path.join(ROOT, "papers");
+const GUIDE_DIR = path.join(ROOT, "guide");
 const DIST = path.join(SITE, "dist");
 
 // Base path for GitHub Pages project sites (e.g. estelledc.github.io/<REPO>/).
@@ -171,6 +172,7 @@ function masthead(active) {
   const primaryItems = [
     { href: url("/"), label: "Index", id: "index" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
+    { href: url("/guide/"), label: "Guide", id: "guide" },
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
   ];
@@ -238,6 +240,7 @@ function masthead(active) {
 const RELATED_VIEWS_MAP = {
   index: ["topics", "timeline", "issues"],
   topics: ["compare", "graph", "heatmap"],
+  guide: ["learn", "topics", "issues"],
   timeline: ["compare", "stats", "venues"],
   compare: ["topics", "timeline", "tags"],
   graph: ["heatmap", "tags", "topics"],
@@ -246,7 +249,7 @@ const RELATED_VIEWS_MAP = {
   glossary: ["tags", "learn", "venues"],
   venues: ["stats", "compare", "timeline"],
   stats: ["timeline", "venues", "compare"],
-  learn: ["glossary", "issues", "topics"],
+  learn: ["guide", "glossary", "issues"],
   issues: ["learn", "stats", "timeline"],
   about: ["learn", "issues", "topics"],
   deck: ["learn", "issues", "topics"],
@@ -254,6 +257,7 @@ const RELATED_VIEWS_MAP = {
 const VIEW_DESC = {
   index: { label: "Index 首页", desc: "156 篇卡片网格按主题分组" },
   topics: { label: "Topics 主题", desc: "11 个主题深度页 + primer 入门 3 篇" },
+  guide: { label: "Guide 导读", desc: "22 章零基础具身智能系统导读" },
   timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
   compare: { label: "Compare", desc: "同主题 era 并排对比表" },
   graph: { label: "Graph", desc: "D3 力导论文关系图" },
@@ -291,10 +295,10 @@ function footerHtml(active) {
     <div class="footer-cols">
       <div class="footer-col">
         <h4>路径</h4>
+        <a href="${url("/guide/")}">22 章导读</a>
         <a href="${url("/learn/path/")}">30 天路径</a>
         <a href="${url("/learn/faq/")}">FAQ</a>
         <a href="${url("/lists/")}">阅读包</a>
-        <a href="${url("/random/")}">随机一篇</a>
       </div>
       <div class="footer-col">
         <h4>视图</h4>
@@ -2391,6 +2395,138 @@ function buildLearnPage(p, allPages) {
   return page({ title: `${p.title} — Learn`, body, active: "learn" });
 }
 
+// --- guide pages (22-chapter reading guide) ---------------------------------
+function discoverGuide() {
+  if (!fs.existsSync(GUIDE_DIR)) return [];
+  const readmePath = path.join(GUIDE_DIR, "README.md");
+  const readmeRaw = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, "utf8") : "";
+  const files = fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md"));
+  files.sort((a, b) => {
+    const na = parseInt(a.replace(/^ch0?/, ""), 10);
+    const nb = parseInt(b.replace(/^ch0?/, ""), 10);
+    return na - nb;
+  });
+  const chapters = files.map(f => {
+    const slug = f.replace(/\.md$/, "");
+    const raw = fs.readFileSync(path.join(GUIDE_DIR, f), "utf8");
+    // Extract title from first H1
+    const h1Match = raw.match(/^#\s+(.+)$/m);
+    const title = h1Match ? h1Match[1] : slug;
+    // Extract chapter number
+    const numMatch = slug.match(/^ch(\d+)/);
+    const num = numMatch ? parseInt(numMatch[1], 10) : 0;
+    return { slug, filename: f, title, num, raw };
+  });
+  return { chapters, readmeRaw };
+}
+
+function buildGuideIndex(guideData) {
+  const { chapters, readmeRaw } = guideData;
+  // Group chapters by part
+  const parts = [
+    { label: "Part 1: 导读总纲", range: [1, 3], desc: "这本导读是什么？怎么读？需要什么前置知识？" },
+    { label: "Part 2: 全景概念", range: [4, 7], desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 3: 核心主线精读", range: [8, 14], desc: "VLM → VLA → 扩散策略 → 模仿学习，一步步造出机器人的大脑和手" },
+    { label: "Part 4: 训练与部署基建", range: [15, 17], desc: "世界模型、强化学习、仿真与 Sim-to-Real——从训练到落地" },
+    { label: "Part 5: 感知模态扩展", range: [18, 20], desc: "多模态生态、射频感知、听觉智能——给机器人装上更多感官" },
+    { label: "Part 6: 横切主题与实战", range: [21, 22], desc: "数据集全景、Task 1/2 实战指南" },
+  ];
+
+  let partsHtml = "";
+  for (const p of parts) {
+    const chs = chapters.filter(c => c.num >= p.range[0] && c.num <= p.range[1]);
+    partsHtml += `<section class="guide-part" style="margin-top:2.5rem">
+      <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:0.5rem">${p.label}</h2>
+      <p style="color:var(--ink-soft);font-size:0.95rem;margin-bottom:1rem">${p.desc}</p>
+      <div class="papers-grid">
+        ${chs.map(c => `<article class="paper-card" style="background:var(--paper-warm)">
+          <span class="num">Ch${String(c.num).padStart(2, "0")}</span>
+          <span class="topic">${p.label.split(":")[0]}</span>
+          <h3><a href="${url(`/guide/${c.slug}/`)}">${c.title.replace(/^Ch\d+:\s*/, "")}</a></h3>
+        </article>`).join("")}
+      </div>
+    </section>`;
+  }
+
+  const body = `<main class="shell">
+    <span class="eyebrow">Guide · 具身智能导读</span>
+    <h1>22 章<em>系统导读</em>，从零基础到实战。</h1>
+    <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:52ch;margin-top:1rem">
+      基于 156 篇论文笔记和 13 篇精读论文，面向零基础读者，系统讲解具身智能（Embodied AI）的完整技术版图。
+    </p>
+    <hr class="ornament"/>
+    ${partsHtml}
+
+    <hr class="ornament" style="margin-top:3rem"/>
+    <section style="margin-top:2rem">
+      <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">推荐阅读路径</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem">
+        <div style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px">
+          <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">Task 1 路径（2 周）</strong>
+          <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">Ch01→Ch03→Ch04→Ch08→Ch09→Ch10→Ch12→Ch22</p>
+        </div>
+        <div style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px">
+          <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">全景学习路径（4 周）</strong>
+          <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">顺序通读 Part 1-6</p>
+        </div>
+        <div style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px">
+          <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读路径</strong>
+          <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">Ch01→Ch04→跳到感兴趣的主题章节</p>
+        </div>
+      </div>
+    </section>
+  </main>`;
+  return page({ title: "Guide — 具身智能导读", body, active: "guide",
+    ogDescription: "22 章零基础具身智能系统导读——从 CLIP 到 VLA 到 Diffusion Policy，从理论到实战。" });
+}
+
+function buildGuidePage(ch, allChapters) {
+  figureCounter = 0;
+  headingIds.clear();
+  // Rewrite internal .md links to /guide/<slug>/ HTML links
+  let body = ch.raw;
+  // Rewrite links like [text](chXX-name.md) → [text](/guide/chXX-name/)
+  body = body.replace(/\]\(ch(\d+[^)]*?)\.md\)/g, (_, rest) => `](${url(`/guide/ch${rest}/`)})`);
+  // Rewrite links to README.md → /guide/
+  body = body.replace(/\]\(README\.md\)/g, `](${url("/guide/")})`);
+  const html = marked.parse(body);
+
+  // Prev / next navigation
+  const idx = allChapters.findIndex(c => c.slug === ch.slug);
+  const prev = idx > 0 ? allChapters[idx - 1] : null;
+  const next = idx < allChapters.length - 1 ? allChapters[idx + 1] : null;
+
+  // Part label
+  const partLabels = {
+    1: "Part 1: 导读总纲", 2: "Part 1: 导读总纲", 3: "Part 1: 导读总纲",
+    4: "Part 2: 全景概念", 5: "Part 2: 全景概念", 6: "Part 2: 全景概念", 7: "Part 2: 全景概念",
+    8: "Part 3: 核心主线精读", 9: "Part 3: 核心主线精读", 10: "Part 3: 核心主线精读",
+    11: "Part 3: 核心主线精读", 12: "Part 3: 核心主线精读", 13: "Part 3: 核心主线精读", 14: "Part 3: 核心主线精读",
+    15: "Part 4: 训练与部署基建", 16: "Part 4: 训练与部署基建", 17: "Part 4: 训练与部署基建",
+    18: "Part 5: 感知模态扩展", 19: "Part 5: 感知模态扩展", 20: "Part 5: 感知模态扩展",
+    21: "Part 6: 横切主题与实战", 22: "Part 6: 横切主题与实战",
+  };
+  const partLabel = partLabels[ch.num] || "Guide";
+
+  const prevNext = `<nav class="guide-nav" style="display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--paper-dark);font-size:0.9rem;font-family:var(--font-mono)">
+    ${prev ? `<a href="${url(`/guide/${prev.slug}/`)}" style="color:var(--ink-soft)">← Ch${String(prev.num).padStart(2, "0")}</a>` : `<span></span>`}
+    <a href="${url("/guide/")}" style="color:var(--ink-mute)">目录</a>
+    ${next ? `<a href="${url(`/guide/${next.slug}/`)}" style="color:var(--ink-soft)">Ch${String(next.num).padStart(2, "0")} →</a>` : `<span></span>`}
+  </nav>`;
+
+  const pageBody = `<main class="note-shell">
+    <span class="eyebrow">Guide · ${partLabel}</span>
+    <h1>${ch.title}</h1>
+    <hr/>
+    <div class="note-content">${html}</div>
+    ${prevNext}
+  </main>`;
+  const shortTitle = ch.title.replace(/^Ch\d+:\s*/, "");
+  return page({ title: `${ch.title} — Guide`, body: pageBody, active: "guide",
+    ogDescription: shortTitle,
+    ogUrl: `https://estelledc.github.io/embodied-ai-reading-station/guide/${ch.slug}/` });
+}
+
 // --- compare page (per-topic side-by-side) ----------------------------------
 function buildCompare(notes) {
   const eraRank = { founder: 0, classic: 1, frontier: 2 };
@@ -3122,6 +3258,17 @@ function build() {
   console.log(`  inferred ${tagSet.size} tags across ${notes.length} notes`);
   stage("infer tags");
 
+  // guide (22-chapter reading guide)
+  const guideData = discoverGuide();
+  if (guideData && guideData.chapters && guideData.chapters.length > 0) {
+    write(path.join(DIST, "guide", "index.html"), buildGuideIndex(guideData));
+    for (const ch of guideData.chapters) {
+      write(path.join(DIST, "guide", ch.slug, "index.html"), buildGuidePage(ch, guideData.chapters));
+    }
+    console.log(`  built ${guideData.chapters.length} guide chapter pages`);
+    stage("guide pages");
+  }
+
   // index — 先用 null（最新 issue 还没加载），稍后加载完 issue 再覆盖
   write(path.join(DIST, "index.html"), buildIndex(notes));
 
@@ -3436,8 +3583,10 @@ function build() {
     // sitemap
     const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
     const today = new Date().toISOString().slice(0, 10);
+    const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
       "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/", "/issues/", "/about/", "/learn/", "/deck/",
+      ...guideUrls,
       ...TOPIC_ORDER.map(t => `/topics/${t.id}/`),
       ...notes.map(n => `/papers/${n.slug}/`),
       ...issuePages.map(p => `/issues/${p.slug.replace("issue-", "")}/`),
