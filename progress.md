@@ -8,6 +8,14 @@
 
 读到这里你应该懂了：13 篇论文 = 我这个学期要啃的 13 篇大作文。
 
+### 站点进展
+
+- [x] 建成 156 篇论文笔记静态学习站（[在线访问](https://estelledc.github.io/embodied-ai-reading-station/)）
+- [x] 22 章导读完成（guide/ch01 ~ ch22）
+- [x] 11 主题 × 3 篇 primer 入门体系
+- [x] 站点功能：30 天路径 / 主题 / Timeline / Graph / Heatmap / 搜索 / PWA
+- [ ] 笔记质量提升：46 篇 auto-summary + 110 篇 auto-summary-light → 逐步补精读
+
 ### 先打基础（5 篇入门轨道，learn track）
 
 类比：把 13 篇论文当高考压轴大题，那这 5 篇就是先把课本和公式表过一遍。
@@ -27,7 +35,7 @@
 
 主线三连（6 月 30 日前必须挑一篇做英文汇报）：
 
-- [ ] LLaVA — VLM 最经典入门款（已建笔记，等精读）
+- [x] **LLaVA** — VLM 最经典入门款（✅ 已完成 14 页英文 deck → `deck/index.html`）
 - [ ] SayCan — 让机器人把"我想喝水"拆成"走过去 → 拿杯子 → 倒水"（已建笔记，等精读）
 - [ ] OpenVLA — 端到端的 VLA，看图听话直接出动作（已建笔记，等精读）
 
@@ -52,6 +60,13 @@
 - [ ] Proactive Hearing — 主动选你想听的人（已建笔记，等精读）
 - [ ] NeuralAids — 神经网络助听器（已建笔记，等精读）
 - [ ] Acoustic Swarms — 一群小麦克风协作分离声音（已建笔记，等精读）
+
+### Task 1 状态
+
+- [x] 选定论文：**LLaVA (Visual Instruction Tuning)**
+- [x] 完成 14 页英文 deck（`deck/index.html`，atelier-zero 风格，中英双语）
+- [ ] 找学长（张瑞杰 or 王宁）约汇报时间
+- [ ] 汇报完成
 
 ### 下一步（今天最好奇的两个问题）
 
