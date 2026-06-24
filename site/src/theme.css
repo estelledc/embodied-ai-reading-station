@@ -2529,19 +2529,18 @@ html.dark-theme body::after {
   .big-stats > div:nth-child(2) { border-right: none; }
 }
 
-/* === more-nav dropdown === */
-.more-nav { display: inline; position: relative; }
-.more-nav summary {
-  list-style: none;
+/* === more-nav dropdown (hover to open) === */
+.more-nav { display: inline-block; position: relative; }
+.more-nav-trigger {
+  all: unset;
   cursor: pointer;
   display: inline;
+  font-family: inherit;
   font-size: inherit;
   letter-spacing: inherit;
   color: var(--ink-mute);
 }
-.more-nav summary::-webkit-details-marker { display: none; }
-.more-nav summary::marker { content: ""; }
-.more-nav summary:hover { color: var(--coral); }
+.more-nav-trigger:hover { color: var(--coral); }
 .more-nav-panel {
   position: absolute;
   top: 100%;
@@ -2556,6 +2555,14 @@ html.dark-theme body::after {
   flex-direction: column;
   gap: 0;
   margin-top: 0.4rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.15s, visibility 0.15s;
+}
+.more-nav:hover .more-nav-panel,
+.more-nav:focus-within .more-nav-panel {
+  visibility: visible;
+  opacity: 1;
 }
 .more-nav-panel a {
   padding: 0.4rem 1rem;
