@@ -6,7 +6,7 @@
 ## 怎么看 / 怎么演
 
 ```bash
-# 在 embodied-ai-research/ 目录起 server
+# 在 embodied-ai/ 项目根目录起 server
 python3 -m http.server -d . 8765
 
 # 浏览器访问
