@@ -2484,11 +2484,13 @@ function buildGuidePage(ch, allChapters) {
   figureCounter = 0;
   headingIds.clear();
   // Rewrite internal .md links to /guide/<slug>/ HTML links
+  // NOTE: Use bare absolute paths (no BASE prefix) because renderer.link
+  // automatically prepends BASE to any href starting with "/"
   let body = ch.raw;
   // Rewrite links like [text](chXX-name.md) → [text](/guide/chXX-name/)
-  body = body.replace(/\]\(ch(\d+[^)]*?)\.md\)/g, (_, rest) => `](${url(`/guide/ch${rest}/`)})`);
+  body = body.replace(/\]\(ch(\d+[^)]*?)\.md\)/g, (_, rest) => `](/guide/ch${rest}/)`);
   // Rewrite links to README.md → /guide/
-  body = body.replace(/\]\(README\.md\)/g, `](${url("/guide/")})`);
+  body = body.replace(/\]\(README\.md\)/g, `](/guide/)`);
   const html = marked.parse(body);
 
   // Prev / next navigation
