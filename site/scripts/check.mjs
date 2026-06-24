@@ -329,6 +329,76 @@ for (const f of top5) {
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
+console.log("\n=== Guide chapter pages ===");
+{
+  const guideDir = path.join(ROOT, "guide");
+  const guideSlugs = fs.readdirSync(guideDir)
+    .filter(f => f.startsWith("ch") && f.endsWith(".md"))
+    .map(f => f.replace(/\.md$/, ""));
+  let guideMissing = 0;
+  for (const slug of guideSlugs) {
+    if (!fs.existsSync(path.join(DIST, "guide", slug, "index.html"))) guideMissing++;
+  }
+  check(`${guideSlugs.length} 章导读 HTML 全部存在`, () => guideMissing === 0 || `${guideMissing} 章缺 HTML`);
+}
+
+console.log("\n=== Task-required notes ===");
+{
+  const TASK_SLUGS = [
+    "llava", "3dshape2vecset", "saycan", "openvla", "vlas", "mla",
+    "cosmos-policy", "rf-slam", "mmclip", "nlos-mmwave",
+    "proactive-hearing", "neuralaids", "acoustic-swarms",
+  ];
+  let taskMissing = 0;
+  let taskNoFlag = 0;
+  for (const slug of TASK_SLUGS) {
+    const noteFile = path.join(NOTES, `${slug}.md`);
+    if (!fs.existsSync(noteFile)) {
+      taskMissing++;
+      console.log(`  ✗ task note missing: ${slug}`);
+    } else {
+      const { data } = matter(fs.readFileSync(noteFile, "utf8"));
+      if (data.task !== "required") taskNoFlag++;
+    }
+  }
+  check(`13 篇任务论文笔记全部存在`, () => taskMissing === 0 || `${taskMissing} 篇缺失`);
+  check(`13 篇任务论文均有 task: required`, () => taskNoFlag === 0 || `${taskNoFlag} 篇缺 task 标记`);
+}
+
+console.log("\n=== Status field validity ===");
+{
+  const VALID_STATUS = new Set(["auto-summary", "auto-summary-light", "deep-read", "stub", "missing"]);
+  let invalidStatus = 0;
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data } = matter(raw);
+    if (data.status && !VALID_STATUS.has(data.status)) {
+      invalidStatus++;
+      console.log(`  ✗ invalid status "${data.status}" in ${f}`);
+    }
+  }
+  check("status 字段值全部合法", () => invalidStatus === 0 || `${invalidStatus} 篇 status 值非法`);
+}
+
+console.log("\n=== Source path integrity ===");
+{
+  let sourceBroken = 0;
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data } = matter(raw);
+    const src = data["来源"] || data.source || "";
+    if (src.startsWith("papers/")) {
+      // 检查 papers/<slug>/ 目录是否存在（至少有 paper.md 或 paper.pdf）
+      const papersDir = path.join(ROOT, path.dirname(src));
+      if (!fs.existsSync(papersDir)) {
+        sourceBroken++;
+        console.log(`  ✗ ${f}: 来源引用 ${src} 但目录不存在`);
+      }
+    }
+  }
+  check("来源引用 papers/ 的笔记目录均存在", () => sourceBroken === 0 || `${sourceBroken} 篇来源目录缺失`);
+}
+
 console.log(`\n=== Summary ===`);
 console.log(`  ${pass} passed, ${fail} failed`);
 process.exit(fail === 0 ? 0 : 1);
