@@ -1640,7 +1640,7 @@ function buildChangelog() {
   let lines = "";
   try {
     const out = _execSync(
-      `git -C "${ROOT}" log -50 --pretty=format:'%h|%ad|%s' --date=short`,
+      `git -C "${ROOT}" log --pretty=format:'%h|%ad|%s' --date=short`,
       { encoding: "utf8" }
     );
     lines = out;
