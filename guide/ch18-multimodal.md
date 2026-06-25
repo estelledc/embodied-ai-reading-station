@@ -1507,3 +1507,5 @@ AnyMAL 冻结 LLM、VecSet 冻结编码器——这不是妥协，而是工程�
 > 前置章节：[Ch17: Sim-to-Real——仿真训练与真机部署](ch17-sim-to-real.md)
 > 后续章节：[Ch19: 射频感知——RF-Pose / milliMap / PanoRadar](ch19-rf-perception.md)
 > [返回目录](README.md)
+
+<!-- papers: imagebind, anymal, 3dshape2vecset, clip, blip-2, llava, flamingo, siglip, onellm, fromage, palm-e, audiopalm, sparsh, sparsh-x, tactile-vla, tla-tactile-language-action, touch-vision-cross-modal -->

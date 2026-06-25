@@ -335,3 +335,5 @@ Habitat (2019) + Isaac Gym (2020) → RLBench → Meta-World
 > 导读目录：[README.md](README.md)
 > 上一章：[Ch05: 两条技术路线——模块化 vs 端到端](ch05-two-paradigms.md)
 > 下一章：[Ch07: 从论文到机器人——理解学术论文的结构与读法](ch07-how-to-read-papers.md)
+
+<!-- papers: clip, blip, blip-2, flamingo, saycan, rt-1, inner-monologue, whisper, diffusion-policy, llava, code-as-policies, imagebind, rt-2, open-x-embodiment, acoustic-swarms, openvla, droid, pi0, rf-slam, proactive-hearing, cosmos-policy, pi05, smolvla, dreamer-v1, dreamer-v3, habitat, isaac-gym, dagger, palm-e, roboflamingo, mmclip, nlos-mmwave, vlas, mla, 3dshape2vecset, neuralaids -->

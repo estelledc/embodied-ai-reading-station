@@ -109,10 +109,15 @@
     "eaireading.dailygoal",
     "eaireading.timing",
     "eaireading.syllabus",
+    "eaireading.syllabusTs",
   ]);
   window.addEventListener("storage", (e) => {
     if (e.key && SYNCED_KEYS.has(e.key)) {
       window.EAI_READ._notify();
+      // Also notify guide system for syllabus keys
+      if (e.key.includes("syllabus") && window.EAI_GUIDE) {
+        window.EAI_GUIDE._notify();
+      }
     }
   });
 
@@ -176,7 +181,7 @@
           .sort((a, b) => (ts[b.slug] || 0) - (ts[a.slug] || 0));
         const today = new Date().toISOString().slice(0, 10);
         let md = `# 我的具身 AI 论文阅读清单\n\n`;
-        md += `> Exported from Embodied AI Reading Station · ${today}\n`;
+        md += `> Exported from Embodied AI: Zero to One · ${today}\n`;
         md += `> 已读 ${readPapers.length} 篇 / 共 ${papers.length} 篇\n\n`;
         const byTopic = new Map();
         for (const p of readPapers) {
@@ -398,6 +403,9 @@
     bindTopicProgress();
     bindMyStats();
     bindDailyPick();
+    bindGuideButton();
+    bindGuideCards();
+    bindGuideStats();
   });
 
   function bindDailyPick() {
@@ -578,5 +586,117 @@
     }
     render();
     window.addEventListener("eai:read-changed", render);
+  }
+
+  // === Guide 章节进度追踪 ===
+  const GUIDE_KEY = "eaireading.syllabus";
+  const GUIDE_TS_KEY = "eaireading.syllabusTs";
+
+  function loadGuide() {
+    try { return new Set(JSON.parse(localStorage.getItem(GUIDE_KEY) || "[]")); }
+    catch { return new Set(); }
+  }
+  function saveGuide(set) {
+    localStorage.setItem(GUIDE_KEY, JSON.stringify([...set]));
+  }
+  function loadGuideTs() {
+    try { return JSON.parse(localStorage.getItem(GUIDE_TS_KEY) || "{}"); }
+    catch { return {}; }
+  }
+  function saveGuideTs(o) {
+    localStorage.setItem(GUIDE_TS_KEY, JSON.stringify(o));
+  }
+
+  window.EAI_GUIDE = {
+    has(slug) { return loadGuide().has(slug); },
+    list() { return [...loadGuide()]; },
+    count() { return loadGuide().size; },
+    mark(slug) {
+      const s = loadGuide(); s.add(slug); saveGuide(s);
+      const t = loadGuideTs(); t[slug] = Date.now(); saveGuideTs(t);
+      this._notify();
+    },
+    unmark(slug) {
+      const s = loadGuide(); s.delete(slug); saveGuide(s);
+      const t = loadGuideTs(); delete t[slug]; saveGuideTs(t);
+      this._notify();
+    },
+    toggle(slug) {
+      this.has(slug) ? this.unmark(slug) : this.mark(slug);
+    },
+    _notify() {
+      window.dispatchEvent(new CustomEvent("eai:guide-changed", {
+        detail: { count: this.count(), list: this.list() }
+      }));
+    },
+  };
+
+  // Sync guide progress across tabs
+  const GUIDE_SYNCED = new Set([GUIDE_KEY, GUIDE_TS_KEY]);
+  window.addEventListener("storage", (e) => {
+    if (e.key && GUIDE_SYNCED.has(e.key)) {
+      window.EAI_GUIDE._notify();
+    }
+  });
+
+  function bindGuideButton() {
+    document.querySelectorAll(".guide-done-btn[data-guide-slug]").forEach(btn => {
+      const slug = btn.dataset.guideSlug;
+      if (!slug) return;
+      function render() {
+        const done = window.EAI_GUIDE.has(slug);
+        btn.classList.toggle("is-done", done);
+        btn.textContent = done ? "✓ 已完成" : "标记本章已完成";
+        btn.setAttribute("aria-pressed", done ? "true" : "false");
+        btn.style.background = done ? "var(--coral)" : "transparent";
+        btn.style.color = done ? "#fff" : "var(--coral)";
+      }
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.EAI_GUIDE.toggle(slug);
+      });
+      render();
+      window.addEventListener("eai:guide-changed", render);
+    });
+  }
+
+  function bindGuideCards() {
+    // Add completion badges to guide index chapter cards
+    document.querySelectorAll(".guide-part .paper-card").forEach(card => {
+      const link = card.querySelector("h3 a");
+      if (!link) return;
+      const href = link.getAttribute("href") || "";
+      const m = href.match(/\/guide\/(ch\d+[^/]*)\//);
+      if (!m) return;
+      const slug = m[1];
+      // Insert badge element
+      let badge = card.querySelector(".guide-done-badge");
+      if (!badge) {
+        badge = document.createElement("span");
+        badge.className = "guide-done-badge";
+        badge.style.cssText = "position:absolute;top:0.5rem;right:0.5rem;font-size:0.85rem;color:var(--coral);opacity:0;transition:opacity 0.2s";
+        badge.textContent = "✓";
+        card.style.position = "relative";
+        card.appendChild(badge);
+      }
+      function render() {
+        const done = window.EAI_GUIDE.has(slug);
+        badge.style.opacity = done ? "1" : "0";
+        card.style.borderLeft = done ? "3px solid var(--coral)" : "";
+      }
+      render();
+      window.addEventListener("eai:guide-changed", render);
+    });
+  }
+
+  function bindGuideStats() {
+    // Update guide progress counter on homepage
+    const el = document.querySelector("[data-eai-guide-count]");
+    if (!el) return;
+    function render() {
+      el.textContent = window.EAI_GUIDE.count();
+    }
+    render();
+    window.addEventListener("eai:guide-changed", render);
   }
 })();

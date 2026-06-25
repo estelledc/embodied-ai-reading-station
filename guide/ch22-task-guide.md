@@ -1410,3 +1410,5 @@ Diffusion Model (去噪生成)
 
 > 上一章：[Ch21: 数据集全景](ch21-datasets.md)
 > [返回目录](README.md)
+
+<!-- papers: openvla, llava, saycan, 3dshape2vecset, cosmos-policy, rf-slam, mmclip, nlos-mmwave, proactive-hearing, neuralaids, acoustic-swarms, vlas, mla, rt-1, rt-2, diffusion-policy, clip, blip-2, droid, open-x-embodiment, robosuite -->

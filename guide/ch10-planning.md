@@ -1443,3 +1443,5 @@ Ch08 CLIP --> Ch09 BLIP-2/LLaVA --> [Ch10 规划] --> Ch11 RT-1/RT-2
 > 前置章节：[Ch09: VLM 地基 (II)——从 BLIP-2 到 LLaVA，给 AI 装上对话能力](ch09-blip2-llava.md)
 > 后续章节：[Ch11: 端到端 VLA (I)——RT-1 / RT-2，把动作变成 token](ch11-rt1-rt2.md)
 > [返回目录](README.md)
+
+<!-- papers: saycan, code-as-policies, inner-monologue, clip, progprompt, llm-plus-p, palm-e -->

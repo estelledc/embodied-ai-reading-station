@@ -144,3 +144,5 @@
 
 > 导读目录：[README.md](README.md)
 > 下一章：[Ch02: 阅读路线图——三条路径任你选](ch02-reading-paths.md)
+
+<!-- papers: clip, llava, saycan, rt-2, openvla, vlas, mla, open-x-embodiment, droid, habitat, isaac-gym, diffusion-policy, rf-slam, mmclip, nlos-mmwave, 3dshape2vecset, cosmos-policy -->

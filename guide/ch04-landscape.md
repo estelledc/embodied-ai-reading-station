@@ -377,3 +377,5 @@ graph TD
 > 导读目录：[README.md](README.md)
 > 上一章：[Ch03: 前置知识检查清单](ch03-prerequisites.md)
 > 下一章：[Ch05: 两条技术路线——模块化 vs 端到端](ch05-two-paradigms.md)
+
+<!-- papers: clip, blip-2, llava, imagebind, mmclip, whisper, saycan, rt-1, rt-2, openvla, diffusion-policy, dreamer-v3, genie, habitat, isaac-gym, 3dshape2vecset -->

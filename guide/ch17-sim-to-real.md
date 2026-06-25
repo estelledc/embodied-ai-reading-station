@@ -1684,3 +1684,4 @@ DR 是最流行的 sim-to-real 技术，但它的代价是策略性能下降—�
 > 前置章节：[Ch16: 强化学习基础——PPO / SAC / 奖励塑形](ch16-rl-basics.md)
 > 后续章节：[Ch18: 多模态生态——ImageBind / AnyMAL / 3DShape2VecSet](ch18-multimodal.md)
 > [返回目录](README.md)
+<!-- papers: isaac-gym, isaac-lab, habitat, habitat-2, habitat-3, sapien, maniskill, robocasa, procthor, behavior-1k, rlbench, meta-world, simpler-env, mujoco-playground, gr-2, cosmos-policy, daydreamer, unisim, idp3 -->

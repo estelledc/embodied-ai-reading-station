@@ -1,6 +1,6 @@
 # 具身智能导读
 
-> 本导读基于 156 篇论文笔记（覆盖 11 个主题方向）和 13 篇导师指定精读论文的研读，面向零基础读者，系统性讲解具身智能（Embodied AI）的完整技术版图。配套 [Embodied AI Reading Station](https://estelledc.github.io/embodied-ai-reading-station/) 在线阅读。
+> 本导读基于 156 篇论文笔记（覆盖 11 个主题方向）和 13 篇导师指定精读论文的研读，面向零基础读者，系统性讲解具身智能（Embodied AI）的完整技术版图。配套 [Embodied AI: Zero to One](https://estelledc.github.io/embodied-ai-reading-station/) 在线阅读。
 
 ## 目录结构
 

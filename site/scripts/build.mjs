@@ -168,11 +168,11 @@ marked.use({ renderer, gfm: true, breaks: false });
 
 // --- layout templates -------------------------------------------------------
 function masthead(active) {
-  // 主导航：4 项关键入口
+  // 主导航：5 项关键入口（Guide 首位 = 教学站主轴）
   const primaryItems = [
-    { href: url("/"), label: "Index", id: "index" },
-    { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/guide/"), label: "Guide", id: "guide" },
+    { href: url("/"), label: "Papers", id: "index" },
+    { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
   ];
@@ -200,7 +200,7 @@ function masthead(active) {
   // 当前 active 是否在折叠区，决定 More 是否高亮
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
-    <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI Reading Station</a></div>
+    <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI: Zero to One</a></div>
     <nav aria-label="主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)" aria-current="page"' : ""}>${i.label}</a>`).join("")}
       <div class="more-nav">
         <button type="button" class="more-nav-trigger"${moreActive ? ' style="color:var(--coral)"' : ''} aria-haspopup="true" aria-expanded="false" aria-label="更多导航">More ▾</button>
@@ -255,7 +255,7 @@ const RELATED_VIEWS_MAP = {
   deck: ["learn", "issues", "topics"],
 };
 const VIEW_DESC = {
-  index: { label: "Index 首页", desc: "156 篇卡片网格按主题分组" },
+  index: { label: "Papers 论文库", desc: "156 篇论文笔记卡片，按主题分组" },
   topics: { label: "Topics 主题", desc: "11 个主题深度页 + primer 入门 3 篇" },
   guide: { label: "Guide 导读", desc: "22 章零基础具身智能系统导读" },
   timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
@@ -332,7 +332,7 @@ function footerHtml(active) {
       <span class="star-mood">— 没有更新订阅，没有广告，只是一个学生的笔记。</span>
     </div>
     <div class="jx-footer__colophon">
-      <strong>Embodied AI Reading Station</strong>
+      <strong>Embodied AI: Zero to One</strong>
       <span lang="en">VOL · MMXXVI</span>
     </div>
     <nav class="jx-footer__index">
@@ -350,7 +350,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   if (hasMath === null) hasMath = /\$[^$\n]+\$|\$\$[\s\S]+?\$\$/.test(body);
   const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const _ogTitle = ogTitle || title;
-  const _ogDesc = ogDescription || "156 篇具身智能论文，用零基础也能读懂的中文重写。从 CLIP 到 π0，11 主题全景。";
+  const _ogDesc = ogDescription || "从零开始学具身智能——22 章系统教程 + 156 篇论文笔记，零术语假设，日常类比起步。";
   const _ogImg = ogImage || `${SITE_URL}/images/hero.webp`;
   const _ogUrl = ogUrl || SITE_URL + "/";
   const escAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -370,7 +370,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <meta property="og:image:type" content="image/webp">
   <meta property="og:image:alt" content="${escAttr(_ogTitle)}">
   <meta property="og:url" content="${escAttr(_ogUrl)}">
-  <meta property="og:site_name" content="Embodied AI Reading Station">
+  <meta property="og:site_name" content="Embodied AI: Zero to One">
   <meta property="og:locale" content="zh_CN">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escAttr(_ogTitle)}">
@@ -381,14 +381,14 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
   ${hasMath ? `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">` : ""}
-  <link rel="alternate" type="application/atom+xml" title="Embodied AI Reading — Atom feed" href="${url("/feed.xml")}">
+  <link rel="alternate" type="application/atom+xml" title="Embodied AI: Zero to One — Atom feed" href="${url("/feed.xml")}">
   <link rel="canonical" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="zh-CN" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="x-default" href="${escAttr(_ogUrl)}">
   ${active === "index" ? `<link rel="preload" as="image" href="${url("/images/hero.webp")}" fetchpriority="high">` : ""}
   <link rel="icon" type="image/svg+xml" href="${url("/favicon.svg")}">
   <link rel="manifest" href="${url("/site.webmanifest")}">
-  <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI Reading" href="${url("/opensearch.xml")}">
+  <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI: Zero to One" href="${url("/opensearch.xml")}">
   <meta name="theme-color" content="#ed6f5c">
   ${jsonLd ? `<script type="application/ld+json">${JSON.stringify(jsonLd)}</script>` : ""}
   <script>(function(){var m=localStorage.getItem("eaireading.theme");if(m==="dark")document.documentElement.classList.add("dark-theme");else if(m==="light")document.documentElement.classList.add("light-theme");})();</script>
@@ -432,11 +432,11 @@ function buildIndex(notes, latestIssue = null) {
   } catch {}
 
   let body = `<main class="shell">
-    <span class="eyebrow">Filed under · embodied AI · 2026 · ${notes.length} papers</span>
+    <span class="eyebrow">Embodied AI: Zero to One · 22 chapters · ${notes.length} papers</span>
     <div class="hero-grid">
       <div class="hero-text">
-        <h1><em>${total} 篇</em>讲机器人怎么学会<em>看、想、做事</em>的论文 — 用<em>能读懂</em>的版本。</h1>
-        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:42ch">这站把 ${total} 篇顶会论文（CoRL、NeurIPS、MobiCom、SIGCOMM、ICML、ICLR、CVPR）翻译成入门读者也能跟下来的语言——任何术语第一次出现都给一句话定义和一个生活类比，方法分步骤拆解，关键数字配生活语境。</p>
+        <h1><em>从零开始</em>学具身智能 — <em>22 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
+        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，22 章教程带你系统入门，156 篇论文笔记做你的参考文献库。</p>
       </div>
       <figure class="hero-figure">
         <picture>
@@ -447,10 +447,15 @@ function buildIndex(notes, latestIssue = null) {
       </figure>
     </div>
 
-    <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;margin:1.6rem 0 0;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
-      <span style="color:var(--coral)">→</span>
-      <span>从这里开始 · 30 天路径 · FAQ · 公式速查</span>
-    </a>
+    <div style="display:flex;flex-wrap:wrap;gap:0.8rem;margin:1.6rem 0 0">
+      <a href="${url("/guide/ch01-why-embodied-ai/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
+        <span style="color:var(--coral)">→</span>
+        <span>开始学习 · 从 Ch01 起步</span>
+      </a>
+      <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;padding:0.85rem 1.4rem;background:transparent;color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
+        <span>30 天路径 · FAQ · 公式速查</span>
+      </a>
+    </div>
 
     ${lastCommits ? `<aside class="last-commits">
       <span class="lc-eyebrow">Recently updated ↘</span>
@@ -464,8 +469,9 @@ function buildIndex(notes, latestIssue = null) {
       <div class="stat-cell"><span class="stat-num">${TOPIC_ORDER.length}</span><span class="stat-label">topics</span></div>
       <div class="stat-cell"><span class="stat-num">${notes.reduce((s, n) => s + (n.wordCount || 0), 0).toLocaleString()}</span><span class="stat-label">total 字</span></div>
       <div class="stat-cell"><span class="stat-num">${Math.round(notes.reduce((s, n) => s + (n.readingTime || 0), 0) / 60)}</span><span class="stat-label">小时阅读</span></div>
-      <div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
-    </div>
+<div class="stat-cell"><span class="stat-num">${(() => { const ys = notes.map(n => Number(n.year)).filter(Boolean); return Math.min(...ys) + "–" + Math.max(...ys); })()}</span><span class="stat-label">year span</span></div>
+<div class="stat-cell"><span class="stat-num" data-eai-guide-count>0</span><span class="stat-denom"> / 22</span><span class="stat-label">Guide 进度</span></div>
+</div>
 
     <aside class="daily-pick" id="eai-daily-pick" hidden>
       <div class="dp-eyebrow">Today's pick · 今日推荐</div>
@@ -532,6 +538,53 @@ function buildIndex(notes, latestIssue = null) {
     </aside>
 <!-- inline data island moved to /data/papers.json (fetched lazily by reading-progress.js) -->
     <hr/>`;
+
+  // --- 路径分流（"你是谁 → 走哪条路"）---
+  body += `<section class="learning-paths" style="margin:2.5rem 0">
+    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">选一条路径开始 ↘</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
+      <a href="${url("/guide/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
+        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">系统学习（推荐）</strong>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">22 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
+      </a>
+      <a href="${url("/learn/path/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
+        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30 天论文路径</strong>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">每天 1-2 篇论文，30 天后能讲清具身 AI 这一年在干什么。</p>
+      </a>
+      <a href="${url("/topics/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
+        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读</strong>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？11 个主题各有 3 篇 primer 带你入门。</p>
+      </a>
+    </div>
+  </section>`;
+
+  // --- Guide 6 Part 预览 ---
+  const guideParts = [
+    { label: "Part 1: 导读总纲", range: "Ch01–03", desc: "这本教程是什么？怎么读？需要什么前置知识？" },
+    { label: "Part 2: 全景概念", range: "Ch04–07", desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 3: 核心主线精读", range: "Ch08–14", desc: "VLM → VLA → 扩散策略 → 模仿学习" },
+    { label: "Part 4: 训练与部署", range: "Ch15–17", desc: "世界模型、强化学习、Sim-to-Real" },
+    { label: "Part 5: 感知扩展", range: "Ch18–20", desc: "多模态、射频感知、听觉智能" },
+    { label: "Part 6: 实战", range: "Ch21–22", desc: "数据集全景 + Task 实战指南" },
+  ];
+  body += `<section style="margin:2rem 0 2.5rem">
+    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">22 章教程总览 ↘</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.8rem">
+      ${guideParts.map(p => `<a href="${url("/guide/")}" style="padding:1rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
+        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--ink-faint)">${p.range}</span>
+        <strong style="display:block;font-size:0.85rem;margin-top:0.3rem">${p.label}</strong>
+        <span style="font-size:0.82rem;color:var(--ink-soft)">${p.desc}</span>
+      </a>`).join("")}
+    </div>
+    <a href="${url("/guide/")}" style="display:inline-block;margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--coral);text-decoration:none">查看完整目录 →</a>
+  </section>
+  <hr/>`;
+
+  // --- 论文库分隔 ---
+  body += `<section style="margin:1.5rem 0 0.5rem">
+    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute)">论文笔记库 · ${total} papers ↘</h2>
+    <p style="font-size:0.95rem;color:var(--ink-soft);max-width:52ch">教程之外，这里是 ${total} 篇论文的详细笔记——每篇含架构图、实验数据、踩坑提醒。可按主题、难度、era 筛选。</p>
+  </section>`;
 
   // 快筛工具栏
   body += `<aside class="quick-filter" id="eai-quick-filter">
@@ -625,7 +678,7 @@ function buildIndex(notes, latestIssue = null) {
   }
 
   body += `</main>`;
-  return page({ title: "Embodied AI Reading Station", body, active: "index" });
+  return page({ title: "Embodied AI: Zero to One", body, active: "index" });
 }
 
 // --- topics page ------------------------------------------------------------
@@ -668,7 +721,7 @@ function buildTopics(notes) {
     body += `</ul></section>`;
   }
   body += `</main>`;
-  return page({ title: "Topics — Embodied AI Reading", body, active: "topics" });
+  return page({ title: "Topics — Embodied AI: Zero to One", body, active: "topics" });
 }
 
 // --- glossary page ----------------------------------------------------------
@@ -717,7 +770,7 @@ function buildGlossary(notes) {
     body += `</dl></section>`;
   }
   body += `</main>`;
-  return page({ title: "Glossary — Embodied AI Reading", body, active: "glossary" });
+  return page({ title: "Glossary — Embodied AI: Zero to One", body, active: "glossary" });
 }
 
 // --- per-topic landing ------------------------------------------------------
@@ -878,7 +931,7 @@ function buildTopicLanding(t, notes) {
 
   body += `</main>`;
 
-  return page({ title: `${t.label} — Embodied AI Reading`, body, active: "topics" });
+  return page({ title: `${t.label} — Embodied AI: Zero to One`, body, active: "topics" });
 }
 
 // --- tags -------------------------------------------------------------------
@@ -940,7 +993,7 @@ function buildTagsIndex(notes) {
     </a>`;
   }
   body += `</div></main>`;
-  return page({ title: "Tags — Embodied AI Reading", body, active: "tags" });
+  return page({ title: "Tags — Embodied AI: Zero to One", body, active: "tags" });
 }
 
 function buildTagPage(tag, notes) {
@@ -965,7 +1018,7 @@ function buildTagPage(tag, notes) {
       </tr>`).join("")}</tbody>
     </table>
   </main>`;
-  return page({ title: `#${tag} — Embodied AI Reading`, body, active: "tags" });
+  return page({ title: `#${tag} — Embodied AI: Zero to One`, body, active: "tags" });
 }
 
 // --- reading lists ----------------------------------------------------------
@@ -1047,7 +1100,7 @@ function buildReadingLists(notes) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Reading lists — Embodied AI Reading", body, active: "lists" });
+  return page({ title: "Reading lists — Embodied AI: Zero to One", body, active: "lists" });
 }
 
 // --- era landing pages ------------------------------------------------------
@@ -1135,7 +1188,7 @@ function buildEraPage(era, notes) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: `${info.label} — Embodied AI Reading`, body, active: "eras" });
+  return page({ title: `${info.label} — Embodied AI: Zero to One`, body, active: "eras" });
 }
 
 // --- /syllabus/ checkable 30-day course plan -------------------------------
@@ -1255,7 +1308,7 @@ function buildSyllabus(notes) {
     render();
   })();
   </script>`;
-  return page({ title: "Syllabus — Embodied AI Reading", body, active: "syllabus" });
+  return page({ title: "Syllabus — Embodied AI: Zero to One", body, active: "syllabus" });
 }
 
 // --- /cheatsheet/ all papers tldr in one page ------------------------------
@@ -1297,7 +1350,7 @@ function buildCheatsheet(notes) {
     body += `</ol></section>`;
   }
   body += `</main>`;
-  return page({ title: "Cheatsheet — Embodied AI Reading", body, active: "cheatsheet" });
+  return page({ title: "Cheatsheet — Embodied AI: Zero to One", body, active: "cheatsheet" });
 }
 
 // --- /discover/ exploration page -------------------------------------------
@@ -1404,7 +1457,7 @@ function buildDiscover(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Discover — Embodied AI Reading", body, active: "discover" });
+  return page({ title: "Discover — Embodied AI: Zero to One", body, active: "discover" });
 }
 
 // --- /next/ smart next paper redirect --------------------------------------
@@ -1454,7 +1507,7 @@ function buildNext(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Next — Embodied AI Reading", body, active: "" });
+  return page({ title: "Next — Embodied AI: Zero to One", body, active: "" });
 }
 
 // --- random paper redirect --------------------------------------------------
@@ -1481,7 +1534,7 @@ function buildRandom(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Random — Embodied AI Reading", body, active: "" });
+  return page({ title: "Random — Embodied AI: Zero to One", body, active: "" });
 }
 
 // --- human-readable site map -----------------------------------------------
@@ -1570,7 +1623,7 @@ function buildSiteMap(notes, issuePages, learnPages) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Site map — Embodied AI Reading", body, active: "sitemap" });
+  return page({ title: "Site map — Embodied AI: Zero to One", body, active: "sitemap" });
 }
 
 // --- contributors page ------------------------------------------------------
@@ -1631,7 +1684,7 @@ function buildContributors(notes) {
       </p>
     </section>
   </main>`;
-  return page({ title: "Contributors — Embodied AI Reading", body, active: "about" });
+  return page({ title: "Contributors — Embodied AI: Zero to One", body, active: "about" });
 }
 
 // --- changelog (从 git log 自动生成) ---------------------------------------
@@ -1689,7 +1742,7 @@ function buildChangelog() {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Changelog — Embodied AI Reading", body, active: "changelog" });
+  return page({ title: "Changelog — Embodied AI: Zero to One", body, active: "changelog" });
 }
 
 // --- quality dashboard (作者用，不放主导航) ---------------------------------
@@ -1747,7 +1800,7 @@ function buildQuality(notes) {
       </tbody>
     </table>
   </main>`;
-  return page({ title: "Quality — Embodied AI Reading", body, active: "quality" });
+  return page({ title: "Quality — Embodied AI: Zero to One", body, active: "quality" });
 }
 
 // --- stats dashboard --------------------------------------------------------
@@ -1938,7 +1991,7 @@ function buildStats(notes, backlinkMap = new Map()) {
     </section>
 <!-- inline data island moved to /data/papers.json -->
   </main>`;
-  return page({ title: "Stats — Embodied AI Reading", body, active: "stats" });
+  return page({ title: "Stats — Embodied AI: Zero to One", body, active: "stats" });
 }
 
 // --- venue stats ------------------------------------------------------------
@@ -2008,7 +2061,7 @@ function buildVenueStats(notes) {
     body += `<p style="color:var(--ink-faint);font-size:0.85rem">${unknown} 篇 venue 未标记，未计入。</p>`;
   }
   body += `</main>`;
-  return page({ title: "Venues — Embodied AI Reading", body, active: "venues" });
+  return page({ title: "Venues — Embodied AI: Zero to One", body, active: "venues" });
 }
 
 // --- tag co-occurrence heatmap ---------------------------------------------
@@ -2077,7 +2130,7 @@ function buildHeatmap(notes) {
       ★ 对角线 mustard = 该 tag 论文数 / 非对角 coral = 共现数 / 数字 ≥3 才显示
     </p>
   </main>`;
-  return page({ title: "Heatmap — Embodied AI Reading", body, active: "heatmap" });
+  return page({ title: "Heatmap — Embodied AI: Zero to One", body, active: "heatmap" });
 }
 
 // --- 404 page ---------------------------------------------------------------
@@ -2152,7 +2205,7 @@ function build404(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "404 — 这页没找到 — Embodied AI Reading", body, active: "" });
+  return page({ title: "404 — 这页没找到 — Embodied AI: Zero to One", body, active: "" });
 }
 
 // --- about page -------------------------------------------------------------
@@ -2306,7 +2359,7 @@ function buildAbout(notes = []) {
       <h2>Cite this site</h2>
       <p>整站作为参考资料引用：</p>
       <pre style="background:var(--bone);border:1px solid var(--paper-dark);padding:0.8rem 1rem;font-family:var(--font-mono);font-size:0.78rem;overflow-x:auto">@online{embodied_ai_reading_station_2026,
-  title       = {Embodied AI Reading Station},
+  title       = {Embodied AI: Zero to One},
   author      = {Zhou, Jason},
   year        = {2026},
   howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/}},
@@ -2315,7 +2368,7 @@ function buildAbout(notes = []) {
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
   </main>`;
-  return page({ title: "About — Embodied AI Reading", body, active: "about" });
+  return page({ title: "About — Embodied AI: Zero to One", body, active: "about" });
 }
 
 function notes_count_estimate() {
@@ -2340,6 +2393,10 @@ function buildLearnIndex(pages) {
     <h1>论文是<em>终点</em>，不是起点。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
       156 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
+    </p>
+    <p style="font-size:0.97rem;line-height:1.6;color:var(--ink-mute);max-width:52ch;margin-top:0.6rem">
+      <strong>Learn</strong> 是工具箱——速查公式、常见 FAQ、30 天路径。
+      系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（22 章，从感知到部署）。
     </p>
 
     ${featuredPages.length ? `<section class="learn-featured">
@@ -2367,7 +2424,7 @@ function buildLearnIndex(pages) {
       </article>`).join("")}
     </div>` : ""}
   </main>`;
-  return page({ title: "Learn — Embodied AI Reading", body, active: "learn" });
+  return page({ title: "Learn — Embodied AI: Zero to One", body, active: "learn" });
 }
 
 function buildLearnPage(p, allPages) {
@@ -2422,6 +2479,24 @@ function discoverGuide() {
 
 function buildGuideIndex(guideData) {
   const { chapters, readmeRaw } = guideData;
+
+  // 13 task-required paper slugs (Task 1 精读论文)
+  const TASK_SLUGS = new Set([
+    "3dshape2vecset", "acoustic-swarms", "cosmos-policy", "llava", "mla",
+    "mmclip", "neuralaids", "nlos-mmwave", "openvla", "proactive-hearing",
+    "rf-slam", "saycan", "vlas",
+  ]);
+
+  // Pre-compute task-required paper count per chapter
+  const chTaskCount = new Map();
+  for (const ch of chapters) {
+    const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
+    if (!m) continue;
+    const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
+    const count = slugs.filter(s => TASK_SLUGS.has(s)).length;
+    if (count > 0) chTaskCount.set(ch.num, count);
+  }
+
   // Group chapters by part
   const parts = [
     { label: "Part 1: 导读总纲", range: [1, 3], desc: "这本导读是什么？怎么读？需要什么前置知识？" },
@@ -2439,20 +2514,27 @@ function buildGuideIndex(guideData) {
       <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:0.5rem">${p.label}</h2>
       <p style="color:var(--ink-soft);font-size:0.95rem;margin-bottom:1rem">${p.desc}</p>
       <div class="papers-grid">
-        ${chs.map(c => `<article class="paper-card" style="background:var(--paper-warm)">
+        ${chs.map(c => {
+          const tc = chTaskCount.get(c.num) || 0;
+          const taskBadge = tc > 0
+            ? `<span style="display:inline-block;font-size:0.7rem;padding:0.15em 0.5em;background:var(--coral);color:#fff;border-radius:4px;margin-top:0.4rem" title="本章涉及 ${tc} 篇 Task 精读论文">Task ×${tc}</span>`
+            : "";
+          return `<article class="paper-card" style="background:var(--paper-warm)">
           <span class="num">Ch${String(c.num).padStart(2, "0")}</span>
           <span class="topic">${p.label.split(":")[0]}</span>
           <h3><a href="${url(`/guide/${c.slug}/`)}">${c.title.replace(/^Ch\d+:\s*/, "")}</a></h3>
-        </article>`).join("")}
+          ${taskBadge}
+        </article>`;
+        }).join("")}
       </div>
     </section>`;
   }
 
   const body = `<main class="shell">
-    <span class="eyebrow">Guide · 具身智能导读</span>
-    <h1>22 章<em>系统导读</em>，从零基础到实战。</h1>
+    <span class="eyebrow">Guide · 具身智能系统教程</span>
+    <h1>22 章<em>系统教程</em>，从零基础到实战。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:52ch;margin-top:1rem">
-      基于 156 篇论文笔记和 13 篇精读论文，面向零基础读者，系统讲解具身智能（Embodied AI）的完整技术版图。
+      面向零基础读者，用日常类比和代码示例系统讲解具身智能——从 CLIP 到 π0，每章含自测题。基于 156 篇论文笔记和 13 篇精读论文。
     </p>
     <hr class="ornament"/>
     ${partsHtml}
@@ -2476,8 +2558,8 @@ function buildGuideIndex(guideData) {
       </div>
     </section>
   </main>`;
-  return page({ title: "Guide — 具身智能导读", body, active: "guide",
-    ogDescription: "22 章零基础具身智能系统导读——从 CLIP 到 VLA 到 Diffusion Policy，从理论到实战。" });
+  return page({ title: "Guide — 具身智能系统教程", body, active: "guide",
+    ogDescription: "22 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。" });
 }
 
 function buildGuidePage(ch, allChapters) {
@@ -2492,6 +2574,33 @@ function buildGuidePage(ch, allChapters) {
   // Rewrite links to README.md → /guide/
   body = body.replace(/\]\(README\.md\)/g, `](/guide/)`);
   const html = marked.parse(body);
+
+  // Parse <!-- papers: slug1, slug2, ... --> annotation
+  const papersMatch = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
+  const paperSlugs = papersMatch
+    ? papersMatch[1].split(",").map(s => s.trim()).filter(Boolean)
+    : [];
+  const linkedPapers = paperSlugs
+    .map(slug => PAPERS.find(p => p.slug === slug))
+    .filter(Boolean);
+
+  // Build "本章涉及论文" section
+  let papersSection = "";
+  if (linkedPapers.length > 0) {
+    const eraLabels = { founder: "祖师爷", classic: "经典", frontier: "前沿" };
+    papersSection = `<section class="guide-papers" style="margin-top:3rem;padding-top:2rem;border-top:1px solid var(--paper-dark)">
+      <h2 style="font-family:var(--font-display);font-size:1.3rem;color:var(--ink);margin-bottom:0.5rem">本章涉及论文 <span style="font-weight:400;font-size:0.85rem;color:var(--ink-mute)">${linkedPapers.length} 篇</span></h2>
+      <p style="font-size:0.9rem;color:var(--ink-soft);margin-bottom:1.5rem">点击查看论文笔记全文，标有 <span style="color:var(--coral)">●</span> 的为已读。</p>
+      <div class="papers-grid" style="gap:0.75rem">${linkedPapers.map(p => {
+        const eraTag = eraLabels[p.era] || p.era;
+        return `<article class="paper-card" data-slug="${p.slug}" style="background:var(--paper-warm);padding:0.8rem 1rem">
+          <span class="num" style="font-size:0.75rem">№ ${String(p.num).padStart(2, "0")}</span>
+          <span class="topic" style="font-size:0.7rem">${p.topicLabel} · ${eraTag}</span>
+          <h3 style="font-size:0.95rem;margin:0.3rem 0 0"><a href="${url(`/papers/${p.slug}/`)}" style="text-decoration:none;color:var(--ink)">${p.title.split(":")[0]}</a></h3>
+        </article>`;
+      }).join("")}</div>
+    </section>`;
+  }
 
   // Prev / next navigation
   const idx = allChapters.findIndex(c => c.slug === ch.slug);
@@ -2510,17 +2619,26 @@ function buildGuidePage(ch, allChapters) {
   };
   const partLabel = partLabels[ch.num] || "Guide";
 
-  const prevNext = `<nav class="guide-nav" style="display:flex;justify-content:space-between;align-items:center;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--paper-dark);font-size:0.9rem;font-family:var(--font-mono)">
-    ${prev ? `<a href="${url(`/guide/${prev.slug}/`)}" style="color:var(--ink-soft)">← Ch${String(prev.num).padStart(2, "0")}</a>` : `<span></span>`}
-    <a href="${url("/guide/")}" style="color:var(--ink-mute)">目录</a>
-    ${next ? `<a href="${url(`/guide/${next.slug}/`)}" style="color:var(--ink-soft)">Ch${String(next.num).padStart(2, "0")} →</a>` : `<span></span>`}
+  const prevTitle = prev ? prev.title.replace(/^Ch\d+:\s*/, "") : "";
+  const nextTitle = next ? next.title.replace(/^Ch\d+:\s*/, "") : "";
+  const prevNext = `<nav class="guide-nav" style="display:flex;justify-content:space-between;align-items:flex-start;margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--paper-dark);font-size:0.9rem;font-family:var(--font-mono);gap:1rem">
+    ${prev ? `<a href="${url(`/guide/${prev.slug}/`)}" style="color:var(--ink-soft);text-decoration:none;max-width:40%"><span style="display:block;font-size:0.75rem;color:var(--ink-faint)">← 上一章</span>Ch${String(prev.num).padStart(2, "0")}: ${prevTitle}</a>` : `<span></span>`}
+    <a href="${url("/guide/")}" style="color:var(--ink-mute);white-space:nowrap">目录</a>
+    ${next ? `<a href="${url(`/guide/${next.slug}/`)}" style="color:var(--ink-soft);text-decoration:none;text-align:right;max-width:40%"><span style="display:block;font-size:0.75rem;color:var(--ink-faint)">下一章 →</span>Ch${String(next.num).padStart(2, "0")}: ${nextTitle}</a>` : `<span></span>`}
   </nav>`;
+
+  // "标记已完成" button for guide progress tracking
+  const completeBtn = `<div style="text-align:center;margin-top:2.5rem">
+    <button class="guide-done-btn" data-guide-slug="${ch.slug}" type="button" aria-pressed="false" style="font-family:var(--font-mono);font-size:0.95rem;padding:0.7rem 2rem;border:2px solid var(--coral);border-radius:6px;background:transparent;color:var(--coral);cursor:pointer;transition:all 0.2s">标记本章已完成</button>
+  </div>`;
 
   const pageBody = `<main class="note-shell">
     <span class="eyebrow">Guide · ${partLabel}</span>
     <h1>${ch.title}</h1>
     <hr/>
     <div class="note-content">${html}</div>
+    ${papersSection}
+    ${completeBtn}
     ${prevNext}
   </main>`;
   const shortTitle = ch.title.replace(/^Ch\d+:\s*/, "");
@@ -2575,7 +2693,7 @@ function buildCompare(notes) {
     body += `</tbody></table></section>`;
   }
   body += `</main>`;
-  return page({ title: "Compare — Embodied AI Reading", body, active: "compare" });
+  return page({ title: "Compare — Embodied AI: Zero to One", body, active: "compare" });
 }
 
 // --- RSS / Atom feed --------------------------------------------------------
@@ -2620,7 +2738,7 @@ function buildFeed(issuePages, notes) {
 
   return `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
-  <title>Embodied AI Reading Station</title>
+  <title>Embodied AI: Zero to One</title>
   <subtitle>156 篇具身 AI 论文，用能读懂的语言重写</subtitle>
   <link href="${SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="${SITE_URL}/" rel="alternate" type="text/html"/>
@@ -2692,7 +2810,7 @@ function buildGraph(notes) {
   </main>
   <script id="graph-data" type="application/json">${JSON.stringify(data)}</script>`;
   return page({
-    title: "Graph — Embodied AI Reading",
+    title: "Graph — Embodied AI: Zero to One",
     body,
     active: "graph",
     extraHead: `<script src="https://d3js.org/d3.v7.min.js" defer></script>
@@ -2775,7 +2893,7 @@ function buildTimeline(notes) {
     body += `</ul></section>`;
   }
   body += `</main>`;
-  return page({ title: "Timeline — Embodied AI Reading", body, active: "timeline" });
+  return page({ title: "Timeline — Embodied AI: Zero to One", body, active: "timeline" });
 }
 
 // --- issue cover pages ------------------------------------------------------
@@ -2812,7 +2930,7 @@ function buildIssueIndex(issues) {
       </a>`).join("")}
     </div>
   </main>`;
-  return page({ title: "Issues — Embodied AI Reading", body, active: "issues" });
+  return page({ title: "Issues — Embodied AI: Zero to One", body, active: "issues" });
 }
 
 function toRoman(n) {
@@ -2863,7 +2981,7 @@ function buildIssuePage(issue, notes) {
 
   const body = `<main class="issue-cover ${outlineHtml ? "has-outline" : ""}">
     <div class="issue-masthead">
-      <span class="issue-title">Embodied AI Reading Station</span>
+      <span class="issue-title">Embodied AI: Zero to One</span>
       <span>Issue Nº ${issue.issueNumber}</span>
       <span>${issue.issueDate}</span>
     </div>
@@ -2873,7 +2991,7 @@ function buildIssuePage(issue, notes) {
     ${outlineHtml}
     ${platesSection}
   </main>`;
-  return page({ title: `${issue.title} — Embodied AI Reading`, body, active: "issues" });
+  return page({ title: `${issue.title} — Embodied AI: Zero to One`, body, active: "issues" });
 }
 
 // --- single note page -------------------------------------------------------
@@ -2898,7 +3016,7 @@ function injectInlineFigures(slug, body, paperTitle = "") {
   return result;
 }
 
-function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = []) {
+function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = [], guideChaptersMentioning = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
   const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
@@ -2979,6 +3097,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
     ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
+    ${guideChaptersMentioning.length ? `<div class="guide-badges" style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.5rem">${guideChaptersMentioning.map(ch => `<a class="guide-badge" href="${url(`/guide/${ch.slug}/`)}" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.3rem 0.75rem;background:var(--paper-warm);border:1px solid var(--paper-dark);border-radius:4px;font-size:0.8rem;font-family:var(--font-mono);color:var(--ink-soft);text-decoration:none;transition:border-color 0.2s" title="${ch.title}"><span style="color:var(--coral);font-weight:600">Guide</span> Ch${String(ch.num).padStart(2, "0")} 中讲解</a>`).join("")}</div>` : ""}
 
     <div class="note-content" data-pagefind-body>
       ${html}
@@ -2999,7 +3118,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   year        = {2026},${note.year ? `
   note        = {Note on a ${note.year} paper},` : ""}
   howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}},
-  organization = {Embodied AI Reading Station}
+  organization = {Embodied AI: Zero to One}
 }</pre>
         <button class="cite-copy" type="button" data-cite-target="cite-${note.slug}">复制 BibTeX</button>
       </div>
@@ -3031,7 +3150,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
         "headline": note.title,
         "description": note.tldr || "",
         "author": { "@type": "Person", "name": "Jason" },
-        "publisher": { "@type": "Organization", "name": "Embodied AI Reading Station" },
+        "publisher": { "@type": "Organization", "name": "Embodied AI: Zero to One" },
         // 笔记的发布时间用 build 时间戳；论文原始年份用 about 字段单独保留
         "datePublished": new Date().toISOString().slice(0, 10),
         "dateModified": new Date().toISOString().slice(0, 10),
@@ -3063,7 +3182,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   const linkRel = `${prev ? `<link rel="prev" href="${SITE_URL}/papers/${prev.slug}/">` : ""}
 ${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
   return page({
-    title: `${note.title} — Embodied AI Reading`,
+    title: `${note.title} — Embodied AI: Zero to One`,
     body,
     active: "papers",
     ogTitle: `№ ${note.num} · ${note.title.split(":")[0]}`,
@@ -3269,6 +3388,21 @@ function build() {
     }
     console.log(`  built ${guideData.chapters.length} guide chapter pages`);
     stage("guide pages");
+  }
+
+  // Build paper → guide chapters reverse mapping for bidirectional links
+  const paperGuideMap = new Map(); // slug → [{num, slug, title}]
+  if (guideData && guideData.chapters) {
+    for (const ch of guideData.chapters) {
+      const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
+      if (!m) continue;
+      const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
+      for (const slug of slugs) {
+        if (!paperGuideMap.has(slug)) paperGuideMap.set(slug, []);
+        paperGuideMap.get(slug).push({ num: ch.num, slug: ch.slug, title: ch.title });
+      }
+    }
+    console.log(`  mapped ${paperGuideMap.size} papers to guide chapters`);
   }
 
   // index — 先用 null（最新 issue 还没加载），稍后加载完 issue 再覆盖
@@ -3538,9 +3672,10 @@ function build() {
     const prev = idx > 0 ? tList[idx - 1] : null;
     const next = idx >= 0 && idx < tList.length - 1 ? tList[idx + 1] : null;
     const issuesMentioning = paperIssues.get(n.slug) || [];
-    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning));
+    const guideChaptersMentioning = paperGuideMap.get(n.slug) || [];
+    write(path.join(DIST, "papers", n.slug, "index.html"), buildNotePage(n, bl, prev, next, issuesMentioning, guideChaptersMentioning));
   }
-  console.log(`  built ${notes.length} paper pages with backlinks/prev-next/issue badges`);
+  console.log(`  built ${notes.length} paper pages with backlinks/prev-next/issue/guide badges`);
   stage("paper pages");
 
   // 重新生成 stats，这次带 backlinks 数据
@@ -3638,7 +3773,7 @@ Canonical: ${SITE_URL}/.well-known/security.txt
 `);
 
     // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
-    write(path.join(DIST, "llms.txt"), `# Embodied AI Reading Station
+    write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
 
 > 156 篇具身智能顶会论文，用零基础也能读懂的中文重写。
 
@@ -3673,7 +3808,7 @@ This is a static reading site for embodied AI papers. All content is hand-curate
 ## Cite
 
 @misc{embodied_ai_reading_station,
-  title  = {Embodied AI Reading Station},
+  title  = {Embodied AI: Zero to One},
   author = {Jason},
   year   = {2026},
   url    = {${SITE_URL}/},
@@ -3684,8 +3819,8 @@ This is a static reading site for embodied AI papers. All content is hand-curate
     // opensearch.xml (浏览器地址栏当搜索引擎)
     write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>EAI Reading</ShortName>
-  <LongName>Embodied AI Reading Station</LongName>
+  <ShortName>EAI Zero to One</ShortName>
+  <LongName>Embodied AI: Zero to One</LongName>
   <Description>156 篇具身智能论文搜索</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image type="image/svg+xml">${SITE_URL}/favicon.svg</Image>

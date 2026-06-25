@@ -1245,3 +1245,5 @@ MLA 代表的是感知丰富度（sensory richness）。它回答的问题是：
 > 前置章节：[Ch11: 端到端 VLA (I)——RT-1 / RT-2，把动作变成 token](ch11-rt1-rt2.md)
 > 后续章节：[Ch13: 扩散策略——Diffusion Policy / 3D-DP / π0，像擦噪声一样擦出动作](ch13-diffusion-policy.md)
 > [返回目录](README.md)
+
+<!-- papers: openvla, openvla-oft, vlas, mla, rt-1, rt-2, siglip, llava, clip, octo, tinyvla, smolvla, spatialvla, tracevla -->

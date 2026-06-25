@@ -1,4 +1,4 @@
-// Embodied AI Reading Station — Service Worker
+// Embodied AI: Zero to One — Service Worker
 // 策略：核心壳 cache-first；论文页 stale-while-revalidate；图片 cache-first
 
 const VERSION = "v1";

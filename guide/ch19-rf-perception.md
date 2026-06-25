@@ -1401,3 +1401,5 @@ PanoRadar 的效果接近 LiDAR，但 LiDAR 一颗 5000-50000 元，mmWave 芯�
 > 前置章节：[Ch18: 多模态生态——ImageBind / AnyMAL / 3DShape2VecSet](ch18-multimodal.md)
 > 后续章节：[Ch20: 听觉智能——Whisper / AudioLM / Proactive Hearing](ch20-auditory.md)
 > [返回目录](README.md)
+
+<!-- papers: rf-pose-through-wall, rfpose-ot, person-in-wifi, millimap, panoradar, rf-slam, mmclip, rfmask, radarhd, radarslam, milliego, nlos-mmwave, 3drimr, clip -->

@@ -2007,7 +2007,7 @@ html.dark-theme body::after {
 
   /* 在第一页顶部加打印水印 */
   .note-content::before {
-    content: "Embodied AI Reading Station — printed copy. Source: estelledc.github.io/embodied-ai-reading-station";
+    content: "Embodied AI: Zero to One — printed copy. Source: estelledc.github.io/embodied-ai-reading-station";
     display: block;
     font-family: var(--font-mono);
     font-size: 8pt;

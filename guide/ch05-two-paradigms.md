@@ -390,3 +390,5 @@ OpenVLA 收到摄像头画面 + "I want a cup of coffee, please make one for me"
 > 导读目录：[README.md](README.md)
 > 上一章：[Ch04: 11 个主题全景图——一个机器人的 11 个器官](ch04-landscape.md)
 > 下一章：[Ch06: 具身 AI 的时间线——2021-2025 关键里程碑](ch06-timeline.md)
+
+<!-- papers: saycan, code-as-policies, inner-monologue, rt-1, rt-2, openvla, siglip, pi0, dagger, diffusion-policy -->

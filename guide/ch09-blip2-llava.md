@@ -1570,3 +1570,5 @@ Ch10 将展示 VLM 在具身智能中的第一种应用方式——不直接输�
 > 前置章节：[Ch08: VLM 地基 (I)——CLIP，教 AI 同时认图和认字](ch08-clip.md)
 > 后续章节：[Ch10: 高层规划——SayCan / Code-as-Policies / Inner Monologue](ch10-planning.md)
 > [返回目录](README.md)
+
+<!-- papers: clip, blip-2, llava, llava-1-5, flamingo, siglip, internvl, qwen-vl, llava-onevision, llava-next-interleave, openvla -->

@@ -1381,3 +1381,5 @@ Diffusion Policy 把动作生成重新定义为"从噪声中去噪"。和 Stable
 > 前置章节：[Ch12: 端到端 VLA (II)——OpenVLA / VLAS / MLA，开源与扩展](ch12-openvla-vlas-mla.md)
 > 后续章节：[Ch14: 模仿学习——DAgger / ACT-ALOHA / UMI，你做给它看](ch14-imitation-learning.md)
 > [返回目录](README.md)
+
+<!-- papers: diffusion-policy, ibc, dp3, 3d-diffusion-policy, dppo, act-aloha, umi, bet, vq-bet, pi0, pi0-fast, consistency-policy, flow-policy, flow-matching-manipulation, idp3 -->

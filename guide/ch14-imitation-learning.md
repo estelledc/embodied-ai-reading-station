@@ -1279,3 +1279,5 @@ ACT 提出的"动作分块"（action chunking）概念已经成为了整个领�
 > 前置章节：[Ch13: 扩散策略——Diffusion Policy / 3D-DP / π0，像擦噪声一样擦出动作](ch13-diffusion-policy.md)
 > 后续章节：[Ch15: 世界模型——World Models / Dreamer / Genie / Cosmos Policy](ch15-world-models.md)
 > [返回目录](README.md)
+
+<!-- papers: dagger, act-aloha, umi, mobile-aloha, diffusion-policy, gail, anyteleop, dexcap, humanplus, isaac-gym -->

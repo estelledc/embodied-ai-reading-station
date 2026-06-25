@@ -1459,3 +1459,5 @@ Ch22 将是一份实战指南（Task 1 & Task 2），把前 21 章学到的知�
 
 > 上一章：[Ch20: 听觉智能](ch20-auditory.md) | 下一章：[Ch22: 实战指南](ch22-task-guide.md)
 > [返回目录](README.md)
+
+<!-- papers: open-x-embodiment, droid, bridgedata-v2, rh20t, libero, meta-world, rlbench, robomimic, calvin, robocasa, behavior-1k, maniskill, simpler-env, octo, robosuite, mujoco-playground, pi0, rdt-1b -->

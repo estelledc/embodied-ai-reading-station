@@ -1493,3 +1493,5 @@ NeuralAids 不是"把大模型缩小了就完事"。它从芯片架构开始思�
 > 前置章节：[Ch19: 射频感知——RF-Pose / milliMap / PanoRadar / RF-SLAM / mmCLIP](ch19-rf-perception.md)
 > 后续章节：[Ch21: 数据集全景——Open X-Embodiment / DROID / BridgeData V2 / LIBERO](ch21-datasets.md)
 > [返回目录](README.md)
+
+<!-- papers: whisper, audiolm, soundstream, encodec, proactive-hearing, neuralaids, acoustic-swarms, conv-tasnet, dprnn, conformer, musiclm, audiopalm, seamless-m4t, meta-stylespeech, stable-audio, uss-weakly-labelled, wave-former -->

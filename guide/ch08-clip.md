@@ -1499,3 +1499,4 @@ CLIP 不只是一篇学术论文——它已经在工业界的大量产品中落
 > 前置章节：[Ch07: 从论文到机器人——理解学术论文的结构与读法](ch07-how-to-read-papers.md)
 > 后续章节：[Ch09: VLM 地基 (II)——从 BLIP-2 到 LLaVA，给 AI 装上对话能力](ch09-blip2-llava.md)
 > [返回目录](README.md)
+<!-- papers: clip, siglip, eva-clip, blip, llava, blip-2, flamingo -->

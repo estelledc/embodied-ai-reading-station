@@ -1335,3 +1335,5 @@ Ch11/12 VLA ←── Cosmos Policy 提供预训练骨干
 > 前置章节：[Ch14: 模仿学习——DAgger / ACT-ALOHA / UMI，你做给它看](ch14-imitation-learning.md)
 > 后续章节：[Ch16: 强化学习基础——PPO / SAC / Reward Shaping](ch16-rl-basics.md)
 > [返回目录](README.md)
+
+<!-- papers: world-models-ha, dreamer-v1, dreamer-v2, dreamer-v3, daydreamer, genie, cosmos-policy, cosmos-world-foundation, iris-world-model, transformer-world-model, gaia-1, unisim, navigation-world-models, 1x-world-model-2025, diffusion-policy -->

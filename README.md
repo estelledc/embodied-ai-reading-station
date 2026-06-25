@@ -1,7 +1,7 @@
-# Embodied AI Reading Station
+# Embodied AI: Zero to One
 
-> **156 篇具身智能顶会论文，用零基础也能读懂的中文重写。**
-> 从 CLIP 到 π0，11 主题全景，零术语堆叠，30 分钟读一篇。
+> **从零开始学具身智能——22 章系统教程 + 156 篇论文笔记。**
+> 零术语假设，日常类比起步。从 CLIP 到 π0，11 主题全景。
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
 
@@ -92,7 +92,7 @@ curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    
   title  = {RT-1: Robotics Transformer for Real-World Control at Scale},
   author = {Jason},
   year   = {2022},
-  note   = {Embodied AI Reading Station — readable note},
+  note   = {Embodied AI: Zero to One — readable note},
   url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/rt-1/}
 }
 ```

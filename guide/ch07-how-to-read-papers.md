@@ -238,3 +238,5 @@ NLP 论文不需要告诉你"我们用什么硬件做推理"——反正都是�
 > 导读目录：[README.md](README.md)
 > 上一章：[Ch06: 具身 AI 的时间线——2021-2025 关键里程碑](ch06-timeline.md)
 > 下一章：[Ch08: VLM 地基 (I)——CLIP，教 AI 同时认图和认字](ch08-clip.md)
+
+<!-- papers: saycan, llava, openvla, vlas, mla, blip-2, inner-monologue, code-as-policies, clip, rt-2, rf-slam, mmclip, nlos-mmwave -->

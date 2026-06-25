@@ -1336,3 +1336,5 @@ Section 10 已经详细分析了两者的同构性。这里再强调一点：两
 > 前置章节：[Ch15: 世界模型——World Models / Dreamer / Genie / Cosmos Policy](ch15-world-models.md)
 > 后续章节：[Ch17: Sim-to-Real——仿真训练与真机部署](ch17-sim-to-real.md)
 > [返回目录](README.md)
+
+<!-- papers: isaac-gym, dreamer-v3, dppo, diffusion-policy, habitat -->

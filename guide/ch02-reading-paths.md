@@ -8,6 +8,8 @@
 
 ## 1. 三条路径说明
 
+> **速查版**：如果你想要一张更简洁的 30 天每日计划表，直接看 [Learn: 30-day path](/learn/path/)。
+
 这本导读有 22 章，但你不需要从头读到尾。根据你的目标和可用时间，我设计了三条路径。每条路径像一条爬山步道——起点不同、长度不同、终点也不同，但都能让你看到有价值的风景。
 
 先说结论：
@@ -257,3 +259,5 @@ graph TD
 > 导读目录：[README.md](README.md)
 > 上一章：[Ch01: 为什么需要具身智能——从屏幕里的 AI 到走出来的机器人](ch01-why-embodied-ai.md)
 > 下一章：[Ch03: 前置知识检查清单](ch03-prerequisites.md)
+
+<!-- papers: clip, blip-2, llava, saycan, openvla, rt-1, rt-2, vlas, mla, diffusion-policy, dreamer-v3, genie, imagebind, 3dshape2vecset, whisper, habitat, isaac-gym, rf-slam, mmclip, nlos-mmwave -->

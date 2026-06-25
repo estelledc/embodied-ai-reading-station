@@ -1296,3 +1296,5 @@ RT-2 是一个强大的概念验证，但它有两个实际瓶颈：不开源、
 > 前置章节：[Ch10: 高层规划——SayCan / Code-as-Policies / Inner Monologue](ch10-planning.md)
 > 后续章节：[Ch12: 端到端 VLA (II)——OpenVLA / VLAS / MLA，开源与扩展](ch12-openvla-vlas-mla.md)
 > [返回目录](README.md)
+
+<!-- papers: rt-1, rt-2, openvla, llava, clip, siglip, palm-e -->

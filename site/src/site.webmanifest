@@ -1,6 +1,6 @@
 {
-  "name": "Embodied AI Reading Station",
-  "short_name": "EAI Reading",
+  "name": "Embodied AI: Zero to One",
+  "short_name": "EAI Zero to One",
   "description": "156 篇具身智能论文，用零基础也能读懂的中文重写",
   "start_url": "/embodied-ai-reading-station/",
   "display": "standalone",
