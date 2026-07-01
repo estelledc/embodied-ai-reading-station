@@ -3,107 +3,589 @@ title: "LIBERO"
 slug: libero
 topic: dataset-eval
 difficulty: ⭐⭐⭐
-status: auto-summary-light
+status: deep-read
 来源: "https://arxiv.org/abs/2306.03310"
 venue: NeurIPS
 year: 2023
 era: classic
 num: 31
-generated_at: 2026-05-31
+generated_at: 2026-07-01
 ---
 
-> 本笔记基于摘要 + 公开资料，未读全文。
+# LIBERO：机器人终身学习的「四科体检卷」
+
+> 零基础可读精读笔记。数字来自 arXiv:2306.03310 原文 Table 1–3。
 
 ## 一句话讲什么（TL;DR）
 
-教机器人学新技能时别忘旧技能。LIBERO 是这事的标准考卷，4 套题分别考空间、物体、目标和综合。
+**LIBERO** 用 **Robosuite 程序化生成 130 个**语言条件桌面任务，拆成 **Spatial / Object / Goal / 100** 四套卷，每任务 **50 条**专家遥操作示范；系统评测 **终身学习（LLDM）** 中 **陈述性 vs 程序性知识** 迁移，并意外发现：**顺序微调（SeqL）前向迁移优于 EWC/ER/PackNet**，且 **LIBERO-90 预训练可能损害下游终身学习**。
+
+*所以这一节是想说：LIBERO 既是 CL 基准，也是 2024+ **VLA 微调的事实考场**——但论文原始 setup 与社区用法不完全相同。*
+
+---
 
 ## 这是个什么场景
 
-家里新来一个家政机器人。周一你教它**叠衣服**，周二教它**洗碗**，周三教它**整理书架**——结果它学会洗碗那天，叠衣服全忘了；再学整理书架，连碗也不会洗了。像极了那种刚学新菜谱就忘了怎么煎蛋的实习生。学界给这个起了个戏剧化的名字：**灾难性遗忘（catastrophic forgetting）**。
+家政机器人周一学会 **叠衣服**，周二学 **洗碗**，周三学 **整理书架**——结果洗碗那天叠衣服全忘了。这叫 **灾难性遗忘（catastrophic forgetting）**。
 
-那怎么知道哪家公司做的机器人"记性"更好？以前没标准——每家自己造一组任务、自己跑、自己说"我们家最强"，谁也不服谁。
+以前没有统一考卷：各家自己造任务、自己报 success rate，无法回答——
 
-LIBERO 干的就是这事：**给所有家政机器人出一份统一的考卷**。考卷分 4 类题（4 个 task suite）：
-- "换了一个厨房，还会不会洗碗？"——考空间泛化
-- "把碗换成杯子，还会不会抓？"——考物体泛化
-- "以前是开抽屉，现在要关抽屉，会不会搞混？"——考目标泛化
-- 长程混合大杂烩——考综合能力
+- 是 **记不住物体在哪**（陈述性/declarative）？
+- 还是 **忘了怎么开抽屉**（程序性/procedural）？
 
-有了这把尺子，大家终于能放在一张表上比。
+**LIBERO**（LIfelong learning BEchmark on RObot manipulation）提供：
 
-## 之前的人怎么做的 — 3-5 bullet
+1. **四套题型** 分别考 **空间 / 物体 / 目标 / 混合长程**
+2. **130 任务 × 50 demo** + 自然语言指令
+3. **FWT / NBT / AUC** 指标量化 **前向迁移 vs 遗忘**
 
-- **单任务 benchmark**：Meta-World、RLBench、CALVIN 等更偏"一次性学一组任务"，不强调"先学 A 再学 B 时 A 会不会忘"
-- **持续学习（CL）社区**：之前主要在图像分类（Split-CIFAR、Permuted-MNIST）上跑，机器人控制这条线的标准化基准缺位
-- **模仿学习 + 视觉伺服**：很多机器人 paper 自己造一组任务、自己跑、自己报数，互相不可比
-- **缺少"知识类型"的解耦**：之前评估混在一起，没把"空间知识 / 物体知识 / 目标知识"拆开来看模型擅长迁移哪一种
-- **没有大规模专家演示数据集**：以前的 CL 基准要么没演示数据，要么只有几条；LIBERO 提供了每任务约 50 条人类遥操作演示
+2024 年起 **OpenVLA、π₀、RDT-1B** 等把 LIBERO 当 **per-task 微调成功率** 标准卷——与原文 **顺序终身学习** 是 **同一任务定义、不同评估协议** 的「一卷两吃」。
 
-## 这篇论文的关键想法
+**和 Split-CIFAR 的类比**：Split-CIFAR 按 **类顺序** 考分类遗忘；LIBERO 按 **操纵知识类型** 考 **declarative/procedural** 遗忘——是 **决策版** 的 split benchmark。
 
-老师批改作业时，会把"算错"和"看错题"分开扣分——因为错的原因不一样，补救方法也不一样。LIBERO 的核心想法就是**把机器人需要记住的"知识"拆成三类，分门别类地考**，再加一个综合套：
+*所以这一节是想说：LIBERO 把「机器人会不会忘」拆成可诊断的知识类型，并开源到能一键跑 baseline。*
 
-1. **空间知识（LIBERO-Spatial）**——像"换了个厨房还能不能找到碗"。物体一样，但摆放位置和桌面布局变了。
-2. **物体知识（LIBERO-Object）**——像"碗换成杯子还会不会抓"。场景一样，但物体外观和类别变了。
-3. **任务/目标知识（LIBERO-Goal）**——像"以前教你开抽屉，现在要关抽屉"。场景物体都一样，但要做的事变了。
-4. **LIBERO-100（综合长程）**——大杂烩。90 个短任务训练 + 10 个长程任务测试，模拟真实家里那种"先 A 再 B 再 C"的复杂活。
+---
 
-等等，先慢一拍——为什么要拆这三类？因为以前评估全混在一起，模型考砸了你都不知道它是"记不住位置"还是"认不出新物体"。拆开后才看得到模型擅长哪一种迁移。
+## 之前的人怎么做的，为什么不够好
 
-第二个关键想法是：**同一份卷子两群人都能用**。持续学习社区拿它跑 EWC、ER、PackNet 这些经典算法；VLA（Vision-Language-Action 模型）圈子拿它当"5-shot / 10-shot 微调能力"的标准考场。一卷两吃。
+- **Meta-World / RLBench / CALVIN**：强在多任务或语言长程，但 **不显式解耦** 空间/物体/目标三类知识，难定位遗忘原因。
+- **ContinualWorld**：改 Meta-World 50 任务做 CL，但 **任务与日常活动、语言条件** 弱于 LIBERO。
+- **Split-CIFAR 等 CL 经典集**：只有 **图像分类陈述性知识**，缺 **动作/程序性知识**。
+- **真机大数据（OXE/DROID）**：训 VLA 强，但 **终身学习顺序协议 + 可控分布偏移** 难做干净 ablation。
+- **各 VLA 自建 eval**：不可比；LIBERO 用 **固定 130 任务 + 50 demo** 成为 **横向标尺**。
 
-## 它怎么做的（方法）— 3-4 段
+**ContinualWorld / CORA 等**：把 Atari 或 Meta-World **改顺序评测**，但 **缺 LIBERO 级：Ego4D 启发的日常语言 + PDDL 目标 + 三套 controlled shift**。F-SIOL / OpenLORIS 偏 **视觉物体增量**，不是 **完整 manipulation LLDM**。
 
-**仿真平台**：基于 robosuite + MuJoCo，单臂 Franka Panda 桌面操作。每个任务都有自然语言指令（"pick up the alphabet soup and place it in the basket"这类），便于评测语言条件策略。共 130 个任务（4 套合计），每个任务约 50 条人类遥操作演示。具体每套任务的精确数量与时长需读原文。
+*所以这一节是想说：LIBERO 填补的是 **「决策 + 程序性知识 + 解耦 shift」** 的标准基准空白。*
 
-**评估协议**：核心指标是**成功率（success rate）**和**前向迁移 / 反向迁移（FWT / BWT）**。BWT 衡量学了新任务后旧任务掉了多少（就是遗忘量），FWT 衡量学过的旧任务对新任务有没有帮助。论文跑了 PackNet、EWC、Experience Replay 等经典 CL 算法，配合 ResNet/ViT 视觉编码器和 BC-RNN/Transformer 策略头做交叉对照。
+---
 
-**网络与训练**：方法层面 LIBERO 论文本身偏"评估 + 实证研究"，不主推某个新算法。它的贡献是发现：(a) **视觉编码器的预训练**（如 R3M）对 FWT 帮助很大；(b) **Transformer 策略**比 RNN 在长程任务上更稳；(c) 现有 CL 算法对**目标知识（Goal）**这一类最容易遗忘，对空间次之。这些观察是后来 VLA paper 反复引用的"基线参考"。
+## 这篇论文的新想法
 
-**数据与代码**：LIBERO 全部开源，提供 HDF5 格式的演示数据 + 标准训练/评估脚本。这是它能成为事实标准的重要原因——可复现性极高，跑 baseline 几乎是 import + 一条命令。
+**核心：把 LLDM（Lifelong Learning in Decision-Making）需要的知识拆成三类 controlled shift + 一套 entangled 长程卷。**
 
-## 实验在做什么
+| Suite | 控制变量 | 知识类型 | 任务数 |
+|-------|----------|----------|--------|
+| **LIBERO-Spatial** | 同物体集，**碗的空间关系/位置**变 | 陈述性（空间） | **10** |
+| **LIBERO-Object** | 同场景结构，**物体类别**变 | 陈述性（物体） | **10** |
+| **LIBERO-Goal** | 同物体同布局，**目标谓词**变 | 程序性（行为） | **10** |
+| **LIBERO-100** | 三者混合 + 长技能 |  entangled | **100** |
 
-论文实验主要回答四个问题：
+**LIBERO-100 再切分**：
 
-- **不同知识类型遗忘程度差多少**：在 Spatial / Object / Goal / 100 四套上分别跑同一组算法，看 BWT 曲线
-- **预训练视觉表征值不值**：对比 from-scratch、ImageNet 预训练、R3M 预训练在 FWT 上的差距
-- **策略架构选择**：BC-RNN vs BC-Transformer，看长程任务表现
-- **CL 算法横评**：PackNet、EWC、ER 等在不同任务族上各自的强项弱项
+- **LIBERO-90**：90 个短 horizon 任务 → 论文用于 **预训练（T5）**
+- **LIBERO-Long**：10 个长 horizon 任务 → **下游终身学习评测**
 
-具体数字需读原文表格（success rate、FWT、BWT 三栏，每个 suite 一组）。后续 VLA 圈子用 LIBERO 时往往只跑 success rate 这一栏，并把场景固定为"小样本微调"——和原论文的终身学习 setup 不完全一样，但共享同一套任务定义。
+**论文摘要四条「意外发现」**（Abstract）：① **架构设计与 CL 算法同等重要**；② **SeqL 前向迁移优于现有 CL 方法**；③ **语义 rich 语言 embedding ≈ Task-ID**；④ **朴素监督预训练可损害 LLDM**。
 
-## 你应该懂的几个新词 — 4-6 个
+**五个研究主题（T1–T5）**：知识类型迁移、网络结构、CL 算法、**任务顺序鲁棒性**、**预训练是否有害/有益**。
 
-- **终身学习（lifelong learning / continual learning, CL）**：模型按时间顺序持续学新任务，要求不忘旧、能用旧帮新。和"多任务学习"区别在于多任务是同时见所有数据，CL 是顺序见。
-- **灾难性遗忘（catastrophic forgetting）**：神经网络学新任务时旧任务性能急剧下降的现象，是 CL 的核心难题。
-- **任务族 / 任务套（task suite）**：一组共享某种结构但内部又有变化的任务集合。LIBERO 把它当作"考试题型"。
-- **前向迁移（FWT）/ 反向迁移（BWT）**：FWT = 学过的任务帮没学的；BWT = 学新的对旧的影响（通常是负数，越接近 0 越不遗忘）。
-- **遥操作演示（teleoperation demonstration）**：人类用手柄/VR 操控机器人完成任务，记录下来当训练数据。LIBERO 的 ~50 条 / 任务就是这么来的。
-- **VLA（Vision-Language-Action 模型）**：把视觉、语言、动作放进一个大模型（通常基于 VLM 微调），LIBERO 现在主要被 VLA 圈用作微调评估场。
+**LLDM 与图像 CL 的差异（Introduction）**：图像 CL 主要迁移 **实体/概念**（陈述性）；操纵还需 **怎么做**（程序性）——例如会找 juice 但不会开 fridge，可能是 **两种知识分别遗忘**，LIBERO 四套件 **部分解耦** 这两类失败模式。
 
-## 它和其他论文什么关系
+*所以这一节是想说：design 哲学是 **「程序化无限生成 + 固定 130 题 benchmark」** 双轨。*
 
-- **上游基础设施**：robosuite / MuJoCo（仿真）、R3M（视觉预训练表征）、BC-RNN / RT-1（策略架构原型）
-- **同代基准**：CALVIN（语言条件长程，更偏多任务）、Meta-World（强化学习多任务）、RLBench（更工业操作向）。LIBERO 的差异化是**显式 lifelong + 知识类型解耦**
-- **下游用户（这是它真正爆火的方向）**：
-  - **OpenVLA**（Stanford 2024）用 LIBERO-Spatial / Object / Goal / 10 测试微调能力，把它当成 VLA 标准卷
-  - **π0 / π0.5**（Physical Intelligence 2024-25）用 LIBERO 验证小样本能力
-  - **RDT-1B**（清华 2024）也跑 LIBERO 对照
-  - 很多近一年的"VLA + xxx"论文（diffusion policy 改进、action tokenizer 等）都把 LIBERO 当默认 evaluation suite
-- **后继 / 替代尝试**：SimplerEnv（2024）走"真机匹配"路线，目标是让仿真更接近真机；CALVIN 仍是另一个常并列报告的选项
+---
 
-## 我建议这样读 — 3-4 步
+## 它分几步做的（方法）
 
-1. **先看官方 GitHub README + 30s demo 视频**（搜 "Lifelong-Robot-Learning/LIBERO"）。先建立"4 个 suite 长什么样"的视觉直觉，比读 paper 引言更快。
-2. **跑通一次 baseline**：clone 仓库，用 BC-Transformer 在 LIBERO-Object 上跑一遍。这一步会让你理解任务、演示数据格式、评测脚本，比读方法章更扎实。
-3. **回到论文 Section 4-5**：看四类知识在不同 CL 算法下的曲线对比，重点关注 Goal suite 为什么最容易遗忘——这是后来很多 paper 切入的角度。
-4. **顺藤摸瓜读 OpenVLA 的 LIBERO 评估表**：你会发现"LIBERO 在 VLA 时代的用法"和论文原始的 lifelong setup 有偏移，理解这个偏移就理解了基准如何"被社区改造"。
+### 5.1 程序化任务生成管道（Section 4.1）
 
-## 为什么值得读
+**三步流程（Fig. 2）**：
 
-- **它是当前 VLA 微调评估的事实标准之一**。读 2024-25 年任何一篇 VLA 论文，几乎都会在实验表里看到 LIBERO 4 个 suite 的成功率——不读原文你只能照抄数字，读了能判断"为什么作者只报 Spatial 不报 Goal"这种小心机
-- **它把"机器人持续学习"这个抽象问题做了一次干净的拆解**：空间 / 物体 / 目标三类知识的解耦思路对你设计自己的 ablation 也有启发
-- **复现门槛低**。仿真 + 完整代码 + 演示数据全开源，是少有的"读完就能上手"的基准 paper
-- **战略价值**：理解 LIBERO 等于理解了一条评估范式——"用任务族而不是单任务衡量泛化"。这种思路在 RoboArena、SimplerEnv 等后续基准里都能看到影子
+1. **行为模板 + 语言**：从 **Ego4D** 人类活动语料抽模板（如 "Open …"）→ 填仿真可用物体 → 自然语言指令（"Open the top drawer of the cabinet and put the bowl in it"）
+2. **初始状态 $\mu_0$**：按指令选场景（厨房/桌面等）→ **PDDL** 描述 **物体类别、摆放、初始状态**（Fig. 2-A/B）
+3. **目标 $g$**：PDDL **谓词合取**——一元 `Open(X)`、二元 `On(A,B)` / `In(A,B)`；全部谓词为真则 episode 成功
+
+**平台**：**Robosuite** + **MuJoCo**；单臂 **Franka Panda** 桌面操作。
+
+**输入→输出（生成一条任务）**：
+
+- 输入：Ego4D 模板 + 物体库 + 场景类型
+- 处理：PDDL 采样布局与目标
+- 输出：**语言指令 + 可仿真执行的 MDP** $(\mu_0, g)$
+
+*所以这一节是想说：任务不是手写的，是 **语言→PDDL→仿真** 可扩展管道。*
+
+**PDDL 人话示例**：目标可能是 `On(bowl, plate) AND In(milk, basket)` 的合取——仿真器每步检查谓词真值，**全满足即 success**。这与 RL 稀疏奖励不同：**成功定义精确、可自动判分**，适合 benchmark。
+
+**与 Ego4D 的连接**：Ego4D 提供 **3000+ 小时** 第一视角日常活动 + 语言；LIBERO 只取 **动词-宾语模板**（非视频到动作的 end-to-end），降低生成成本，但保证任务 **贴近人类活动分布**。
+
+---
+
+### 5.2 四套任务套件设计细节（Section 4.2）
+
+**LIBERO-X（Spatial / Object / Goal 各 10 任务）**：
+
+- **Spatial**：全是「把 **bowl** 放到 **plate** 上」，但有 **两个同款 bowl**，仅 **空间关系/位置** 不同 → 必须 **持续记新空间关系**
+- **Object**：全是 pick-place，但 **每个任务不同物体** → 记 **新物体概念**
+- **Goal**：**物体与空间固定**，仅 **目标谓词/指令** 变（如 open vs close drawer）→ 记 **新动作程序**
+
+**为何 10 任务/suite？** 原文 footnote：足够观察 **catastrophic forgetting** 且 **算力可承受**。
+
+**具体任务例子（Spatial）**：桌面有 **相同物体集**（bowl、plate、cabinet 等），指令形如 pick the **left/right/中间** bowl place on plate——变的是 **bowl 与 plate 的相对位姿**，不是 object set。
+
+**具体任务例子（Goal）**：同一 cabinet + bowl 布局，任务 A 为 **open top drawer**，任务 B 为 **close drawer** 或 **put bowl in drawer**——**motor skill / goal predicate** 变，**视觉场景几乎不变**。
+
+**LIBERO-100**：100 个日常操纵，**90 short + 10 long**；long 用于测 **entangled 知识 + 长程**。
+
+*所以这一节是想说：三套 X 是 **controlled ablation**，100 是 **realistic 大杂烩**。*
+
+---
+
+### 5.3 示范数据采集
+
+| 项目 | 规格 |
+|------|------|
+| 每任务轨迹 | **50** 条 |
+| 采集方式 | 专家 **3Dconnexion Spacemouse** 遥操作 |
+| 策略训练 | **Behavioral Cloning（BC）**，GMM 动作头 |
+| 观测 | 图像 + 关节/gripper + **语言**（非 Markov → 用 $o_{\leq t}$ 历史） |
+
+**数据格式**：开源 **HDF5** + 训练/评估脚本（https://libero-project.github.io）。
+
+*所以这一节是想说：50 demo/task 是为 **sample-efficient BC** 研究 CL 算法，不是 RL 稀疏奖励。*
+
+**Lifelong 问题形式化（Eq.1–2）**：顺序任务 $T^1,\dots,T^K$，每任务 $T^k=(\mu_0^k, g^k)$。学到 $T^k$ 时 **默认无法访问** $T^{1..k-1}$ 的完整数据（ER 例外：小 buffer）。优化 **平均 success**，训练用 **BC 负对数似然** 在每条 demo 上。Partial observability：状态 $s_t \equiv o_{\leq t}$，故 **必须时序模型**（RNN/Transformer）。
+
+**演示内容**：每条 $\tau=(o_0,a_0,\dots,o_l)$ 含 **多模态 $o_t$**（相机、关节、夹爪）与 **连续动作** $a_t$；与 VLA 的 **离散 token 动作** 不同，LIBERO 原生 **连续控制 BC**。
+
+---
+
+### 5.4 策略架构（Section 4.4）
+
+三种 **视觉-语言-时序** 策略（语言默认 **BERT embedding**）：
+
+| 架构 | 视觉 | 时序 | 语言注入 |
+|------|------|------|----------|
+| **ResNet-RNN** | ResNet + **FiLM** | **LSTM** | FiLM + LSTM 输入 |
+| **ResNet-T** | ResNet | **Transformer decoder** | 语言 token 与视觉 token 并列 |
+| **ViT-T** | **ViT** | Transformer decoder | 语言进 ViT 与 decoder |
+
+**输出**：每步 **GMM** 采样 **连续末端执行器动作**。
+
+**输入→输出（单步控制）**：
+
+1. 输入：当前/历史图像 + 任务语言 + proprio
+2. 视觉 backbone → token 序列
+3. 时序 backbone 融合
+4. GMM head → 采样动作 → Robosuite 执行
+
+*所以这一节是想说：架构对比是论文 **Table 1 核心**，Transformer 时序 **普遍强于 RNN**。*
+
+---
+
+### 5.5 终身学习算法（Section 4.3）
+
+实现五类 baseline：
+
+| 算法 | 类型 | 角色 |
+|------|------|------|
+| **SeqL** | 顺序微调 | **FWT 上界参考**（意外强） |
+| **MTL** | 多任务同时训 | **性能上界**（不可部署但作对照） |
+
+**训练资源（Appendix）**：单实验 **1× A100 或 A40**（CUDA 11.7）+ **16 CPU**——CL 全曲线 **比单 task VLA FT 更耗算力**。
+| **ER** | Experience Replay | 记忆库回放 |
+| **EWC** | 弹性权重巩固 | 正则防遗忘 |
+| **PackNet** | 动态子网络 | 参数隔离 |
+
+**设定**：学到任务 $T^k$ 时 **不能访问** 先前任务完整数据（ER 除外，存小 buffer）；目标最大化 **Eq.(1) 平均 success** 的 lifelong 目标，训练用 **Eq.(2) BC surrogate**。
+
+*所以这一节是想说：算法实现覆盖 **记忆/正则/动态结构** 三类 CL 范式。*
+
+**ER（Experience Replay）**：为每个旧任务存 **少量 trajectory** 进 buffer，学新任务时 **混合采样** 旧数据——**NBT 与 AUC 较稳**，LIBERO-Long 上 **优于 PackNet 的 FWT**（Table 2）。
+
+**EWC**：对 **Fisher 重要权重** 加二次惩罚，防参数漂移——在 LLDM 上 **FWT/AUC 常低于 SeqL**（Spatial FWT 仅 **0.23** vs SeqL **0.72**）。
+
+**PackNet**：每任务 **二值掩码** 隔离参数；**NBT 极低**（Goal 上 **0.06**）但 **FWT 受限**，Long 上 **AUC 0.25**。
+
+**SeqL vs MTL**：SeqL 是 **下界式 naive 微调**（FWT 强）；MTL **同时见所有任务数据** 是 **性能上界**（不可在线部署但作对照）。
+
+---
+
+### 5.6 评估指标（Section 5.1）
+
+记 $c_{i,j,e}$：学完前 $i-1$ 任务、在第 $i$ 任务训练 **$e$ epoch**（$e \in \{0,5,\dots,50\}$）后，在任务 $j$ 上的 **成功率**。
+
+| 指标 | 含义 | 方向 |
+|------|------|------|
+| **FWT** | 新任务上学得多快（当前 task success 曲线面积） | ↑ |
+| **NBT** | **负向后迁移** = 学新任务后旧任务掉多少 | ↓ |
+| **AUC** | 综合 FWT + 保持旧任务 | ↑ |
+
+**人话**：FWT 看 **学新快不快**，NBT 看 **忘旧忘多少**，AUC 看 **整体终身表现**。
+
+*所以这一节是想说：LIBERO 用 **success rate** 而非 loss——操纵里 loss 与成功率常脱节。*
+
+**Epoch 网格**：每任务训练 **50 epochs**，每 **5 epoch** 评一次 success → 共 **11 个 checkpoint**（0,5,…,50）。取 **最早达到最佳 success 的 epoch** $e_i^*$ 作为该任务「学完」时刻，再测 **旧任务** $j<i$ 的 $c_{i,j}$ 算 NBT——避免 **「训更久偶然回升」** 干扰遗忘度量。
+
+**与经典 BWT 关系**：论文用 **NBT（negative backward transfer）** 命名；$c_{k,k}-c_{\tau,k}$ 越大 **忘得越狠**。
+
+---
+
+### 5.7 VLA 时代用法 vs 原文 setup（社区差异）
+
+| 维度 | 原文 LLDM | 2024+ VLA 论文常见 |
+|------|-----------|-------------------|
+| 训练 | 顺序 10/100 任务 + CL 算法 | **单任务或少量 task** 微调 |
+| 指标 | FWT / NBT / AUC | **单任务 success %** |
+| 模型 | ResNet-T 等中小 BC | **OpenVLA / π₀** 等大 VLA |
+| 数据 | 50 demo/task 全用 | 有时 **5-shot / 10-shot** |
+
+**共享**：**同一 130 任务语言 + 仿真场景** → 仍可横向比 **Spatial vs Goal** 哪套更低分。
+
+**OpenVLA 典型流程（社区，非原文）**：
+
+1. 加载 **OXE/DROID 预训练** VLA
+2. 对 LIBERO **每个 task** 取 **50 或 10** demo 微调
+3. 在 **该 task 初始分布** 上 roll out **N 次** 报 success
+4. **四套件分别平均** → 论文 Table 中的一行
+
+**解读分差**：Spatial 低 → **空间/视觉 grounding** 弱；Object 低 → **新物体泛化** 弱；Goal 低 → **指令-行为对齐/程序性** 弱；Long 低 → **长程规划** 弱。
+
+*所以这一节是想说：读 VLA 表时要知道 **「LIBERO 分数」多半是微调 eval，不是 SeqL 曲线**。*
+
+---
+
+### 5.9 预训练实验（Q6，Fig. 5）
+
+**设置**：在 **LIBERO-Long** 10 任务上做 CL，对比 **from scratch** vs **先在 LIBERO-90 上 BC 50 epoch 预训练**（每 5 epoch 存 checkpoint，取 **验证最优** 权重）。
+
+**组合**：3 架构 × 多种 CL 算法（与主实验一致）。
+
+**发现**：**朴素监督预训练常降低** 下游 LLDM 的 **FWT/AUC**——可能因为 **90 任务分布与 Long 10 任务 mismatch**，或 **预训练权重陷入 short-horizon 局部最优**。
+
+**对 VLA 启示**：**大规模 pretrain ≠ 终身学习友好**；需要 **continual-aware pretrain** 或 **任务分布对齐**——这与 π₀/OpenVLA「先 OXE 再 LIBERO FT」的 **两阶段** 实践相关但 **目标函数不同**。
+
+*所以这一节是想说：LIBERO 不仅提供 **考卷**，还用 Fig. 5 **警告 naive pretrain**。*
+
+---
+
+### 5.10 流程 ASCII
+
+```
+Ego4D 模板 → 语言指令
+      ↓ PDDL (μ₀, goal predicates)
+Robosuite / MuJoCo / Franka
+      ↓ Spacemouse ×50 demos/task
+   BC + (ResNet-T | ViT-T | …)
+      ↓ 顺序任务流 T¹…T^K
+ ER / EWC / PackNet / SeqL / MTL
+      ↓
+  FWT, NBT, AUC
+```
+
+*所以这一节是想说：从 **生成** 到 **CL 评测** 全链路开源，复现门槛低于真机基准；硬件仅需 **仿真 GPU**，无需 Franka 真机。*
+
+---
+
+## 关键数字（What works）
+
+### 规模
+
+| 项目 | 数值 |
+|------|------|
+| 总任务 | **130** |
+| LIBERO-X | **10+10+10 = 30** |
+| LIBERO-100 | **100**（**90** short + **10** long） |
+| Demo / task | **50** |
+| 总 demo 量级 | **130 × 50 = 6500** 轨迹 |
+| 遥操作设备 | **3Dconnexion Spacemouse** |
+| 仿真引擎 | **MuJoCo** via **Robosuite** |
+
+### Table 1：架构（ER / PackNet，节选 AUC↑）
+
+| Suite | 最佳架构趋势 |
+|-------|----------------|
+| LIBERO-Spatial | ResNet-T **AUC 0.56**（ER） |
+| LIBERO-Object | ViT-T **AUC 0.57**（ER） |
+| LIBERO-Goal | PackNet+ResNet-T **AUC 0.75** |
+| LIBERO-Long | ViT-T+PackNet **AUC 0.34** |
+
+**ResNet-T vs ResNet-RNN**：Transformer 时序 **全面优于** LSTM（FWT/AUC 常 **2× 量级** 差距）。
+
+**SeqL 的 NBT 代价（Table 2）**：Spatial 上 SeqL **NBT 0.81**、AUC 仅 **0.20**——**学新极快但忘旧极狠**；PackNet 同 suite **NBT 0.07**、AUC **0.63**，体现 **遗忘-迁移 trade-off**。
+
+### Table 2：算法（固定 ResNet-T，节选）
+
+| Suite | SeqL FWT | PackNet AUC | ER AUC |
+|-------|----------|-------------|--------|
+| LIBERO-Spatial | **0.72** | **0.63** | 0.56 |
+| LIBERO-Object | **0.78** | **0.60** | 0.44 |
+| LIBERO-Goal | **0.77** | **0.75** | 0.49 |
+| LIBERO-Long | **0.54** | 0.25 | **0.32** |
+
+**SeqL FWT 全 suite 最高**；**PackNet NBT 最低**（忘得少）但 **Long 上 FWT 差**。
+
+### Table 3：语言 embedding（LIBERO-Long, ER, ResNet-T）
+
+| Embedding | FWT | NBT | AUC |
+|-----------|-----|-----|-----|
+| BERT | 0.48 | 0.32 | 0.32 |
+| CLIP | 0.52 | 0.34 | 0.35 |
+| GPT-2 | 0.46 | 0.34 | 0.30 |
+| Task-ID | 0.50 | 0.37 | 0.33 |
+
+**无统计显著差异**——语义 rich 描述 **≈** "Task 5" ID。论文默认仍用 **BERT**，因 **维度 768** 与实现方便。
+
+**Fig. 4 任务顺序**：五种 permutation 下 **PackNet 方差显著**——说明 **部署顺序不可控** 时，需 **order-robust CL** 仍为开放问题。
+
+*所以这一节是想说：数字支撑 **「架构 > CL 算法（FWT）」「PackNet 防忘但不善 Long」「语言未用好」** 三条结论。*
+
+---
+
+## 实验结果说明了什么
+
+1. **程序性 vs 陈述性可分开考**：Goal suite 测 **行为遗忘**，Spatial/Object 测 **概念/位置遗忘**——attention 可视化（Appendix E.4）显示遗忘模式不同。
+2. **Transformer 时序 backbone 关键**：ResNet-T / ViT-T **碾压** ResNet-RNN。
+3. **CL 算法伤 FWT**：SeqL **优于** ER/EWC/PackNet 的 **forward transfer**——经典 CL **防忘但阻学新**。
+4. **PackNet 双面**：LIBERO-X 上 **NBT 极低**；**LIBERO-Long** 上容量不够 **FWT 崩**。
+5. **EWC 常不如 SeqL**：正则 **阻碍** LLDM 表现。
+6. **语言 embedding 未发挥语义**：需 **更好 task conditioning**（对 VLA 是机会）。
+7. **任务顺序敏感**（Fig. 4）：PackNet 对 ordering **显著波动**。
+8. **LIBERO-90 预训练可能有害**（Fig. 5）： naive BC 预训练 **损害** 后续 LLDM——与「大数据预训练万能」直觉相反。
+9. **社区复用**：VLA 在 LIBERO 上 **per-task success** 高 ≠ 解决了 **NBT**；Goal/Spatial 分差仍 **诊断泛化短板**。
+
+10. **ViT vs ResNet 依 suite 而异**：Object 上 **ViT-T** 强（物体多样性）；ER 下 **ResNet-T** 在 Spatial/Goal **常更好**——**没有万能视觉 backbone**（Table 1 讨论）。
+
+11. **Attention 可视化（Appendix E.4）**：遗忘时 **saliency 从 task-relevant 物体 drift**——Goal suite 上 **行为相关区域** 遗忘模式与 Spatial **不同**，支持 **知识类型解耦有效**。
+
+12. **对 benchmark 设计的启示**：Medical-style **分科体检**（Ch21 类比）——单独 **总 success** 会掩盖 **Goal 崩而 Spatial 仍高** 的 **选择性遗忘**，投稿时应 **分套件报告**。
+
+*所以这一节是想说：LIBERO 的价值在 **诊断 + 反直觉结论**，不只提供一个高分数字。*
+
+---
+
+## 你应该懂的几个新词
+
+- **LLDM**：Lifelong Learning in Decision-Making，顺序学操纵任务，含 **程序性+陈述性** 知识。
+- **Declarative / Procedural knowledge**：「是什么/在哪」vs「怎么做」。
+- **FWT / NBT / AUC**：前向迁移、负向后迁移、成功率曲线下面积。
+- **SeqL**：Sequential finetuning，学新任务时 **直接微调同一网络**（最易忘但 FWT 高）。
+- **PackNet**：给每个任务分配 **不同子网络掩码**，防遗忘占容量。
+- **PDDL**：经典 AI 规划语言，LIBERO 用来 **写目标与初始状态**。
+- **BC（Behavioral Cloning）**：监督模仿 $(o,a)$ 对。
+- **Robosuite**：模块化 MuJoCo 操纵仿真框架，LIBERO **构建于其上**。
+
+*所以这一节是想说：读 OpenVLA 的 LIBERO 表前，先分清 **success vs NBT**。*
+
+---
+
+## 它有什么搞不定的
+
+1. **纯仿真**：MuJoCo 与真机 **gap** 大（Ch17 sim-to-real）；90% sim success 可能 **40–50% 真机**。
+2. **单 embodiment 仿真 Franka**：不测 **跨真机** 迁移。
+3. **10 任务/suite 规模小**：统计方差大，**需多 seed**（论文 3 seeds）。
+4. **语言未真正用语义**：BERT 句向量 ≈ bag-of-words，**低估语言条件价值**。
+5. **Spacemouse 专家 demo**：与 VR/Policy 人类分布不同；**50 条** 对极难长程仍少。
+6. **VLA 社区用法偏离 LLDM**：大量论文 **只报 Spatial/Object**，回避 **Goal/Long**——基准被 ** cherry-pick** 风险。
+7. **预训练结论反直觉但 setup 单一**：仅 LIBERO-90 BC 预训练，**不等价** VLA web-scale pretrain。
+
+8. **算力仍不可忽视**：原文 **A100/A40** 单卡 + 16 CPU；130×50 demo 全训 **CL 曲线** 比 **单 task VLA FT** 贵一个数量级。
+
+9. **成功谓词依赖仿真器**：PDDL 判据与 **真实物理误差** 无关——sim success **乐观**。
+
+*所以这一节是想说：LIBERO 是 **尺子不是食材**——只在其上训 130 任务会 **过拟合考卷**。*
+
+---
+
+## 它和别的几篇是什么关系
+
+- **基础设施**：**Robosuite**、**Ego4D**（任务模板）、**BERT**（任务 embedding）。
+- **对照 CALVIN**：CALVIN **长程语言** ABCD 序列；LIBERO **知识类型解耦 + CL 指标**。
+- **对照 Meta-World / ContinualWorld**：Meta-World **RL 多任务**；ContinualWorld **50 任务 CL** 无 LIBERO 级语言+PDDL 生成。
+- **下游 OpenVLA / π₀ / RDT-1B**：几乎 **必报 LIBERO 四套件 success**。
+- **后继 SimplerEnv**：真机对齐仿真；LIBERO 仍是最 **轻量 VLA eval** 之一。
+- **数据线 OXE/DROID**：真机 **训练**；LIBERO **仿真考试**——互补。
+
+**Ch21 踩坑提醒（guide §21.4.7）**：在 OXE 上训的 VLA **aggregate success 不可严格横向比**；**LIBERO 四套件** 是 **同协议下的尺子**。读 VLA 论文时若 **只报 LIBERO-Spatial 90%+** 却省略 Goal，应对照本笔记 **§5.7 社区差异** 理解作者意图。
+
+*所以这一节是想说：LIBERO 在生态位上是 **VLA 微调标配 + CL 研究深井**。*
+
+---
+
+## 和本导读的关系
+
+对应 **[Ch21: 数据集全景](../guide/ch21-datasets.md)** §21.4.5 **LIBERO**（语言条件 + 知识解耦 + 终身学习）。建议：
+
+1. Ch21 §21.4 理解 **仿真基准 vs 真机数据集** 分工；
+2. 读 `open-x-embodiment.md` / `droid.md`（训练数据从哪来）；
+3. 读本笔记 §5.2 + §5.7（四套件 + VLA 用法差异）；
+4. 读 `openvla.md` 对照 **社区 LIBERO 表**；
+5. sim-to-real 问题见 **Ch17**；
+6. 若做 CL 研究：复现 **Table 2 SeqL vs PackNet** 理解 **FWT–NBT trade-off**。
+
+*所以这一节是想说：Ch21 把 LIBERO 放在 **「仿真考试」** 格，与 OXE/DROID **「真机食材」** 并列。*
+
+---
+
+## 思考题
+
+**Q1：为何 Spatial 用「两个同款 bowl」而不是换 plate？**
+
+<details>
+<summary>提示</summary>
+
+控制 **物体 identity**，只变 **空间关系**——纯测 spatial declarative knowledge。
+
+</details>
+
+**Q2：SeqL FWT 最高但 NBT 高，部署机器人敢用吗？**
+
+<details>
+<summary>提示</summary>
+
+SeqL **学新快但忘旧多**；实际部署要 **AUC/NBT** 或 **回放/隔离**（PackNet/ER）。
+
+</details>
+
+**Q3：为何 VLA 论文爱报 Spatial/Object 少报 Goal？**
+
+<details>
+<summary>提示</summary>
+
+Goal 测 **程序性** 遗忘，大 VLA **微调后 Goal 常更低**；Spatial 更易刷分。
+
+</details>
+
+**Q4：LIBERO-90 预训练为何害 Long？**
+
+<details>
+<summary>提示</summary>
+
+Fig. 5；过拟合 short task 分布 + 后续 CL **负迁移**；需 **更好 pretrain 目标**。
+
+</details>
+
+**Q5：Task-ID 与 BERT 打平，对 VLA 设计何启示？**
+
+<details>
+<summary>提示</summary>
+
+Table 3；当前 BC+embedding **没用 instruction 语义**——应用 **LLM/VLM 条件** 才可能拉开差距。
+
+</details>
+
+**Q6：PackNet 在 Goal 上 AUC 0.75 高，但 Long 上为何不行？**
+
+<details>
+<summary>提示</summary>
+
+子网 **容量** 限制；Long 需 **更大共享表示**。
+
+</details>
+
+**Q7：若只有 10-shot demo，该用原文 CL 还是单任务 FT？**
+
+<details>
+<summary>提示</summary>
+
+社区 VLA 走 **单任务 FT + success**；CL 算法需 **50 demo × 顺序流** 才有意义。
+
+</details>
+
+**Q8：PDDL 目标与语言指令不一致会怎样？**
+
+<details>
+<summary>提示</summary>
+
+成功谓词由 PDDL 判定；语言只是 **条件输入**——仿真 **ground truth 在谓词**。训练时应保证 **语言与谓词一致**，否则 BC **标签噪声**。
+
+</details>
+
+**Q9：为何 LIBERO 比 Meta-World 更适合 VLA？**
+
+<details>
+<summary>提示</summary>
+
+**语言条件 + 50 demo + 四套件解耦 + 与 Robosuite/VLA 输入格式接近**；Meta-World 更偏 **RL reward** 少 dense 语言 demo。
+
+</details>
+
+---
+
+## 一些好奇心问答（FAQ）
+
+**Q：130 和 100 怎么算？**
+
+**A**：**30**（X 三套）+ **100**（LIBERO-100）= **130**；100 内 **90+10** 为 pretrain/eval 切分。
+
+**Q：LIBERO-Long 只有 10 个任务够吗？**
+
+**A**：原文用作 **长程 entangled + 预训练 ablation**；算力有限下的 **stress test**，非覆盖所有长程家务。
+
+**Q：和 RoboMimic 啥关系？**
+
+**A**：不同基准；LIBERO **自研任务+CL**；RoboMimic **多算法实现库**。部分实验精神类似 **BC baseline**。
+
+**Q：OpenVLA 在 LIBERO 上 90%+ 算解决了 CL 吗？**
+
+**A**：**不算**。高 success 是 **per-task 微调** 结果；**未报告 NBT**——模型 **未顺序学 100 任务而不忘**。
+
+**Q：HuggingFace 能下吗？**
+
+**A**：官网 + 社区 mirror 提供 **demo HDF5**；具体链接以 https://libero-project.github.io 为准。
+
+*所以这一节是想说：FAQ 澄清 **任务计数、Long 角色、与 VLA eval 关系**。*
+
+---
+
+## 如果你想再深入
+
+1. **官网**：https://libero-project.github.io — 代码、数据、可视化。
+2. **跑 baseline**：clone **Lifelong-Robot-Learning/LIBERO**，**ResNet-T + ER** 在 **LIBERO-Object** 复现 Table 1。
+3. **对照读**：`notes/openvla.md` — VLA 如何 **改写评估协议**。
+4. **Ch21 续**：`notes/simpler-env.md`（待精读）— 真机对齐版 eval。
+5. **Appendix C**：每套件 **10 任务** 逐条语言与 PDDL 谓词。
+
+6. **读 NeurIPS 2023 原版 Table 8**：MTL **上界** success——理解 **SeqL 与 MTL gap** 即 **CL 可改进空间**。
+
+*所以这一节是想说：LIBERO **最适合边跑 baseline 边读 Table 1–3**。*
+
+---
+
+## 原文信息
+
+```bibtex
+@inproceedings{liu2023libero,
+  title={LIBERO: Benchmarking Knowledge Transfer for Lifelong Robot Learning},
+  author={Liu, Bo and Zhu, Yifeng and Gao, Chongkai and others},
+  booktitle={Advances in Neural Information Processing Systems (NeurIPS)},
+  year={2023},
+  note={arXiv:2306.03310}
+}
+```
+
+- **arXiv**：https://arxiv.org/abs/2306.03310
+- **Project**：https://libero-project.github.io
+
+*所以这一节是想说：引用 LIBERO 时注明 **suite 名称**（Spatial/Object/Goal/Long）与 **指标**（success vs FWT/NBT）。*
+
+---
+
+## 架构一图（ASCII）
+
+```
+        ┌─────────────────────────────────────┐
+        │  Ego4D → 模板 → PDDL → Robosuite    │
+        │  130 tasks × 50 demos × language    │
+        └──────────────┬──────────────────────┘
+                       │
+     ┌─────────────────┼─────────────────┐
+     ▼                 ▼                 ▼
+ Spatial(10)     Object(10)        Goal(10)
+ 位置关系           新物体            新目标/程序
+     └─────────────────┬─────────────────┘
+                       ▼
+              LIBERO-100 (90+10 Long)
+                       │
+           BC + ResNet-T / ViT-T
+                       │
+        SeqL / ER / EWC / PackNet / MTL
+                       ▼
+              FWT ↑   NBT ↓   AUC ↑
+```
+
+*所以这一节是想说：一图记住 **生成→四套件→CL 算法→三指标**；VLA 社区常 **跳过最后一行只报 success**，但完整理解 LIBERO 应 **同时看 Goal 套件与 NBT 曲线**。*
+
+---

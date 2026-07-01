@@ -238,7 +238,7 @@ RT-1-X     RT-2-X (+ VLM co-fine-tune)
 
 **为何 15 帧 history？** 继承 RT-1 原论文——操纵任务中 **短程运动模糊**（手是否闭合、物体是否滑动）需 temporal context；Table II 显示 RT-2-X **5B + 2 帧 history** 远好于无 history，与 RT-1 设计哲学一致。
 
-**采样与 batch 构成（概念层）**：每个 training step 从 mixture 中 **按数据集权重采样** trajectory——小数据集通常 **过采样** 以免被 Bridge / RT-1 等大户淹没；具体比例随实验配置，原文强调 **同一 mixture 用于所有对比** 以保证 RT-1 vs RT-1-X 公平性。社区复现时应在日志里 **固定 seed 与采样权重**，否则 emergent 数字可能对不齐。
+**采样与 batch 构成（概念层）**：每个 training step 从 mixture 中 **按数据集权重采样** trajectory——小数据集通常 **过采样** 以免被 Bridge / RT-1 等大户淹没；具体比例随实验配置，原文强调 **同一 mixture 用于所有对比** 以保证 RT-1 vs RT-1-X 公平性。社区复现时应在日志里 **固定 seed 与采样权重**，否则 emergent 数字可能对不齐表 II。
 
 *所以这一节是想说：OXE 实验里 RT-1-X 是 **离散 BC + 短历史** 路线，RT-2-X 是 **VLA token 路线**——两条线共享 mixture，分工覆盖 **小模型可部署** 与 **大模型涌现**。*
 
