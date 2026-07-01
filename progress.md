@@ -15,6 +15,18 @@
 - [x] 11 主题 × 3 篇 primer 入门体系
 - [x] 站点功能：30 天路径 / 主题 / Timeline / Graph / Heatmap / 搜索 / PWA
 - [ ] 笔记质量提升：46 篇 auto-summary + 110 篇 auto-summary-light → 逐步补精读
+  - [x] act-aloha（Ch14 primer）→ deep-read 2026-07-01
+  - [x] umi（Ch14 primer）→ deep-read 2026-07-01
+  - [x] pi0（Ch13 primer）→ deep-read 2026-07-01
+  - [x] dreamer-v3（Ch15 primer）→ deep-read 2026-07-01
+  - [x] genie（Ch15 primer）→ deep-read 2026-07-01
+  - [x] open-x-embodiment（Ch21 primer）→ deep-read 2026-07-01
+  - [x] droid（Ch21 primer）→ deep-read 2026-07-01
+  - [x] libero（Ch21 primer）→ deep-read 2026-07-01
+  - [x] audiolm（Ch20 primer）→ deep-read 2026-07-01
+  - [x] obelics（Ch18/VII primer）→ deep-read 2026-07-01
+  - [x] panoradar（Ch19/VIII primer）→ deep-read 2026-07-01
+  - [x] simpler-env（Ch17/XI primer）→ deep-read 2026-07-01
 
 ### 先打基础（5 篇入门轨道，learn track）
 
