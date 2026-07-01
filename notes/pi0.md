@@ -542,15 +542,6 @@ VLM 预训练时从未见过 robotics suffix；若双向 attention 让 image 读
 
 </details>
 
-**Q9：903M steps 私有数据占 mixture 绝大多数——若只剩 9.1% OXE，π₀ 还能 work 吗？**
-
-<details>
-<summary>提示</summary>
-
-论文未做 ablation；但 OpenVLA/Octo **同 OXE 仍弱** 暗示 **dexterous 高频数据** 不可替代。社区复现应预期：缺 PI 数据 → zero-shot dexterity 大幅缩水。
-
-</details>
-
 ---
 
 ## 一些好奇心问答（FAQ）

@@ -247,6 +247,11 @@ $$w_i = \exp(-m \cdot i), \quad a_t = \frac{\sum_i w_i A_t[i]}{\sum_i w_i}$$
 
 *所以这一节是想说：任务设计刻意选"低对比度感知 + 双臂协调 + 接触丰富"，不是 pick-and-place 玩具题。*
 
+---
+
+## 关键数字（What works）
+
+以下数字均来自论文 Table I–II 与系统配置段；**粗体**为 ACT 相对基线的决定性差距。
 
 ### 主实验成功率（%）
 

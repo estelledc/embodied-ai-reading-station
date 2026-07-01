@@ -493,15 +493,6 @@ Table 3；当前 BC+embedding **没用 instruction 语义**——应用 **LLM/VL
 
 </details>
 
-**Q9：为何 LIBERO 比 Meta-World 更适合 VLA？**
-
-<details>
-<summary>提示</summary>
-
-**语言条件 + 50 demo + 四套件解耦 + 与 Robosuite/VLA 输入格式接近**；Meta-World 更偏 **RL reward** 少 dense 语言 demo。
-
-</details>
-
 ---
 
 ## 一些好奇心问答（FAQ）

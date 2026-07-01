@@ -289,7 +289,12 @@ SysID 最优：**Control Loss 0.131**，**MMRV 0.031**。
 
 9. **Behavior mode 而不只是 scalar**：Fig.6–7 证明 sim **不仅复现成功率**，还复现 **对 shift/纹理的敏感度曲线**——适合 **诊断「模型为何真机掉点」**。
 
-*所以这一节是想说：实验 **证相关** 也 **证「该怎么建 sim」**（控+视缺一不可）。*
+10. **样本量与置信区间**：论文在 Google Robot 上 **每 checkpoint 真机 10–20 trials**、sim **数百 rollouts**——排序稳定但 **绝对成功率** 仍有 ±5% 级方差；读 VLA 论文时若 **只比 1–2 个点**，应要求作者 **多 seed 或报区间**。
+
+11. **与 LIBERO 的分工**：LIBERO 测 **语言微调后的 sim 考试**；SIMPLER 测 **RT/Bridge 真机协议在 sim 里的 rank 保真**——二者 **不可互相替代**：在 LIBERO 刷高 **不保证** SIMPLER 上 RT-1 系 checkpoint 排序正确。
+
+*所以这一节是想说：实验 **证相关** 也 **证「该怎么建 sim」**（控+视缺一不可）；读表时 **分清 rank proxy 与绝对 deploy 分数**。*
+
 
 ---
 
