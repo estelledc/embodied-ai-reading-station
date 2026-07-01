@@ -103,6 +103,31 @@ CPU 时代要把 1024 个环境拆成 8 个 scene 各 128，因为单 scene 太�
 
 按训练一次 Ant 的时间轴拆开：
 
+下图是"数据永不下 GPU"的端到端训练闭环（对比传统 CPU-GPU 来回搬运）：
+
+```
+【传统方案: 每步两次过 PCIe 总线 (伪并行)】
+   PhysX(CPU物理) ─拷─► GPU(policy) ─拷─► CPU(obs/reward) ─...
+        └────────── 搬运时间 > 计算时间 ──────────┘
+
+【Isaac Gym: 全链路在 GPU 显存内循环】
+   ┌──────────────────── GPU 显存 ─────────────────────┐
+   │                                                     │
+   │  ①PhysX GPU solver(TGS) ──► 物理状态 buffer         │
+   │            ▲                      │ 零拷贝 wrap      │
+   │            │                      ▼                  │
+   │  ⑤写回 control tensor      ②PyTorch 算 observation  │
+   │  set_dof_*_target             (TorchScript JIT)     │
+   │            ▲                      │                  │
+   │            │                      ▼                  │
+   │  ④rl_games PPO 更新 ◄── reward ◄─③policy 前向        │
+   │                                                     │
+   └─────────────────────────────────────────────────────┘
+     全程无 .cpu() / 无 host-device 拷贝
+```
+
+*上图说明：物理状态以零拷贝 tensor 暴露给 PyTorch，观测/奖励/策略/回写全在 GPU 显存内闭环，彻底消除传统方案每步两次过 PCIe 的搬运瓶颈。*
+
 ### 步骤 0：并行化策略选择（架构决策）
 **类比：你要开一千间完全一样的面包店。CPU 方案是给每间店派一个经理，经理人数就是店铺上限；GPU 方案是在一个超级大工厂里摆一千条流水线，只需要一个总调度员。**
 
@@ -255,6 +280,28 @@ ANYmal rough terrain 的 sim-to-real 还用了额外两个技巧：(1) **actuato
 从宏观角度看，Isaac Gym 的数据流形成了一个闭环：(1) PhysX GPU solver 推进物理，状态写入 GPU buffer；(2) Tensor API 将 buffer 零拷贝暴露为 PyTorch tensor；(3) Python 端用 PyTorch 计算 observation 和 reward（TorchScript JIT 编译）；(4) rl_games PPO 用这些 tensor 做梯度更新，产生 action tensor；(5) action tensor 通过 Tensor API 写回 PhysX buffer（`set_dof_*_target_tensor`）；(6) 回到步骤 1。整个循环中数据从未离开 GPU 显存——这就是论文反复强调的"end-to-end GPU"。
 
 这个设计产生了一个有趣的工程约束：所有环境必须共享同一个 PhysX scene（单 scene 多 actor 设计），因为跨 scene 的 tensor 拼接会引入内存拷贝。这也是为什么步骤 0 中讨论的"单 scene"方案是唯一正确的并行化选择——它确保 `gym.acquire_*_tensor` 返回的是一块连续的 GPU 内存，对应形状为 (N_env, dim) 的二维 tensor，可以直接被 PyTorch 操作。
+
+下图对比 CPU 时代"多小场景"与 Isaac Gym"单巨型场景"的并行哲学反转：
+
+```
+【CPU 时代: 一线程一环境 / 少量中等 scene】
+   核0│核1│核2│ ... │核63    ← 天花板 = 物理核数
+   [env][env][env] ... [env]    64 核顶多 ~128 环境
+   想再多 → 只能加机器组集群 (OpenAI: 29440 CPU 核)
+
+【Isaac Gym: 所有环境塞进同一个 PhysX scene】
+   ┌──────────── 单个巨型 scene (GPU) ────────────┐
+   │  env0  env1  env2  env3  ...  env4095         │
+   │  ▓▓▓   ▓▓▓   ▓▓▓   ▓▓▓         ▓▓▓            │
+   │  用 collision filter 隔离 (物理互不感知)      │
+   └───────────────────┬──────────────────────────┘
+                       ▼ 同一 batch 的 workload
+   broadphase / narrowphase / TGS solver 全部并行
+   几千~上万并行工作单元 → 吃满 GPU 的 SM (occupancy 高)
+   状态在内存连续排列 → coalesced access, 单卡 A100 70 万 FPS
+```
+
+*上图说明：GPU 靠"吃满并行度"掩盖单线程弱性能，所以把全部环境塞进一个巨型场景（靠碰撞过滤隔离）才能让 broadphase / solver 都跑满，这与 CPU 的多小场景哲学正好相反。*
 
 *所以这一节是想说：训练循环本身没变（还是 PPO + 环境 step），变的是循环里所有步骤都在 GPU tensor 上完成，靠 PhysX 的两个新 API（GPU step 不回 CPU + 直接 GPU buffer 访问）打通最后一环。方法的核心不是算法创新，而是系统工程的全链路 GPU 化——从物理引擎改造（TGS solver + reduced coordinate articulation）到数据接口设计（Tensor API + 零拷贝 wrap）到训练框架适配（rl_games GPU 向量化 PPO）到 sim-to-real 技巧（asymmetric AC + DR + actuator network + curriculum），每一环都针对"消除 CPU-GPU 数据搬运"这个统一目标设计。*
 
