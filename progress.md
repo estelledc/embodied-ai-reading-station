@@ -24,6 +24,7 @@
   - [x] droid（Ch21 primer）→ deep-read 2026-07-01
   - [x] libero（Ch21 primer）→ deep-read 2026-07-01
   - [x] audiolm（Ch20 primer）→ deep-read 2026-07-01
+  - [x] obelics（Ch18/VII primer）→ deep-read 2026-07-01
 
 ### 先打基础（5 篇入门轨道，learn track）
 

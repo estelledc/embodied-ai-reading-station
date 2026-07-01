@@ -1508,4 +1508,4 @@ AnyMAL 冻结 LLM、VecSet 冻结编码器——这不是妥协，而是工程�
 > 后续章节：[Ch19: 射频感知——RF-Pose / milliMap / PanoRadar](ch19-rf-perception.md)
 > [返回目录](README.md)
 
-<!-- papers: imagebind, anymal, 3dshape2vecset, clip, blip-2, llava, flamingo, siglip, onellm, fromage, palm-e, audiopalm, sparsh, sparsh-x, tactile-vla, tla-tactile-language-action, touch-vision-cross-modal -->
+<!-- papers: imagebind, obelics, anymal, 3dshape2vecset, clip, blip-2, llava, flamingo, siglip, onellm, fromage, palm-e, audiopalm, sparsh, sparsh-x, tactile-vla, tla-tactile-language-action, touch-vision-cross-modal -->
