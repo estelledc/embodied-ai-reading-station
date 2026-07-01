@@ -1,15 +1,15 @@
 ---
-title: "FILIP: Fine-grained Interactive Language-Image Pre-Training"
+title: 'FILIP: Fine-grained Interactive Language-Image Pre-Training'
 slug: filip
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2111.07783"
+来源: 'https://arxiv.org/abs/2111.07783'
 venue: ICLR
 year: 2022
 era: classic
 num: 130
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # FILIP：让图的"每一小块"和句子的"每个词"互相找对象
@@ -157,6 +157,23 @@ FILIP 想要的是"鱼和熊掌兼得"：**既有细粒度的小块对词对齐�
 **为什么有用**：这些是把细粒度模型用好的实操技巧，说明 FILIP 的细粒度性质需要配套的推理方式才能发挥。
 
 *所以这一节是想说：FILIP 用双塔保效率、用 token 级最大相似度做细粒度对齐、用扔补白+平均两处修正把机制做对、用降维/fp16/选25%token 三招把它训得起，再用 token 级 prompt 集成把它用得好。核心巧思是"延迟交互"——只动最后的相似度计算，就同时拿到细粒度和效率。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【FILIP: Fine-grained Interactive Lan… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

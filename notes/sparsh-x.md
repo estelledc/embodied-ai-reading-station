@@ -1,15 +1,15 @@
 ---
-title: "Tactile Beyond Pixels (Sparsh-X)"
+title: Tactile Beyond Pixels (Sparsh-X)
 slug: sparsh-x
 topic: multimodal
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2506.14754"
+来源: 'https://arxiv.org/abs/2506.14754'
 venue: CoRL
 year: 2025
 era: frontier
 num: 71
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -124,6 +124,23 @@ Sparsh-X 的缺口：**触觉本身就是天然多模态的物理过程**，前�
 > **线性 probe（linear probe）**：评估表征质量的标准手法——冻结主干，只训一个线性层。如果小小的线性层就能做好任务，说明主干学到的表征本身就很有信息量。
 
 *所以这一节是想说：Sparsh-X 的方法 = 四机位同步采数据 + 四路专用编码器投到共享空间 + 对比与掩码混合自监督 + 线性 probe 下游评估，四步缺一不可。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Tactile Beyond Pixels (Sparsh-X) · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

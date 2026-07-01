@@ -1,15 +1,15 @@
 ---
-title: "Generalizable Humanoid Manipulation with 3D Diffusion Policies (iDP3)"
+title: Generalizable Humanoid Manipulation with 3D Diffusion Policies (iDP3)
 slug: idp3
 topic: imitation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2410.10803"
+来源: 'https://arxiv.org/abs/2410.10803'
 venue: RSS
 year: 2025
 era: frontier
 num: 59
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Generalizable Humanoid Manipulation with Improved 3D Diffusion Policies (iDP3)
@@ -170,6 +170,23 @@ ASCII 总览：
 **输出**：一个用小数据训练、却能直接搬到新房间用的人形操作策略——这正是论文最想卖的点。换句话说，iDP3 把"泛化"这个难题的解法从"多采数据"挪到了"设计一个天生跨场景不变的输入表示"上，这对采集成本高得离谱的人形机器人尤其划算。
 
 *所以这一节是想说：头部相机出自我中心点云、坚持用 3D 几何、配一个抗噪的改进编码器、再接扩散策略和本体状态出动作；核心题眼是"不做坐标变换"，它把"我在哪"从输入里抹掉，从而让几十条小数据也能跨场景直接用。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Generalizable Humanoid Manipulation… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

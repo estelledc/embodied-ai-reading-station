@@ -1,15 +1,17 @@
 ---
-title: "What Matters in Learning from Offline Human Demonstrations for Robot Manipulation"
+title: >-
+  What Matters in Learning from Offline Human Demonstrations for Robot
+  Manipulation
 slug: robomimic
 topic: dataset-eval
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2108.03298"
+来源: 'https://arxiv.org/abs/2108.03298'
 venue: CoRL
 year: 2021
 era: classic
 num: 33
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语第一次出现一定配类比，公式翻译成人话。
@@ -138,6 +140,23 @@ generated_at: 2026-07-01
 **输出**：能回答"图像策略是不是普遍更弱""记忆是不是必需"这些一直在争的问题。
 
 *所以这一节是想说：RoboMimic 的方法就是把"任务难度、数据质量、算法、观测输入"四个维度拆开、各自单独变化，从而第一次把这些变量的贡献分离量化。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【What Matters in Learning from Offli… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

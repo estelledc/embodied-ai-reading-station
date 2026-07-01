@@ -1,15 +1,15 @@
 ---
-title: "Isaac Lab"
+title: Isaac Lab
 slug: isaac-lab
 topic: sim
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2511.04831"
+来源: 'https://arxiv.org/abs/2511.04831'
 venue: arXiv
 year: 2025
 era: frontier
 num: 107
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Isaac Lab: A GPU-Accelerated Simulation Framework for Robot Learning
@@ -169,6 +169,23 @@ ASCII 总览：
 **输出**：一个解耦、开放、可持续演进的机器人学习平台。
 
 *所以这一节是想说：三层架构（解耦底层引擎）+ 全程 GPU 高吞吐 + 多频率调度（省算力又贴近真实）+ 可切换渲染（覆盖 sim-to-real 两端）+ 开源资产生态，五件事拼出一个"又快又真又通用又可持续"的训练框架。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Isaac Lab · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

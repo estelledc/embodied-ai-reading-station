@@ -84,6 +84,18 @@ generated_at: 2026-06-25
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure：Conv-TasNet 编码器—分离网络—解码器整体结构](../papers/conv-tasnet/images/img_000.jpg)
+
+*上图说明：Figure：Conv-TasNet 编码器—分离网络—解码器整体结构（论文原图）。*
+
+![Figure：Conv-TasNet 与 IRM 基线的主观评分对比](../papers/conv-tasnet/images/img_002.jpg)
+
+*上图说明：Figure：Conv-TasNet 与 IRM 基线的主观评分对比（论文原图）。*
+<!-- paper-figures:end -->
+
+
 整个 Conv-TasNet 像一条三段流水线：**编码器 -> 分离器 -> 解码器**。下面把每一段掰开讲清楚。
 
 ### 1. 编码器：把波形切碎，每片打个数字标签

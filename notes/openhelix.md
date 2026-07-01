@@ -1,15 +1,15 @@
 ---
-title: "OpenHelix"
+title: OpenHelix
 slug: openhelix
 topic: vla
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2505.03912"
+来源: 'https://arxiv.org/abs/2505.03912'
 venue: arXiv
 year: 2025
 era: frontier
 num: 117
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # OpenHelix: A Short Survey, Empirical Analysis, and Open-Source Dual-System VLA Model for Robotic Manipulation
@@ -200,6 +200,23 @@ OpenHelix 由两个预训练模型（慢脑 MLLM f_φ 和快手 policy π_θ）�
 **惊人发现**：性能在 N=1 到 60 的整个范围内**出奇地稳定**，即使在动态环境下。N=60（慢脑几乎只在开头想一次）性能才掉约 3%。原文对此的解读很坦诚且深刻：这"有点出乎意料"，说明**当前的 MLLM 对视觉场景变化相当不敏感**——直觉上你以为慢脑更新越勤越能适应动态变化，但实验说明不是。这既是好消息（可以把慢脑放在远端服务器上低频跑、快手放在边缘设备高频跑，工程上很实用），也暴露了一个问题（慢脑的视觉推理还不够"活"，这正是辅助任务想改进的方向）。
 
 *所以这一节是想说：异步推理让慢脑低频、快手高频，实测性能在慢脑更新间隔拉到 60 步时才掉约 3%——这既证明了双系统工程上可落地，也揭示了当前 MLLM 对场景变化不够敏感的隐忧。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【OpenHelix · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

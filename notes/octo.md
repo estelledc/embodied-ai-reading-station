@@ -1,15 +1,15 @@
 ---
-title: "Octo: An Open-Source Generalist Robot Policy"
+title: 'Octo: An Open-Source Generalist Robot Policy'
 slug: octo
 topic: vla
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2405.12213"
+来源: 'https://arxiv.org/abs/2405.12213'
 venue: RSS
 year: 2024
 era: classic
 num: 111
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Octo: An Open-Source Generalist Robot Policy
@@ -191,6 +191,22 @@ Octo 本质是一个把"任意输入 token → Transformer → 动作输出"的�
 **为什么这步是灵魂**：这是它和 RT-2 类闭源工作差异最大的地方。它证明了"少量数据就能 adapt"——而且是能适配到**新观测和新动作空间**，不是只能在预训练格式里打转。这把"通用策略"从"看个 demo"变成了"真能拿来用的可微调 checkpoint"。
 
 *所以这一节是想说：下游微调用约 100 条新数据、统一配方、几小时就能把 Octo 适配到带新传感器/新动作空间的机器人——"少量数据快速适配"是全篇最核心的卖点。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Octo: An Open-Source Generalist Rob… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   Octo 微调      ──► 基准（最优）                 ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

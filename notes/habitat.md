@@ -76,6 +76,21 @@ generated_at: 2026-06-25
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/habitat/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/habitat/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/habitat/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 把整篇论文想成"装修一套出租屋"：先把毛坯房的水电（**渲染引擎**）做到极致快；再把家具（**数据集**）做成宜家那种自由组装；再把电器接口（**任务 API**）做成统一插座；然后定义一个公平的比赛项目（**PointGoal 导航**）；最后请几个朋友（智能体）来实测——结果发现以前的"经验之谈"全都被推翻了。
 
 具体就是 5 件事：底层渲染引擎、数据集解耦、任务 API、PointGoal 实验设计、用这套东西做一组以前没法做的大规模实验。

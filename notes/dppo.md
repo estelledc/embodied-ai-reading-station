@@ -1,15 +1,15 @@
 ---
-title: "Diffusion Policy Policy Optimization (DPPO)"
+title: Diffusion Policy Policy Optimization (DPPO)
 slug: dppo
 topic: diffusion-policy
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2409.00588"
+来源: 'https://arxiv.org/abs/2409.00588'
 venue: ICLR
 year: 2025
 era: frontier
 num: 43
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Diffusion Policy Policy Optimization (DPPO)
@@ -225,6 +225,23 @@ for 每一轮迭代:
 ```
 
 *所以这一节是想说：DPPO 把"去噪链条"拆成一层可训练的小决策，再用标准 PPO 逐步更新，最后靠一套细致的工程配方把它调稳。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Diffusion Policy Policy Optimizatio… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

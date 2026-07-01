@@ -72,6 +72,18 @@ Meta-World 想做的事，就是**把这群算法拉到一个真正像样的考�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure：Meta-World 50 任务与 MT10/MT50 多任务设定示意](../papers/meta-world/images/img_006.jpg)
+
+*上图说明：Figure：Meta-World 50 任务与 MT10/MT50 多任务设定示意（论文原图）。*
+
+![Figure：各算法在 MT10/MT50 上的泛化成功率对比](../papers/meta-world/images/img_013.jpg)
+
+*上图说明：Figure：各算法在 MT10/MT50 上的泛化成功率对比（论文原图）。*
+<!-- paper-figures:end -->
+
+
 整个论文做了 5 件事：设计任务集、统一观察/动作/奖励、设计五档难度、跑 7 个算法、得出"现有算法不够用"的结论。下面逐步拆解。
 
 ### 1. 50 道题：既要"互相不同"又要"互有关联"

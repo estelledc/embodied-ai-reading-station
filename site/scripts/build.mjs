@@ -6,6 +6,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import matter from "gray-matter";
+import { SCENE_SECTION_RE, METHOD_SECTION_RE } from "./figure-section-utils.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -3003,15 +3004,17 @@ function injectInlineFigures(slug, body, paperTitle = "") {
   // 用 paper title prefix 让 alt 更具体（屏幕阅读器友好）
   const head = paperTitle ? paperTitle.split(":")[0].trim() : slug;
   let result = body;
-  // 在「这是个什么场景」H2 段后插场景图（在该段内容末尾，下一个 ## 之前）
+  // 在「这是个什么场景」H2 段后插场景图（支持编号标题如 ## 2. 场景）
   if (fs.existsSync(sceneImg)) {
     const sceneMd = `\n\n![${head} — 场景示意：这论文要解决的现实问题](${url(`/images/inline/${slug}-scene.webp`)})\n`;
-    result = result.replace(/(## 这是个什么场景[^\n]*\n[\s\S]*?)(?=\n## )/, (m) => m + sceneMd);
+    const sceneRe = new RegExp(`(${SCENE_SECTION_RE.source}[^\\n]*\\n[\\s\\S]*?)(?=\\n## )`);
+    result = result.replace(sceneRe, (m) => m + sceneMd);
   }
-  // 在「方法」H2 段后插方法图
+  // 在「方法」H2 段后插方法图（支持 ## 方法 / ## 5. 方法 等）
   if (fs.existsSync(methodImg)) {
     const methodMd = `\n\n![${head} — 方法示意：核心 pipeline](${url(`/images/inline/${slug}-method.webp`)})\n`;
-    result = result.replace(/(## (?:它分几步做的|它怎么做的|这篇论文的关键想法)[^\n]*\n[\s\S]*?)(?=\n## )/, (m) => m + methodMd);
+    const methodRe = new RegExp(`(${METHOD_SECTION_RE.source}[^\\n]*\\n[\\s\\S]*?)(?=\\n## )`);
+    result = result.replace(methodRe, (m) => m + methodMd);
   }
   return result;
 }

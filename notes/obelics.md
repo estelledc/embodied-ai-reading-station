@@ -70,6 +70,22 @@ HuggingFace **OBELICS** 从 Common Crawl 抽出 **1.41 亿** 英文网页、**3.
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/obelics/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/obelics/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/obelics/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
+
 ### 5.1 总览：Figure 2 六级漏斗
 
 **输入**：Common Crawl **25 个 dump**（**2020-02 ~ 2023-02**）。

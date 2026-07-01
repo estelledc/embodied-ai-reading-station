@@ -1,15 +1,15 @@
 ---
-title: "Sigmoid Loss for Language Image Pre-Training"
+title: Sigmoid Loss for Language Image Pre-Training
 slug: siglip
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2303.15343"
+来源: 'https://arxiv.org/abs/2303.15343'
 venue: ICCV
 year: 2023
 era: classic
 num: 136
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。公式一律翻译成人话，术语首次出现配类比。
@@ -128,6 +128,23 @@ loss = Σ  -log σ(z_ij · s_ij)
 回到损失本身对比一下就清楚了。CLIP 用的是 softmax：对每一张图，它要在**整个 batch 的所有文本里**算一个"归一化的概率分布"，也就是"这张图配 A 文本的概率是多少、配 B 的多少……全部加起来等于 1"。这个"加起来等于 1"就要求每张卡都得看到 batch 里所有的文本向量才能算——batch 越大，要凑齐的向量越多，通信和显存开销就爆炸，而且 batch 一小，归一化的分母样本太少，估计就不稳。SigLIP 的 sigmoid 把它拆成一道道**独立的判断题**："这一对图文，匹配还是不匹配？"每对自己算自己的，不需要和别的对比较、不需要全局归一化。于是 batch 大小不再是损失能否算对的前提，只受显存约束；小 batch 也照样稳。这就是为什么"换个损失函数"这么一个看似微小的改动，能连带解开"必须超大 batch + 昂贵通信"这个死结。
 
 *所以这一节是想说：SigLIP 的方法 = sigmoid 判断题损失 + 负偏置初始化校准失衡 + 环形接力的分布式实现，三者配合才让"换损失"真正落地，其根本在于 sigmoid 去掉了 softmax 那个"全局归一化"的枷锁。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Sigmoid Loss for Language Image Pre… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

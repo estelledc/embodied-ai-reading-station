@@ -1,15 +1,15 @@
 ---
-title: "The Llama 3 Herd of Models"
+title: The Llama 3 Herd of Models
 slug: llama-3-herd
 topic: vlm-foundation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2407.21783"
+来源: 'https://arxiv.org/abs/2407.21783'
 venue: arXiv
 year: 2024
 era: frontier
 num: 139
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # The Llama 3 Herd of Models
@@ -170,6 +170,23 @@ ASCII 总览：
 **输出**：在保住语言能力的前提下、可控地长出图像/视频/语音理解的多模态版本。
 
 *所以这一节是想说：数据像采购（真正的护城河）、架构像算钢筋（稳妥选稠密）、后训练像试菜（选可控的 DPO 而非难驯的 PPO）、多模态像加配菜（组合式不伤主干）——四步背后是同一条哲学：把已知有效的东西做到极致，用规模与数据取胜，而非用花招取巧。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【The Llama 3 Herd of Models · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

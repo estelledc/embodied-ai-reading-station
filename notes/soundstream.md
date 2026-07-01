@@ -82,6 +82,18 @@ SoundStream 想做的事，是把这一整套手搓的工程**全部丢给神经
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure：SoundStream 编解码器—量化器—解码器端到端架构](../papers/soundstream/images/img_003.jpg)
+
+*上图说明：Figure：SoundStream 编解码器—量化器—解码器端到端架构（论文原图）。*
+
+![Figure：发送端/接收端神经音频 codec 数据流](../papers/soundstream/images/img_004.jpg)
+
+*上图说明：Figure：发送端/接收端神经音频 codec 数据流（论文原图）。*
+<!-- paper-figures:end -->
+
+
 整套方法分五件事：编/解码骨架、残差量化、量化层 dropout、对抗训练、联合去噪。下面逐一拆解。
 
 ### 1. 编码器和解码器：纯卷积的"声音压缩管"

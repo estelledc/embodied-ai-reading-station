@@ -74,6 +74,21 @@ DreamerV3 想做的事就一句话：**手柄只调一次，150 款游戏全用�
 
 ## 5. 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/dreamer-v3/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/dreamer-v3/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/dreamer-v3/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 整体流程可以想成**三个打工人共用一个经验仓库，各干各的活，下班不对接梯度**：
 
 ```

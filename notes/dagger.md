@@ -106,6 +106,18 @@ DAgger 的核心 insight 一句话讲完：
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure：Super Mario Bros 平台上 DAgger 与 BC 轨迹对比](../papers/dagger/images/img_001.jpg)
+
+*上图说明：Figure：Super Mario Bros 平台上 DAgger 与 BC 轨迹对比（论文原图）。*
+
+![Figure：各迭代下 DAgger 行驶距离学习曲线](../papers/dagger/images/img_003.jpg)
+
+*上图说明：Figure：各迭代下 DAgger 行驶距离学习曲线（论文原图）。*
+<!-- paper-figures:end -->
+
+
 这是 DAgger 论文的核心，我们拆得细一点。整个方法可以分成五个层次理解：算法流程本身、beta-混合策略的设计、FTL 归约的理论框架、有限样本复杂度、以及工程实现考量。
 
 ### 5.1 算法主循环：Algorithm 3.1

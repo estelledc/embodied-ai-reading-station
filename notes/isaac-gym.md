@@ -101,6 +101,21 @@ CPU 时代要把 1024 个环境拆成 8 个 scene 各 128，因为单 scene 太�
 
 ## 方法分步
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/isaac-gym/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/isaac-gym/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/isaac-gym/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 按训练一次 Ant 的时间轴拆开：
 
 下图是"数据永不下 GPU"的端到端训练闭环（对比传统 CPU-GPU 来回搬运）：

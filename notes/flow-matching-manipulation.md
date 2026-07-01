@@ -1,15 +1,15 @@
 ---
-title: "Affordance-based Robot Manipulation with Flow Matching"
+title: Affordance-based Robot Manipulation with Flow Matching
 slug: flow-matching-manipulation
 topic: diffusion-policy
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2409.01083"
+来源: 'https://arxiv.org/abs/2409.01083'
 venue: IROS
 year: 2024
 era: frontier
 num: 44
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Affordance-based Robot Manipulation with Flow Matching
@@ -209,6 +209,23 @@ for 少数几步:  x = x + v_theta(x, t, c) * dt   # 欧拉积分
 *所以这一节是想说：分阶段不是为了好看，而是把"看哪里"和"怎么走"解耦成两个更好学的子问题，同时换来可解释性。*
 
 *所以整块方法是想说：先预测 affordance 当条件，再用流匹配学速度场，推理时沿直线积分出轨迹，最后滚动执行——四步各司其职，且每一步都为"快""稳""可解释"服务。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Affordance-based Robot Manipulation… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

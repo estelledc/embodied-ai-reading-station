@@ -1,15 +1,15 @@
 ---
-title: "FlowPolicy: 3D Flow-based Policy via Consistency Flow Matching"
+title: 'FlowPolicy: 3D Flow-based Policy via Consistency Flow Matching'
 slug: flow-policy
 topic: diffusion-policy
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2412.04987"
+来源: 'https://arxiv.org/abs/2412.04987'
 venue: AAAI
 year: 2025
 era: frontier
 num: 45
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # FlowPolicy: 3D Flow-based Policy via Consistency Flow Matching
@@ -213,6 +213,23 @@ a0 = f_theta(x1, t=1, c)     # 一次前向直达
 *所以这一节是想说：一步生成的精度代价可以用可选的迭代细化补回来，而 3D 输入让"一步命中"这件事本身更容易。*
 
 *所以整块方法是想说：3D 编码给条件，流匹配学速度场，一致性损失把多步 ODE 压成一步直达，EMA 保训练不崩，推理只需一次前向——每一块都服务于"低延迟高频控制"这个目标。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【FlowPolicy: 3D Flow-based Policy vi… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -1,15 +1,15 @@
 ---
-title: "What matters when building vision-language models?"
+title: What matters when building vision-language models?
 slug: idefics-2
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2405.02246"
+来源: 'https://arxiv.org/abs/2405.02246'
 venue: NeurIPS
 year: 2024
 era: frontier
 num: 137
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Idefics2：做"看图说话 AI"时，到底哪个零件才重要？
@@ -184,6 +184,23 @@ Idefics2 这篇论文就是来当那个"严谨的厨师"：**一次只改一个�
 - 输出：Idefics2 的 base / instructed / chat 三个版本，全部开源。
 
 *所以这一节是想说：方法 = 六条受控实验发现（大脑>眼睛、全自回归+LoRA、少视觉token、保留长宽比、切图换性能）+ 照方抓药搭出的 Idefics2。核心不是某个新模块，而是"把每个选择的影响单独量化"这套方法论。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【What matters when building vision-l… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   Idefics2     ──► 8B                     ──► …
+   Idefics2     ──► 8B                     ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

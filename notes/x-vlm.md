@@ -1,15 +1,15 @@
 ---
-title: "X-VLM: Multi-Grained Vision Language Pre-Training"
+title: 'X-VLM: Multi-Grained Vision Language Pre-Training'
 slug: x-vlm
 topic: multimodal
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2111.08276"
+来源: 'https://arxiv.org/abs/2111.08276'
 venue: ICML
 year: 2022
 era: classic
 num: 70
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -159,6 +159,23 @@ X-VLM 的关键想法是同时改造"数据、模型、目标"三层：
 **输出**：在各任务上微调后的模型。
 
 *所以这一节是想说：X-VLM 的方法 = ViT+BERT+融合三件套 + 从 patch 聚合出多粒度视觉特征 + ITC/ITM/MLM/bbox 四类损失联合训练 + 粗细数据混合，一个端到端框架同时学会多个粒度且推理不依赖检测器。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【X-VLM: Multi-Grained Vision Languag… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -1,15 +1,15 @@
 ---
-title: "Universal Source Separation with Weakly Labelled Data"
+title: Universal Source Separation with Weakly Labelled Data
 slug: uss-weakly-labelled
 topic: auditory
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2305.07447"
+来源: 'https://arxiv.org/abs/2305.07447'
 venue: TASLP
 year: 2024
 era: frontier
 num: 25
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -121,6 +121,23 @@ generated_at: 2026-07-01
 传统源分离要"干净配对数据"：一段纯净的狗叫 + 同一段混进背景噪声的版本，一一对应，这样才能教模型"从混音里还原干净源"。可现实中这种成对干净录音极稀缺、极贵。USS 换了个思路：AudioSet 这类数据只有"这段 10 秒里出现过狗叫"这种粗标注（弱标注，不告诉你狗叫具体在第几秒、也没有纯净版本）,但它的量极大（几百万段、527 类）。USS 先用一个声音事件检测器（SED）在这些弱标注音频里挑出"这一小段大概率就是纯狗叫"的片段，当作"伪干净源"；再把不同类的伪干净源相加，人工合成出"混音 + 已知成分"的配对。于是**海量但粗糙的弱标注，经过 SED 这道加工，就变出了训练所需的成对样本**——用数据规模的广度，弥补了标注精度的不足。这就是它能覆盖 527 类、还能泛化到没见过的声音的根本原因。
 
 *所以这一节是想说：USS 的方法 = SED 把弱标注变伪源 + 相加造混音 + ResUNet/FiLM 按 query 分离 + 灵活的 embedding/参考音频提示，四步把弱标注变成通用分离能力，核心是用大规模弱标注经 SED 加工"造出"配对数据。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Universal Source Separation with We… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

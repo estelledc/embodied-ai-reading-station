@@ -91,6 +91,17 @@ Acoustic Swarms 干的是同款故事，只不过主角换成了"会爬桌面的
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Fig. 2: 2D localization of swarm robots.](../papers/acoustic-swarms/images/img_000.jpg)
+
+*上图说明：Fig. 2: 2D localization of swarm robots.（论文原图）。*
+
+![Fig. 4: Acoustic swarm returning to the base.](../papers/acoustic-swarms/images/img_001.jpg)
+
+*上图说明：Fig. 4: Acoustic swarm returning to the base.（论文原图）。*
+<!-- paper-figures:end -->
+
 整个流程像七个小演员演一出戏：从化妆间排好队 -> 一个个上台站位 -> 报告各自坐标 -> 开始听观众说话 -> 结束后回化妆间充电。下面逐步拆解。
 
 下图是整套系统的端到端流程（硬件动作 + 声学信号 + 算法处理）：

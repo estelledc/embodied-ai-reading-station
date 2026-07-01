@@ -82,6 +82,21 @@ RT-2 想干的事就一句话：把这两个角色塞进**同一个脑袋**。�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/rt-2/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/rt-2/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/rt-2/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 整个论文做了 5 件事：动作怎么变 token、模型怎么挑、训练怎么搭、推理怎么提速、以及如何让机器人"先想再做"（思维链推理）。这五步加在一起构成了从"会写字的 AI"到"会动手的机器人"的完整技术路线。
 
 下图是 RT-2 从"图像 + 指令"到"电机动作"的端到端管线（零架构修改，动作 token 与文字 token 同格式）：

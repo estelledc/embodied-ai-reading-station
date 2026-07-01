@@ -80,6 +80,21 @@ LLaVA-1.5 的核心信念可以用一句话概括：**做菜不在锅多花哨�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/llava-1-5/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/llava-1-5/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/llava-1-5/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 这是全文最重要的一节。LLaVA-1.5 的方法可以拆成四大块：架构设计、两阶段训练流程、数据配方、以及一系列工程细节。我们逐个拆解。
 
 下图是"三件套"的数据流管道（眼睛 → 镜片 → 嘴巴）：

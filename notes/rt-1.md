@@ -66,6 +66,21 @@ RT-1 想做的事，就是把这三类的好处捏一起：一个统一的模型
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/rt-1/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/rt-1/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/rt-1/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 整篇论文做了 4 件事：花 17 个月攒数据、设计 token 化方案把多模态输入统一成 Transformer 能吃的格式、搭建一个跑得快的 Transformer 出动作 token、用模仿学习训练整个系统。下面逐一拆开。
 
 下图是 RT-1 从"图像 + 指令"到"动作 token"的端到端管线：

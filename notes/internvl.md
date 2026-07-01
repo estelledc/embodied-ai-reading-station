@@ -1,15 +1,17 @@
 ---
-title: "InternVL: Scaling up Vision Foundation Models and Aligning for Generic Visual-Linguistic Tasks"
+title: >-
+  InternVL: Scaling up Vision Foundation Models and Aligning for Generic
+  Visual-Linguistic Tasks
 slug: internvl
 topic: vlm-foundation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2312.14238"
+来源: 'https://arxiv.org/abs/2312.14238'
 venue: CVPR
 year: 2024
 era: classic
 num: 132
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # InternVL: Scaling up Vision Foundation Models
@@ -168,6 +170,23 @@ ASCII 总览：
 **输出**：一个覆盖判别、检索、对话三大能力谱系的统一视觉基础模型。也正因为它把这三条原本割裂的技术路线收进同一份权重，后来者要接入自己的任务时，可以按需选一种姿态直接用，而不必为每类任务各找一个专门模型，这正是"基础模型"应有的通用性。
 
 *所以这一节是想说：InternViT-6B 提供与 LLM 匹配的大容量视觉（消除瓶颈），QLLaMA 让视觉从小按 LLM 语言习惯对齐（消除翻译损耗），对比→生成→指令三阶段层层递进，最终得到一份权重通吃感知/检索/对话三类任务的视觉基础模型。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【InternVL: Scaling up Vision Foundat… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -70,6 +70,22 @@ robosuite 就是来搭这个中央厨房的：给机器人学习提供统一的�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1：robosuite 程序化生成环境与统一 API](../papers/robosuite/images/img_000.jpg)
+
+*上图说明：Figure 1：robosuite 程序化生成环境与统一 API（论文原图）。*
+
+![Figure：MuJoCo 封装层—Robot / Gripper / Controller 类图](../papers/robosuite/images/img_016.jpg)
+
+*上图说明：Figure：MuJoCo 封装层—Robot / Gripper / Controller 类图（论文原图）。*
+
+![Figure：单臂/双臂操作任务与观测模态示例](../papers/robosuite/images/img_022.jpg)
+
+*上图说明：Figure：单臂/双臂操作任务与观测模态示例（论文原图）。*
+<!-- paper-figures:end -->
+
+
 把 robosuite 想成一家"机器人共享厨房"，老板帮你备齐了 6 样东西：可拼接的桌台（模块化架构）、一排现成的厨师（10 款机械臂）、统一的方向盘（6 种控制器）、各种监控摄像头（传感器+示教接口）、9 道指定菜（标准任务）、还有自动出题机（程序化生成）。下面一项一项讲。
 
 ### 5.1 双层 API 的模块化架构（Modeling API + Simulation API）

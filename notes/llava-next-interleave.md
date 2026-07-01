@@ -1,15 +1,15 @@
 ---
-title: "LLaVA-NeXT-Interleave"
+title: LLaVA-NeXT-Interleave
 slug: llava-next-interleave
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2407.07895"
+来源: 'https://arxiv.org/abs/2407.07895'
 venue: arXiv
 year: 2024
 era: frontier
 num: 140
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # LLaVA-NeXT-Interleave: Tackling Multi-image, Video, and 3D
@@ -171,6 +171,23 @@ ASCII 总览：
 **输出**：一套把三种不同维度信息统一编码进单一有序序列的具体映射方案。
 
 *所以这一节是想说：把多图/视频/多视角/多切片统一成图文交错数据（这是真正的钥匙），用 LLaVA-NeXT 原架构编码穿插（复用成熟单图能力、最小改动），混训带来跨任务迁移与涌现，指令微调后一个接口吃三类活。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【LLaVA-NeXT-Interleave · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

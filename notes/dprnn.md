@@ -1,15 +1,15 @@
 ---
-title: "Dual-path RNN"
+title: Dual-path RNN
 slug: dprnn
 topic: auditory
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/1910.06379"
+来源: 'https://arxiv.org/abs/1910.06379'
 venue: ICASSP
 year: 2020
 era: classic
 num: 18
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Dual-Path RNN: Efficient Long Sequence Modeling for Time-Domain Single-Channel Speech Separation
@@ -189,6 +189,24 @@ DPRNN 本身是一个通用的长序列建模模块，本文把它装进 TasNet 
 **输出**：训练好的模型权重。
 
 *所以这一节是想说：训练目标直接优化最终评测指标 SI-SNR（缩放不变、更稳），用 uPIT 解决说话人排列歧义——目标和评测完全对齐。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Dual-path RNN · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   DPRNN          ──► 2.6M                   ──► …
+   DPRNN-TasNet   ──► 2.6M                   ──► …
+   DPRNN          ──► 2.6M                   ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -84,6 +84,17 @@ RLBench 想做的事，是给机器人圈造一场"高考"：
 
 ## 5. 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure：RLBench 基于 CoppeliaSim 的任务与场景 API](../papers/rlbench/images/img_000.jpg)
+
+*上图说明：Figure：RLBench 基于 CoppeliaSim 的任务与场景 API（论文原图）。*
+
+![Figure：100 任务变体与评测协议示意](../papers/rlbench/images/img_004.jpg)
+
+*上图说明：Figure：100 任务变体与评测协议示意（论文原图）。*
+<!-- paper-figures:end -->
+
 把这套"机器人高考"做出来，作者其实在干 5 件事——就像办一场高考要准备的东西：考场、题型、答题示范、出题工具、加试赛道。一件件来：
 
 1. **统一仿真场景**（搭考场）

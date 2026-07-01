@@ -1,5 +1,5 @@
 ---
-title: "ImageBind: One Embedding Space To Bind Them All"
+title: 'ImageBind: One Embedding Space To Bind Them All'
 slug: imagebind
 topic: multimodal
 difficulty: ⭐⭐⭐
@@ -9,7 +9,7 @@ venue: CVPR
 year: 2023
 era: founder
 num: 64
-generated_at: 2026-06-25
+generated_at: 2026-06-25T00:00:00.000Z
 ---
 
 # ImageBind: One Embedding Space To Bind Them All
@@ -83,6 +83,17 @@ ImageBind 就是这招：**只让每种模态去跟"图"对齐，模态之间的
 ---
 
 ## 它分几步做的（方法）
+
+<!-- paper-figures:begin -->
+
+![Figure 1：ImageBind 联合嵌入空间与跨模态能力](../papers/imagebind/images/img_000.jpg)
+
+*上图说明：Figure 1：ImageBind 联合嵌入空间与跨模态能力（论文原图）。*
+
+![Figure 2：ImageBind 架构总览（六模态以图像为锚点对齐）](../papers/imagebind/images/img_001.jpg)
+
+*上图说明：Figure 2：ImageBind 架构总览（六模态以图像为锚点对齐）（论文原图）。*
+<!-- paper-figures:end -->
 
 整篇论文做了 4 件事：定义"图配 X"训练范式、设计编码器、用对比学习对齐、展示涌现行为和下游应用。下面按顺序拆解。
 
@@ -369,6 +380,23 @@ ImageBind 训练完只有一个对齐目标，但作者发现这个共享空间�
 - 给开发者一个新模板：以后做多模态产品，**只对齐一次**就能装出多种花样。已有的 CLIP 生态（检测器、生成模型、检索系统）都可以直接接入。
 
 *所以这一节是想说：训练只盯着一个 InfoNCE 对齐目标，但共享空间自然涌现出一堆"不用再训"的下游能力——跨模态检索、向量算术、音频检测、音频生图、IMU 检索——这才是这篇真正的杀手锏，也是它对 CLIP 生态最大的贡献。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【ImageBind: One Embedding Space To B… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -64,6 +64,18 @@ Flamingo 想做的就是：**给"会看图的 AI"也装上 GPT-3 那种"看几�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 3：Flamingo 架构总览（Perceiver + Gated XATTN + 冻结 LM）](../papers/flamingo/images/img_003.jpg)
+
+*上图说明：Figure 3：Flamingo 架构总览（Perceiver + Gated XATTN + 冻结 LM）（论文原图）。*
+
+![Figure 4：Gated XATTN-DENSE 层插入冻结 LM 块之间](../papers/flamingo/images/img_004.jpg)
+
+*上图说明：Figure 4：Gated XATTN-DENSE 层插入冻结 LM 块之间（论文原图）。*
+<!-- paper-figures:end -->
+
+
 把整件事想成"给一位写作大师配一位看图助理"，要让两人合作顺畅，得做 4 件事：
 
 1. 把一张图压成几十个"视觉关键词"（不然信息太多，主笔顾不过来）；

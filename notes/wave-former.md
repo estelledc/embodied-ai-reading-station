@@ -1,15 +1,15 @@
 ---
-title: "Wave-Former: Through-Occlusion 3D Reconstruction via Wireless Shape Completion"
+title: 'Wave-Former: Through-Occlusion 3D Reconstruction via Wireless Shape Completion'
 slug: wave-former
 topic: rf
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2511.14152"
+来源: 'https://arxiv.org/abs/2511.14152'
 venue: arXiv
 year: 2025
 era: frontier
 num: 97
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -123,6 +123,23 @@ Wave-Former 干的就是第三件事，再多走一步：把雷达回波（一�
 **输出**：足量的训练数据。具体合成/真实配比需查原文。
 
 *所以这一节是想说：Wave-Former 的方法 = 电磁物理校正去畸变 + 稀疏点云编码 + Transformer cross-attention 补全 + 仿真合成数据训练，四步把模糊回波变成完整 3D 网格。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Wave-Former: Through-Occlusion 3D R… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

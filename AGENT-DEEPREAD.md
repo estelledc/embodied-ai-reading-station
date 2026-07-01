@@ -56,7 +56,10 @@
 - 每大节末尾：`*所以这一节是想说：……*`
 - 目标 ≥4000 中文字；Method 每个子节含输入→处理→输出
 - 公式必须有人话翻译
-- 插图：`../papers/{slug}/images/xxx.jpg`
+- 插图：`../papers/{slug}/images/xxx.jpg`（有本地 `papers/` 时优先）；无原图则用 ASCII（≥2）
+- 站点配图：`site/src/images/inline/{slug}-scene|method.webp` 由 `fill-missing-inline.mjs` 或 `gen-inline-figures.mjs` 维护；card 由 `fill-missing-cards.mjs` 维护
+- 配图审计：`node site/scripts/audit-figures.mjs`；primer/task 缺原图时运行 `node site/scripts/fetch-arxiv-figures.mjs`
+- `npm run check` 校验笔记层视觉 ≥2 与站点层 inline/card 覆盖率
 - 禁止编造实验数字；没有的写「原文未报告」
 - 不用 emoji
 
@@ -110,7 +113,7 @@ git push
 | 篇幅 | ≥4000 字，Method ≥1500 字 |
 | 机制 | 每个核心组件有输入→输出 |
 | 数字 | 主表有 Markdown 表格 |
-| 图 | ≥2 张（原图或 ASCII） |
+| 图 | ≥2 张（**笔记层**：`../papers/{slug}/images/` 原图 **或** ASCII 架构图）；**站点层** scene/method AI 图由 build 注入，不计入笔记层计数 |
 | 局限 | ≥3 条 |
 | 思考题 | 5–8 题，提示在 details 里 |
 | 站点 | `npm run check` 0 fail |

@@ -1,15 +1,15 @@
 ---
-title: "RFMask: A Simple Baseline for Human Silhouette Segmentation with Radio Signals"
+title: 'RFMask: A Simple Baseline for Human Silhouette Segmentation with Radio Signals'
 slug: rfmask
 topic: rf
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2201.10175"
+来源: 'https://arxiv.org/abs/2201.10175'
 venue: TMM
 year: 2022
 era: classic
 num: 92
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # RFMask: A Simple Baseline for Human Silhouette Segmentation with Radio Signals
@@ -206,6 +206,22 @@ RFMask 由三个模块串成：信号处理 → 人体检测 → 掩码生成。
 **输出**：梯度反传，同时更新检测和分割部分的权重。
 
 *所以这一节是想说：损失函数把"框准"和"轮廓对"两个目标简单相加联合优化，配上标准的两阶段训练配置，工程上干净利落，呼应了标题的 "Simple Baseline"。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【RFMask: A Simple Baseline for Human… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   RFMask(12)   ──► 0.706                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -1,15 +1,15 @@
 ---
-title: "GenSim"
+title: GenSim
 slug: gensim
 topic: planning
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2310.01361"
+来源: 'https://arxiv.org/abs/2310.01361'
 venue: ICLR
 year: 2024
 era: classic
 num: 81
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # GenSim: Generating Robotic Simulation Tasks via LLMs
@@ -176,6 +176,23 @@ ASCII 总览：
 **输出**：一个因任务多样性而显著更能泛化的多任务机器人策略。
 
 *所以这一节是想说：LLM 把任务写成可验证的三块代码，仿真器当守门员筛掉幻觉，合格任务入库并作为示例喂回去形成自举飞轮，最后用海量多样任务训一个泛化更强的多任务策略——"代码化 + 验证闭环"是整套能成立的两块基石。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【GenSim · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 
