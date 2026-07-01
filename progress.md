@@ -17,6 +17,10 @@
 - [ ] 笔记质量提升：46 篇 auto-summary + 110 篇 auto-summary-light → 逐步补精读
   - [x] act-aloha（Ch14 primer）→ deep-read 2026-07-01
   - [x] umi（Ch14 primer）→ deep-read 2026-07-01
+  - [x] pi0（Ch13 primer）→ deep-read 2026-07-01
+  - [x] dreamer-v3（Ch15 primer）→ deep-read 2026-07-01
+  - [x] genie（Ch15 primer）→ deep-read 2026-07-01
+  - [x] open-x-embodiment（Ch21 primer）→ deep-read 2026-07-01
 
 ### 先打基础（5 篇入门轨道，learn track）
 
