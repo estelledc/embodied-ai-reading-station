@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import matter from "gray-matter";
 import { SCENE_SECTION_RE, METHOD_SECTION_RE } from "./figure-section-utils.mjs";
+import { TASK_SLUGS } from "./constants.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -2492,12 +2493,8 @@ function discoverGuide() {
 function buildGuideIndex(guideData) {
   const { chapters, readmeRaw } = guideData;
 
-  // 13 task-required paper slugs (Task 1 精读论文)
-  const TASK_SLUGS = new Set([
-    "3dshape2vecset", "acoustic-swarms", "cosmos-policy", "llava", "mla",
-    "mmclip", "neuralaids", "nlos-mmwave", "openvla", "proactive-hearing",
-    "rf-slam", "saycan", "vlas",
-  ]);
+  // 13 task-required paper slugs (Task 1 精读论文，来源 constants.mjs)
+  const taskSlugSet = new Set(TASK_SLUGS);
 
   // Pre-compute task-required paper count per chapter
   const chTaskCount = new Map();
@@ -2505,7 +2502,7 @@ function buildGuideIndex(guideData) {
     const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
     if (!m) continue;
     const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
-    const count = slugs.filter(s => TASK_SLUGS.has(s)).length;
+    const count = slugs.filter(s => taskSlugSet.has(s)).length;
     if (count > 0) chTaskCount.set(ch.num, count);
   }
 

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
+import { TASK_SLUGS } from "./constants.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -344,11 +345,6 @@ console.log("\n=== Guide chapter pages ===");
 
 console.log("\n=== Task-required notes ===");
 {
-  const TASK_SLUGS = [
-    "llava", "3dshape2vecset", "saycan", "openvla", "vlas", "mla",
-    "cosmos-policy", "rf-slam", "mmclip", "nlos-mmwave",
-    "proactive-hearing", "neuralaids", "acoustic-swarms",
-  ];
   let taskMissing = 0;
   let taskNoFlag = 0;
   for (const slug of TASK_SLUGS) {
