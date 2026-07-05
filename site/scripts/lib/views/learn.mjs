@@ -126,7 +126,8 @@ function toRoman(n) {
 }
 
 // 抽取 issue body 引用的论文 slugs（papers/<slug>/ 形式）
-function issuePaperSlugs(body, notes) {
+// 仅用 papers/<slug>/ 形式匹配 — \b<slug>\b 在 issue editorial 散文里太容易误判
+export function issuePaperSlugs(body, notes) {
   const refs = new Set();
   for (const n of notes) {
     const esc = n.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

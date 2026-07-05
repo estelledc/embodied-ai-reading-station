@@ -48,7 +48,6 @@ export function masthead(active) {
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
   ];
-  const allItems = [...primaryItems, ...viewItems];
   // 当前 active 是否在折叠区，决定 More 是否高亮
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">

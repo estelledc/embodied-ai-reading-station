@@ -16,7 +16,7 @@ import {
   buildDiscover, buildQuality, buildStats, buildVenueStats, buildHeatmap,
   buildCompare, buildGraph, buildTimeline,
 } from "./lib/views/aggregates.mjs";
-import { buildLearnIndex, buildLearnPage, buildIssueIndex, buildIssuePage } from "./lib/views/learn.mjs";
+import { buildLearnIndex, buildLearnPage, buildIssueIndex, buildIssuePage, issuePaperSlugs } from "./lib/views/learn.mjs";
 import {
   buildNext, buildRandom, buildSiteMap, buildContributors,
   buildChangelog, build404, buildAbout,
@@ -236,22 +236,16 @@ function build() {
     issuePages.sort((a, b) => a.order - b.order);
   }
 
-  // 计算 issue → 提到的 slugs；反向给每个 paper 一份 issue 列表
-  // 仅用 papers/<slug>/ 形式匹配 — \b<slug>\b 在 issue editorial 散文里太容易误判
+  // 计算 issue → 提到的 slugs（复用 issuePaperSlugs）；反向给每个 paper 一份 issue 列表
   const paperIssues = new Map(); // slug → [{number, slug, title}]
   for (const issue of issuePages) {
-    const body = issue.body || "";
-    for (const n of notes) {
-      const esc = n.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const re = new RegExp(`papers/${esc}/`);
-      if (re.test(body)) {
-        if (!paperIssues.has(n.slug)) paperIssues.set(n.slug, []);
-        paperIssues.get(n.slug).push({
-          number: issue.issueNumber,
-          slug: issue.slug.replace("issue-", ""),
-          title: issue.title.replace(/^Issue Nº \d+ — /, ""),
-        });
-      }
+    for (const slug of issuePaperSlugs(issue.body || "", notes)) {
+      if (!paperIssues.has(slug)) paperIssues.set(slug, []);
+      paperIssues.get(slug).push({
+        number: issue.issueNumber,
+        slug: issue.slug.replace("issue-", ""),
+        title: issue.title.replace(/^Issue Nº \d+ — /, ""),
+      });
     }
   }
 
