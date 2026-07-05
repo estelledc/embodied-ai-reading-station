@@ -602,12 +602,27 @@ Appendix 很值得看：A 给了完整的 PyTorch 代码（不到 20 行就实�
 
 ---
 
-## BibTeX
+## 原文信息
+
+**论文标题**：3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations
+
+**作者**：Yanjie Ze, Gu Zhang, Kangning Zhang, Chenyuan Hu, Muhan Wang, Huazhe Xu
+
+**机构**：Shanghai Qi Zhi Institute, Shanghai Jiao Tong University, Tsinghua University (IIIS), Shanghai AI Lab
+
+**发表**：RSS 2024
+
+**链接**：
+- 论文：https://arxiv.org/abs/2403.03954
+- 项目主页：https://3d-diffusion-policy.github.io
+- 本地全文解析：`papers/3d-diffusion-policy/paper.md`
+
+**BibTeX**：
 
 ```bibtex
 @inproceedings{ze2024dp3,
   title={3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations},
-  author={Ze, Yanjie and Niu, Gu and Chen, Kangning and Lin, Ruishi and Wang, Zhen and Xu, Huazhe},
+  author={Ze, Yanjie and Zhang, Gu and Zhang, Kangning and Hu, Chenyuan and Wang, Muhan and Xu, Huazhe},
   booktitle={Robotics: Science and Systems (RSS)},
   year={2024}
 }
