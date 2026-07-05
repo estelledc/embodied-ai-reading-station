@@ -70,6 +70,17 @@ Whisper 的三句话总结：
 
 ## 5. 方法
 
+<!-- paper-figures:begin -->
+
+![Figure 1：Whisper 多任务 seq2seq Transformer 与特殊 token 格式](../papers/whisper/images/img_008.jpg)
+
+*上图说明：Figure 1：Whisper 多任务 seq2seq Transformer 与特殊 token 格式（论文原图）。*
+
+![Figure：训练数据规模与 WER 缩放规律](../papers/whisper/images/img_010.jpg)
+
+*上图说明：Figure：训练数据规模与 WER 缩放规律（论文原图）。*
+<!-- paper-figures:end -->
+
 ### 5.1 数据收集与清洗
 
 像主厨进菜市场——先大筐扫货，再回厨房挑挑拣拣，最后开炉试做一道菜，吃出哪个摊主在卖坏菜，下次直接拉黑。

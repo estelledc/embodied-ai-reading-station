@@ -1,15 +1,15 @@
 ---
-title: "Tree-Planner"
+title: Tree-Planner
 slug: tree-planner
 topic: planning
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2310.08582"
+来源: 'https://arxiv.org/abs/2310.08582'
 venue: ICLR
 year: 2024
 era: classic
 num: 83
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -123,6 +123,23 @@ generated_at: 2026-07-01
 > **backtracking（回溯）**：搜索算法走死路时退回上一个分叉重新选择的机制。这里指执行失败时退回树上的上一个节点。
 
 *所以这一节是想说：Tree-Planner 的方法 = 高温采样 N 条计划 + 合并成前缀树 + 落地筛选能走的分支 + 失败时树上回溯，四步把"一次规划"变成"能纠错的规划"。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Tree-Planner · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

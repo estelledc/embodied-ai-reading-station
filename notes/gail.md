@@ -1,5 +1,5 @@
 ---
-title: "Generative Adversarial Imitation Learning"
+title: Generative Adversarial Imitation Learning
 slug: gail
 topic: imitation
 difficulty: ⭐⭐⭐⭐
@@ -9,7 +9,7 @@ venue: NeurIPS
 year: 2016
 era: founder
 num: 50
-generated_at: 2026-06-25
+generated_at: 2026-06-25T00:00:00.000Z
 ---
 
 # GAIL: Generative Adversarial Imitation Learning
@@ -74,6 +74,14 @@ GAIL 想做的事：**既要 IRL 那种"学评分标准"的鲁棒性，又不想
 ---
 
 ## 它分几步做的（方法）
+
+<!-- paper-figures:begin -->
+
+![Figure：GAIL 生成器—判别器对抗训练与 MuJoCo 任务成功率](../papers/gail/images/img_000.jpg)
+
+*上图说明：Figure：GAIL 生成器—判别器对抗训练与 MuJoCo 任务成功率（论文原图）。*
+<!-- paper-figures:end -->
+
 
 像学做一道菜：先想清楚"什么叫做得像大厨"，再挑一把"尺子"量你和大厨差多少，然后请一位挑刺老师天天打分，最后把整套办法搬到 9 个真实任务上验证。整篇论文做了这 4 件事：定义"什么叫像专家"、证明 IRL 其实是分布匹配、设计 GAN 式的目标函数、给出落地算法。下面逐步展开。
 
@@ -367,6 +375,23 @@ nabla_theta max_{c in C} E_{pi_theta}[c(s,a)] - E_{pi_E}[c(s,a)]
 - 熵正则 lambda 通常设为 0（论文只在 Reacher 任务上观察到非零 lambda 有帮助）。
 
 *所以这一节是想说：工程上 GAIL 的实现出人意料地简单——两个小网络交替训练，关键是控制好鉴别器不要太强、策略更新不要太大。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【GAIL vs 行为克隆 · 样本效率对比】
+
+   专家示范 D ──► 行为克隆 BC ──► 分布偏移 → 成功率崩溃
+        │
+        └──► GAIL: pi + D 对抗 ──► 学分布匹配 → 少样本接近专家
+                    │
+                    ▼
+            MuJoCo 连续控制：GAIL 显著优于 BC（同示范量）
+
+```
 
 ---
 

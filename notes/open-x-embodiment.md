@@ -67,6 +67,17 @@ generated_at: 2026-07-01
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/open-x-embodiment/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/open-x-embodiment/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 ### 5.1 数据侧：Open X-Embodiment Repository
 
 **输入**：全球 **34 个实验室**已有的 **60 个**机器人学习子数据集（抓取、推送、遥操作演示等）。

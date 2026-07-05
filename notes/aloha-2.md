@@ -1,15 +1,15 @@
 ---
-title: "ALOHA 2"
+title: ALOHA 2
 slug: aloha-2
 topic: imitation
 difficulty: ⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2405.02292"
+来源: 'https://arxiv.org/abs/2405.02292'
 venue: Tech Report
 year: 2024
 era: frontier
 num: 56
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # ALOHA 2: An Enhanced Low-Cost Hardware for Bimanual Teleoperation
@@ -171,6 +171,23 @@ ALOHA 2 没发明新算法、没发新数据集，它发的是一份"让别人�
 > **BOM（Bill of Materials，物料清单）**：搭一台机器需要的每个零件型号、数量、参考链接。开源硬件里 BOM 完整度直接决定别人能不能复刻。
 
 *所以这一节是想说：完整的开源交付（CAD + BOM + 教程 + 软件栈）把"复刻一台 ALOHA 2"从踩坑半个月变成照着手册来，是让平台标准化扩散的最后一块拼图。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【ALOHA 2 · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

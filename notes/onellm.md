@@ -1,15 +1,15 @@
 ---
-title: "OneLLM"
+title: OneLLM
 slug: onellm
 topic: multimodal
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2312.03700"
+来源: 'https://arxiv.org/abs/2312.03700'
 venue: CVPR
 year: 2024
 era: classic
 num: 69
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # OneLLM: One Framework to Align All Modalities with Language
@@ -140,6 +140,23 @@ OneLLM 的核心洞察：**不同模态虽然原始形式千差万别，但可�
 ```
 
 *所以这一整节是想说：OneLLM = 轻 tokenizer + 共享编码器 + 万能投影模块(专家/路由/模态token) + 渐进式对齐，用一套机件把八模态统一接到语言模型。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【OneLLM · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

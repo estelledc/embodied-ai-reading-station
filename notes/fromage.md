@@ -1,15 +1,15 @@
 ---
-title: "FROMAGe: Grounding LLMs to Images"
+title: 'FROMAGe: Grounding LLMs to Images'
 slug: fromage
 topic: multimodal
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2301.13823"
+来源: 'https://arxiv.org/abs/2301.13823'
 venue: ICML
 year: 2023
 era: classic
 num: 68
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # FROMAGe: Grounding LLMs to Images
@@ -179,6 +179,23 @@ FROMAGe 最反直觉的决定，是把那颗昂贵的大语言模型整个冻住
 再补一个训练上的细节直觉：因为可训练参数极少（只有两片线性层和一个新嵌入），过拟合风险和训练不稳定性都很低，学习率、batch 这些超参也比全参数微调好调很多。这也是"参数高效"路线的普遍红利——你动的东西少，能出错的地方就少，实验迭代快。反过来，能力上限也被这几片薄层卡住，想再强就得解冻更多东西，那就走向了后来 LLaVA 那类"投影层 + 微调主干"的路线。
 
 *所以这一节是想说：输入线性层把图变假 token，[RET] 触发输出线性层做检索，主干全冻，只训两片薄翻译；冻结换来了效率与语言保全，两个损失分别打通图的"进"与"出"。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【FROMAGe: Grounding LLMs to Images · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -1,5 +1,7 @@
 ---
-title: "3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D Representations"
+title: >-
+  3D Diffusion Policy: Generalizable Visuomotor Policy Learning via Simple 3D
+  Representations
 slug: 3d-diffusion-policy
 topic: diffusion-policy
 difficulty: ⭐⭐⭐
@@ -9,7 +11,7 @@ venue: RSS
 year: 2024
 era: classic
 num: 39
-generated_at: 2026-06-25
+generated_at: 2026-06-25T00:00:00.000Z
 ---
 
 # 3D Diffusion Policy：给机器人换上"立体眼"，10 条示教就够
@@ -85,6 +87,21 @@ DP3 的核心想法非常朴素，可以浓缩成一句话：
 ---
 
 ## 它分几步做的（方法）
+
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/3d-diffusion-policy/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/3d-diffusion-policy/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/3d-diffusion-policy/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
 
 把 DP3 跑一次（训练 + 推理）拆成 6 步。整体节奏像做菜：先拿食材（拍照）-> 切配（点云处理）-> 压味（编码器）-> 下锅（扩散）-> 出餐（执行）-> 再从头切一盘新菜（滚动重规划）。这一节占整篇笔记最大篇幅，因为**方法就是这篇论文的全部贡献**。
 
@@ -262,6 +279,23 @@ batch size 128，MetaWorld 训 1000 epoch（任务简单），其他训 3000 epo
 **多相机扩展**：虽然论文只用了单相机，但方法可以自然扩展到多相机——每个相机各自拍一张深度图、各自反投影和裁剪、把所有点云合并后一起做 FPS 采样和编码。论文没有做这个实验，但指出这是一个低工程成本的扩展方向，可以解决单相机的遮挡盲区问题。
 
 *所以这一步是想说：方法本身不复杂——拍深度图 -> 切成点云 -> MLP 压成向量 -> 喂给一个标准扩散策略 -> 每 3 步重规划——每一步都用最朴素的选择。总推理时间约 80ms，和纯 2D 方案持平，且有精简版可以进一步提速。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【3D Diffusion Policy: Generalizable … · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   Point cloud（DP3）      ──► 78.3%                  ──► …
+   DP3 Encoder（三层 MLP）   ──► 78.3%                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

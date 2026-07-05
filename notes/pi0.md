@@ -1,16 +1,16 @@
 ---
-title: "π₀: A Vision-Language-Action Flow Model for General Robot Control"
+title: 'π₀: A Vision-Language-Action Flow Model for General Robot Control'
 slug: pi0
 topic: diffusion-policy
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: optional
-来源: "https://arxiv.org/abs/2410.24164"
+来源: 'https://arxiv.org/abs/2410.24164'
 venue: arXiv
 year: 2024
 era: frontier
 num: 47
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # π₀：VLM 大脑 + 流匹配小手，通用机器人基础模型
@@ -101,6 +101,21 @@ Physical Intelligence 的 **π₀**：在 **PaliGemma 3B** 视觉-语言模型�
 ---
 
 ## 它分几步做的（方法）
+
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/pi0/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/pi0/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/pi0/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
 
 ### 5.1 观察与动作空间
 
@@ -346,6 +361,23 @@ Fig. 6–7 五任务 **同一 pre-trained checkpoint**，仅改语言指令：
 5. 输出 $\mathbf{A}^1$ 前 25/16 步送 low-level controller
 
 *所以这一节是想说：π₀ 的 SOTA 声明建立在 **同数据、同任务协议** 上的架构对比，而非私有数据 alone。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【π₀: A Vision-Language-Action Flow M… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

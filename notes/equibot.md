@@ -1,15 +1,15 @@
 ---
-title: "EquiBot: SIM(3)-Equivariant Diffusion Policy"
+title: 'EquiBot: SIM(3)-Equivariant Diffusion Policy'
 slug: equibot
 topic: diffusion-policy
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2407.01479"
+来源: 'https://arxiv.org/abs/2407.01479'
 venue: CoRL
 year: 2024
 era: classic
 num: 41
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # EquiBot: SIM(3)-Equivariant Diffusion Policy
@@ -184,6 +184,23 @@ SIM(3) 听起来吓人，其实就是"三维空间里不改变物体形状的四
 **输出**：在演示数量固定时，显著更强的对新位置/新朝向/新尺度的泛化——这就是等变策略最核心的卖点，也是它特别适合真机（数据永远不够）的原因。
 
 *所以这一节是想说：EquiBot 用点云做输入、VN 做等变编码、等变去噪器出动作，全程用"分而治之的 SIM(3) 处理 + 等变乐高 + 讲究的旋转表示"把不变性焊进结构，训练照旧只用去噪损失，却白赚了少样本泛化。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【EquiBot: SIM(3)-Equivariant Diffusi… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

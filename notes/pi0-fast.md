@@ -1,15 +1,15 @@
 ---
-title: "FAST: Efficient Action Tokenization for VLA"
+title: 'FAST: Efficient Action Tokenization for VLA'
 slug: pi0-fast
 topic: diffusion-policy
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2501.09747"
+来源: 'https://arxiv.org/abs/2501.09747'
 venue: RSS
 year: 2025
 era: frontier
 num: 46
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # FAST: Efficient Action Tokenization for Vision-Language-Action Models
@@ -137,6 +137,23 @@ FAST 的核心洞察来自信号处理：**连续动作序列里的冗余，可�
 ```
 
 *所以这一整节是想说：FAST = 诊断冗余 + DCT 去冗余 + 量化/BPE 压缩 + FAST+ 通用化，把动作 token 从"学不动"变成"又短又好学"。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【FAST: Efficient Action Tokenization… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

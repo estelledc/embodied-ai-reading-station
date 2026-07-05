@@ -399,6 +399,43 @@ console.log("\n=== Source path integrity ===");
   check("来源引用 papers/ 的笔记目录均存在", () => sourceBroken === 0 || `${sourceBroken} 篇来源目录缺失`);
 }
 
+console.log("\n=== Figure coverage (deep-read) ===");
+{
+  function countAscii(body) {
+    const blocks = body.match(/```[\s\S]*?```/g) || [];
+    return blocks.filter((b) => /[┌┐└┘│─├┤→]/.test(b) || (b.includes("->") && b.length > 80 && !/^```python/i.test(b))).length;
+  }
+  const INLINE = path.join(SITE, "src", "images", "inline");
+  const CARDS = path.join(SITE, "src", "images", "cards");
+  let visualFail = 0, localUnused = 0, inlineFail = 0;
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data, content } = matter(raw);
+    if (data.status !== "deep-read") continue;
+    const slug = f.replace(/\.md$/, "");
+    const mdImgs = (content.match(/!\[[^\]]*\]\([^)]+\)/g) || []).length;
+    const paperImgs = (content.match(/!\[[^\]]*\]\(\.\.\/papers\//g) || []).length;
+    const ascii = countAscii(content);
+    if (mdImgs + ascii < 2) {
+      visualFail++;
+      console.log(`  ✗ ${slug}: 视觉元素 < 2 (md=${mdImgs} ascii=${ascii})`);
+    }
+    const imgDir = path.join(ROOT, "papers", slug, "images");
+    const localN = fs.existsSync(imgDir) ? fs.readdirSync(imgDir).filter(x => /\.(jpe?g|png|webp)$/i.test(x)).length : 0;
+    if (localN >= 5 && paperImgs === 0) {
+      localUnused++;
+      console.log(`  ⚠ ${slug}: 本地 ${localN} 张图未引用`);
+    }
+    if (!fs.existsSync(path.join(INLINE, `${slug}-scene.webp`)) || !fs.existsSync(path.join(INLINE, `${slug}-method.webp`))) {
+      inlineFail++;
+    }
+    if (!fs.existsSync(path.join(CARDS, `${slug}.webp`))) inlineFail++;
+  }
+  check("deep-read 笔记视觉元素 ≥ 2", () => visualFail === 0 || `${visualFail} 篇未达标`);
+  check("inline scene+method 与 card 齐全", () => inlineFail === 0 || `${inlineFail} 篇缺站点配图`);
+  if (localUnused > 0) console.log(`  ⚠ ${localUnused} 篇本地图未引用（warn only）`);
+}
+
 console.log(`\n=== Summary ===`);
 console.log(`  ${pass} passed, ${fail} failed`);
 process.exit(fail === 0 ? 0 : 1);

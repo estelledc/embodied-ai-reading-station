@@ -1,15 +1,15 @@
 ---
-title: "LLM+P: Empowering LLMs with Optimal Planning"
+title: 'LLM+P: Empowering LLMs with Optimal Planning'
 slug: llm-plus-p
 topic: planning
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2304.11477"
+来源: 'https://arxiv.org/abs/2304.11477'
 venue: arXiv
 year: 2023
 era: founder
 num: 77
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # LLM+P: Empowering Large Language Models with Optimal Planning Proficiency
@@ -168,6 +168,23 @@ ASCII 总览：
 **输出**：一条有正确性与最优性保证的计划——保证来自规划器，而非 LLM 的自信。
 
 *所以这一节是想说：专家写 domain（稳定、要求正确的骨架）、LLM 翻 problem（擅长的模式匹配填空）、经典规划器算最优（提供 LLM 给不了的正确性保证）、LLM 再翻回人话——四步各司其职，核心是让神经网络和符号系统各扬其长、互相兜底。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【LLM+P: Empowering LLMs with Optimal… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

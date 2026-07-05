@@ -1,15 +1,15 @@
 ---
-title: "GR-2: Generative Video-Language-Action Model"
+title: 'GR-2: Generative Video-Language-Action Model'
 slug: gr-2
 topic: vla
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2410.06158"
+来源: 'https://arxiv.org/abs/2410.06158'
 venue: arXiv
 year: 2024
 era: frontier
 num: 116
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # GR-2: A Generative Video-Language-Action Model
@@ -170,6 +170,23 @@ ASCII 总览：
 顺带说一个部署上的现实约束：机器人控制要求足够高的频率（通常 10 Hz 以上），否则"先想象整段视频再读动作"会让手反应迟钝、跟不上环境变化。所以这类"生成式 VLA"在工程上必须解决"想象要快"的问题——要么压缩想象的分辨率/长度，要么让动作解码不必等完整视频生成完，这些取舍直接决定它能不能从演示视频里的漂亮结果走到真机上的实用系统。
 
 *所以这一节是想说：先用海量视频学会想象未来、建立世界物理直觉，再在机器人数据上加动作头联合微调（视频预测全程当辅助防遗忘），推理时"先脑补画面再从中读出动作"——稀缺的机器人数据只用来接地，广博的世界知识全靠视频兜底。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【GR-2: Generative Video-Language-Act… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

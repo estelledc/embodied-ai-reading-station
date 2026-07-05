@@ -75,6 +75,21 @@ $$\text{sign}(R_a - R_b) \approx \text{sign}(R_{\mathcal{S},a} - R_{\mathcal{S},
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/simpler-env/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/simpler-env/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/simpler-env/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 ### 5.1 问题定义与指标（§III）
 
 **输入**：在 **真机** 上测得的策略成功率 $R_i$（多 checkpoint、多任务）。

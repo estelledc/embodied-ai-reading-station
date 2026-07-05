@@ -95,6 +95,21 @@ Genie 的切入点：**动作信息已经编码在帧间变化里，只是没人
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/genie/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/genie/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/genie/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 整个方法可以拆成 **共享骨干 ST-Transformer**、**三组件**、**两阶段训练**、**推理闭环** 四块。下面按数据流从输入到输出讲清楚。
 
 ### 0. 共享骨干：ST-Transformer

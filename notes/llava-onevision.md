@@ -1,15 +1,15 @@
 ---
-title: "LLaVA-OneVision: Easy Visual Task Transfer"
+title: 'LLaVA-OneVision: Easy Visual Task Transfer'
 slug: llava-onevision
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2408.03326"
+来源: 'https://arxiv.org/abs/2408.03326'
 venue: arXiv
 year: 2024
 era: frontier
 num: 141
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # LLaVA-OneVision: Easy Visual Task Transfer
@@ -176,6 +176,23 @@ ASCII 总览：
 **输出**：一个证明"跨视觉场景能力可迁移"、且在多个规模上都成立的统一视觉模型。
 
 *所以这一节是想说：朴素三明治架构 + 把一切统一成 visual token 序列（迁移的地基）+ Higher AnyRes 保细节切图 + 课程式数据配方，让能力从单图长到多图、再自然迁移到视频——"任务迁移"才是 OneVision 真正的主张。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【LLaVA-OneVision: Easy Visual Task T… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

@@ -1,15 +1,15 @@
 ---
-title: "RadarSLAM: Radar based Large-Scale SLAM in All Weathers"
+title: 'RadarSLAM: Radar based Large-Scale SLAM in All Weathers'
 slug: radarslam
 topic: rf
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2005.02198"
+来源: 'https://arxiv.org/abs/2005.02198'
 venue: BMVC
 year: 2020
 era: classic
 num: 90
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # RadarSLAM: Radar based Large-Scale SLAM in All Weathers
@@ -206,6 +206,23 @@ RadarSLAM 选的是第四条路：**纯雷达 + 经典几何 + 全图优化**。
 **为什么这步是收尾**：前面攒下的所有漂移，都在这里被回环约束"拉回去"分摊掉。这一步做完，几公里的轨迹才能闭合成一条干净的环。
 
 *所以这一节是想说：位姿图优化是系统的收尾——把所有帧间约束和回环约束一起扔进 g2o，让长期累积的漂移在闭环处被一次性拉直，输出全局一致的轨迹和地图。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【RadarSLAM: Radar based Large-Scale … · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

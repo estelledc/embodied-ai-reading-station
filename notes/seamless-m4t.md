@@ -1,15 +1,15 @@
 ---
-title: "SeamlessM4T"
+title: SeamlessM4T
 slug: seamless-m4t
 topic: auditory
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2308.11596"
+来源: 'https://arxiv.org/abs/2308.11596'
 venue: arXiv
 year: 2023
 era: frontier
 num: 23
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。缩写第一次出现一定展开 + 类比，公式翻译成人话。
@@ -135,6 +135,23 @@ SeamlessM4T 想做的是一只**全能翻译耳机**：奶奶说泰语它直接�
 **输出**：一份带公平性与安全性评估的负责任发布。具体数字需查原文。
 
 *所以这一节是想说：SeamlessM4T 的方法 = 自动挖 47 万小时平行数据 + UnitY 两阶段解码骨干 + 五任务联合训练 + 公平性评估，四件事缺一不可。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【SeamlessM4T · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

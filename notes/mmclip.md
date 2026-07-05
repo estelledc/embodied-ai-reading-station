@@ -84,6 +84,18 @@ CLIP 在图像上已能零样本分类，但雷达输出的是 **Time-Doppler / 
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1：mmCLIP 信号—文本对齐框架总览](../papers/mmclip/images/img_001.jpg)
+
+*上图说明：Figure 1：mmCLIP 信号—文本对齐框架总览（论文原图）。*
+
+![Figure 7：未见活动类别上的零样本 HAR 效果](../papers/mmclip/images/img_007.jpg)
+
+*上图说明：Figure 7：未见活动类别上的零样本 HAR 效果（论文原图）。*
+<!-- paper-figures:end -->
+
+
 整体可以想成「翻译学校」：CLIP 文本编码器是已经精通人话的翻译官（冻结）；mmCLIP 信号编码器是学生，用对比学习练习「这段雷达语和哪段文字说的是同一件事」。
 
 ```

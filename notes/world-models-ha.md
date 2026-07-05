@@ -78,6 +78,21 @@ generated_at: 2026-06-25
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/world-models-ha/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/world-models-ha/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/world-models-ha/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 把 agent 想成一个开车的人：**V** 是眼睛（看清画面）、**M** 是大脑里的"老司机直觉"（记得路况、预感下一秒）、**C** 是手脚（拧方向盘踩油门）。前两个拼起来就是"世界模型"，第三个是真正做决策的小肌肉。论文最妙的设计：眼睛和直觉做得很大，手脚做得超小。
 
 整个训练流程分为四大阶段：收集数据 -> 训练 V（压缩画面）-> 训练 M（预测未来）-> 训练 C（做决策）。前三步都不用任何奖励信号，只有最后一步才需要"分数"。

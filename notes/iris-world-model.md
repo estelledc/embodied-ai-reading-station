@@ -1,15 +1,15 @@
 ---
-title: "Transformers are Sample-Efficient World Models"
+title: Transformers are Sample-Efficient World Models
 slug: iris-world-model
 topic: world-model
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2209.00588"
+来源: 'https://arxiv.org/abs/2209.00588'
 venue: ICLR
 year: 2023
 era: classic
 num: 149
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # IRIS: Transformers are Sample-Efficient World Models
@@ -165,6 +165,23 @@ ASCII 总览：
 **输出**：一个用 Transformer 换来更强建模能力、并证明其样本效率优势的世界模型架构。
 
 *所以这一节是想说：VQ-VAE 把帧变离散 token（换来省数据的可建模性），Transformer 学会 token 接龙当高容量世界模型，actor-critic 在短想象轨迹里练级（并靠勤校准压住累积误差），真玩只用来采新素材和校准——离散化 + 想象训练 + 大容量序列模型，共同成就了"样本高效"。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Transformers are Sample-Efficient W… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

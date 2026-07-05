@@ -1,15 +1,15 @@
 ---
-title: "High Resolution Point Clouds from mmWave Radar"
+title: High Resolution Point Clouds from mmWave Radar
 slug: radarhd
 topic: rf
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2206.09273"
+来源: 'https://arxiv.org/abs/2206.09273'
 venue: ICRA
 year: 2023
 era: classic
 num: 89
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # RadarHD: 用深度学习把廉价毫米波雷达"看糊的画面"变成激光级点云
@@ -128,6 +128,23 @@ RadarHD 要问的是：**能不能用深度学习，把廉价雷达这堆"稀又
 ```
 
 *所以这一整节是想说：RadarHD = 雷达表示 + 雷达/激光配对 + 翻译网络 + 下游对接验证，把糊雷达炼成可用的激光级点云。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【High Resolution Point Clouds from m… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

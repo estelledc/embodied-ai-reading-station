@@ -1,15 +1,15 @@
 ---
-title: "Habitat 2.0"
+title: Habitat 2.0
 slug: habitat-2
 topic: sim
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2106.14405"
+来源: 'https://arxiv.org/abs/2106.14405'
 venue: NeurIPS
 year: 2021
 era: classic
 num: 101
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 # Habitat 2.0: Training Home Assistants to Rearrange their Habitat
@@ -175,6 +175,23 @@ Replica 扫描 ──►[人工做成铰接资产]──► ReplicaCAD(门能开
 **输出**：一个让具身操作研究得以规模化、可复现、可横向比较的公共训练场。
 
 *所以这一节是想说：把资产做成可交互、把仿真做到超快（并用抽象抓取守住速度）、把任务做成长流程，再用端到端和分层两条基线揭示"长任务需要模块化"这一核心难度，最终交付的是一整套可复现的研究基础设施。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Habitat 2.0 · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

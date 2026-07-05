@@ -1,15 +1,17 @@
 ---
-title: "BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models"
+title: >-
+  BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders
+  and Large Language Models
 slug: blip-2
 topic: vlm-foundation
-difficulty: "\u2B50\u2B50\u2B50\u2B50"
+difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2301.12597"
+来源: 'https://arxiv.org/abs/2301.12597'
 venue: ICML
 year: 2023
 era: classic
 num: 126
-generated_at: 2026-06-25
+generated_at: 2026-06-25T00:00:00.000Z
 ---
 
 # BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models
@@ -63,6 +65,21 @@ BLIP-2 的做法：雇一个**便宜的小翻译**站中间，画家和作家原
 ---
 
 ## 它分几步做的（方法）
+
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/blip-2/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/blip-2/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/blip-2/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
 
 把整件事想成"训练一位外交口译"：这位口译需要先学会"从画家的画里提炼关键信息"（第一阶段），再学会"把关键信息翻译成作家听得懂的话"（第二阶段）。
 
@@ -288,6 +305,23 @@ BLIP-2 用 1.6% 的可训练参数，超越了训练参数 50 倍以上的 Flami
 后续历史：LLaVA 路线在开源社区胜出——因为当 LLM 够大且可以 LoRA 微调时，"信息选择"这件事 LLM 自己就能做。但 Q-Former 在多图/视频场景仍有优势。
 
 *所以这一节是想说：BLIP-2 在桥梁设计空间中占据"中等复杂度"位置。后来社区转向 LLaVA，但 Q-Former 的"信息瓶颈"思想影响深远。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【BLIP-2: Bootstrapping Language-Imag… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

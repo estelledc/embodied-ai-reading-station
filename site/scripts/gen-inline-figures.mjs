@@ -5,6 +5,7 @@ import path from "node:path";
 import { execSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
+import { SCENE_SECTION_RE, METHOD_SECTION_RE, extractSectionParagraph } from "./figure-section-utils.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..", "..");
@@ -29,19 +30,18 @@ function callCodex(prompt) {
 }
 
 function extractScene(content) {
-  // 提取「这是个什么场景」段第一段
-  const m = content.match(/##\s*这是个什么场景[^\n]*\n+([\s\S]+?)(?=\n##|$)/);
-  if (!m) return null;
-  const text = m[1].split("\n").filter(l => l.trim() && !l.startsWith(">") && !l.startsWith("*") && !l.startsWith("```")).join(" ");
-  return text.replace(/\*\*/g, "").slice(0, 400);
+  return extractSectionParagraph(content, SCENE_SECTION_RE);
 }
 
 function extractMethod(content) {
-  // 提取「方法」段第一段
-  const m = content.match(/##\s*(?:它分几步做的|它怎么做的|关键想法|这篇论文的关键想法)[^\n]*\n+([\s\S]+?)(?=\n##|$)/);
-  if (!m) return null;
-  const text = m[1].split("\n").filter(l => l.trim() && !l.startsWith(">") && !l.startsWith("*") && !l.startsWith("```") && !l.startsWith("###")).join(" ");
-  return text.replace(/\*\*/g, "").slice(0, 400);
+  let text = extractSectionParagraph(content, METHOD_SECTION_RE);
+  if (!text) {
+    // fallback: TL;DR + 新想法
+    const tldr = extractSectionParagraph(content, /##\s*(?:\d+\.\s*)?(?:一句话讲什么|TL;DR)[^\n]*/);
+    const idea = extractSectionParagraph(content, /##\s*(?:\d+\.\s*)?(?:这篇论文的新想法|新想法)[^\n]*/);
+    text = [tldr, idea].filter(Boolean).join(" ").slice(0, 400);
+  }
+  return text || null;
 }
 
 function makeScenePrompt(slug, title, scene) {

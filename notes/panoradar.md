@@ -75,6 +75,21 @@ $$\text{高分辨率 RF 3D} = \underbrace{\text{旋转圆柱 SAR}}_{\text{方位
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/panoradar/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/panoradar/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/panoradar/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 ### 5.1 硬件与数据（§7）
 
 **输入**：环境反射的 **FMCW chirp**（77–81 GHz，**B=4 GHz**）。

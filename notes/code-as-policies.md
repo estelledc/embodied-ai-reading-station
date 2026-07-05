@@ -74,6 +74,21 @@ generated_at: 2026-06-25
 
 ## 5. 方法
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/code-as-policies/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/code-as-policies/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/code-as-policies/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 方法占全文篇幅最大，因为 CaP 的价值全在"怎么设计 prompt + 怎么让生成的代码安全跑起来"这些工程细节上。下面按执行流水线逐步拆解，每步都展开到"够你自己复现"的程度。
 
 ### 5.1 Prompt 架构设计——告诉 LLM"你能用什么、该怎么用"

@@ -1,15 +1,15 @@
 ---
-title: "Behavior Generation with Latent Actions (VQ-BeT)"
+title: Behavior Generation with Latent Actions (VQ-BeT)
 slug: vq-bet
 topic: imitation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: "https://arxiv.org/abs/2403.03181"
+来源: 'https://arxiv.org/abs/2403.03181'
 venue: ICML
 year: 2024
 era: frontier
 num: 63
-generated_at: 2026-07-01
+generated_at: 2026-07-01T00:00:00.000Z
 ---
 
 > 这是一份写给"完全没接触过 AI"的读者看的精读笔记。术语首次出现配类比，公式翻译成人话。
@@ -114,6 +114,23 @@ VQ-BeT 换思路：先把所有动作风格整理成一本"动作菜单"——�
 **输出**：一个菜单稳定、点菜精准的两段式策略。具体码本大小、残差层数需查原文。
 
 *所以这一节是想说：VQ-BeT 的方法 = 残差 VQ 编动作菜单 + Transformer 分类选菜 + 小偏移微调 + 单步解码 + 先定菜单后学点菜的两阶段训练，用"分类抗平均、回归保精度"一举解决多模态且快。*
+
+---
+
+
+下图概括本篇在「关键数字」节前的核心结果脉络（便于对照后文表格）：
+
+```
+【Behavior Generation with Latent Act… · 关键结果概览】
+
+   设定 / 数据          方法要点              主结果
+        │                   │                    │
+        ▼                   ▼                    ▼
+   训练           ──► 方法核心                   ──► …
+   评测           ──► 主指标提升                  ──► ↑ 论文主结论
+
+   （对照下方表格中的原文数字与消融）
+```
 
 ---
 

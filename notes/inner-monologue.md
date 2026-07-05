@@ -84,6 +84,21 @@ Inner Monologue 想干的事，就是把机器人从"照菜谱卡硬执行"变�
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1（ar5iv 原图）](../papers/inner-monologue/images/img_000.jpg)
+
+*上图说明：Figure 1（ar5iv 原图）（论文原图）。*
+
+![Figure 2（ar5iv 原图）](../papers/inner-monologue/images/img_001.jpg)
+
+*上图说明：Figure 2（ar5iv 原图）（论文原图）。*
+
+![Figure 3（ar5iv 原图）](../papers/inner-monologue/images/img_002.jpg)
+
+*上图说明：Figure 3（ar5iv 原图）（论文原图）。*
+<!-- paper-figures:end -->
+
 整个系统的骨架可以拆成五个层次：问题定义、反馈分类学、信息拼接机制、思维链增强、以及三套异构实现。下面逐层展开。
 
 ### 层次一：问题定义——机器人规划的"接地难题"

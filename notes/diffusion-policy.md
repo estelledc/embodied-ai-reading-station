@@ -86,6 +86,22 @@ Diffusion Policy 让机器人产生动作的方式跟这个一模一样：
 
 ## 它分几步做的（方法）
 
+<!-- paper-figures:begin -->
+
+![Figure 1：扩散策略从噪声迭代去噪得到动作轨迹](../papers/diffusion-policy/images/img_000.jpg)
+
+*上图说明：Figure 1：扩散策略从噪声迭代去噪得到动作轨迹（论文原图）。*
+
+![Figure 2：Diffusion Policy 整体架构（观测编码 + 1D U-Net 去噪）](../papers/diffusion-policy/images/img_020.jpg)
+
+*上图说明：Figure 2：Diffusion Policy 整体架构（观测编码 + 1D U-Net 去噪）（论文原图）。*
+
+![Figure 3：多模态动作分布——同一状态下多个合理动作簇](../papers/diffusion-policy/images/img_027.jpg)
+
+*上图说明：Figure 3：多模态动作分布——同一状态下多个合理动作簇（论文原图）。*
+<!-- paper-figures:end -->
+
+
 整篇论文做了 4 件关键事：把扩散模型搬到动作上、设计网络结构、用"边走边规划"接好闭环、加视觉条件。下面逐一展开，每一件都从"类比 → 机制 → 公式人话翻译 → 为什么有用"的顺序讲清楚。
 
 ### 1. 用"擦噪声"代替"直接说动作"
