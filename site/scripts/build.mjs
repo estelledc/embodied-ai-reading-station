@@ -67,6 +67,13 @@ function discoverPapers() {
 
 const PAPERS = discoverPapers();
 
+// 动态计数（文案插值用，避免内容增长后数字漂移）
+const PAPER_COUNT = PAPERS.length;
+const TOPIC_COUNT = TOPIC_ORDER.length;
+const GUIDE_CHAPTER_COUNT = fs.existsSync(GUIDE_DIR)
+  ? fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md")).length
+  : 0;
+
 // --- page hero helper -------------------------------------------------------
 function pageHeroHtml(slug, alt) {
   const SITE_DIR = path.resolve(__dirname, "..");
@@ -261,19 +268,19 @@ const RELATED_VIEWS_MAP = {
   deck: ["learn", "issues", "topics"],
 };
 const VIEW_DESC = {
-  index: { label: "Papers 论文库", desc: "156 篇论文笔记卡片，按主题分组" },
-  topics: { label: "Topics 主题", desc: "11 个主题深度页 + primer 入门 3 篇" },
-  guide: { label: "Guide 导读", desc: "22 章零基础具身智能系统导读" },
+  index: { label: "Papers 论文库", desc: `${PAPER_COUNT} 篇论文笔记卡片，按主题分组` },
+  topics: { label: "Topics 主题", desc: `${TOPIC_COUNT} 个主题深度页 + primer 入门 3 篇` },
+  guide: { label: "Guide 导读", desc: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统导读` },
   timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
   compare: { label: "Compare", desc: "同主题 era 并排对比表" },
   graph: { label: "Graph", desc: "D3 力导论文关系图" },
-  heatmap: { label: "Heatmap", desc: "21 × 21 标签共现矩阵" },
-  tags: { label: "Tags", desc: "21 个跨主题技术标签" },
+  heatmap: { label: "Heatmap", desc: "标签共现矩阵" },
+  tags: { label: "Tags", desc: "跨主题技术标签" },
   glossary: { label: "Glossary", desc: "60 个术语字典" },
   venues: { label: "Venues", desc: "37 个会议按类别分布" },
   stats: { label: "Stats", desc: "5 维度数据看板" },
   learn: { label: "Learn", desc: "学习路径 + math primer" },
-  issues: { label: "Issues", desc: "4 期编辑总结" },
+  issues: { label: "Issues", desc: "编辑总结合集" },
   about: { label: "About", desc: "项目说明" },
   deck: { label: "Deck", desc: "LLaVA 演讲" },
 };
@@ -301,7 +308,7 @@ function footerHtml(active) {
     <div class="footer-cols">
       <div class="footer-col">
         <h4>路径</h4>
-        <a href="${url("/guide/")}">22 章导读</a>
+        <a href="${url("/guide/")}">${GUIDE_CHAPTER_COUNT} 章导读</a>
         <a href="${url("/learn/path/")}">30 天路径</a>
         <a href="${url("/learn/faq/")}">FAQ</a>
         <a href="${url("/lists/")}">阅读包</a>
@@ -355,7 +362,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   // 自动检测：有 $ 或 $$ 的页面才加载 KaTeX
   if (hasMath === null) hasMath = /\$[^$\n]+\$|\$\$[\s\S]+?\$\$/.test(body);
   const _ogTitle = ogTitle || title;
-  const _ogDesc = ogDescription || "从零开始学具身智能——22 章系统教程 + 156 篇论文笔记，零术语假设，日常类比起步。";
+  const _ogDesc = ogDescription || `从零开始学具身智能——${GUIDE_CHAPTER_COUNT} 章系统教程 + ${PAPER_COUNT} 篇论文笔记，零术语假设，日常类比起步。`;
   const _ogImg = ogImage || `${SITE_URL}/images/hero.webp`;
   const _ogUrl = ogUrl || SITE_URL + "/";
   const escAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -440,8 +447,8 @@ function buildIndex(notes, latestIssue = null) {
     <span class="eyebrow">Embodied AI: Zero to One · 22 chapters · ${notes.length} papers</span>
     <div class="hero-grid">
       <div class="hero-text">
-        <h1><em>从零开始</em>学具身智能 — <em>22 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
-        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，22 章教程带你系统入门，156 篇论文笔记做你的参考文献库。</p>
+        <h1><em>从零开始</em>学具身智能 — <em>${GUIDE_CHAPTER_COUNT} 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
+        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，${GUIDE_CHAPTER_COUNT} 章教程带你系统入门，${total} 篇论文笔记做你的参考文献库。</p>
       </div>
       <figure class="hero-figure">
         <picture>
@@ -550,7 +557,7 @@ function buildIndex(notes, latestIssue = null) {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
       <a href="${url("/guide/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">系统学习（推荐）</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">22 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">${GUIDE_CHAPTER_COUNT} 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
       </a>
       <a href="${url("/learn/path/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30 天论文路径</strong>
@@ -558,7 +565,7 @@ function buildIndex(notes, latestIssue = null) {
       </a>
       <a href="${url("/topics/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？11 个主题各有 3 篇 primer 带你入门。</p>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？${TOPIC_COUNT} 个主题各有 3 篇 primer 带你入门。</p>
       </a>
     </div>
   </section>`;
@@ -566,14 +573,14 @@ function buildIndex(notes, latestIssue = null) {
   // --- Guide 6 Part 预览 ---
   const guideParts = [
     { label: "Part 1: 导读总纲", range: "Ch01–03", desc: "这本教程是什么？怎么读？需要什么前置知识？" },
-    { label: "Part 2: 全景概念", range: "Ch04–07", desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 2: 全景概念", range: "Ch04–07", desc: `具身 AI 到底在解决什么问题？${TOPIC_COUNT} 个主题怎么串起来？` },
     { label: "Part 3: 核心主线精读", range: "Ch08–14", desc: "VLM → VLA → 扩散策略 → 模仿学习" },
     { label: "Part 4: 训练与部署", range: "Ch15–17", desc: "世界模型、强化学习、Sim-to-Real" },
     { label: "Part 5: 感知扩展", range: "Ch18–20", desc: "多模态、射频感知、听觉智能" },
     { label: "Part 6: 实战", range: "Ch21–22", desc: "数据集全景 + Task 实战指南" },
   ];
   body += `<section style="margin:2rem 0 2.5rem">
-    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">22 章教程总览 ↘</h2>
+    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">${GUIDE_CHAPTER_COUNT} 章教程总览 ↘</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.8rem">
       ${guideParts.map(p => `<a href="${url("/guide/")}" style="padding:1rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--ink-faint)">${p.range}</span>
@@ -755,7 +762,7 @@ function buildGlossary(notes) {
     <span class="eyebrow">Glossary · 术语字典</span>
     <h1>${terms.length} 个<em>术语</em>，每个一句话讲清楚。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin-top:1rem">
-      看论文最大障碍是术语雪崩。这页把 156 篇里反复出现的核心词收齐，一句话说清楚是什么、首次出现在哪篇。
+      看论文最大障碍是术语雪崩。这页把 ${PAPER_COUNT} 篇里反复出现的核心词收齐，一句话说清楚是什么、首次出现在哪篇。
     </p>
     <nav class="glossary-nav">${sortedKeys.map(k => `<a href="#g-${k}">${k}</a>`).join("")}</nav>
     <hr class="ornament"/>`;
@@ -1075,7 +1082,7 @@ function buildReadingLists(notes) {
     <span class="eyebrow">Reading lists · 主题精选</span>
     <h1><em>${READING_LISTS.length} 套</em>策划好的<em>读书包</em>。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
-      不知道 156 篇该从哪开始？挑一个你最感兴趣的方向，按 era 顺序读完一个包。每包 50-90 分钟，读完能在那个细分领域跟人聊起。
+      不知道 ${PAPER_COUNT} 篇该从哪开始？挑一个你最感兴趣的方向，按 era 顺序读完一个包。每包 50-90 分钟，读完能在那个细分领域跟人聊起。
     </p>
     <hr class="ornament"/>`;
   for (const list of READING_LISTS) {
@@ -1327,10 +1334,10 @@ function buildCheatsheet(notes) {
     return (Number(a.year) || 9999) - (Number(b.year) || 9999);
   };
   let body = `<main class="shell">
-    <span class="eyebrow">Cheatsheet · 156 篇 tldr 速查</span>
-    <h1><em>156 篇</em>论文一句话<em>速览</em>。</h1>
+    <span class="eyebrow">Cheatsheet · ${PAPER_COUNT} 篇 tldr 速查</span>
+    <h1><em>${PAPER_COUNT} 篇</em>论文一句话<em>速览</em>。</h1>
     <p style="font-size:1.05rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
-      把 156 篇全部 tldr 放在一页。Cmd+F 即可全文搜索。打印（Cmd+P）输出 ~10 页 A4 cheatsheet。
+      把 ${PAPER_COUNT} 篇全部 tldr 放在一页。Cmd+F 即可全文搜索。打印（Cmd+P）输出 ~10 页 A4 cheatsheet。
     </p>
     <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);letter-spacing:0.04em">
       显示模式：每行 编号 · 标题 / 一句话 / 主题 · 年份
@@ -1548,7 +1555,7 @@ function buildSiteMap(notes, issuePages, learnPages) {
     {
       title: "入口",
       items: [
-        { url: "/", label: "Index", desc: "156 张论文卡 + 主题分组 + 快筛" },
+        { url: "/", label: "Index", desc: `${PAPER_COUNT} 张论文卡 + 主题分组 + 快筛` },
         { url: "/learn/path/", label: "30 天路径", desc: "零基础入门推荐顺序" },
         { url: "/learn/faq/", label: "FAQ", desc: "新人 12 题" },
         { url: "/lists/", label: "Reading lists", desc: "5 套主题精选包" },
@@ -1557,25 +1564,25 @@ function buildSiteMap(notes, issuePages, learnPages) {
     {
       title: "视图",
       items: [
-        { url: "/topics/", label: "Topics", desc: "11 个主题概览" },
+        { url: "/topics/", label: "Topics", desc: `${TOPIC_COUNT} 个主题概览` },
         { url: "/timeline/", label: "Timeline", desc: "2011→2025 演化时间线" },
         { url: "/compare/", label: "Compare", desc: "同主题 era 并排对比" },
         { url: "/graph/", label: "Graph", desc: "D3 力导论文关系图（3 种布局）" },
-        { url: "/heatmap/", label: "Heatmap", desc: "21 tag 共现矩阵" },
+        { url: "/heatmap/", label: "Heatmap", desc: "tag 共现矩阵" },
         { url: "/eras/founder/", label: "Eras", desc: "祖师爷 / 经典 / 前沿三档" },
       ],
     },
     {
       title: "分类",
       items: [
-        { url: "/tags/", label: "Tags", desc: "21 跨主题技术标签" },
+        { url: "/tags/", label: "Tags", desc: "跨主题技术标签" },
         { url: "/glossary/", label: "Glossary", desc: "60 术语字典" },
         { url: "/venues/", label: "Venues", desc: "37 会议按类别" },
         { url: "/stats/", label: "Stats", desc: "5 维数据看板 + 你的快照" },
       ],
     },
     {
-      title: "11 个主题",
+      title: `${TOPIC_COUNT} 个主题`,
       items: TOPIC_ORDER.map(t => ({ url: `/topics/${t.id}/`, label: `${t.roman}. ${t.label}`, desc: t.subtitle })),
     },
     {
@@ -1598,9 +1605,9 @@ function buildSiteMap(notes, issuePages, learnPages) {
       title: "数据 + 元",
       items: [
         { url: "/data/index.json", label: "Data manifest", desc: "JSON 数据 manifest" },
-        { url: "/data/papers.json", label: "papers.json", desc: "156 篇全元数据" },
-        { url: "/data/tags.json", label: "tags.json", desc: "21 tag + 共现矩阵" },
-        { url: "/data/topics.json", label: "topics.json", desc: "11 主题元数据" },
+        { url: "/data/papers.json", label: "papers.json", desc: `${PAPER_COUNT} 篇全元数据` },
+        { url: "/data/tags.json", label: "tags.json", desc: "tag 频次 + 共现矩阵" },
+        { url: "/data/topics.json", label: "topics.json", desc: `${TOPIC_COUNT} 主题元数据` },
         { url: "/feed.xml", label: "Atom feed", desc: "RSS 订阅" },
         { url: "/sitemap.xml", label: "sitemap.xml", desc: "搜索引擎用" },
         { url: "/changelog/", label: "Changelog", desc: "git log 自动" },
@@ -1645,7 +1652,7 @@ function buildContributors(notes) {
     <span class="eyebrow">Contributors · 谁的工作让这站存在</span>
     <h1>致<em>所有原作者</em>。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
-      这站的 156 篇笔记不是原创研究——它们是 ${topVenues.length} 个会议/期刊上 ${totalLab} 篇论文的入门转写。
+      这站的 ${PAPER_COUNT} 篇笔记不是原创研究——它们是 ${topVenues.length} 个会议/期刊上 ${totalLab} 篇论文的入门转写。
       所有的科学贡献都属于这些原论文的作者。
     </p>
     <hr class="ornament"/>
@@ -2296,9 +2303,9 @@ function buildAbout(notes = []) {
       <p>站点数据全部以 JSON 公开，CC BY 4.0 协议。如果你想做二次分析、可视化或 LLM 训练数据：</p>
       <ul style="font-family:var(--font-mono);font-size:0.9rem">
         <li><a href="${url("/data/index.json")}">/data/index.json</a> — manifest（计数 + endpoint URL）</li>
-        <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — 156 篇全部元数据 + tldr</li>
-        <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — 21 tag 频次 + 共现矩阵</li>
-        <li><a href="${url("/data/topics.json")}">/data/topics.json</a> — 11 主题 + primer</li>
+        <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — ${PAPER_COUNT} 篇全部元数据 + tldr</li>
+        <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — tag 频次 + 共现矩阵</li>
+        <li><a href="${url("/data/topics.json")}">/data/topics.json</a> — ${TOPIC_COUNT} 主题 + primer</li>
       </ul>
 
       <h2>Workflow</h2>
@@ -2368,7 +2375,7 @@ function buildAbout(notes = []) {
   author      = {Zhou, Jason},
   year        = {2026},
   howpublished = {\\url{${SITE_URL}/}},
-  note        = {156 readable Chinese notes on embodied AI papers}
+  note        = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}
 }</pre>
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
@@ -2397,11 +2404,11 @@ function buildLearnIndex(pages) {
     <span class="eyebrow">Start here · 入门轨道</span>
     <h1>论文是<em>终点</em>，不是起点。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
-      156 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
+      ${PAPER_COUNT} 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
     </p>
     <p style="font-size:0.97rem;line-height:1.6;color:var(--ink-mute);max-width:52ch;margin-top:0.6rem">
       <strong>Learn</strong> 是工具箱——速查公式、常见 FAQ、30 天路径。
-      系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（22 章，从感知到部署）。
+      系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（${GUIDE_CHAPTER_COUNT} 章，从感知到部署）。
     </p>
 
     ${featuredPages.length ? `<section class="learn-featured">
@@ -2505,7 +2512,7 @@ function buildGuideIndex(guideData) {
   // Group chapters by part
   const parts = [
     { label: "Part 1: 导读总纲", range: [1, 3], desc: "这本导读是什么？怎么读？需要什么前置知识？" },
-    { label: "Part 2: 全景概念", range: [4, 7], desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 2: 全景概念", range: [4, 7], desc: `具身 AI 到底在解决什么问题？${TOPIC_COUNT} 个主题怎么串起来？` },
     { label: "Part 3: 核心主线精读", range: [8, 14], desc: "VLM → VLA → 扩散策略 → 模仿学习，一步步造出机器人的大脑和手" },
     { label: "Part 4: 训练与部署基建", range: [15, 17], desc: "世界模型、强化学习、仿真与 Sim-to-Real——从训练到落地" },
     { label: "Part 5: 感知模态扩展", range: [18, 20], desc: "多模态生态、射频感知、听觉智能——给机器人装上更多感官" },
@@ -2537,9 +2544,9 @@ function buildGuideIndex(guideData) {
 
   const body = `<main class="shell">
     <span class="eyebrow">Guide · 具身智能系统教程</span>
-    <h1>22 章<em>系统教程</em>，从零基础到实战。</h1>
+    <h1>${GUIDE_CHAPTER_COUNT} 章<em>系统教程</em>，从零基础到实战。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:52ch;margin-top:1rem">
-      面向零基础读者，用日常类比和代码示例系统讲解具身智能——从 CLIP 到 π0，每章含自测题。基于 156 篇论文笔记和 13 篇精读论文。
+      面向零基础读者，用日常类比和代码示例系统讲解具身智能——从 CLIP 到 π0，每章含自测题。基于 ${PAPER_COUNT} 篇论文笔记和 13 篇精读论文。
     </p>
     <hr class="ornament"/>
     ${partsHtml}
@@ -2564,7 +2571,7 @@ function buildGuideIndex(guideData) {
     </section>
   </main>`;
   return page({ title: "Guide — 具身智能系统教程", body, active: "guide",
-    ogDescription: "22 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。" });
+    ogDescription: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。` });
 }
 
 function buildGuidePage(ch, allChapters) {
@@ -2743,7 +2750,7 @@ function buildFeed(issuePages, notes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
   <title>Embodied AI: Zero to One</title>
-  <subtitle>156 篇具身 AI 论文，用能读懂的语言重写</subtitle>
+  <subtitle>${PAPER_COUNT} 篇具身 AI 论文，用能读懂的语言重写</subtitle>
   <link href="${SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="${SITE_URL}/" rel="alternate" type="text/html"/>
   <id>${SITE_URL}/</id>
@@ -3792,27 +3799,27 @@ Canonical: ${SITE_URL}/.well-known/security.txt
   // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
   write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
 
-> 156 篇具身智能顶会论文，用零基础也能读懂的中文重写。
+> ${PAPER_COUNT} 篇具身智能顶会论文，用零基础也能读懂的中文重写。
 
 This is a static reading site for embodied AI papers. All content is hand-curated Chinese notes (CC BY 4.0).
 
 ## Best entry points for AI agents
 
-- [Site index](${SITE_URL}/) — Hero + 156 paper cards grouped by topic
-- [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all 156 tldrs (best for quick scan)
-- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all 156 papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
+- [Site index](${SITE_URL}/) — Hero + ${PAPER_COUNT} paper cards grouped by topic
+- [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all ${PAPER_COUNT} tldrs (best for quick scan)
+- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all ${PAPER_COUNT} papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
 - [/data/papers.csv](${SITE_URL}/data/papers.csv) — Same data as CSV
-- [/data/tags.json](${SITE_URL}/data/tags.json) — 21 tag frequency + co-occurrence matrix
-- [/data/topics.json](${SITE_URL}/data/topics.json) — 11 topic metadata + primer slugs
+- [/data/tags.json](${SITE_URL}/data/tags.json) — tag frequency + co-occurrence matrix
+- [/data/topics.json](${SITE_URL}/data/topics.json) — ${TOPIC_COUNT} topic metadata + primer slugs
 - [/sitemap.xml](${SITE_URL}/sitemap.xml) — Full URL list
 - [/feed.xml](${SITE_URL}/feed.xml) — Atom feed
 
 ## Content structure
 
-- 156 papers in /papers/{slug}/
-- 11 topic landings in /topics/{id}/
-- 7 issues (editorial recaps) in /issues/{N}/
-- 5 reading lists in /lists/
+- ${PAPER_COUNT} papers in /papers/{slug}/
+- ${TOPIC_COUNT} topic landings in /topics/{id}/
+- ${issuePages.length} issues (editorial recaps) in /issues/{N}/
+- ${READING_LISTS.length} reading lists in /lists/
 - 30-day learning path in /learn/path/
 - FAQ in /learn/faq/
 
@@ -3829,7 +3836,7 @@ This is a static reading site for embodied AI papers. All content is hand-curate
   author = {Jason},
   year   = {2026},
   url    = {${SITE_URL}/},
-  note   = {156 readable Chinese notes on embodied AI papers}
+  note   = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}
 }
 `);
 
@@ -3838,7 +3845,7 @@ This is a static reading site for embodied AI papers. All content is hand-curate
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>EAI Zero to One</ShortName>
   <LongName>Embodied AI: Zero to One</LongName>
-  <Description>156 篇具身智能论文搜索</Description>
+  <Description>${PAPER_COUNT} 篇具身智能论文搜索</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image type="image/svg+xml">${SITE_URL}/favicon.svg</Image>
   <Url type="text/html" template="${SITE_URL}/?q={searchTerms}"/>
