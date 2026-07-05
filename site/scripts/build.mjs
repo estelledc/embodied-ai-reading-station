@@ -393,7 +393,7 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <link rel="stylesheet" href="${url("/jx/components.css")}">
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
-  ${hasMath ? `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">` : ""}
+  ${hasMath ? `<link rel="stylesheet" href="${url("/vendor/katex/katex.min.css")}">` : ""}
   <link rel="alternate" type="application/atom+xml" title="Embodied AI: Zero to One — Atom feed" href="${url("/feed.xml")}">
   <link rel="canonical" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="zh-CN" href="${escAttr(_ogUrl)}">
@@ -422,8 +422,8 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
   <script src="${url("/svg-export.js")}" defer></script>
-  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>` : ""}
-  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
+  ${hasMath ? `<script src="${url("/vendor/katex/katex.min.js")}" defer></script>` : ""}
+  ${hasMath ? `<script src="${url("/vendor/katex/contrib/auto-render.min.js")}" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
 </body>
 </html>`;
 }
@@ -2326,8 +2326,8 @@ function buildAbout(notes = []) {
         <li>Markdown → HTML via <code>marked</code> + <code>gray-matter</code></li>
         <li>Build script: <code>site/scripts/build.mjs</code> 单文件 ~2400 行 Node</li>
         <li>搜索: <a href="https://pagefind.app">Pagefind</a> 全文索引</li>
-        <li>数学: <a href="https://katex.org">KaTeX</a> CDN</li>
-        <li>可视化: <a href="https://d3js.org">D3.js v7</a>（force-directed graph）</li>
+        <li>数学: <a href="https://katex.org">KaTeX</a>（自托管 vendor/）</li>
+        <li>可视化: <a href="https://github.com/d3/d3">D3.js v7</a>（force-directed graph，自托管 vendor/）</li>
         <li>PWA: 自定义 service worker 离线缓存</li>
         <li>部署: GitHub Pages + Actions（每 push 自动 build → healthcheck → deploy）</li>
       </ul>
@@ -2821,7 +2821,7 @@ function buildGraph(notes) {
     title: "Graph — Embodied AI: Zero to One",
     body,
     active: "graph",
-    extraHead: `<script src="https://d3js.org/d3.v7.min.js" defer></script>
+    extraHead: `<script src="${url("/vendor/d3.min.js")}" defer></script>
     <script src="${url("/graph.js")}" defer></script>`,
   });
 }
@@ -3378,6 +3378,15 @@ function build() {
 
   // Jason DS (jx tokens + components)
   copyDir(path.join(SITE, "src", "jx"), path.join(DIST, "jx"));
+
+  // vendor：KaTeX + D3 自托管（从 node_modules 复制，摆脱运行时 CDN 依赖）
+  // 注意：katex.min.css 内用相对路径 fonts/ 引字体，css 与 fonts/ 必须保持同级
+  const KATEX_SRC = path.join(SITE, "node_modules", "katex", "dist");
+  copyDir(path.join(KATEX_SRC, "fonts"), path.join(DIST, "vendor", "katex", "fonts"));
+  for (const f of ["katex.min.css", "katex.min.js", "contrib/auto-render.min.js"]) {
+    copy(path.join(KATEX_SRC, f), path.join(DIST, "vendor", "katex", f));
+  }
+  copy(path.join(SITE, "node_modules", "d3", "dist", "d3.min.js"), path.join(DIST, "vendor", "d3.min.js"));
 
   // load notes
   const notes = loadNotes();
