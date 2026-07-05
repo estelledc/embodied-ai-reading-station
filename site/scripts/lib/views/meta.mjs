@@ -489,7 +489,7 @@ export function buildAbout(notes = []) {
       <p>这站建成借助了几个 AI 工具：</p>
       <ul>
         <li><strong>Claude Code</strong>：主要的代码生成 + 笔记重写工具</li>
-        <li><strong>Codex CLI</strong>：${notes_count_estimate()}+ 张内嵌图片生成（场景图 + 方法图，全部 16:9 webp）</li>
+        <li><strong>Codex CLI</strong>：${countInlineImages()}+ 张内嵌图片生成（场景图 + 方法图，全部 16:9 webp）</li>
         <li><strong>MinerU + pdftotext</strong>：PDF → markdown 解析</li>
         <li><strong>lr (LightRead)</strong>：arXiv 检索 + PDF bundle 工具</li>
       </ul>
@@ -529,12 +529,10 @@ export function buildAbout(notes = []) {
   return page({ title: "About — Embodied AI: Zero to One", body, active: "about" });
 }
 
-function notes_count_estimate() {
-  // 实时数 inline 图（webp）
-  try {
-    const dir = path.join(SITE, "src", "images", "inline");
-    if (!fs.existsSync(dir)) return 590;
-    const count = fs.readdirSync(dir).filter(f => f.endsWith(".webp") && !f.includes("-800")).length;
-    return count;
-  } catch { return 590; }
+// About 页「AI 工具」一节用：实际数 site/src/images/inline 下的内嵌配图
+// （webp 原图，不含 -800 缩放版）。目录缺失时如实返回 0，不再用硬编码兜底。
+function countInlineImages() {
+  const dir = path.join(SITE, "src", "images", "inline");
+  if (!fs.existsSync(dir)) return 0;
+  return fs.readdirSync(dir).filter(f => f.endsWith(".webp") && !f.includes("-800")).length;
 }
