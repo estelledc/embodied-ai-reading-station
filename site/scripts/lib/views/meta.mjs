@@ -467,9 +467,9 @@ export function buildAbout(notes = []) {
 
       <h2>Stack</h2>
       <ul>
-        <li>Pure HTML + CSS, no framework — 156 张静态页面</li>
+        <li>Pure HTML + CSS, no framework — 全站静态页面预渲染</li>
         <li>Markdown → HTML via <code>marked</code> + <code>gray-matter</code></li>
-        <li>Build script: <code>site/scripts/build.mjs</code> 单文件 ~2400 行 Node</li>
+        <li>Build script: <code>site/scripts/build.mjs</code> 编排入口 + <code>scripts/lib/</code> 模块（Node，零框架）</li>
         <li>搜索: <a href="https://pagefind.app">Pagefind</a> 全文索引</li>
         <li>数学: <a href="https://katex.org">KaTeX</a>（自托管 vendor/）</li>
         <li>可视化: <a href="https://github.com/d3/d3">D3.js v7</a>（force-directed graph，自托管 vendor/）</li>
