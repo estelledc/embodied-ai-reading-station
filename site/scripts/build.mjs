@@ -3351,7 +3351,12 @@ function build() {
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
-  copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
+  // site.webmanifest: 按部署 BASE 注入 start_url 等路径
+  {
+    const manifest = fs.readFileSync(path.join(SITE, "src", "site.webmanifest"), "utf8")
+      .replaceAll("__BASE__", BASE || "");
+    write(path.join(DIST, "site.webmanifest"), manifest);
+  }
   // sw.js: 注入 build timestamp 作版本号
   {
     const swSrc = fs.readFileSync(path.join(SITE, "src", "sw.js"), "utf8");
