@@ -370,7 +370,7 @@ def keep_pole_upright_with_pd_control(x, x_dot, theta, theta_dot):
 
 ---
 
-## 7. 实验说明
+## 7. 实验结果说明了什么
 
 论文的实验分为三大块：
 
