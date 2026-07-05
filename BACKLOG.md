@@ -1,5 +1,9 @@
 # Backlog — 未完成的 P2/P3 项
 
+> ⚠️ **历史文档**：本文反映 2026-06-24 时点的状态，其中多数问题已在后续迭代中解决
+> （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
+> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+
 > 记录本次治理中识别但未处理的技术债务和改进方向。
 > 按优先级排列，P2 = 有空再做，P3 = 观察后决定。
 
@@ -14,14 +18,14 @@
 - 风险：拆分过程可能引入回归，需要 check.mjs 68 项全覆盖才安全
 - 参考：当前 build 用时 ~2 秒，性能不是瓶颈
 
-### 2. 110 篇 auto-summary-light 补充 PDF
+### 2. 110 篇 auto-summary-light 补充 PDF（✅ 已于 2026-07-01 通过批量 deep-read 升级解决，见 DEEPREAD-BATCH.md）
 
 - 当前 110 篇仅有 arxiv URL，无本地 PDF/paper.md
 - 可批量下载 PDF → 用 AI 生成 paper.md → 升级为 auto-summary
 - 优先补 topics.json 33 篇 primer 中尚未是 auto-summary 的论文
 - 工作量估算：每篇 ~20 分钟（下载+解析+校对），110 篇 ≈ 37 小时
 
-### 3. deep-read 升级计划
+### 3. deep-read 升级计划（✅ 已于 2026-07-01 通过批量 deep-read 升级解决，见 DEEPREAD-BATCH.md）
 
 - 13 篇任务论文中目前只有 LLaVA 是 deep-read
 - 随着精读推进，每完成一篇应升级 status + 更新 progress.md

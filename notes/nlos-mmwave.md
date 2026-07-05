@@ -641,7 +641,26 @@ A：论文明确说在多径丰富的室内办公环境中测试（桌椅、行�
 5. **mmNorm GitHub 官方仓库（signalkinetics/mmNorm）**：想真正理解每一步在干什么，最好读读代码。
 6. **Neural Radiance Fields (NeRF) 入门**：mmNorm 的 Step 3（正向渲染 + 比对优化）和 NeRF 的思路异曲同工。理解 NeRF 有助于理解"用正向模拟解逆问题"这一通用范式。
 
-**原文引用**：
+*所以这一节是想说：从"图 + 直觉"开始，最后才碰公式和代码。先理解 WHY，再理解 HOW。*
+
+---
+
+## 原文信息
+
+**论文标题**：Non-Line-of-Sight 3D Object Reconstruction via mmWave Surface Normal Estimation（mmNorm）
+
+**作者**：Laura Dodds, Tara Boroushaki, Kaichen Zhou, Fadel Adib
+
+**机构**：Massachusetts Institute of Technology（Signal Kinetics 实验室）, Cartesian Systems
+
+**发表**：MobiSys 2025
+
+**链接**：
+- 论文（DOI）：https://doi.org/10.1145/3711875.3729138
+- 代码：https://github.com/signalkinetics/mmNorm
+- 本地 PDF：`papers/nlos-mmwave/paper-neurips.pdf`（另有 GetMobile 版 `papers/nlos-mmwave/paper-getmobile.pdf`）
+
+**BibTeX**：
 
 ```bibtex
 @inproceedings{dodds2025mmNorm,
@@ -653,9 +672,3 @@ A：论文明确说在多径丰富的室内办公环境中测试（桌椅、行�
   doi={10.1145/3711875.3729138}
 }
 ```
-
-论文链接：https://doi.org/10.1145/3711875.3729138
-
-代码仓库：https://github.com/signalkinetics/mmNorm
-
-*所以这一节是想说：从"图 + 直觉"开始，最后才碰公式和代码。先理解 WHY，再理解 HOW。*

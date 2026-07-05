@@ -1,5 +1,9 @@
 # 站点改进清单
 
+> ⚠️ **历史文档**：本文反映 2026-05-31 时点的状态，其中多数问题已在后续迭代中解决
+> （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
+> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+
 > 基于 5 路对标调研（Distill 类 / 论文聚合 / 编辑型杂志 / 中文学习站 / 教育平台）。
 > 当前站底色：atelier-zero 暖纸期刊感（#efe7d2 + Playfair italic + JetBrains Mono caption + 罗马数字 + coral 装饰线）— 已经到位，所有改进必须不破坏这套语汇。
 > 现状：13 篇论文笔记 + 5 学习页 + 1 拓展论文页 + 1 deck；纯 HTML + Tailwind + node build；无 JS（除 deck）。

@@ -2,6 +2,7 @@
 
 > **从零开始学具身智能——22 章系统教程 + 156 篇论文笔记。**
 > 零术语假设，日常类比起步。从 CLIP 到 π0，11 主题全景。
+> v1.0.0 · 2026-07（更新记录见 [CHANGELOG.md](CHANGELOG.md)）
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
 
@@ -18,13 +19,14 @@
 
 ### 内容质量说明
 
-156 篇笔记**不是**同等深度——它们分三个层次：
+156 篇笔记已于 2026-07 全部升级为 **deep-read（深度精读）** 标准（升级过程见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)，标准定义见 [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)）：
 
-| 层次 | 数量 | 标志 | 含义 |
-|------|------|------|------|
-| **deep-read** (深度精读) | 少量 | 站内标签"深度精读" | 有完整 deck / 逐段批注 / 导读章节覆盖，可作为汇报材料 |
-| **auto-summary** (auto 摘要) | 46 篇 | 有本地 PDF 全文解析 + 人工校对 | 4000 字级别，含架构图、实验数据、踩坑提醒 |
-| **auto-summary-light** (短摘要) | 110 篇 | 基于摘要 + 公开资料 | 1500-2500 字概览，未读全文，适合快速了解一篇论文在做什么 |
+- 每篇 ≥4000 字，Method 拆解占比 ≥40%
+- 主实验表用 Markdown 表格还原，关键数字带生活语境
+- 每篇 ≥2 个视觉元素（架构图 / ASCII 图 / 论文原图）
+- ≥3 条「局限与批评」+ 5–8 道思考题
+
+其中 46 篇有本地 PDF 全文解析（`papers/<slug>/`），110 篇基于 arxiv 原文 + 公开资料撰写。
 
 这站起源于导师布置的 **13 篇精读任务**（详见 [research-task.md](research-task.md)），扩展到 156 篇是为了看到全景。13 篇任务论文在站内标有 `task: required` 标记。
 
@@ -174,7 +176,7 @@ content/*.md ┤                              │
                                   ├─ sw.js (PWA)
                                   └─ index.html ... 2400+ files
 
-   ↓ npm run check (63 项)
+   ↓ npm run check (70+ 项)
    ↓ GitHub Actions (build → check → deploy)
    ↓
    estelledc.github.io/embodied-ai-reading-station/

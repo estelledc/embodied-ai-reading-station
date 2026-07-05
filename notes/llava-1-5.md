@@ -12,6 +12,8 @@ num: 133
 generated_at: 2026-06-25
 ---
 
+> 📌 **系列说明**：本篇是 LLaVA-**1.5**（2023-10 改进版），主题入门三连选它是因为配方更成熟。想理解"视觉指令微调"这个范式的原始动机，请先读初代 [LLaVA](/papers/llava/)（本站 13 篇任务论文之一）。
+
 # LLaVA-1.5: Improved Baselines with Visual Instruction Tuning
 
 > 这是一份给"完全没接触过 AI"的读者看的精读笔记。语言尽量像聊天，公式全部翻译成人话。

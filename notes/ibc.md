@@ -448,7 +448,7 @@ IBC 论文的 Section 5 给了两个新定理，扩展了万能逼近到隐式�
 
 ## 和本导读的关系
 
-本导读的 [Ch14: 模仿学习](../../guide/ch14-imitation-learning.md) 系统讲了行为克隆的致命缺陷（分布偏移、误差累积），DAgger 如何用在线纠正解决分布偏移，ACT-ALOHA 如何用动作分块减少决策次数。IBC 在这个体系中的位置是：
+本导读的 [Ch14: 模仿学习](../guide/ch14-imitation-learning.md) 系统讲了行为克隆的致命缺陷（分布偏移、误差累积），DAgger 如何用在线纠正解决分布偏移，ACT-ALOHA 如何用动作分块减少决策次数。IBC 在这个体系中的位置是：
 
 **它解决的是 Ch14 没覆盖的第三个痛点——"多答案 + 不连续"的表达能力问题。**
 
@@ -458,7 +458,7 @@ IBC 论文的 Section 5 给了两个新定理，扩展了万能逼近到隐式�
 
 三者不互斥：你可以用 IBC 的能量模型思想 + ACT 的动作分块 + DAgger 的在线纠正。事实上，Diffusion Policy 正是这么做的——它继承了 IBC 的"隐式生成"思路，加入了 ACT 的"分块预测"，成为了 2023-2024 年模仿学习的事实标准。
 
-同时，[Ch13: 扩散策略](../../guide/ch13-diffusion-policy.md) 正是 IBC 的直接后继。读完 IBC 再读 Ch13，你会发现 Diffusion Policy 的每一个设计选择都在回应 IBC 的局限：用去噪代替 argmin 搜索（解决推理效率）、用 DDPM 损失代替 InfoNCE（解决负例采样不稳定）、用动作序列代替单步动作（解决误差累积）。
+同时，[Ch13: 扩散策略](../guide/ch13-diffusion-policy.md) 正是 IBC 的直接后继。读完 IBC 再读 Ch13，你会发现 Diffusion Policy 的每一个设计选择都在回应 IBC 的局限：用去噪代替 argmin 搜索（解决推理效率）、用 DDPM 损失代替 InfoNCE（解决负例采样不稳定）、用动作序列代替单步动作（解决误差累积）。
 
 *所以这一节是想说：IBC 是连接 Ch14（模仿学习基础）和 Ch13（扩散策略）的桥梁——它提出了问题（表达能力不够），给出了第一个答案（能量+argmin），而 Diffusion Policy 给出了更好的答案。*
 

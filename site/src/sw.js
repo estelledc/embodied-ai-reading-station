@@ -60,6 +60,19 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // vendor 静态资源（自托管 KaTeX/D3，内容随缓存版本更新）：cache-first
+  if (url.pathname.includes("/vendor/")) {
+    event.respondWith(
+      caches.open(SHELL_CACHE).then(cache =>
+        cache.match(req).then(hit => hit || fetch(req).then(res => {
+          if (res.ok) cache.put(req, res.clone());
+          return res;
+        }))
+      )
+    );
+    return;
+  }
+
   // 论文 / topic / issue / learn 页：stale-while-revalidate
   if (/\/(papers|topics|issues|learn|eras|tags|lists)\/[^/]+\/?$/.test(url.pathname)) {
     event.respondWith(

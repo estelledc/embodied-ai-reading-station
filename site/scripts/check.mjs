@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
+import { TASK_SLUGS } from "./constants.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -216,7 +217,7 @@ function walkHtml(dir) {
 }
 walkHtml(DIST);
 
-const linkRe = /href="([^"#?]+)"/g;
+const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];
 let totalLinks = 0;
 const seenLinks = new Set();
@@ -227,38 +228,15 @@ const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
 if (m) prefix = m[1];
 
-// stratified sample：papers/issues/topics/eras/learn/lists 各取若干 + 根级所有
-const sampled = (() => {
-  const buckets = { paper: [], issue: [], topic: [], era: [], learn: [], list: [], root: [] };
-  for (const f of htmlFiles) {
-    const rel = path.relative(DIST, f);
-    if (rel.startsWith("papers/")) buckets.paper.push(f);
-    else if (rel.startsWith("issues/")) buckets.issue.push(f);
-    else if (rel.startsWith("topics/")) buckets.topic.push(f);
-    else if (rel.startsWith("eras/")) buckets.era.push(f);
-    else if (rel.startsWith("learn/")) buckets.learn.push(f);
-    else if (rel.startsWith("lists/")) buckets.list.push(f);
-    else buckets.root.push(f);
-  }
-  return [
-    ...buckets.root,                      // 全部根级页
-    ...buckets.paper.slice(0, 20),        // 20 papers
-    ...buckets.issue.slice(0, 7),         // 全部 7 issues
-    ...buckets.topic.slice(0, 5),
-    ...buckets.era.slice(0, 3),
-    ...buckets.learn.slice(0, 3),
-    ...buckets.list.slice(0, 1),
-  ];
-})();
-console.log(`  sampled ${sampled.length} files (stratified) for link check`);
-for (const file of sampled) {
+// 全量扫描：dist 下所有 HTML 的站内链接（以 BASE 或 / 开头）逐一验证目标存在
+console.log(`  scanning ${htmlFiles.length} html files (full scan) for link check`);
+for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   let match;
   linkRe.lastIndex = 0;
   while ((match = linkRe.exec(html))) {
     const href = match[1];
     if (href.startsWith("http") || href.startsWith("//") || href.startsWith("mailto:") || href.startsWith("#")) continue;
-    if (href.endsWith(".js") || href.endsWith(".css") || href.endsWith(".xml") || href.endsWith(".json") || href.endsWith(".webmanifest")) continue;
     totalLinks++;
     if (seenLinks.has(href)) continue;
     seenLinks.add(href);
@@ -266,8 +244,15 @@ for (const file of sampled) {
     let target = href;
     if (prefix && target.startsWith(prefix)) target = target.slice(prefix.length);
     if (!target.startsWith("/")) continue;
-    // 解析候选路径
-    let candidate = path.join(DIST, target);
+    // 解析候选路径：/foo/ → dist/foo/index.html；/foo.xml → dist/foo.xml
+    let decoded;
+    try {
+      decoded = decodeURIComponent(target);
+    } catch {
+      broken.push({ file: path.relative(DIST, file), href: `${href}（URI 解码失败）` });
+      continue;
+    }
+    let candidate = path.join(DIST, decoded);
     if (target.endsWith("/")) candidate = path.join(candidate, "index.html");
     if (!fs.existsSync(candidate)) {
       // 试 .html
@@ -277,7 +262,11 @@ for (const file of sampled) {
     }
   }
 }
-check(`${seenLinks.size} 唯一链接均可达`, () => broken.length === 0 || `${broken.length} 个死链 (sample): ${broken.slice(0, 3).map(b => b.href).join(", ")}`);
+if (broken.length > 0) {
+  console.log(`  死链清单（前 20 条，源文件 → 死链）:`);
+  for (const b of broken.slice(0, 20)) console.log(`    ${b.file} → ${b.href}`);
+}
+check(`${seenLinks.size} 唯一站内链接全量扫描均可达`, () => broken.length === 0 || `${broken.length} 个死链`);
 
 console.log("\n=== Asset sizes ===");
 function dirSize(dir) {
@@ -329,6 +318,18 @@ for (const f of top5) {
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
+// 性能预算（1.0.0 固化当前健康值，防劣化）
+const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
+check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+
+const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
+check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);
+
+// 单张图片预算：论文附图已压缩，当前全站最大 ~474KB
+const IMG_EXT = /\.(webp|png|jpe?g|gif|svg|avif)$/i;
+const heavyImages = allFiles.filter(f => IMG_EXT.test(f.path) && f.size > 600 * 1024);
+check(`单张图片均 < 600KB`, () => heavyImages.length === 0 || `${heavyImages.length} 张超 600KB: ${heavyImages.map(f => path.relative(DIST, f.path)).join(", ")}`);
+
 console.log("\n=== Guide chapter pages ===");
 {
   const guideDir = path.join(ROOT, "guide");
@@ -344,11 +345,6 @@ console.log("\n=== Guide chapter pages ===");
 
 console.log("\n=== Task-required notes ===");
 {
-  const TASK_SLUGS = [
-    "llava", "3dshape2vecset", "saycan", "openvla", "vlas", "mla",
-    "cosmos-policy", "rf-slam", "mmclip", "nlos-mmwave",
-    "proactive-hearing", "neuralaids", "acoustic-swarms",
-  ];
   let taskMissing = 0;
   let taskNoFlag = 0;
   for (const slug of TASK_SLUGS) {
@@ -363,6 +359,46 @@ console.log("\n=== Task-required notes ===");
   }
   check(`13 篇任务论文笔记全部存在`, () => taskMissing === 0 || `${taskMissing} 篇缺失`);
   check(`13 篇任务论文均有 task: required`, () => taskNoFlag === 0 || `${taskNoFlag} 篇缺 task 标记`);
+}
+
+console.log("\n=== Metadata consistency ===");
+{
+  // A. topics.json 的 primer slug 全部有对应笔记
+  check("topics.json primer slug 均有对应笔记", () => {
+    const missing = topicsJson
+      .flatMap(t => t.primer || [])
+      .filter(s => !fs.existsSync(path.join(NOTES, `${s}.md`)));
+    return missing.length === 0 || `缺失: ${missing.join(", ")}`;
+  });
+
+  // B. progress.md 提到全部 13 篇任务论文，且笔记存在
+  // progress.md 用论文名（如 "Cosmos Policy"、"RF-SLAM"），归一化（去非字母数字、小写）后按 slug 匹配
+  check("progress.md 覆盖全部 TASK_SLUGS 且笔记存在", () => {
+    const progress = fs.readFileSync(path.join(ROOT, "progress.md"), "utf8");
+    const normalized = progress.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const problems = [];
+    for (const slug of TASK_SLUGS) {
+      if (!normalized.includes(slug.replace(/[^a-z0-9]/g, ""))) problems.push(`progress.md 未提到 ${slug}`);
+      if (!fs.existsSync(path.join(NOTES, `${slug}.md`))) problems.push(`notes/${slug}.md 缺失`);
+    }
+    return problems.length === 0 || problems.join("; ");
+  });
+
+  // C. issue markdown ≥1 且 dist/issues/ 页面数与 content/issue-*.md 一致
+  const contentDir = path.join(SITE, "content");
+  const issueMds = fs.existsSync(contentDir)
+    ? fs.readdirSync(contentDir).filter(f => /^issue-.*\.md$/.test(f))
+    : [];
+  check("content/ 下 issue markdown ≥ 1", () => issueMds.length >= 1 || "content/ 下没有任何 issue-*.md");
+  check("issue 页数与 content/issue-*.md 数一致", () => {
+    const issueDir = path.join(DIST, "issues");
+    const builtPages = fs.existsSync(issueDir)
+      ? fs.readdirSync(issueDir, { withFileTypes: true })
+          .filter(d => d.isDirectory() && fs.existsSync(path.join(issueDir, d.name, "index.html")))
+          .length
+      : 0;
+    return builtPages === issueMds.length || `dist/issues/ ${builtPages} 页 vs content ${issueMds.length} 篇`;
+  });
 }
 
 console.log("\n=== Status field validity ===");
@@ -434,6 +470,32 @@ console.log("\n=== Figure coverage (deep-read) ===");
   check("deep-read 笔记视觉元素 ≥ 2", () => visualFail === 0 || `${visualFail} 篇未达标`);
   check("inline scene+method 与 card 齐全", () => inlineFail === 0 || `${inlineFail} 篇缺站点配图`);
   if (localUnused > 0) console.log(`  ⚠ ${localUnused} 篇本地图未引用（warn only）`);
+}
+
+console.log("\n=== Deep-read required sections ===");
+{
+  // 兼容两种标题体例：`## 思考题` 与 `## 7. 思考题`
+  const REQUIRED_SECTIONS = [
+    ["实验结果说明了什么", /^## (\d+\. )?.*实验结果说明了什么/m],
+    ["和本导读的关系", /^## (\d+\. )?.*和本导读的关系/m],
+    ["思考题", /^## (\d+\. )?.*思考题/m],
+    ["原文信息", /^## (\d+\. )?.*原文信息/m],
+  ];
+  const missing = [];
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data, content } = matter(raw);
+    if (data.status !== "deep-read") continue;
+    const slug = f.replace(/\.md$/, "");
+    for (const [name, re] of REQUIRED_SECTIONS) {
+      if (!re.test(content)) missing.push(`${slug} 缺「${name}」`);
+    }
+  }
+  if (missing.length > 0) {
+    console.log(`  缺失清单（前 20 条）:`);
+    for (const msg of missing.slice(0, 20)) console.log(`    ✗ ${msg}`);
+  }
+  check("deep-read 笔记含 4 个强制章节（实验解读/导读关系/思考题/原文信息）", () => missing.length === 0 || `${missing.length} 处缺失`);
 }
 
 console.log(`\n=== Summary ===`);

@@ -640,7 +640,7 @@ LlamaPIE（2025）把本文的"听清"能力接入了 LLM（大语言模型）�
 
 ---
 
-## 如果你想再深入 + 原文 citation
+## 如果你想再深入
 
 ### 延伸阅读（按优先级排序）
 
@@ -653,7 +653,25 @@ LlamaPIE（2025）把本文的"听清"能力接入了 LLM（大语言模型）�
 7. **TF-GridNet (Wang 2023)** — 本文网络架构的基础。如果想深入理解模型结构，需要读这篇。
 8. **DeepFilterNet2 (Schroter 2022)** — 本文的基线模型。了解工业级语音增强的当前水平。
 
-### 原文信息
+*所以这一节是想说：找到一篇论文的家族树和后续走向，是真正读懂它的最后一步。*
+
+---
+
+## 原文信息
+
+**论文标题**：Proactive Hearing Assistants that Isolate Egocentric Conversations
+
+**作者**：Guilin Hu, Malek Itani, Tuochao Chen, Shyamnath Gollakota
+
+**机构**：University of Washington, Paul G. Allen School of Computer Science & Engineering（Gollakota Lab——同组还有 Semantic Hearing、Look Once to Hear、Sound Bubbles 等一系列"可编程耳朵"工作）
+
+**发表**：UIST 2024
+
+**链接**：
+- 项目主页：https://proactivehearing.cs.washington.edu/
+- 本地全文解析：`papers/proactive-hearing/paper.md`
+
+**BibTeX**：
 
 ```bibtex
 @inproceedings{hu2024proactive,
@@ -664,9 +682,3 @@ LlamaPIE（2025）把本文的"听清"能力接入了 LLM（大语言模型）�
   organization={ACM}
 }
 ```
-
-- 机构：University of Washington, Paul G. Allen School of Computer Science & Engineering
-- 项目主页：https://proactivehearing.cs.washington.edu/
-- 实验室：Gollakota Lab（同组还有 Semantic Hearing、Look Once to Hear、Sound Bubbles 等一系列"可编程耳朵"工作）
-
-*所以这一节是想说：找到一篇论文的家族树和后续走向，是真正读懂它的最后一步。*

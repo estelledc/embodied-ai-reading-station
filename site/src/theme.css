@@ -4,8 +4,8 @@
  *         ~/intern-journal/explorations/open-design/design-systems/warm-editorial/DESIGN.md
  */
 
-@import url("https://rsms.me/inter/inter.css");
-@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap");
+/* 字体自托管：Inter / Playfair Display / JetBrains Mono 由 build.mjs 生成
+ * dist/vendor/fonts/fonts.css 并在 <head> 注入（styles.css 之前），无 CDN 依赖 */
 
 /* embodied-ai · Jason DS layer 2 override：暖米 Playfair coral 保留 */
 :root {

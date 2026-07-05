@@ -7,6 +7,7 @@ import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import matter from "gray-matter";
 import { SCENE_SECTION_RE, METHOD_SECTION_RE } from "./figure-section-utils.mjs";
+import { TASK_SLUGS } from "./constants.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -16,11 +17,16 @@ const PAPERS_DIR = path.join(ROOT, "papers");
 const GUIDE_DIR = path.join(ROOT, "guide");
 const DIST = path.join(SITE, "dist");
 
-// Base path for GitHub Pages project sites (e.g. estelledc.github.io/<REPO>/).
+// Base path for GitHub Pages project sites (e.g. <user>.github.io/<REPO>/).
 // Override with SITE_BASE="" for root-domain deploys, or any prefix.
 // Default empty in dev (npm run serve), filled by GitHub Actions to "/embodied-ai-reading-station".
 const BASE = (process.env.SITE_BASE ?? "").replace(/\/$/, "");
 const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
+
+// Canonical production URL (origin + repo path, no trailing slash).
+// Override with SITE_URL for forks / custom-domain deploys.
+const SITE_URL = (process.env.SITE_URL ?? "https://estelledc.github.io/embodied-ai-reading-station").replace(/\/$/, "");
+const SITE_ORIGIN = new URL(SITE_URL).origin;
 
 // --- topics + papers loaded dynamically from notes/ -------------------------
 const TOPICS_JSON = path.join(NOTES_DIR, "topics.json");
@@ -61,6 +67,13 @@ function discoverPapers() {
 }
 
 const PAPERS = discoverPapers();
+
+// 动态计数（文案插值用，避免内容增长后数字漂移）
+const PAPER_COUNT = PAPERS.length;
+const TOPIC_COUNT = TOPIC_ORDER.length;
+const GUIDE_CHAPTER_COUNT = fs.existsSync(GUIDE_DIR)
+  ? fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md")).length
+  : 0;
 
 // --- page hero helper -------------------------------------------------------
 function pageHeroHtml(slug, alt) {
@@ -201,7 +214,7 @@ function masthead(active) {
   // 当前 active 是否在折叠区，决定 More 是否高亮
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
-    <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI: Zero to One</a></div>
+    <div><a class="jx-return-to-hub" href="${SITE_ORIGIN}/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI: Zero to One</a></div>
     <nav aria-label="主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)" aria-current="page"' : ""}>${i.label}</a>`).join("")}
       <div class="more-nav">
         <button type="button" class="more-nav-trigger"${moreActive ? ' style="color:var(--coral)"' : ''} aria-haspopup="true" aria-expanded="false" aria-label="更多导航">More ▾</button>
@@ -256,19 +269,19 @@ const RELATED_VIEWS_MAP = {
   deck: ["learn", "issues", "topics"],
 };
 const VIEW_DESC = {
-  index: { label: "Papers 论文库", desc: "156 篇论文笔记卡片，按主题分组" },
-  topics: { label: "Topics 主题", desc: "11 个主题深度页 + primer 入门 3 篇" },
-  guide: { label: "Guide 导读", desc: "22 章零基础具身智能系统导读" },
+  index: { label: "Papers 论文库", desc: `${PAPER_COUNT} 篇论文笔记卡片，按主题分组` },
+  topics: { label: "Topics 主题", desc: `${TOPIC_COUNT} 个主题深度页 + primer 入门 3 篇` },
+  guide: { label: "Guide 导读", desc: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统导读` },
   timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
   compare: { label: "Compare", desc: "同主题 era 并排对比表" },
   graph: { label: "Graph", desc: "D3 力导论文关系图" },
-  heatmap: { label: "Heatmap", desc: "21 × 21 标签共现矩阵" },
-  tags: { label: "Tags", desc: "21 个跨主题技术标签" },
+  heatmap: { label: "Heatmap", desc: "标签共现矩阵" },
+  tags: { label: "Tags", desc: "跨主题技术标签" },
   glossary: { label: "Glossary", desc: "60 个术语字典" },
   venues: { label: "Venues", desc: "37 个会议按类别分布" },
   stats: { label: "Stats", desc: "5 维度数据看板" },
   learn: { label: "Learn", desc: "学习路径 + math primer" },
-  issues: { label: "Issues", desc: "4 期编辑总结" },
+  issues: { label: "Issues", desc: "编辑总结合集" },
   about: { label: "About", desc: "项目说明" },
   deck: { label: "Deck", desc: "LLaVA 演讲" },
 };
@@ -296,7 +309,7 @@ function footerHtml(active) {
     <div class="footer-cols">
       <div class="footer-col">
         <h4>路径</h4>
-        <a href="${url("/guide/")}">22 章导读</a>
+        <a href="${url("/guide/")}">${GUIDE_CHAPTER_COUNT} 章导读</a>
         <a href="${url("/learn/path/")}">30 天路径</a>
         <a href="${url("/learn/faq/")}">FAQ</a>
         <a href="${url("/lists/")}">阅读包</a>
@@ -349,9 +362,8 @@ function footerHtml(active) {
 function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null, jsonLd = null, hasMath = null }) {
   // 自动检测：有 $ 或 $$ 的页面才加载 KaTeX
   if (hasMath === null) hasMath = /\$[^$\n]+\$|\$\$[\s\S]+?\$\$/.test(body);
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const _ogTitle = ogTitle || title;
-  const _ogDesc = ogDescription || "从零开始学具身智能——22 章系统教程 + 156 篇论文笔记，零术语假设，日常类比起步。";
+  const _ogDesc = ogDescription || `从零开始学具身智能——${GUIDE_CHAPTER_COUNT} 章系统教程 + ${PAPER_COUNT} 篇论文笔记，零术语假设，日常类比起步。`;
   const _ogImg = ogImage || `${SITE_URL}/images/hero.webp`;
   const _ogUrl = ogUrl || SITE_URL + "/";
   const escAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
@@ -377,11 +389,12 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <meta name="twitter:title" content="${escAttr(_ogTitle)}">
   <meta name="twitter:description" content="${escAttr(_ogDesc)}">
   <meta name="twitter:image" content="${escAttr(_ogImg)}">
+  <link rel="stylesheet" href="${url("/vendor/fonts/fonts.css")}">
   <link rel="stylesheet" href="${url("/jx/tokens.css")}">
   <link rel="stylesheet" href="${url("/jx/components.css")}">
   <link rel="stylesheet" href="${url("/styles.css")}">
   <link rel="stylesheet" href="${url("/pagefind/pagefind-ui.css")}">
-  ${hasMath ? `<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">` : ""}
+  ${hasMath ? `<link rel="stylesheet" href="${url("/vendor/katex/katex.min.css")}">` : ""}
   <link rel="alternate" type="application/atom+xml" title="Embodied AI: Zero to One — Atom feed" href="${url("/feed.xml")}">
   <link rel="canonical" href="${escAttr(_ogUrl)}">
   <link rel="alternate" hreflang="zh-CN" href="${escAttr(_ogUrl)}">
@@ -410,8 +423,8 @@ function page({ title, body, active, extraHead = "", ogTitle = null, ogDescripti
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
   <script src="${url("/svg-export.js")}" defer></script>
-  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" defer></script>` : ""}
-  ${hasMath ? `<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
+  ${hasMath ? `<script src="${url("/vendor/katex/katex.min.js")}" defer></script>` : ""}
+  ${hasMath ? `<script src="${url("/vendor/katex/contrib/auto-render.min.js")}" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
 </body>
 </html>`;
 }
@@ -436,8 +449,8 @@ function buildIndex(notes, latestIssue = null) {
     <span class="eyebrow">Embodied AI: Zero to One · 22 chapters · ${notes.length} papers</span>
     <div class="hero-grid">
       <div class="hero-text">
-        <h1><em>从零开始</em>学具身智能 — <em>22 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
-        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，22 章教程带你系统入门，156 篇论文笔记做你的参考文献库。</p>
+        <h1><em>从零开始</em>学具身智能 — <em>${GUIDE_CHAPTER_COUNT} 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
+        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，${GUIDE_CHAPTER_COUNT} 章教程带你系统入门，${total} 篇论文笔记做你的参考文献库。</p>
       </div>
       <figure class="hero-figure">
         <picture>
@@ -546,7 +559,7 @@ function buildIndex(notes, latestIssue = null) {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
       <a href="${url("/guide/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">系统学习（推荐）</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">22 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">${GUIDE_CHAPTER_COUNT} 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
       </a>
       <a href="${url("/learn/path/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30 天论文路径</strong>
@@ -554,7 +567,7 @@ function buildIndex(notes, latestIssue = null) {
       </a>
       <a href="${url("/topics/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？11 个主题各有 3 篇 primer 带你入门。</p>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？${TOPIC_COUNT} 个主题各有 3 篇 primer 带你入门。</p>
       </a>
     </div>
   </section>`;
@@ -562,14 +575,14 @@ function buildIndex(notes, latestIssue = null) {
   // --- Guide 6 Part 预览 ---
   const guideParts = [
     { label: "Part 1: 导读总纲", range: "Ch01–03", desc: "这本教程是什么？怎么读？需要什么前置知识？" },
-    { label: "Part 2: 全景概念", range: "Ch04–07", desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 2: 全景概念", range: "Ch04–07", desc: `具身 AI 到底在解决什么问题？${TOPIC_COUNT} 个主题怎么串起来？` },
     { label: "Part 3: 核心主线精读", range: "Ch08–14", desc: "VLM → VLA → 扩散策略 → 模仿学习" },
     { label: "Part 4: 训练与部署", range: "Ch15–17", desc: "世界模型、强化学习、Sim-to-Real" },
     { label: "Part 5: 感知扩展", range: "Ch18–20", desc: "多模态、射频感知、听觉智能" },
     { label: "Part 6: 实战", range: "Ch21–22", desc: "数据集全景 + Task 实战指南" },
   ];
   body += `<section style="margin:2rem 0 2.5rem">
-    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">22 章教程总览 ↘</h2>
+    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">${GUIDE_CHAPTER_COUNT} 章教程总览 ↘</h2>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.8rem">
       ${guideParts.map(p => `<a href="${url("/guide/")}" style="padding:1rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--ink-faint)">${p.range}</span>
@@ -751,7 +764,7 @@ function buildGlossary(notes) {
     <span class="eyebrow">Glossary · 术语字典</span>
     <h1>${terms.length} 个<em>术语</em>，每个一句话讲清楚。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch;margin-top:1rem">
-      看论文最大障碍是术语雪崩。这页把 156 篇里反复出现的核心词收齐，一句话说清楚是什么、首次出现在哪篇。
+      看论文最大障碍是术语雪崩。这页把 ${PAPER_COUNT} 篇里反复出现的核心词收齐，一句话说清楚是什么、首次出现在哪篇。
     </p>
     <nav class="glossary-nav">${sortedKeys.map(k => `<a href="#g-${k}">${k}</a>`).join("")}</nav>
     <hr class="ornament"/>`;
@@ -1071,7 +1084,7 @@ function buildReadingLists(notes) {
     <span class="eyebrow">Reading lists · 主题精选</span>
     <h1><em>${READING_LISTS.length} 套</em>策划好的<em>读书包</em>。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
-      不知道 156 篇该从哪开始？挑一个你最感兴趣的方向，按 era 顺序读完一个包。每包 50-90 分钟，读完能在那个细分领域跟人聊起。
+      不知道 ${PAPER_COUNT} 篇该从哪开始？挑一个你最感兴趣的方向，按 era 顺序读完一个包。每包 50-90 分钟，读完能在那个细分领域跟人聊起。
     </p>
     <hr class="ornament"/>`;
   for (const list of READING_LISTS) {
@@ -1323,10 +1336,10 @@ function buildCheatsheet(notes) {
     return (Number(a.year) || 9999) - (Number(b.year) || 9999);
   };
   let body = `<main class="shell">
-    <span class="eyebrow">Cheatsheet · 156 篇 tldr 速查</span>
-    <h1><em>156 篇</em>论文一句话<em>速览</em>。</h1>
+    <span class="eyebrow">Cheatsheet · ${PAPER_COUNT} 篇 tldr 速查</span>
+    <h1><em>${PAPER_COUNT} 篇</em>论文一句话<em>速览</em>。</h1>
     <p style="font-size:1.05rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
-      把 156 篇全部 tldr 放在一页。Cmd+F 即可全文搜索。打印（Cmd+P）输出 ~10 页 A4 cheatsheet。
+      把 ${PAPER_COUNT} 篇全部 tldr 放在一页。Cmd+F 即可全文搜索。打印（Cmd+P）输出 ~10 页 A4 cheatsheet。
     </p>
     <p style="font-family:var(--font-mono);font-size:0.78rem;color:var(--ink-faint);letter-spacing:0.04em">
       显示模式：每行 编号 · 标题 / 一句话 / 主题 · 年份
@@ -1544,7 +1557,7 @@ function buildSiteMap(notes, issuePages, learnPages) {
     {
       title: "入口",
       items: [
-        { url: "/", label: "Index", desc: "156 张论文卡 + 主题分组 + 快筛" },
+        { url: "/", label: "Index", desc: `${PAPER_COUNT} 张论文卡 + 主题分组 + 快筛` },
         { url: "/learn/path/", label: "30 天路径", desc: "零基础入门推荐顺序" },
         { url: "/learn/faq/", label: "FAQ", desc: "新人 12 题" },
         { url: "/lists/", label: "Reading lists", desc: "5 套主题精选包" },
@@ -1553,25 +1566,25 @@ function buildSiteMap(notes, issuePages, learnPages) {
     {
       title: "视图",
       items: [
-        { url: "/topics/", label: "Topics", desc: "11 个主题概览" },
+        { url: "/topics/", label: "Topics", desc: `${TOPIC_COUNT} 个主题概览` },
         { url: "/timeline/", label: "Timeline", desc: "2011→2025 演化时间线" },
         { url: "/compare/", label: "Compare", desc: "同主题 era 并排对比" },
         { url: "/graph/", label: "Graph", desc: "D3 力导论文关系图（3 种布局）" },
-        { url: "/heatmap/", label: "Heatmap", desc: "21 tag 共现矩阵" },
+        { url: "/heatmap/", label: "Heatmap", desc: "tag 共现矩阵" },
         { url: "/eras/founder/", label: "Eras", desc: "祖师爷 / 经典 / 前沿三档" },
       ],
     },
     {
       title: "分类",
       items: [
-        { url: "/tags/", label: "Tags", desc: "21 跨主题技术标签" },
+        { url: "/tags/", label: "Tags", desc: "跨主题技术标签" },
         { url: "/glossary/", label: "Glossary", desc: "60 术语字典" },
         { url: "/venues/", label: "Venues", desc: "37 会议按类别" },
         { url: "/stats/", label: "Stats", desc: "5 维数据看板 + 你的快照" },
       ],
     },
     {
-      title: "11 个主题",
+      title: `${TOPIC_COUNT} 个主题`,
       items: TOPIC_ORDER.map(t => ({ url: `/topics/${t.id}/`, label: `${t.roman}. ${t.label}`, desc: t.subtitle })),
     },
     {
@@ -1594,9 +1607,9 @@ function buildSiteMap(notes, issuePages, learnPages) {
       title: "数据 + 元",
       items: [
         { url: "/data/index.json", label: "Data manifest", desc: "JSON 数据 manifest" },
-        { url: "/data/papers.json", label: "papers.json", desc: "156 篇全元数据" },
-        { url: "/data/tags.json", label: "tags.json", desc: "21 tag + 共现矩阵" },
-        { url: "/data/topics.json", label: "topics.json", desc: "11 主题元数据" },
+        { url: "/data/papers.json", label: "papers.json", desc: `${PAPER_COUNT} 篇全元数据` },
+        { url: "/data/tags.json", label: "tags.json", desc: "tag 频次 + 共现矩阵" },
+        { url: "/data/topics.json", label: "topics.json", desc: `${TOPIC_COUNT} 主题元数据` },
         { url: "/feed.xml", label: "Atom feed", desc: "RSS 订阅" },
         { url: "/sitemap.xml", label: "sitemap.xml", desc: "搜索引擎用" },
         { url: "/changelog/", label: "Changelog", desc: "git log 自动" },
@@ -1641,7 +1654,7 @@ function buildContributors(notes) {
     <span class="eyebrow">Contributors · 谁的工作让这站存在</span>
     <h1>致<em>所有原作者</em>。</h1>
     <p style="font-size:1.1rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">
-      这站的 156 篇笔记不是原创研究——它们是 ${topVenues.length} 个会议/期刊上 ${totalLab} 篇论文的入门转写。
+      这站的 ${PAPER_COUNT} 篇笔记不是原创研究——它们是 ${topVenues.length} 个会议/期刊上 ${totalLab} 篇论文的入门转写。
       所有的科学贡献都属于这些原论文的作者。
     </p>
     <hr class="ornament"/>
@@ -2197,7 +2210,7 @@ function build404(notes) {
           var list = document.getElementById('eai-404-list');
           list.innerHTML = top.map(function(x){
             return '<li style="padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)">' +
-              '<a href="' + x.p.url.replace('https://estelledc.github.io/embodied-ai-reading-station', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
+              '<a href="' + x.p.url.replace('${SITE_URL}', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
               '<span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem">' + x.p.topic + ' · ' + (x.p.year || '') + '</span></li>';
           }).join('');
           aside.hidden = false;
@@ -2292,9 +2305,9 @@ function buildAbout(notes = []) {
       <p>站点数据全部以 JSON 公开，CC BY 4.0 协议。如果你想做二次分析、可视化或 LLM 训练数据：</p>
       <ul style="font-family:var(--font-mono);font-size:0.9rem">
         <li><a href="${url("/data/index.json")}">/data/index.json</a> — manifest（计数 + endpoint URL）</li>
-        <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — 156 篇全部元数据 + tldr</li>
-        <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — 21 tag 频次 + 共现矩阵</li>
-        <li><a href="${url("/data/topics.json")}">/data/topics.json</a> — 11 主题 + primer</li>
+        <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — ${PAPER_COUNT} 篇全部元数据 + tldr</li>
+        <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — tag 频次 + 共现矩阵</li>
+        <li><a href="${url("/data/topics.json")}">/data/topics.json</a> — ${TOPIC_COUNT} 主题 + primer</li>
       </ul>
 
       <h2>Workflow</h2>
@@ -2314,8 +2327,8 @@ function buildAbout(notes = []) {
         <li>Markdown → HTML via <code>marked</code> + <code>gray-matter</code></li>
         <li>Build script: <code>site/scripts/build.mjs</code> 单文件 ~2400 行 Node</li>
         <li>搜索: <a href="https://pagefind.app">Pagefind</a> 全文索引</li>
-        <li>数学: <a href="https://katex.org">KaTeX</a> CDN</li>
-        <li>可视化: <a href="https://d3js.org">D3.js v7</a>（force-directed graph）</li>
+        <li>数学: <a href="https://katex.org">KaTeX</a>（自托管 vendor/）</li>
+        <li>可视化: <a href="https://github.com/d3/d3">D3.js v7</a>（force-directed graph，自托管 vendor/）</li>
         <li>PWA: 自定义 service worker 离线缓存</li>
         <li>部署: GitHub Pages + Actions（每 push 自动 build → healthcheck → deploy）</li>
       </ul>
@@ -2363,8 +2376,8 @@ function buildAbout(notes = []) {
   title       = {Embodied AI: Zero to One},
   author      = {Zhou, Jason},
   year        = {2026},
-  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/}},
-  note        = {156 readable Chinese notes on embodied AI papers}
+  howpublished = {\\url{${SITE_URL}/}},
+  note        = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}
 }</pre>
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
@@ -2393,11 +2406,11 @@ function buildLearnIndex(pages) {
     <span class="eyebrow">Start here · 入门轨道</span>
     <h1>论文是<em>终点</em>，不是起点。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:48ch;margin-top:1rem">
-      156 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
+      ${PAPER_COUNT} 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
     </p>
     <p style="font-size:0.97rem;line-height:1.6;color:var(--ink-mute);max-width:52ch;margin-top:0.6rem">
       <strong>Learn</strong> 是工具箱——速查公式、常见 FAQ、30 天路径。
-      系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（22 章，从感知到部署）。
+      系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（${GUIDE_CHAPTER_COUNT} 章，从感知到部署）。
     </p>
 
     ${featuredPages.length ? `<section class="learn-featured">
@@ -2481,12 +2494,8 @@ function discoverGuide() {
 function buildGuideIndex(guideData) {
   const { chapters, readmeRaw } = guideData;
 
-  // 13 task-required paper slugs (Task 1 精读论文)
-  const TASK_SLUGS = new Set([
-    "3dshape2vecset", "acoustic-swarms", "cosmos-policy", "llava", "mla",
-    "mmclip", "neuralaids", "nlos-mmwave", "openvla", "proactive-hearing",
-    "rf-slam", "saycan", "vlas",
-  ]);
+  // 13 task-required paper slugs (Task 1 精读论文，来源 constants.mjs)
+  const taskSlugSet = new Set(TASK_SLUGS);
 
   // Pre-compute task-required paper count per chapter
   const chTaskCount = new Map();
@@ -2494,14 +2503,14 @@ function buildGuideIndex(guideData) {
     const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
     if (!m) continue;
     const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
-    const count = slugs.filter(s => TASK_SLUGS.has(s)).length;
+    const count = slugs.filter(s => taskSlugSet.has(s)).length;
     if (count > 0) chTaskCount.set(ch.num, count);
   }
 
   // Group chapters by part
   const parts = [
     { label: "Part 1: 导读总纲", range: [1, 3], desc: "这本导读是什么？怎么读？需要什么前置知识？" },
-    { label: "Part 2: 全景概念", range: [4, 7], desc: "具身 AI 到底在解决什么问题？11 个主题怎么串起来？" },
+    { label: "Part 2: 全景概念", range: [4, 7], desc: `具身 AI 到底在解决什么问题？${TOPIC_COUNT} 个主题怎么串起来？` },
     { label: "Part 3: 核心主线精读", range: [8, 14], desc: "VLM → VLA → 扩散策略 → 模仿学习，一步步造出机器人的大脑和手" },
     { label: "Part 4: 训练与部署基建", range: [15, 17], desc: "世界模型、强化学习、仿真与 Sim-to-Real——从训练到落地" },
     { label: "Part 5: 感知模态扩展", range: [18, 20], desc: "多模态生态、射频感知、听觉智能——给机器人装上更多感官" },
@@ -2533,9 +2542,9 @@ function buildGuideIndex(guideData) {
 
   const body = `<main class="shell">
     <span class="eyebrow">Guide · 具身智能系统教程</span>
-    <h1>22 章<em>系统教程</em>，从零基础到实战。</h1>
+    <h1>${GUIDE_CHAPTER_COUNT} 章<em>系统教程</em>，从零基础到实战。</h1>
     <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:52ch;margin-top:1rem">
-      面向零基础读者，用日常类比和代码示例系统讲解具身智能——从 CLIP 到 π0，每章含自测题。基于 156 篇论文笔记和 13 篇精读论文。
+      面向零基础读者，用日常类比和代码示例系统讲解具身智能——从 CLIP 到 π0，每章含自测题。基于 ${PAPER_COUNT} 篇论文笔记和 13 篇精读论文。
     </p>
     <hr class="ornament"/>
     ${partsHtml}
@@ -2560,7 +2569,7 @@ function buildGuideIndex(guideData) {
     </section>
   </main>`;
   return page({ title: "Guide — 具身智能系统教程", body, active: "guide",
-    ogDescription: "22 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。" });
+    ogDescription: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。` });
 }
 
 function buildGuidePage(ch, allChapters) {
@@ -2645,7 +2654,7 @@ function buildGuidePage(ch, allChapters) {
   const shortTitle = ch.title.replace(/^Ch\d+:\s*/, "");
   return page({ title: `${ch.title} — Guide`, body: pageBody, active: "guide",
     ogDescription: shortTitle,
-    ogUrl: `https://estelledc.github.io/embodied-ai-reading-station/guide/${ch.slug}/` });
+    ogUrl: `${SITE_URL}/guide/${ch.slug}/` });
 }
 
 // --- compare page (per-topic side-by-side) ----------------------------------
@@ -2699,7 +2708,6 @@ function buildCompare(notes) {
 
 // --- RSS / Atom feed --------------------------------------------------------
 function buildFeed(issuePages, notes) {
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const updated = new Date().toISOString();
   const xmlEscape = s => String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -2740,7 +2748,7 @@ function buildFeed(issuePages, notes) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
   <title>Embodied AI: Zero to One</title>
-  <subtitle>156 篇具身 AI 论文，用能读懂的语言重写</subtitle>
+  <subtitle>${PAPER_COUNT} 篇具身 AI 论文，用能读懂的语言重写</subtitle>
   <link href="${SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="${SITE_URL}/" rel="alternate" type="text/html"/>
   <id>${SITE_URL}/</id>
@@ -2814,7 +2822,7 @@ function buildGraph(notes) {
     title: "Graph — Embodied AI: Zero to One",
     body,
     active: "graph",
-    extraHead: `<script src="https://d3js.org/d3.v7.min.js" defer></script>
+    extraHead: `<script src="${url("/vendor/d3.min.js")}" defer></script>
     <script src="${url("/graph.js")}" defer></script>`,
   });
 }
@@ -3022,7 +3030,6 @@ function injectInlineFigures(slug, body, paperTitle = "") {
 function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = [], guideChaptersMentioning = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const enrichedBody = injectInlineFigures(note.slug, note.body, note.title);
   const html = marked.parse(enrichedBody);
 
@@ -3120,7 +3127,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   author      = {Zhou, Jason},
   year        = {2026},${note.year ? `
   note        = {Note on a ${note.year} paper},` : ""}
-  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}},
+  howpublished = {\\url{${SITE_URL}/papers/${note.slug}/}},
   organization = {Embodied AI: Zero to One}
 }</pre>
         <button class="cite-copy" type="button" data-cite-target="cite-${note.slug}">复制 BibTeX</button>
@@ -3208,7 +3215,7 @@ function loadNotes() {
       continue;
     }
     const { data, content } = cached;
-    const stripped = stripFirstH1(rewriteImagePaths(content, p.slug));
+    const stripped = stripFirstH1(rewriteGuideLinks(rewriteImagePaths(content, p.slug)));
     const wc = countWords(stripped);
     notes.push({
       ...p,
@@ -3309,9 +3316,45 @@ function rewriteImagePaths(md, slug) {
     (_, alt, file) => `![${alt}](${url(`/assets/${slug}/${file}`)})`);
 }
 
+function rewriteGuideLinks(md) {
+  // 笔记内 [text](../guide/chXX-name.md#anchor) → [text](/guide/chXX-name/#anchor)
+  // NOTE: bare absolute path (no BASE prefix) — renderer.link 会自动给 "/" 开头的 href 加 BASE
+  return md.replace(/\]\((?:\.\.\/)?guide\/([\w-]+)\.md(#[^)]*)?\)/g,
+    (_, name, anchor) => `](/guide/${name}/${anchor ?? ""})`);
+}
+
 function stripFirstH1(md) {
   // remove the first H1 heading anywhere near the top (titled page already shows the H1 in note-shell)
   return md.replace(/^\s*#\s+[^\n]+\n+/, "");
+}
+
+function vendorFonts() {
+  // [包名, 需要的 css 文件, Fontsource 内的 family 名 → 站点字体栈用的名字]
+  // variable 包的 family 带 "Variable" 后缀，改写回 theme.css/tokens.css 里的裸名
+  const FONT_SOURCES = [
+    ["@fontsource-variable/inter", ["index.css", "wght-italic.css"], ["Inter Variable", "Inter"]],
+    ["@fontsource-variable/playfair-display", ["index.css", "wght-italic.css"], ["Playfair Display Variable", "Playfair Display"]],
+    ["@fontsource/jetbrains-mono", ["latin-400.css", "latin-500.css"], null],
+  ];
+  let out = "/* self-hosted web fonts — generated by build.mjs from Fontsource packages (latin subset only) */\n\n";
+  for (const [pkg, cssFiles, rename] of FONT_SOURCES) {
+    const pkgDir = path.join(SITE, "node_modules", pkg);
+    for (const f of cssFiles) {
+      const css = fs.readFileSync(path.join(pkgDir, f), "utf8");
+      const blocks = (css.match(/\/\*[^*]*\*\/\s*@font-face\s*\{[^}]*\}/g) ?? [])
+        .filter(b => b.includes("-latin-") && !b.includes("-latin-ext-"));
+      let faces = blocks.join("\n\n");
+      // 静态字重包附带 woff 回退；woff2 已是全浏览器基线，去掉省体积
+      faces = faces.replace(/,\s*url\([^)]*\.woff\)\s*format\('woff'\)/g, "");
+      if (rename) faces = faces.replaceAll(`'${rename[0]}'`, `'${rename[1]}'`);
+      out += faces + "\n\n";
+      for (const m of faces.matchAll(/url\(\.\/files\/([^)]+\.woff2)\)/g)) {
+        copy(path.join(pkgDir, "files", m[1]), path.join(DIST, "vendor", "fonts", "files", m[1]));
+      }
+    }
+  }
+  ensure(path.join(DIST, "vendor", "fonts"));
+  fs.writeFileSync(path.join(DIST, "vendor", "fonts", "fonts.css"), out);
 }
 
 function copyAssets(notes) {
@@ -3349,7 +3392,12 @@ function build() {
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
-  copy(path.join(SITE, "src", "site.webmanifest"), path.join(DIST, "site.webmanifest"));
+  // site.webmanifest: 按部署 BASE 注入 start_url 等路径
+  {
+    const manifest = fs.readFileSync(path.join(SITE, "src", "site.webmanifest"), "utf8")
+      .replaceAll("__BASE__", BASE || "");
+    write(path.join(DIST, "site.webmanifest"), manifest);
+  }
   // sw.js: 注入 build timestamp 作版本号
   {
     const swSrc = fs.readFileSync(path.join(SITE, "src", "sw.js"), "utf8");
@@ -3367,6 +3415,20 @@ function build() {
 
   // Jason DS (jx tokens + components)
   copyDir(path.join(SITE, "src", "jx"), path.join(DIST, "jx"));
+
+  // vendor：KaTeX + D3 自托管（从 node_modules 复制，摆脱运行时 CDN 依赖）
+  // 注意：katex.min.css 内用相对路径 fonts/ 引字体，css 与 fonts/ 必须保持同级
+  const KATEX_SRC = path.join(SITE, "node_modules", "katex", "dist");
+  copyDir(path.join(KATEX_SRC, "fonts"), path.join(DIST, "vendor", "katex", "fonts"));
+  for (const f of ["katex.min.css", "katex.min.js", "contrib/auto-render.min.js"]) {
+    copy(path.join(KATEX_SRC, f), path.join(DIST, "vendor", "katex", f));
+  }
+  copy(path.join(SITE, "node_modules", "d3", "dist", "d3.min.js"), path.join(DIST, "vendor", "d3.min.js"));
+
+  // vendor：web 字体自托管（Fontsource，替代 rsms.me / Google Fonts CDN）
+  // 只取 latin subset（本站拉丁文本为主，中文走 PingFang/YaHei 系统字体栈）；
+  // 生成合并的 fonts.css，@font-face 内相对路径 ./files/ 与复制后的目录结构保持一致
+  vendorFonts();
 
   // load notes
   const notes = loadNotes();
@@ -3475,7 +3537,6 @@ function build() {
   write(path.join(DIST, "lists", "index.html"), buildReadingLists(notes));
 
   // data endpoints (public JSON for research / external use)
-  const SITE_URL_DATA = "https://estelledc.github.io/embodied-ai-reading-station";
   const papersJson = notes.map(n => ({
     slug: n.slug,
     num: n.num,
@@ -3490,7 +3551,7 @@ function build() {
     wordCount: n.wordCount || 0,
     readingMinutes: n.readingTime || 0,
     tags: n.tags || [],
-    url: `${SITE_URL_DATA}/papers/${n.slug}/`,
+    url: `${SITE_URL}/papers/${n.slug}/`,
     sourcePath: n.sourcePath || "",
     status: n.status || "auto-summary",
   }));
@@ -3534,13 +3595,13 @@ function build() {
     subtitle: t.subtitle,
     count: notes.filter(n => n.topic === t.id).length,
     primer: t.primer || [],
-    url: `${SITE_URL_DATA}/topics/${t.id}/`,
+    url: `${SITE_URL}/topics/${t.id}/`,
   }));
   write(path.join(DIST, "data", "topics.json"), JSON.stringify(topicsJson, null, 2));
 
   // index manifest
   const manifest = {
-    site: SITE_URL_DATA,
+    site: SITE_URL,
     generated: new Date().toISOString(),
     counts: {
       papers: notes.length,
@@ -3549,10 +3610,10 @@ function build() {
       total_words: notes.reduce((s, n) => s + (n.wordCount || 0), 0),
     },
     endpoints: {
-      papers: `${SITE_URL_DATA}/data/papers.json`,
-      papers_csv: `${SITE_URL_DATA}/data/papers.csv`,
-      tags: `${SITE_URL_DATA}/data/tags.json`,
-      topics: `${SITE_URL_DATA}/data/topics.json`,
+      papers: `${SITE_URL}/data/papers.json`,
+      papers_csv: `${SITE_URL}/data/papers.csv`,
+      tags: `${SITE_URL}/data/tags.json`,
+      topics: `${SITE_URL}/data/topics.json`,
     },
     license: "CC BY 4.0 — Attribution required",
   };
@@ -3710,22 +3771,29 @@ function build() {
       const latestIssue = sortedIssues[0];
       write(path.join(DIST, "index.html"), buildIndex(notes, latestIssue));
     }
+  }
 
-    // human-readable site map（needs issue + learn loaded first）
-    write(path.join(DIST, "site-map", "index.html"), buildSiteMap(notes, issuePages, learnPages));
+  // --- 全站级产物（不依赖 content/ 是否存在；issues/learn 条目用上面收集的变量）---
 
-    // RSS / Atom feed
-    write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
+  // human-readable site map（issues/learn 为空时对应板块自然为空）
+  write(path.join(DIST, "site-map", "index.html"), buildSiteMap(notes, issuePages, learnPages));
 
-    // 404
-    write(path.join(DIST, "404.html"), build404(notes));
+  // RSS / Atom feed（无 issues 时只含 notes 条目）
+  write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
 
-    // sitemap
-    const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
+  // 404
+  write(path.join(DIST, "404.html"), build404(notes));
+
+  // sitemap
+  {
     const today = new Date().toISOString().slice(0, 10);
     const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
-      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/", "/issues/", "/about/", "/learn/", "/deck/",
+      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
+      ...(issuePages.length ? ["/issues/"] : []),
+      "/about/",
+      ...(learnPages.length ? ["/learn/"] : []),
+      "/deck/",
       ...guideUrls,
       ...TOPIC_ORDER.map(t => `/topics/${t.id}/`),
       ...notes.map(n => `/papers/${n.slug}/`),
@@ -3738,15 +3806,16 @@ ${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></u
 </urlset>
 `;
     write(path.join(DIST, "sitemap.xml"), sitemap);
+  }
 
-    // robots.txt
-    write(path.join(DIST, "robots.txt"), `User-agent: *
+  // robots.txt
+  write(path.join(DIST, "robots.txt"), `User-agent: *
 Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
 `);
 
-    // /humans.txt — 谁做的（humanstxt.org spec）
-    write(path.join(DIST, "humans.txt"), `/* TEAM */
+  // /humans.txt — 谁做的（humanstxt.org spec）
+  write(path.join(DIST, "humans.txt"), `/* TEAM */
 Author: Jason
 Site: ${SITE_URL}
 GitHub: github.com/estelledc/embodied-ai-reading-station
@@ -3767,38 +3836,38 @@ Build: ~2 seconds
 Deployed: GitHub Pages via Actions
 `);
 
-    // /.well-known/security.txt — RFC 9116
-    const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
-    write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
+  // /.well-known/security.txt — RFC 9116
+  const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
+  write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
 Expires: ${expiryISO}
 Preferred-Languages: zh-CN, en
 Canonical: ${SITE_URL}/.well-known/security.txt
 `);
 
-    // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
-    write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
+  // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
+  write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
 
-> 156 篇具身智能顶会论文，用零基础也能读懂的中文重写。
+> ${PAPER_COUNT} 篇具身智能顶会论文，用零基础也能读懂的中文重写。
 
 This is a static reading site for embodied AI papers. All content is hand-curated Chinese notes (CC BY 4.0).
 
 ## Best entry points for AI agents
 
-- [Site index](${SITE_URL}/) — Hero + 156 paper cards grouped by topic
-- [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all 156 tldrs (best for quick scan)
-- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all 156 papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
+- [Site index](${SITE_URL}/) — Hero + ${PAPER_COUNT} paper cards grouped by topic
+- [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all ${PAPER_COUNT} tldrs (best for quick scan)
+- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all ${PAPER_COUNT} papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
 - [/data/papers.csv](${SITE_URL}/data/papers.csv) — Same data as CSV
-- [/data/tags.json](${SITE_URL}/data/tags.json) — 21 tag frequency + co-occurrence matrix
-- [/data/topics.json](${SITE_URL}/data/topics.json) — 11 topic metadata + primer slugs
+- [/data/tags.json](${SITE_URL}/data/tags.json) — tag frequency + co-occurrence matrix
+- [/data/topics.json](${SITE_URL}/data/topics.json) — ${TOPIC_COUNT} topic metadata + primer slugs
 - [/sitemap.xml](${SITE_URL}/sitemap.xml) — Full URL list
 - [/feed.xml](${SITE_URL}/feed.xml) — Atom feed
 
 ## Content structure
 
-- 156 papers in /papers/{slug}/
-- 11 topic landings in /topics/{id}/
-- 7 issues (editorial recaps) in /issues/{N}/
-- 5 reading lists in /lists/
+- ${PAPER_COUNT} papers in /papers/{slug}/
+- ${TOPIC_COUNT} topic landings in /topics/{id}/
+- ${issuePages.length} issues (editorial recaps) in /issues/{N}/
+- ${READING_LISTS.length} reading lists in /lists/
 - 30-day learning path in /learn/path/
 - FAQ in /learn/faq/
 
@@ -3815,23 +3884,22 @@ This is a static reading site for embodied AI papers. All content is hand-curate
   author = {Jason},
   year   = {2026},
   url    = {${SITE_URL}/},
-  note   = {156 readable Chinese notes on embodied AI papers}
+  note   = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}
 }
 `);
 
-    // opensearch.xml (浏览器地址栏当搜索引擎)
-    write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+  // opensearch.xml (浏览器地址栏当搜索引擎)
+  write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>EAI Zero to One</ShortName>
   <LongName>Embodied AI: Zero to One</LongName>
-  <Description>156 篇具身智能论文搜索</Description>
+  <Description>${PAPER_COUNT} 篇具身智能论文搜索</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image type="image/svg+xml">${SITE_URL}/favicon.svg</Image>
   <Url type="text/html" template="${SITE_URL}/?q={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="${SITE_URL}/opensearch.xml"/>
 </OpenSearchDescription>
 `);
-  }
 
   // assets
   copyAssets(notes);

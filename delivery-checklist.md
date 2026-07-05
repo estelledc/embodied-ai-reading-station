@@ -1,5 +1,9 @@
 # Task 1 & Task 2 交付清单
 
+> ⚠️ **历史文档**：本文反映 2026-06-24 时点的状态，其中多数问题已在后续迭代中解决
+> （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
+> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+
 > 截止：2026 年 6 月 30 日（research-task.md 原文写"6 月 31 日"，6 月只有 30 天，需跟学长确认）
 > 最后更新：2026-06-24
 

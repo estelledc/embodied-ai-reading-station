@@ -1,5 +1,9 @@
 # Embodied AI: Zero to One — 治理审计报告
 
+> ⚠️ **历史文档**：本文反映 2026-06-24 时点的状态，其中多数问题已在后续迭代中解决
+> （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
+> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+
 > 审计日期：2026-06-24
 > 范围：156 篇笔记 + 22 章导读 + 站点构建 + 任务对齐
 
