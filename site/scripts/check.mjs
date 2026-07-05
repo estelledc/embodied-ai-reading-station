@@ -228,38 +228,15 @@ const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
 if (m) prefix = m[1];
 
-// stratified sample：papers/issues/topics/eras/learn/lists 各取若干 + 根级所有
-const sampled = (() => {
-  const buckets = { paper: [], issue: [], topic: [], era: [], learn: [], list: [], root: [] };
-  for (const f of htmlFiles) {
-    const rel = path.relative(DIST, f);
-    if (rel.startsWith("papers/")) buckets.paper.push(f);
-    else if (rel.startsWith("issues/")) buckets.issue.push(f);
-    else if (rel.startsWith("topics/")) buckets.topic.push(f);
-    else if (rel.startsWith("eras/")) buckets.era.push(f);
-    else if (rel.startsWith("learn/")) buckets.learn.push(f);
-    else if (rel.startsWith("lists/")) buckets.list.push(f);
-    else buckets.root.push(f);
-  }
-  return [
-    ...buckets.root,                      // 全部根级页
-    ...buckets.paper.slice(0, 20),        // 20 papers
-    ...buckets.issue.slice(0, 7),         // 全部 7 issues
-    ...buckets.topic.slice(0, 5),
-    ...buckets.era.slice(0, 3),
-    ...buckets.learn.slice(0, 3),
-    ...buckets.list.slice(0, 1),
-  ];
-})();
-console.log(`  sampled ${sampled.length} files (stratified) for link check`);
-for (const file of sampled) {
+// 全量扫描：dist 下所有 HTML 的站内链接（以 BASE 或 / 开头）逐一验证目标存在
+console.log(`  scanning ${htmlFiles.length} html files (full scan) for link check`);
+for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   let match;
   linkRe.lastIndex = 0;
   while ((match = linkRe.exec(html))) {
     const href = match[1];
     if (href.startsWith("http") || href.startsWith("//") || href.startsWith("mailto:") || href.startsWith("#")) continue;
-    if (href.endsWith(".js") || href.endsWith(".css") || href.endsWith(".xml") || href.endsWith(".json") || href.endsWith(".webmanifest")) continue;
     totalLinks++;
     if (seenLinks.has(href)) continue;
     seenLinks.add(href);
@@ -267,8 +244,8 @@ for (const file of sampled) {
     let target = href;
     if (prefix && target.startsWith(prefix)) target = target.slice(prefix.length);
     if (!target.startsWith("/")) continue;
-    // 解析候选路径
-    let candidate = path.join(DIST, target);
+    // 解析候选路径：/foo/ → dist/foo/index.html；/foo.xml → dist/foo.xml
+    let candidate = path.join(DIST, decodeURIComponent(target));
     if (target.endsWith("/")) candidate = path.join(candidate, "index.html");
     if (!fs.existsSync(candidate)) {
       // 试 .html
@@ -278,7 +255,11 @@ for (const file of sampled) {
     }
   }
 }
-check(`${seenLinks.size} 唯一链接均可达`, () => broken.length === 0 || `${broken.length} 个死链 (sample): ${broken.slice(0, 3).map(b => b.href).join(", ")}`);
+if (broken.length > 0) {
+  console.log(`  死链清单（前 20 条，源文件 → 死链）:`);
+  for (const b of broken.slice(0, 20)) console.log(`    ${b.file} → ${b.href}`);
+}
+check(`${seenLinks.size} 唯一站内链接全量扫描均可达`, () => broken.length === 0 || `${broken.length} 个死链`);
 
 console.log("\n=== Asset sizes ===");
 function dirSize(dir) {
@@ -359,6 +340,46 @@ console.log("\n=== Task-required notes ===");
   }
   check(`13 篇任务论文笔记全部存在`, () => taskMissing === 0 || `${taskMissing} 篇缺失`);
   check(`13 篇任务论文均有 task: required`, () => taskNoFlag === 0 || `${taskNoFlag} 篇缺 task 标记`);
+}
+
+console.log("\n=== Metadata consistency ===");
+{
+  // A. topics.json 的 primer slug 全部有对应笔记
+  check("topics.json primer slug 均有对应笔记", () => {
+    const missing = topicsJson
+      .flatMap(t => t.primer || [])
+      .filter(s => !fs.existsSync(path.join(NOTES, `${s}.md`)));
+    return missing.length === 0 || `缺失: ${missing.join(", ")}`;
+  });
+
+  // B. progress.md 提到全部 13 篇任务论文，且笔记存在
+  // progress.md 用论文名（如 "Cosmos Policy"、"RF-SLAM"），归一化（去非字母数字、小写）后按 slug 匹配
+  check("progress.md 覆盖全部 TASK_SLUGS 且笔记存在", () => {
+    const progress = fs.readFileSync(path.join(ROOT, "progress.md"), "utf8");
+    const normalized = progress.toLowerCase().replace(/[^a-z0-9]/g, "");
+    const problems = [];
+    for (const slug of TASK_SLUGS) {
+      if (!normalized.includes(slug.replace(/[^a-z0-9]/g, ""))) problems.push(`progress.md 未提到 ${slug}`);
+      if (!fs.existsSync(path.join(NOTES, `${slug}.md`))) problems.push(`notes/${slug}.md 缺失`);
+    }
+    return problems.length === 0 || problems.join("; ");
+  });
+
+  // C. issue markdown ≥1 且 dist/issues/ 页面数与 content/issue-*.md 一致
+  const contentDir = path.join(SITE, "content");
+  const issueMds = fs.existsSync(contentDir)
+    ? fs.readdirSync(contentDir).filter(f => /^issue-.*\.md$/.test(f))
+    : [];
+  check("content/ 下 issue markdown ≥ 1", () => issueMds.length >= 1 || "content/ 下没有任何 issue-*.md");
+  check("issue 页数与 content/issue-*.md 数一致", () => {
+    const issueDir = path.join(DIST, "issues");
+    const builtPages = fs.existsSync(issueDir)
+      ? fs.readdirSync(issueDir, { withFileTypes: true })
+          .filter(d => d.isDirectory() && fs.existsSync(path.join(issueDir, d.name, "index.html")))
+          .length
+      : 0;
+    return builtPages === issueMds.length || `dist/issues/ ${builtPages} 页 vs content ${issueMds.length} 篇`;
+  });
 }
 
 console.log("\n=== Status field validity ===");
