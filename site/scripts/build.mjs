@@ -3214,7 +3214,7 @@ function loadNotes() {
       continue;
     }
     const { data, content } = cached;
-    const stripped = stripFirstH1(rewriteImagePaths(content, p.slug));
+    const stripped = stripFirstH1(rewriteGuideLinks(rewriteImagePaths(content, p.slug)));
     const wc = countWords(stripped);
     notes.push({
       ...p,
@@ -3313,6 +3313,13 @@ function rewriteImagePaths(md, slug) {
   // normalize relative paths so build copies them under /assets/<slug>/
   return md.replace(/!\[([^\]]*)\]\((?:\.\.\/)?papers\/[^/]+\/images\/([^)]+)\)/g,
     (_, alt, file) => `![${alt}](${url(`/assets/${slug}/${file}`)})`);
+}
+
+function rewriteGuideLinks(md) {
+  // 笔记内 [text](../guide/chXX-name.md#anchor) → [text](/guide/chXX-name/#anchor)
+  // NOTE: bare absolute path (no BASE prefix) — renderer.link 会自动给 "/" 开头的 href 加 BASE
+  return md.replace(/\]\((?:\.\.\/)?guide\/([\w-]+)\.md(#[^)]*)?\)/g,
+    (_, name, anchor) => `](/guide/${name}/${anchor ?? ""})`);
 }
 
 function stripFirstH1(md) {

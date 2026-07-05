@@ -217,7 +217,7 @@ function walkHtml(dir) {
 }
 walkHtml(DIST);
 
-const linkRe = /href="([^"#?]+)"/g;
+const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];
 let totalLinks = 0;
 const seenLinks = new Set();
@@ -245,7 +245,14 @@ for (const file of htmlFiles) {
     if (prefix && target.startsWith(prefix)) target = target.slice(prefix.length);
     if (!target.startsWith("/")) continue;
     // 解析候选路径：/foo/ → dist/foo/index.html；/foo.xml → dist/foo.xml
-    let candidate = path.join(DIST, decodeURIComponent(target));
+    let decoded;
+    try {
+      decoded = decodeURIComponent(target);
+    } catch {
+      broken.push({ file: path.relative(DIST, file), href: `${href}（URI 解码失败）` });
+      continue;
+    }
+    let candidate = path.join(DIST, decoded);
     if (target.endsWith("/")) candidate = path.join(candidate, "index.html");
     if (!fs.existsSync(candidate)) {
       // 试 .html
