@@ -16,11 +16,16 @@ const PAPERS_DIR = path.join(ROOT, "papers");
 const GUIDE_DIR = path.join(ROOT, "guide");
 const DIST = path.join(SITE, "dist");
 
-// Base path for GitHub Pages project sites (e.g. estelledc.github.io/<REPO>/).
+// Base path for GitHub Pages project sites (e.g. <user>.github.io/<REPO>/).
 // Override with SITE_BASE="" for root-domain deploys, or any prefix.
 // Default empty in dev (npm run serve), filled by GitHub Actions to "/embodied-ai-reading-station".
 const BASE = (process.env.SITE_BASE ?? "").replace(/\/$/, "");
 const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
+
+// Canonical production URL (origin + repo path, no trailing slash).
+// Override with SITE_URL for forks / custom-domain deploys.
+const SITE_URL = (process.env.SITE_URL ?? "https://estelledc.github.io/embodied-ai-reading-station").replace(/\/$/, "");
+const SITE_ORIGIN = new URL(SITE_URL).origin;
 
 // --- topics + papers loaded dynamically from notes/ -------------------------
 const TOPICS_JSON = path.join(NOTES_DIR, "topics.json");
@@ -201,7 +206,7 @@ function masthead(active) {
   // 当前 active 是否在折叠区，决定 More 是否高亮
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
-    <div><a class="jx-return-to-hub" href="https://estelledc.github.io/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI: Zero to One</a></div>
+    <div><a class="jx-return-to-hub" href="${SITE_ORIGIN}/" rel="home">回 Jason 主站</a><span class="mast-divider">·</span><span class="star">★</span><a href="${url("/")}">Embodied AI: Zero to One</a></div>
     <nav aria-label="主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' style="color:var(--coral)" aria-current="page"' : ""}>${i.label}</a>`).join("")}
       <div class="more-nav">
         <button type="button" class="more-nav-trigger"${moreActive ? ' style="color:var(--coral)"' : ''} aria-haspopup="true" aria-expanded="false" aria-label="更多导航">More ▾</button>
@@ -349,7 +354,6 @@ function footerHtml(active) {
 function page({ title, body, active, extraHead = "", ogTitle = null, ogDescription = null, ogImage = null, ogUrl = null, jsonLd = null, hasMath = null }) {
   // 自动检测：有 $ 或 $$ 的页面才加载 KaTeX
   if (hasMath === null) hasMath = /\$[^$\n]+\$|\$\$[\s\S]+?\$\$/.test(body);
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const _ogTitle = ogTitle || title;
   const _ogDesc = ogDescription || "从零开始学具身智能——22 章系统教程 + 156 篇论文笔记，零术语假设，日常类比起步。";
   const _ogImg = ogImage || `${SITE_URL}/images/hero.webp`;
@@ -2197,7 +2201,7 @@ function build404(notes) {
           var list = document.getElementById('eai-404-list');
           list.innerHTML = top.map(function(x){
             return '<li style="padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)">' +
-              '<a href="' + x.p.url.replace('https://estelledc.github.io/embodied-ai-reading-station', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
+              '<a href="' + x.p.url.replace('${SITE_URL}', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
               '<span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem">' + x.p.topic + ' · ' + (x.p.year || '') + '</span></li>';
           }).join('');
           aside.hidden = false;
@@ -2363,7 +2367,7 @@ function buildAbout(notes = []) {
   title       = {Embodied AI: Zero to One},
   author      = {Zhou, Jason},
   year        = {2026},
-  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/}},
+  howpublished = {\\url{${SITE_URL}/}},
   note        = {156 readable Chinese notes on embodied AI papers}
 }</pre>
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
@@ -2645,7 +2649,7 @@ function buildGuidePage(ch, allChapters) {
   const shortTitle = ch.title.replace(/^Ch\d+:\s*/, "");
   return page({ title: `${ch.title} — Guide`, body: pageBody, active: "guide",
     ogDescription: shortTitle,
-    ogUrl: `https://estelledc.github.io/embodied-ai-reading-station/guide/${ch.slug}/` });
+    ogUrl: `${SITE_URL}/guide/${ch.slug}/` });
 }
 
 // --- compare page (per-topic side-by-side) ----------------------------------
@@ -2699,7 +2703,6 @@ function buildCompare(notes) {
 
 // --- RSS / Atom feed --------------------------------------------------------
 function buildFeed(issuePages, notes) {
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const updated = new Date().toISOString();
   const xmlEscape = s => String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
@@ -3022,7 +3025,6 @@ function injectInlineFigures(slug, body, paperTitle = "") {
 function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = [], guideChaptersMentioning = []) {
   figureCounter = 0; // reset for each note
   headingIds.clear();
-  const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
   const enrichedBody = injectInlineFigures(note.slug, note.body, note.title);
   const html = marked.parse(enrichedBody);
 
@@ -3120,7 +3122,7 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
   author      = {Zhou, Jason},
   year        = {2026},${note.year ? `
   note        = {Note on a ${note.year} paper},` : ""}
-  howpublished = {\\url{https://estelledc.github.io/embodied-ai-reading-station/papers/${note.slug}/}},
+  howpublished = {\\url{${SITE_URL}/papers/${note.slug}/}},
   organization = {Embodied AI: Zero to One}
 }</pre>
         <button class="cite-copy" type="button" data-cite-target="cite-${note.slug}">复制 BibTeX</button>
@@ -3475,7 +3477,6 @@ function build() {
   write(path.join(DIST, "lists", "index.html"), buildReadingLists(notes));
 
   // data endpoints (public JSON for research / external use)
-  const SITE_URL_DATA = "https://estelledc.github.io/embodied-ai-reading-station";
   const papersJson = notes.map(n => ({
     slug: n.slug,
     num: n.num,
@@ -3490,7 +3491,7 @@ function build() {
     wordCount: n.wordCount || 0,
     readingMinutes: n.readingTime || 0,
     tags: n.tags || [],
-    url: `${SITE_URL_DATA}/papers/${n.slug}/`,
+    url: `${SITE_URL}/papers/${n.slug}/`,
     sourcePath: n.sourcePath || "",
     status: n.status || "auto-summary",
   }));
@@ -3534,13 +3535,13 @@ function build() {
     subtitle: t.subtitle,
     count: notes.filter(n => n.topic === t.id).length,
     primer: t.primer || [],
-    url: `${SITE_URL_DATA}/topics/${t.id}/`,
+    url: `${SITE_URL}/topics/${t.id}/`,
   }));
   write(path.join(DIST, "data", "topics.json"), JSON.stringify(topicsJson, null, 2));
 
   // index manifest
   const manifest = {
-    site: SITE_URL_DATA,
+    site: SITE_URL,
     generated: new Date().toISOString(),
     counts: {
       papers: notes.length,
@@ -3549,10 +3550,10 @@ function build() {
       total_words: notes.reduce((s, n) => s + (n.wordCount || 0), 0),
     },
     endpoints: {
-      papers: `${SITE_URL_DATA}/data/papers.json`,
-      papers_csv: `${SITE_URL_DATA}/data/papers.csv`,
-      tags: `${SITE_URL_DATA}/data/tags.json`,
-      topics: `${SITE_URL_DATA}/data/topics.json`,
+      papers: `${SITE_URL}/data/papers.json`,
+      papers_csv: `${SITE_URL}/data/papers.csv`,
+      tags: `${SITE_URL}/data/tags.json`,
+      topics: `${SITE_URL}/data/topics.json`,
     },
     license: "CC BY 4.0 — Attribution required",
   };
@@ -3721,7 +3722,6 @@ function build() {
     write(path.join(DIST, "404.html"), build404(notes));
 
     // sitemap
-    const SITE_URL = "https://estelledc.github.io/embodied-ai-reading-station";
     const today = new Date().toISOString().slice(0, 10);
     const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
