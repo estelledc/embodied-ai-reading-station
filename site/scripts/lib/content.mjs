@@ -117,8 +117,9 @@ export function inferTags(note) {
 }
 
 // --- guide pages (22-chapter reading guide) ---------------------------------
+// 返回形状恒为 { chapters: [], readmeRaw: "" }，无 guide 目录时 chapters 为空数组
 export function discoverGuide() {
-  if (!fs.existsSync(GUIDE_DIR)) return [];
+  if (!fs.existsSync(GUIDE_DIR)) return { chapters: [], readmeRaw: "" };
   const readmePath = path.join(GUIDE_DIR, "README.md");
   const readmeRaw = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, "utf8") : "";
   const files = fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md"));

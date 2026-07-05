@@ -58,7 +58,7 @@ function build() {
 
   // guide (22-chapter reading guide)
   const guideData = discoverGuide();
-  if (guideData && guideData.chapters && guideData.chapters.length > 0) {
+  if (guideData.chapters.length > 0) {
     write(path.join(DIST, "guide", "index.html"), buildGuideIndex(guideData));
     for (const ch of guideData.chapters) {
       write(path.join(DIST, "guide", ch.slug, "index.html"), buildGuidePage(ch, guideData.chapters));
@@ -69,16 +69,16 @@ function build() {
 
   // Build paper → guide chapters reverse mapping for bidirectional links
   const paperGuideMap = new Map(); // slug → [{num, slug, title}]
-  if (guideData && guideData.chapters) {
-    for (const ch of guideData.chapters) {
-      const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
-      if (!m) continue;
-      const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
-      for (const slug of slugs) {
-        if (!paperGuideMap.has(slug)) paperGuideMap.set(slug, []);
-        paperGuideMap.get(slug).push({ num: ch.num, slug: ch.slug, title: ch.title });
-      }
+  for (const ch of guideData.chapters) {
+    const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
+    if (!m) continue;
+    const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
+    for (const slug of slugs) {
+      if (!paperGuideMap.has(slug)) paperGuideMap.set(slug, []);
+      paperGuideMap.get(slug).push({ num: ch.num, slug: ch.slug, title: ch.title });
     }
+  }
+  if (guideData.chapters.length > 0) {
     console.log(`  mapped ${paperGuideMap.size} papers to guide chapters`);
   }
 

@@ -150,7 +150,7 @@ export function writeSeoFiles(notes, guideData, issuePages, learnPages) {
   // sitemap
   {
     const today = BUILD_DATE.toISOString().slice(0, 10);
-    const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
+    const guideUrls = guideData.chapters.length > 0 ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
       "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
       ...(issuePages.length ? ["/issues/"] : []),
