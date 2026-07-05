@@ -33,7 +33,7 @@
 > **VLM**：Vision-Language Model，看图说话的 AI，类似你给它看猫的照片它能写"一只橘猫"。
 > **VLA**：Vision-Language-Action，看图听话还能动手的 AI，比 VLM 多了"动作"这一步。
 
-主线三连（6 月 30 日前必须挑一篇做英文汇报）：
+主线三连（精读优先）：
 
 - [x] **LLaVA** — VLM 最经典入门款（✅ 已完成 14 页英文 deck → `deck/index.html`）
 - [ ] SayCan — 让机器人把"我想喝水"拆成"走过去 → 拿杯子 → 倒水"（deep-read 笔记已就绪，等本人消化）
@@ -65,8 +65,6 @@
 
 - [x] 选定论文：**LLaVA (Visual Instruction Tuning)**
 - [x] 完成 14 页英文 deck（`deck/index.html`，atelier-zero 风格，中英双语）
-- [ ] 找学长（张瑞杰 or 王宁）约汇报时间
-- [ ] 汇报完成
 
 ### 下一步（今天最好奇的两个问题）
 
