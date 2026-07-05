@@ -2,9 +2,9 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与语义化版本。
 
-## [1.1.0] - Unreleased
+## [1.1.0] - 2026-07-05
 
-工程债清偿：build.mjs 模块化 + 单元测试骨架，构建产物零变化（全程以固定时间戳 dist 逐字节对比护航）。
+工程债清偿：build.mjs 模块化 + 单元测试骨架 + 拆分中记录的坏味道逐条清偿（行为不变重构全程以固定时间戳 dist 逐字节对比护航）。
 
 ### Added
 - 可复现构建：支持 `SOURCE_DATE_EPOCH`（秒）固定所有产物内的构建时间戳（页脚 stamp / feed updated / JSON-LD 日期 / sw.js VERSION / data manifest generated / sitemap·humans.txt 日期 / security.txt Expires）
@@ -20,6 +20,16 @@
   - `lib/layout.mjs`（page / masthead / footer / related views / page hero）
   - `lib/views/{papers,guide,aggregates,learn,meta,seo}.mjs`（全部 build* 页面生成器与 SEO/data 产物）
 - 拆分全程函数体逐字搬运，每步固定 `SOURCE_DATE_EPOCH` 构建与基线快照 `diff -r` 逐字节一致，`npm run check` 78 项（含 SITE_BASE 场景）保持通过
+- 坏味道清偿（BACKLOG「1.1 拆分中记录的坏味道」逐条处置，行为不变项 dist 逐字节一致）：
+  - era 排序比较器 8 处重复（7 个 view builder + build.mjs prev/next）抽为 `lib/content.mjs` 的 `eraComparator({pinTask, tiebreak})` 工厂，"细节出入"收敛为两个参数：是否 pin num≤13 置顶、同 era 内按 num/year 排
+  - `issuePaperSlugs()` 从 `lib/views/learn.mjs` 导出，build.mjs 的 `paperIssues` 循环复用，删除重复的 `papers/<slug>/` 正则匹配；顺删 `masthead()` 未使用的 `allItems`
+  - `discoverGuide()` 返回形状统一为 `{chapters: [], readmeRaw: ""}`，调用方不再靠 `guideData && guideData.chapters` 兜底
+  - 页面级可变渲染状态（figure 编号 / heading id 去重表）收敛为 `lib/markdown.mjs` 单一入口 `resetPageState()`，替换 4 处散落的 clear/reset 调用
+
+### Fixed
+- `notes_count_estimate()` 更名 `countInlineImages()`（名字如实：数 About 页 inline webp 配图数），删除硬编码 590 兜底（目录缺失时返回 0）
+- About 页过期文案："156 张静态页面" 去数字化、"build.mjs 单文件 ~2400 行" 改为如实描述模块化后的结构
+- `VIEW_DESC` 硬编码计数（"60 个术语字典"、"37 个会议"）去数字化，内容增长不再漂移
 
 ## [1.0.0] - 2026-07-05
 
