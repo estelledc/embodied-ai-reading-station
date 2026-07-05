@@ -12,6 +12,7 @@
 - check.mjs 新增 deep-read 强制章节门禁（思考题 / 实验结果说明了什么 / 和本导读的关系 / 原文信息）
 - check.mjs 新增性能预算门禁：首页 < 250KB、styles.css < 135KB、单张图片 < 600KB
 - KaTeX 0.17.0 / D3 7.9.0 自托管到 `dist/vendor/`（含 KaTeX 字体），sw.js 对 `/vendor/` 走 cache-first，离线与国内访问可用
+- Web 字体自托管：Inter / Playfair Display（variable）+ JetBrains Mono（400/500）经 Fontsource 打包进 `dist/vendor/fonts/`（latin subset），移除 rsms.me 与 Google Fonts CDN `@import`，同样被 sw.js `/vendor/` cache-first 覆盖
 - CHANGELOG 与语义化版本流程
 
 ### Changed
@@ -31,7 +32,6 @@
 - research-task.md 截止日期笔误（6/31 → 6/30）
 
 ### Known Issues
-- 字体仍依赖 Google Fonts CDN（`theme.css` 顶部 `@import`）：自托管工作量较大（3 个字族 × 多字重），本版显式跳过，拟在 1.0.x 处理
 - build.mjs / theme.css 拆分与测试框架（Vitest/Playwright）引入推迟到 1.1（见 [PLAN-1.0.0.md](PLAN-1.0.0.md) 的「明确不做」）
 
 ## [0.1.0] - 2026-06
