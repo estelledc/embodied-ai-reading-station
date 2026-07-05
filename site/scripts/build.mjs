@@ -3716,21 +3716,29 @@ function build() {
       const latestIssue = sortedIssues[0];
       write(path.join(DIST, "index.html"), buildIndex(notes, latestIssue));
     }
+  }
 
-    // human-readable site map（needs issue + learn loaded first）
-    write(path.join(DIST, "site-map", "index.html"), buildSiteMap(notes, issuePages, learnPages));
+  // --- 全站级产物（不依赖 content/ 是否存在；issues/learn 条目用上面收集的变量）---
 
-    // RSS / Atom feed
-    write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
+  // human-readable site map（issues/learn 为空时对应板块自然为空）
+  write(path.join(DIST, "site-map", "index.html"), buildSiteMap(notes, issuePages, learnPages));
 
-    // 404
-    write(path.join(DIST, "404.html"), build404(notes));
+  // RSS / Atom feed（无 issues 时只含 notes 条目）
+  write(path.join(DIST, "feed.xml"), buildFeed(issuePages, notes));
 
-    // sitemap
+  // 404
+  write(path.join(DIST, "404.html"), build404(notes));
+
+  // sitemap
+  {
     const today = new Date().toISOString().slice(0, 10);
     const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
-      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/", "/issues/", "/about/", "/learn/", "/deck/",
+      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
+      ...(issuePages.length ? ["/issues/"] : []),
+      "/about/",
+      ...(learnPages.length ? ["/learn/"] : []),
+      "/deck/",
       ...guideUrls,
       ...TOPIC_ORDER.map(t => `/topics/${t.id}/`),
       ...notes.map(n => `/papers/${n.slug}/`),
@@ -3743,15 +3751,16 @@ ${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></u
 </urlset>
 `;
     write(path.join(DIST, "sitemap.xml"), sitemap);
+  }
 
-    // robots.txt
-    write(path.join(DIST, "robots.txt"), `User-agent: *
+  // robots.txt
+  write(path.join(DIST, "robots.txt"), `User-agent: *
 Allow: /
 Sitemap: ${SITE_URL}/sitemap.xml
 `);
 
-    // /humans.txt — 谁做的（humanstxt.org spec）
-    write(path.join(DIST, "humans.txt"), `/* TEAM */
+  // /humans.txt — 谁做的（humanstxt.org spec）
+  write(path.join(DIST, "humans.txt"), `/* TEAM */
 Author: Jason
 Site: ${SITE_URL}
 GitHub: github.com/estelledc/embodied-ai-reading-station
@@ -3772,16 +3781,16 @@ Build: ~2 seconds
 Deployed: GitHub Pages via Actions
 `);
 
-    // /.well-known/security.txt — RFC 9116
-    const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
-    write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
+  // /.well-known/security.txt — RFC 9116
+  const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
+  write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
 Expires: ${expiryISO}
 Preferred-Languages: zh-CN, en
 Canonical: ${SITE_URL}/.well-known/security.txt
 `);
 
-    // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
-    write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
+  // /llms.txt — AI scraper 友好（仿 llmstxt.org spec）
+  write(path.join(DIST, "llms.txt"), `# Embodied AI: Zero to One
 
 > 156 篇具身智能顶会论文，用零基础也能读懂的中文重写。
 
@@ -3824,8 +3833,8 @@ This is a static reading site for embodied AI papers. All content is hand-curate
 }
 `);
 
-    // opensearch.xml (浏览器地址栏当搜索引擎)
-    write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
+  // opensearch.xml (浏览器地址栏当搜索引擎)
+  write(path.join(DIST, "opensearch.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <ShortName>EAI Zero to One</ShortName>
   <LongName>Embodied AI: Zero to One</LongName>
@@ -3836,7 +3845,6 @@ This is a static reading site for embodied AI papers. All content is hand-curate
   <Url type="application/opensearchdescription+xml" rel="self" template="${SITE_URL}/opensearch.xml"/>
 </OpenSearchDescription>
 `);
-  }
 
   // assets
   copyAssets(notes);
