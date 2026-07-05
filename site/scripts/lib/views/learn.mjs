@@ -2,7 +2,7 @@
 
 import { marked } from "marked";
 import { url } from "../config.mjs";
-import { resetFigureCounter, headingIds, extractOutline } from "../markdown.mjs";
+import { resetPageState, extractOutline } from "../markdown.mjs";
 import { PAPER_COUNT, GUIDE_CHAPTER_COUNT } from "../content.mjs";
 import { page, pageHeroHtml } from "../layout.mjs";
 
@@ -53,8 +53,7 @@ export function buildLearnIndex(pages) {
 }
 
 export function buildLearnPage(p, allPages) {
-  resetFigureCounter();
-  headingIds.clear();
+  resetPageState();
   const html = marked.parse(p.body);
   const otherLinks = allPages.filter(x => x.slug !== p.slug).map(x =>
     `<li style="margin-bottom:0.5rem"><a href="${url(`/learn/${x.slug}/`)}">${x.title}</a></li>`
@@ -138,8 +137,7 @@ export function issuePaperSlugs(body, notes) {
 }
 
 export function buildIssuePage(issue, notes) {
-  resetFigureCounter();
-  headingIds.clear();
+  resetPageState();
   const html = marked.parse(issue.body);
 
   // 仅渲染该 issue 实际引用的论文，不再硬编码 13

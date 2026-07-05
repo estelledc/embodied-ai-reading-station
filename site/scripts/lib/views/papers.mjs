@@ -5,7 +5,7 @@ import path from "node:path";
 import { execSync as _execSync } from "node:child_process";
 import { marked } from "marked";
 import { SITE, ROOT, PAPERS_DIR, url, SITE_URL, BUILD_DATE } from "../config.mjs";
-import { resetFigureCounter, headingIds, injectInlineFigures, extractOutline } from "../markdown.mjs";
+import { resetPageState, injectInlineFigures, extractOutline } from "../markdown.mjs";
 import { TOPIC_ORDER, PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT, eraComparator } from "../content.mjs";
 import { page } from "../layout.mjs";
 
@@ -275,8 +275,7 @@ export function buildIndex(notes, latestIssue = null) {
 
 // --- single note page -------------------------------------------------------
 export function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = [], guideChaptersMentioning = []) {
-  resetFigureCounter(); // reset for each note
-  headingIds.clear();
+  resetPageState(); // reset for each note
   const enrichedBody = injectInlineFigures(note.slug, note.body, note.title);
   const html = marked.parse(enrichedBody);
 

@@ -3,7 +3,7 @@
 import { marked } from "marked";
 import { TASK_SLUGS } from "../../constants.mjs";
 import { url, SITE_URL } from "../config.mjs";
-import { resetFigureCounter, headingIds } from "../markdown.mjs";
+import { resetPageState } from "../markdown.mjs";
 import { PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT } from "../content.mjs";
 import { page } from "../layout.mjs";
 
@@ -90,8 +90,7 @@ export function buildGuideIndex(guideData) {
 }
 
 export function buildGuidePage(ch, allChapters) {
-  resetFigureCounter();
-  headingIds.clear();
+  resetPageState();
   // Rewrite internal .md links to /guide/<slug>/ HTML links
   // NOTE: Use bare absolute paths (no BASE prefix) because renderer.link
   // automatically prepends BASE to any href starting with "/"
