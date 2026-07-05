@@ -11,7 +11,7 @@
 
 ## P2：近期可做
 
-### 1. build.mjs 拆分（技术债务）
+### 1. build.mjs 拆分（技术债务）（✅ 已于 1.1 完成，拆为 `scripts/lib/` 5 模块 + 6 个 views 模块 + 338 行编排入口，全程固定时间戳 dist 逐字节对比护航，见 CHANGELOG 1.1.0）
 
 - 当前 3715 行单文件，包含 ~30 个 view builder + 数据处理 + 图片处理
 - 建议拆为：`lib/notes.mjs`（笔记发现+加载）、`lib/pages/`（按页面类型拆）、`lib/assets.mjs`（图片复制）
@@ -82,3 +82,21 @@
 
 - 当前不在本次范围内改
 - 未发现明确 bug，但可检查 node 版本、缓存策略等
+
+---
+
+## 1.1 拆分中记录的坏味道（未修）
+
+> 2026-07-05 build.mjs 模块化过程中发现、按「只搬运不重写」纪律未顺手修的问题，只记录。
+
+1. `notes_count_estimate()`（现 `lib/views/meta.mjs`）：名字失实（实际数 inline webp 图片数）、snake_case、硬编码 590 兜底。
+2. `buildAbout` 文案过期：仍写着 "单文件 ~2400 行"、"156 张静态页面" 等硬编码数字。
+3. era 排序比较器（`eraRank` + pin num≤13）在 buildIndex/buildTopics/buildTopicLanding/buildCompare/buildCheatsheet/buildGraph/buildTimeline 重复了约 7 份，细节略有出入。
+4. `issuePaperSlugs()` 与 build() 里 `paperIssues` 循环重复同一套 `papers/<slug>/` 正则匹配逻辑。
+5. `masthead()` 里 `allItems` 计算后从未使用。
+6. `discoverGuide()` 返回形状不一致：无 guide 目录时返回 `[]`，否则返回 `{chapters, readmeRaw}`，调用方靠 `guideData && guideData.chapters` 兜着。
+7. `VIEW_DESC` 硬编码 "60 个术语字典"、"37 个会议"，内容增长会漂移。
+8. `headingIds`/`figureCounter` 是跨页面共享的可变模块状态，靠调用点手动 clear/reset，漏一处就串号。
+9. build.mjs 曾残留 6 个无用 import（slugify/TOPIC_BY_ID/extractTLDR/countWords/rewriteImagePaths/rewriteGuideLinks）——已在任务 5 收口时清除，此条仅存档。
+
+另记：首页「Recently updated」/changelog/about 渲染实时 git log（相对时间、commit 数），dist 快照天然随 git 状态与时间漂移；`SOURCE_DATE_EPOCH` 只固定构建时间戳，可复现对比需在同一 git 状态下两侧对齐。
