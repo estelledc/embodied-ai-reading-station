@@ -2,6 +2,25 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与语义化版本。
 
+## [1.1.0] - Unreleased
+
+工程债清偿：build.mjs 模块化 + 单元测试骨架，构建产物零变化（全程以固定时间戳 dist 逐字节对比护航）。
+
+### Added
+- 可复现构建：支持 `SOURCE_DATE_EPOCH`（秒）固定所有产物内的构建时间戳（页脚 stamp / feed updated / JSON-LD 日期 / sw.js VERSION / data manifest generated / sitemap·humans.txt 日期 / security.txt Expires）
+- 纯函数单元测试骨架（Node 22 内置 `node:test`，零新依赖，21 项）：`slugify` / `extractTLDR` / `extractOutline` / `rewriteGuideLinks` / `inferTags` / `url()`（BASE 空与非空双场景，子进程隔离）
+- `npm run test:unit` 脚本；`npm test` 改为 test:unit → build → check 全链路；CI（deploy.yml）在 Healthcheck 前新增 Unit tests 步骤
+
+### Changed
+- `site/scripts/build.mjs` 从 ~3900 行单文件拆为 `scripts/lib/` 下 11 个模块 + 338 行编排入口：
+  - `lib/config.mjs`（路径常量 / BASE / url() / SITE_URL / BUILD_DATE）
+  - `lib/assets.mjs`（fs 助手 / 静态资源与 vendor 复制 / sw.js VERSION 与 webmanifest 注入）
+  - `lib/markdown.mjs`（marked renderer / slugify / TLDR·outline 提取 / 链接与图片路径重写）
+  - `lib/content.mjs`（topics.json / notes frontmatter 扫描 / tag 推断 / guide 章节发现）
+  - `lib/layout.mjs`（page / masthead / footer / related views / page hero）
+  - `lib/views/{papers,guide,aggregates,learn,meta,seo}.mjs`（全部 build* 页面生成器与 SEO/data 产物）
+- 拆分全程函数体逐字搬运，每步固定 `SOURCE_DATE_EPOCH` 构建与基线快照 `diff -r` 逐字节一致，`npm run check` 78 项（含 SITE_BASE 场景）保持通过
+
 ## [1.0.0] - 2026-07-05
 
 首个正式版。156 篇论文笔记全部达到 deep-read 标准，三条学习入口对齐，构建与质量门禁产品化。
