@@ -3,26 +3,11 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { marked } from "marked";
 import matter from "gray-matter";
-import { TASK_SLUGS } from "./constants.mjs";
-import {
-  SITE, ROOT, NOTES_DIR, PAPERS_DIR, GUIDE_DIR, DIST,
-  BASE, url, SITE_URL, SITE_ORIGIN, BUILD_DATE,
-} from "./lib/config.mjs";
-import { ensure, copy, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
-import {
-  resetFigureCounter, headingIds, slugify, injectInlineFigures,
-  extractTLDR, countWords, readingTime, extractOutline,
-  rewriteImagePaths, rewriteGuideLinks, stripFirstH1,
-} from "./lib/markdown.mjs";
-import {
-  TOPIC_ORDER, TOPIC_BY_ID, PAPERS,
-  PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT,
-  inferTags, discoverGuide, loadNotes,
-} from "./lib/content.mjs";
-import { page, masthead, footerHtml, relatedViewsHtml, pageHeroHtml, VIEW_DESC } from "./lib/layout.mjs";
+import { SITE, ROOT, DIST, url } from "./lib/config.mjs";
+import { ensure, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
+import { stripFirstH1 } from "./lib/markdown.mjs";
+import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes } from "./lib/content.mjs";
 import { buildIndex, buildNotePage } from "./lib/views/papers.mjs";
 import { buildGuideIndex, buildGuidePage } from "./lib/views/guide.mjs";
 import {
@@ -37,8 +22,6 @@ import {
   buildChangelog, build404, buildAbout,
 } from "./lib/views/meta.mjs";
 import { buildFeed, writeDataFiles, writeSeoFiles } from "./lib/views/seo.mjs";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // --- main -------------------------------------------------------------------
 function build() {
