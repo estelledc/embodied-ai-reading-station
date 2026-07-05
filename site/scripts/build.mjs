@@ -28,6 +28,11 @@ const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
 const SITE_URL = (process.env.SITE_URL ?? "https://estelledc.github.io/embodied-ai-reading-station").replace(/\/$/, "");
 const SITE_ORIGIN = new URL(SITE_URL).origin;
 
+// 可复现构建：设置 SOURCE_DATE_EPOCH（秒）可固定所有产物内的构建时间戳
+const BUILD_DATE = process.env.SOURCE_DATE_EPOCH
+  ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000)
+  : new Date();
+
 // --- topics + papers loaded dynamically from notes/ -------------------------
 const TOPICS_JSON = path.join(NOTES_DIR, "topics.json");
 const TOPIC_ORDER = JSON.parse(fs.readFileSync(TOPICS_JSON, "utf8")).topics;
@@ -355,7 +360,7 @@ function footerHtml(active) {
       <a href="${url("/site-map/")}">site map</a>
       <a href="${url("/feed.xml")}" type="application/atom+xml">rss</a>
     </nav>
-    <time class="jx-footer__stamp" datetime="${new Date().toISOString()}" lang="en" title="构建时间 (UTC)">${new Date().toISOString().slice(0,16).replace("T", " · ")}</time>
+    <time class="jx-footer__stamp" datetime="${BUILD_DATE.toISOString()}" lang="en" title="构建时间 (UTC)">${BUILD_DATE.toISOString().slice(0,16).replace("T", " · ")}</time>
   </footer>`;
 }
 
@@ -2708,7 +2713,7 @@ function buildCompare(notes) {
 
 // --- RSS / Atom feed --------------------------------------------------------
 function buildFeed(issuePages, notes) {
-  const updated = new Date().toISOString();
+  const updated = BUILD_DATE.toISOString();
   const xmlEscape = s => String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -3162,8 +3167,8 @@ function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMen
         "author": { "@type": "Person", "name": "Jason" },
         "publisher": { "@type": "Organization", "name": "Embodied AI: Zero to One" },
         // 笔记的发布时间用 build 时间戳；论文原始年份用 about 字段单独保留
-        "datePublished": new Date().toISOString().slice(0, 10),
-        "dateModified": new Date().toISOString().slice(0, 10),
+        "datePublished": BUILD_DATE.toISOString().slice(0, 10),
+        "dateModified": BUILD_DATE.toISOString().slice(0, 10),
         "about": note.year ? {
           "@type": "ScholarlyArticle",
           "name": note.title,
@@ -3401,7 +3406,7 @@ function build() {
   // sw.js: 注入 build timestamp 作版本号
   {
     const swSrc = fs.readFileSync(path.join(SITE, "src", "sw.js"), "utf8");
-    const buildId = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
+    const buildId = BUILD_DATE.toISOString().slice(0, 16).replace(/[-:T]/g, "");
     const swOut = swSrc.replace(/const VERSION = "[^"]*";/, `const VERSION = "${buildId}";`);
     fs.writeFileSync(path.join(DIST, "sw.js"), swOut);
   }
@@ -3602,7 +3607,7 @@ function build() {
   // index manifest
   const manifest = {
     site: SITE_URL,
-    generated: new Date().toISOString(),
+    generated: BUILD_DATE.toISOString(),
     counts: {
       papers: notes.length,
       topics: TOPIC_ORDER.length,
@@ -3786,7 +3791,7 @@ function build() {
 
   // sitemap
   {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = BUILD_DATE.toISOString().slice(0, 10);
     const guideUrls = (guideData && guideData.chapters) ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const urls = [
       "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
@@ -3828,7 +3833,7 @@ AI tools: Claude Code, Codex CLI, MinerU, lr (LightRead)
 Static stack: Node.js, marked, gray-matter, Pagefind, KaTeX, D3.js v7
 
 /* SITE */
-Last update: ${new Date().toISOString().slice(0, 10)}
+Last update: ${BUILD_DATE.toISOString().slice(0, 10)}
 Language: zh-CN (Chinese, simplified)
 Doctype: HTML5
 Components: pure HTML + CSS, no framework
@@ -3837,7 +3842,7 @@ Deployed: GitHub Pages via Actions
 `);
 
   // /.well-known/security.txt — RFC 9116
-  const expiryISO = new Date(Date.now() + 365*24*3600*1000).toISOString();
+  const expiryISO = new Date(BUILD_DATE.getTime() + 365*24*3600*1000).toISOString();
   write(path.join(DIST, ".well-known", "security.txt"), `Contact: https://github.com/estelledc/embodied-ai-reading-station/issues
 Expires: ${expiryISO}
 Preferred-Languages: zh-CN, en
