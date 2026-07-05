@@ -13,6 +13,8 @@ year: 2023
 venue: NeurIPS
 ---
 
+> 📌 **系列说明**：本篇是 LLaVA **初代**（2023-04，Visual Instruction Tuning），也是本站 13 篇任务论文之一、[英文汇报 deck](/deck/) 的主角。半年后的改进版见 [LLaVA-1.5](/papers/llava-1-5/)——更高分辨率 + 学术数据配方，是 VLM 主题的入门 primer。
+
 # LLaVA: Visual Instruction Tuning
 
 > 这是一份给"完全没接触过 AI"的读者看的精读笔记。语言尽量像聊天，公式全部翻译成人话。
