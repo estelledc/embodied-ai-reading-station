@@ -318,11 +318,10 @@ check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => inde
 const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
 check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);
 
-// 单张图片预算：现存论文附图（dist/assets/）最大 ~1025KB，暂按 1100KB 设线；
-// 待附图压缩后可收紧到 600KB（站点自产图 dist/images/ 当前全部 <340KB）
+// 单张图片预算：论文附图已压缩，当前全站最大 ~474KB
 const IMG_EXT = /\.(webp|png|jpe?g|gif|svg|avif)$/i;
-const heavyImages = allFiles.filter(f => IMG_EXT.test(f.path) && f.size > 1100 * 1024);
-check(`单张图片均 < 1100KB`, () => heavyImages.length === 0 || `${heavyImages.length} 张超 1100KB: ${heavyImages.map(f => path.relative(DIST, f.path)).join(", ")}`);
+const heavyImages = allFiles.filter(f => IMG_EXT.test(f.path) && f.size > 600 * 1024);
+check(`单张图片均 < 600KB`, () => heavyImages.length === 0 || `${heavyImages.length} 张超 600KB: ${heavyImages.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
 console.log("\n=== Guide chapter pages ===");
 {
