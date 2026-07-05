@@ -48,7 +48,6 @@ export function masthead(active) {
     { href: url("/deck/"), label: "Deck", id: "deck" },
     { href: url("/about/"), label: "About", id: "about" },
   ];
-  const allItems = [...primaryItems, ...viewItems];
   // 当前 active 是否在折叠区，决定 More 是否高亮
   const moreActive = viewItems.some(v => v.id === active);
   return `<header class="masthead">
@@ -115,8 +114,8 @@ export const VIEW_DESC = {
   graph: { label: "Graph", desc: "D3 力导论文关系图" },
   heatmap: { label: "Heatmap", desc: "标签共现矩阵" },
   tags: { label: "Tags", desc: "跨主题技术标签" },
-  glossary: { label: "Glossary", desc: "60 个术语字典" },
-  venues: { label: "Venues", desc: "37 个会议按类别分布" },
+  glossary: { label: "Glossary", desc: "核心术语字典" },
+  venues: { label: "Venues", desc: "会议/期刊按类别分布" },
   stats: { label: "Stats", desc: "5 维度数据看板" },
   learn: { label: "Learn", desc: "学习路径 + math primer" },
   issues: { label: "Issues", desc: "编辑总结合集" },

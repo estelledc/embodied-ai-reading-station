@@ -9,7 +9,6 @@ import { SITE, BASE, url } from "./config.mjs";
 // --- markdown renderer ------------------------------------------------------
 const renderer = new marked.Renderer();
 let figureCounter = 0;
-export function resetFigureCounter() { figureCounter = 0; }
 renderer.image = (token) => {
   // marked v14 token: { href, title, text }
   const { href, title, text } = token;
@@ -31,7 +30,7 @@ export function slugify(s) {
     .replace(/\s+/g, "-")
     .slice(0, 50) || "section";
 }
-export const headingIds = new Map();
+const headingIds = new Map();
 renderer.heading = function (token) {
   const { tokens, depth, text } = token;
   // marked v14: this.parser.parseInline 渲染 inline tokens（含 bold/code/link）
@@ -74,6 +73,13 @@ renderer.link = function (token) {
 };
 
 marked.use({ renderer, gfm: true, breaks: false });
+
+// 页面级可变渲染状态（figure 编号、heading id 去重表）的唯一重置入口。
+// 每次渲染一个新页面的 markdown 前调用，避免跨页面串号。
+export function resetPageState() {
+  figureCounter = 0;
+  headingIds.clear();
+}
 
 // --- inline figures ---------------------------------------------------------
 export function injectInlineFigures(slug, body, paperTitle = "") {

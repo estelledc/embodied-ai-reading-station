@@ -7,7 +7,7 @@ import matter from "gray-matter";
 import { SITE, ROOT, DIST, url } from "./lib/config.mjs";
 import { ensure, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
 import { stripFirstH1 } from "./lib/markdown.mjs";
-import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes } from "./lib/content.mjs";
+import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes, eraComparator } from "./lib/content.mjs";
 import { buildIndex, buildNotePage } from "./lib/views/papers.mjs";
 import { buildGuideIndex, buildGuidePage } from "./lib/views/guide.mjs";
 import {
@@ -16,7 +16,7 @@ import {
   buildDiscover, buildQuality, buildStats, buildVenueStats, buildHeatmap,
   buildCompare, buildGraph, buildTimeline,
 } from "./lib/views/aggregates.mjs";
-import { buildLearnIndex, buildLearnPage, buildIssueIndex, buildIssuePage } from "./lib/views/learn.mjs";
+import { buildLearnIndex, buildLearnPage, buildIssueIndex, buildIssuePage, issuePaperSlugs } from "./lib/views/learn.mjs";
 import {
   buildNext, buildRandom, buildSiteMap, buildContributors,
   buildChangelog, build404, buildAbout,
@@ -58,7 +58,7 @@ function build() {
 
   // guide (22-chapter reading guide)
   const guideData = discoverGuide();
-  if (guideData && guideData.chapters && guideData.chapters.length > 0) {
+  if (guideData.chapters.length > 0) {
     write(path.join(DIST, "guide", "index.html"), buildGuideIndex(guideData));
     for (const ch of guideData.chapters) {
       write(path.join(DIST, "guide", ch.slug, "index.html"), buildGuidePage(ch, guideData.chapters));
@@ -69,16 +69,16 @@ function build() {
 
   // Build paper → guide chapters reverse mapping for bidirectional links
   const paperGuideMap = new Map(); // slug → [{num, slug, title}]
-  if (guideData && guideData.chapters) {
-    for (const ch of guideData.chapters) {
-      const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
-      if (!m) continue;
-      const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
-      for (const slug of slugs) {
-        if (!paperGuideMap.has(slug)) paperGuideMap.set(slug, []);
-        paperGuideMap.get(slug).push({ num: ch.num, slug: ch.slug, title: ch.title });
-      }
+  for (const ch of guideData.chapters) {
+    const m = ch.raw.match(/<!--\s*papers:\s*(.+?)\s*-->/);
+    if (!m) continue;
+    const slugs = m[1].split(",").map(s => s.trim()).filter(Boolean);
+    for (const slug of slugs) {
+      if (!paperGuideMap.has(slug)) paperGuideMap.set(slug, []);
+      paperGuideMap.get(slug).push({ num: ch.num, slug: ch.slug, title: ch.title });
     }
+  }
+  if (guideData.chapters.length > 0) {
     console.log(`  mapped ${paperGuideMap.size} papers to guide chapters`);
   }
 
@@ -202,15 +202,9 @@ function build() {
   }
 
   // prev/next: 同主题内按 era + year 排序，跨主题就用 PAPERS 全局序
-  const eraRank2 = { founder: 0, classic: 1, frontier: 2 };
-  const rankEra = e => eraRank2[e] ?? eraRank2.classic;
   const sortedByTopic = new Map();
   for (const t of TOPIC_ORDER) {
-    const inT = notes.filter(n => n.topic === t.id).sort((a, b) => {
-      const ea = rankEra(a.era) - rankEra(b.era);
-      if (ea !== 0) return ea;
-      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-    });
+    const inT = notes.filter(n => n.topic === t.id).sort(eraComparator({ tiebreak: "year" }));
     sortedByTopic.set(t.id, inT);
   }
 
@@ -242,22 +236,16 @@ function build() {
     issuePages.sort((a, b) => a.order - b.order);
   }
 
-  // 计算 issue → 提到的 slugs；反向给每个 paper 一份 issue 列表
-  // 仅用 papers/<slug>/ 形式匹配 — \b<slug>\b 在 issue editorial 散文里太容易误判
+  // 计算 issue → 提到的 slugs（复用 issuePaperSlugs）；反向给每个 paper 一份 issue 列表
   const paperIssues = new Map(); // slug → [{number, slug, title}]
   for (const issue of issuePages) {
-    const body = issue.body || "";
-    for (const n of notes) {
-      const esc = n.slug.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const re = new RegExp(`papers/${esc}/`);
-      if (re.test(body)) {
-        if (!paperIssues.has(n.slug)) paperIssues.set(n.slug, []);
-        paperIssues.get(n.slug).push({
-          number: issue.issueNumber,
-          slug: issue.slug.replace("issue-", ""),
-          title: issue.title.replace(/^Issue Nº \d+ — /, ""),
-        });
-      }
+    for (const slug of issuePaperSlugs(issue.body || "", notes)) {
+      if (!paperIssues.has(slug)) paperIssues.set(slug, []);
+      paperIssues.get(slug).push({
+        number: issue.issueNumber,
+        slug: issue.slug.replace("issue-", ""),
+        title: issue.title.replace(/^Issue Nº \d+ — /, ""),
+      });
     }
   }
 

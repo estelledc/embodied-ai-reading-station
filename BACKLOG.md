@@ -85,18 +85,19 @@
 
 ---
 
-## 1.1 拆分中记录的坏味道（未修）
+## 1.1 拆分中记录的坏味道（✅ 已于 2026-07-05 全部清偿，见 CHANGELOG 1.1.0）
 
 > 2026-07-05 build.mjs 模块化过程中发现、按「只搬运不重写」纪律未顺手修的问题，只记录。
+> 同日 v1.1.0 收尾时逐条处置，处置结果标注如下。
 
-1. `notes_count_estimate()`（现 `lib/views/meta.mjs`）：名字失实（实际数 inline webp 图片数）、snake_case、硬编码 590 兜底。
-2. `buildAbout` 文案过期：仍写着 "单文件 ~2400 行"、"156 张静态页面" 等硬编码数字。
-3. era 排序比较器（`eraRank` + pin num≤13）在 buildIndex/buildTopics/buildTopicLanding/buildCompare/buildCheatsheet/buildGraph/buildTimeline 重复了约 7 份，细节略有出入。
-4. `issuePaperSlugs()` 与 build() 里 `paperIssues` 循环重复同一套 `papers/<slug>/` 正则匹配逻辑。
-5. `masthead()` 里 `allItems` 计算后从未使用。
-6. `discoverGuide()` 返回形状不一致：无 guide 目录时返回 `[]`，否则返回 `{chapters, readmeRaw}`，调用方靠 `guideData && guideData.chapters` 兜着。
-7. `VIEW_DESC` 硬编码 "60 个术语字典"、"37 个会议"，内容增长会漂移。
-8. `headingIds`/`figureCounter` 是跨页面共享的可变模块状态，靠调用点手动 clear/reset，漏一处就串号。
+1. `notes_count_estimate()`（现 `lib/views/meta.mjs`）：名字失实（实际数 inline webp 图片数）、snake_case、硬编码 590 兜底。——✅ 已修：更名 `countInlineImages()`（真实用途：数 About 页「Codex CLI 生成 N+ 张内嵌图片」的图片数），590 兜底删除，目录缺失时如实返回 0；dist 逐字节不变（目录存在，计数逻辑未动）。
+2. `buildAbout` 文案过期：仍写着 "单文件 ~2400 行"、"156 张静态页面" 等硬编码数字。——✅ 已修："156 张静态页面" 去数字化为「全站静态页面预渲染」；"单文件 ~2400 行" 改为如实描述「编排入口 + `scripts/lib/` 模块」。
+3. era 排序比较器（`eraRank` + pin num≤13）在 buildIndex/buildTopics/buildTopicLanding/buildCompare/buildCheatsheet/buildGraph/buildTimeline 重复了约 7 份，细节略有出入。——✅ 已修：抽为 `lib/content.mjs` 的 `eraComparator({pinTask, tiebreak})` 工厂。逐份 diff 后确认"出入"只有两个维度：是否 pin num≤13 置顶、同 era 内按 num 还是 year 排；用工厂参数表达，8 处调用点（含 build.mjs prev/next 第 8 份）全部替换，dist 逐字节一致。
+4. `issuePaperSlugs()` 与 build() 里 `paperIssues` 循环重复同一套 `papers/<slug>/` 正则匹配逻辑。——✅ 已修：`issuePaperSlugs()` 从 `lib/views/learn.mjs` 导出，build.mjs 复用，dist 逐字节一致。
+5. `masthead()` 里 `allItems` 计算后从未使用。——✅ 已修：删除。
+6. `discoverGuide()` 返回形状不一致：无 guide 目录时返回 `[]`，否则返回 `{chapters, readmeRaw}`，调用方靠 `guideData && guideData.chapters` 兜着。——✅ 已修：恒返回 `{chapters: [], readmeRaw: ""}` 形状，build.mjs / seo.mjs 调用方简化为 `guideData.chapters.length` 判断。
+7. `VIEW_DESC` 硬编码 "60 个术语字典"、"37 个会议"，内容增长会漂移。——✅ 已修：去数字化（「核心术语字典」/「会议/期刊按类别分布」；VIEW_DESC 是静态常量拿不到计数）。
+8. `headingIds`/`figureCounter` 是跨页面共享的可变模块状态，靠调用点手动 clear/reset，漏一处就串号。——✅ 已收敛：`lib/markdown.mjs` 提供唯一入口 `resetPageState()`，4 个渲染调用点统一替换，`headingIds`/`resetFigureCounter` 不再导出（参数化传递属更大重构，未做）。
 9. build.mjs 曾残留 6 个无用 import（slugify/TOPIC_BY_ID/extractTLDR/countWords/rewriteImagePaths/rewriteGuideLinks）——已在任务 5 收口时清除，此条仅存档。
 
 另记：首页「Recently updated」/changelog/about 渲染实时 git log（相对时间、commit 数），dist 快照天然随 git 状态与时间漂移；`SOURCE_DATE_EPOCH` 只固定构建时间戳，可复现对比需在同一 git 状态下两侧对齐。
