@@ -4,6 +4,8 @@ order: 5
 intro: "如果你刚来，156 篇太多。这页给你 30 天的具体路径——每天 1-2 篇，30 天后能自信讲出'具身 AI 这一年在干什么'。"
 ---
 
+> **三条入口怎么选？** 本页是**线性 30+5 天计划**（适合每天固定投入）；[22 章导读](/guide/) 是**系统教材**（适合想搞懂原理再读论文）；[主题入门三连](/topics/) 是**按兴趣跳读**（适合已有方向）。三者内容互通，选一条主线即可，不必都走。
+
 ## 这页为谁设计
 
 > 你是大一/大二/转方向的本科生，知道 Python 但没接触过具身 AI；你愿意每天花 30-60 分钟系统读一段时间。
@@ -76,6 +78,25 @@ VLA 不是孤岛。这周读世界模型、仿真器、感知扩展。
 | 29-30 | 复习 + 看 [Compare](/compare/) + 写一篇自己的 review | 输出验证收获 |
 
 **Week 4 收获**：你已经具备"读 2026 年新论文 abstract 不发蒙"的能力。
+
+## Week 5 · RF 感知 + 听觉智能 + 3D/世界模型收尾
+
+Week 5 是任务驱动读者的补全周——完成它，13 篇任务论文就全部走完（对照 [research-task.md](https://github.com/estelledc/embodied-ai-reading-station/blob/main/research-task.md)）。
+
+| Day | 论文 | 为什么读 |
+|---|---|---|
+| 31 | [3DShape2VecSet](/papers/3dshape2vecset/) | 把 3D 物体压成"特征卡片集"喂给扩散模型——3D 生成表示法的代表作 |
+| 31 | [Cosmos Policy](/papers/cosmos-policy/) | 把会"脑补下一秒视频"的大模型微调成机械臂策略——世界模型直通控制 |
+| 32 | [VLAS](/papers/vlas/) | 给 VLA 装上耳朵：Whisper 当听觉编码器 + 声纹 RAG 解决"我的杯子是哪只"式个性化指令 |
+| 32 | [MLA](/papers/mla/) | 视觉之外再加"手感"和"空间感"——多感官直通语言-动作模型 |
+| 33 | [CartoRadar (RF-SLAM)](/papers/rf-slam/) | 几百块的毫米波雷达做厘米级 3D SLAM，靠"知道自己不确定"打败相机方案 |
+| 33 | [mmCLIP](/papers/mmclip/) | 把雷达信号对齐进 CLIP 文本语义空间，零样本认出没采过数据的新动作 |
+| 34 | [mmNorm (NLOS mmWave)](/papers/nlos-mmwave/) | 先猜"表面法向"再重建——隔着纸箱用毫米波还原物体的 3D 形状 |
+| 34 | [Proactive Hearing](/papers/proactive-hearing/) | 耳机自动听出"你在跟谁聊天"——靠对话节奏而非声纹放大同伴的声音 |
+| 35 | [NeuralAids](/papers/neuralaids/) | 把跑在显卡上的降噪模型瘦身 100 倍塞进助听器，实时又省电 |
+| 35 | [Acoustic Swarms](/papers/acoustic-swarms/) | 七个自走小麦克风机器人自己散开、互相定位，把同桌说话人一一分离 |
+
+**Week 5 收获**：13 篇任务论文全部走完，RF 感知与听觉智能两个"具身感官"方向也补上了。
 
 ## 30 天后你能做什么
 
