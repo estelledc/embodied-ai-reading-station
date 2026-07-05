@@ -1,6 +1,6 @@
 {
   "name": "embodied-ai-reading-station",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Embodied AI paper reading station — atelier-zero editorial style",
   "private": true,
   "type": "module",
