@@ -6,62 +6,24 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked } from "marked";
 import matter from "gray-matter";
-import { SCENE_SECTION_RE, METHOD_SECTION_RE } from "./figure-section-utils.mjs";
 import { TASK_SLUGS } from "./constants.mjs";
 import {
   SITE, ROOT, NOTES_DIR, PAPERS_DIR, GUIDE_DIR, DIST,
   BASE, url, SITE_URL, SITE_ORIGIN, BUILD_DATE,
 } from "./lib/config.mjs";
 import { ensure, copy, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
+import {
+  resetFigureCounter, headingIds, slugify, injectInlineFigures,
+  extractTLDR, countWords, readingTime, extractOutline,
+  rewriteImagePaths, rewriteGuideLinks, stripFirstH1,
+} from "./lib/markdown.mjs";
+import {
+  TOPIC_ORDER, TOPIC_BY_ID, PAPERS,
+  PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT,
+  inferTags, discoverGuide, loadNotes,
+} from "./lib/content.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// --- topics + papers loaded dynamically from notes/ -------------------------
-const TOPICS_JSON = path.join(NOTES_DIR, "topics.json");
-const TOPIC_ORDER = JSON.parse(fs.readFileSync(TOPICS_JSON, "utf8")).topics;
-const TOPIC_BY_ID = new Map(TOPIC_ORDER.map(t => [t.id, t]));
-
-// 自动发现：扫 notes/*.md 的 frontmatter，按 num 排序生成 PAPERS
-// 缓存：discoverPapers 已经读了文件，loadNotes 不要再读一次
-const NOTE_CACHE = new Map(); // slug -> { raw, data, content }
-
-function discoverPapers() {
-  const files = fs.readdirSync(NOTES_DIR).filter(f => f.endsWith(".md"));
-  const papers = [];
-  for (const f of files) {
-    const slug = f.replace(/\.md$/, "");
-    const raw = fs.readFileSync(path.join(NOTES_DIR, f), "utf8");
-    const parsed = matter(raw);
-    NOTE_CACHE.set(slug, { raw, data: parsed.data, content: parsed.content });
-    const { data } = parsed;
-    if (!data.num || !data.topic) continue;
-    const t = TOPIC_BY_ID.get(data.topic);
-    if (!t) {
-      console.warn(`unknown topic '${data.topic}' for ${slug}, skip`);
-      continue;
-    }
-    papers.push({
-      slug,
-      num: Number(data.num),
-      title: data.title || slug,
-      topic: data.topic,
-      topicLabel: t.label,
-      topicRoman: t.roman,
-      era: data.era || "classic",
-    });
-  }
-  papers.sort((a, b) => a.num - b.num);
-  return papers;
-}
-
-const PAPERS = discoverPapers();
-
-// 动态计数（文案插值用，避免内容增长后数字漂移）
-const PAPER_COUNT = PAPERS.length;
-const TOPIC_COUNT = TOPIC_ORDER.length;
-const GUIDE_CHAPTER_COUNT = fs.existsSync(GUIDE_DIR)
-  ? fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md")).length
-  : 0;
 
 // --- page hero helper -------------------------------------------------------
 function pageHeroHtml(slug, alt) {
@@ -75,74 +37,6 @@ function pageHeroHtml(slug, alt) {
     </picture>
   </figure>`;
 }
-
-// --- markdown renderer ------------------------------------------------------
-const renderer = new marked.Renderer();
-let figureCounter = 0;
-renderer.image = (token) => {
-  // marked v14 token: { href, title, text }
-  const { href, title, text } = token;
-  figureCounter++;
-  const roman = ["i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii"][figureCounter - 1] ?? String(figureCounter);
-  // codex 生图全部 16:9，1672×941。给 inline / cards 默认尺寸避免 CLS
-  let dims = "";
-  if (href && (href.includes("/images/inline/") || href.includes("/images/cards/") || href.includes("/images/topics/"))) {
-    dims = ` width="1672" height="941"`;
-  }
-  // lazy 加载 + decoding async（首屏图片可能例外，但 inline figures 都在首屏下方）
-  return `<figure><img src="${href}" alt="${text || ""}"${title ? ` title="${title}"` : ""}${dims} loading="lazy" decoding="async"/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${text || title || ""}</figcaption></figure>`;
-};
-
-// 给 H2/H3 加 id（让 outline 能锚点跳转）
-function slugify(s) {
-  return s.toLowerCase()
-    .replace(/[^一-龥\w\s-]/g, "")
-    .replace(/\s+/g, "-")
-    .slice(0, 50) || "section";
-}
-const headingIds = new Map();
-renderer.heading = function (token) {
-  const { tokens, depth, text } = token;
-  // marked v14: this.parser.parseInline 渲染 inline tokens（含 bold/code/link）
-  const inner = (tokens && this && this.parser)
-    ? this.parser.parseInline(tokens)
-    : text;
-  if (depth === 2 || depth === 3) {
-    let base = slugify(text);
-    let id = base;
-    let n = 2;
-    while (headingIds.has(id)) id = `${base}-${n++}`;
-    headingIds.set(id, true);
-    return `<h${depth} id="${id}">${inner}</h${depth}>\n`;
-  }
-  return `<h${depth}>${inner}</h${depth}>\n`;
-};
-
-// 段落只含一张图时不包 <p>（避免 <figure> 在 <p> 内被浏览器 split 出空 p）
-renderer.paragraph = function (token) {
-  const tokens = token.tokens || [];
-  // 只有一个 image token，或恰好是单个 image 加可忽略空白
-  const meaningful = tokens.filter(t => !(t.type === "text" && /^\s*$/.test(t.text || "")));
-  if (meaningful.length === 1 && meaningful[0].type === "image") {
-    return (this && this.parser ? this.parser.parseInline(tokens) : "") + "\n";
-  }
-  const inner = this && this.parser ? this.parser.parseInline(tokens) : (token.text || "");
-  return `<p>${inner}</p>\n`;
-};
-
-// 内部绝对链接 (/papers/x/ /topics/y/ 等) 自动加 BASE prefix；外链不动
-renderer.link = function (token) {
-  const { href, title, tokens } = token;
-  const inner = (tokens && this && this.parser) ? this.parser.parseInline(tokens) : (token.text || href);
-  let finalHref = href;
-  if (href && href.startsWith("/") && !href.startsWith("//")) {
-    finalHref = BASE + href;
-  }
-  const titleAttr = title ? ` title="${title}"` : "";
-  return `<a href="${finalHref}"${titleAttr}>${inner}</a>`;
-};
-
-marked.use({ renderer, gfm: true, breaks: false });
 
 // --- layout templates -------------------------------------------------------
 function masthead(active) {
@@ -913,40 +807,6 @@ function buildTopicLanding(t, notes) {
 }
 
 // --- tags -------------------------------------------------------------------
-// 自动从笔记 title + body 关键词推断 tag（每篇 0-5 个）
-const TAG_RULES = [
-  { tag: "diffusion", keywords: /\b(diffusion|denoising|noise schedul|ddpm|ddim|score-based)\b/i },
-  { tag: "flow-matching", keywords: /flow.?matching|consistency model|rectified flow/i },
-  { tag: "transformer", keywords: /\btransformer\b|self.?attention|multi.?head/i },
-  { tag: "mamba-ssm", keywords: /\bmamba\b|state.?space model|\bSSM\b/i },
-  { tag: "3D", keywords: /point cloud|3D point|voxel|nerf|3D shape|mesh|sapien|3d-vla|3d-diffusion/i },
-  { tag: "language", keywords: /\bLLM\b|language model|natural language|instruct|GPT|PaLM|LLaMA/i },
-  { tag: "vision", keywords: /\bvisual\b|image encoder|RGB|camera|ViT|CLIP|SigLIP/i },
-  { tag: "tactile", keywords: /tactile|haptic|GelSight|DIGIT|sparsh/i },
-  { tag: "audio-speech", keywords: /\baudio\b|speech|ASR|whisper|microphone|acoustic/i },
-  { tag: "RF-radar", keywords: /\bradar\b|mmWave|WiFi|RF |electromagnetic|panoradar|millimap/i },
-  { tag: "manipulation", keywords: /manipulat|grasp|pick.?and.?place|gripper|dexterous/i },
-  { tag: "locomotion", keywords: /locomotion|legged|walk|gait|quadruped|humanoid/i },
-  { tag: "navigation", keywords: /navigat|exploration|SLAM|mapping/i },
-  { tag: "RL", keywords: /reinforcement learning|\bRL\b|policy gradient|Q-learning/i },
-  { tag: "imitation", keywords: /imitation|behavior\s*clon|behavioral\s*clon|teleoperat|demonstration|模仿/i },
-  { tag: "world-model", keywords: /world model|latent dynamics|imagined rollout/i },
-  { tag: "VLA", keywords: /vision.?language.?action|\bVLA\b/i },
-  { tag: "VLM", keywords: /vision.?language model|\bVLM\b|multimodal LLM/i },
-  { tag: "sim2real", keywords: /sim.?to.?real|domain randomi|sim2real/i },
-  { tag: "dataset", keywords: /\bdataset\b|benchmark|trajector|episodes/i },
-  { tag: "open-source", keywords: /open.?source|publicly released|github\.com/i },
-];
-
-function inferTags(note) {
-  const text = (note.title + " " + (note.body || "").slice(0, 4000)).toLowerCase();
-  const tags = [];
-  for (const r of TAG_RULES) {
-    if (r.keywords.test(text)) tags.push(r.tag);
-  }
-  return tags.slice(0, 6); // 最多 6 个
-}
-
 function buildTagsIndex(notes) {
   const tagMap = new Map();
   for (const n of notes) {
@@ -2406,7 +2266,7 @@ function buildLearnIndex(pages) {
 }
 
 function buildLearnPage(p, allPages) {
-  figureCounter = 0;
+  resetFigureCounter();
   headingIds.clear();
   const html = marked.parse(p.body);
   const otherLinks = allPages.filter(x => x.slug !== p.slug).map(x =>
@@ -2431,30 +2291,6 @@ function buildLearnPage(p, allPages) {
 }
 
 // --- guide pages (22-chapter reading guide) ---------------------------------
-function discoverGuide() {
-  if (!fs.existsSync(GUIDE_DIR)) return [];
-  const readmePath = path.join(GUIDE_DIR, "README.md");
-  const readmeRaw = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, "utf8") : "";
-  const files = fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md"));
-  files.sort((a, b) => {
-    const na = parseInt(a.replace(/^ch0?/, ""), 10);
-    const nb = parseInt(b.replace(/^ch0?/, ""), 10);
-    return na - nb;
-  });
-  const chapters = files.map(f => {
-    const slug = f.replace(/\.md$/, "");
-    const raw = fs.readFileSync(path.join(GUIDE_DIR, f), "utf8");
-    // Extract title from first H1
-    const h1Match = raw.match(/^#\s+(.+)$/m);
-    const title = h1Match ? h1Match[1] : slug;
-    // Extract chapter number
-    const numMatch = slug.match(/^ch(\d+)/);
-    const num = numMatch ? parseInt(numMatch[1], 10) : 0;
-    return { slug, filename: f, title, num, raw };
-  });
-  return { chapters, readmeRaw };
-}
-
 function buildGuideIndex(guideData) {
   const { chapters, readmeRaw } = guideData;
 
@@ -2537,7 +2373,7 @@ function buildGuideIndex(guideData) {
 }
 
 function buildGuidePage(ch, allChapters) {
-  figureCounter = 0;
+  resetFigureCounter();
   headingIds.clear();
   // Rewrite internal .md links to /guide/<slug>/ HTML links
   // NOTE: Use bare absolute paths (no BASE prefix) because renderer.link
@@ -2929,7 +2765,7 @@ function issuePaperSlugs(body, notes) {
 }
 
 function buildIssuePage(issue, notes) {
-  figureCounter = 0;
+  resetFigureCounter();
   headingIds.clear();
   const html = marked.parse(issue.body);
 
@@ -2968,31 +2804,8 @@ function buildIssuePage(issue, notes) {
 }
 
 // --- single note page -------------------------------------------------------
-function injectInlineFigures(slug, body, paperTitle = "") {
-  const inlineDir = path.join(SITE, "src", "images", "inline");
-  const sceneImg = path.join(inlineDir, `${slug}-scene.webp`);
-  const methodImg = path.join(inlineDir, `${slug}-method.webp`);
-
-  // 用 paper title prefix 让 alt 更具体（屏幕阅读器友好）
-  const head = paperTitle ? paperTitle.split(":")[0].trim() : slug;
-  let result = body;
-  // 在「这是个什么场景」H2 段后插场景图（支持编号标题如 ## 2. 场景）
-  if (fs.existsSync(sceneImg)) {
-    const sceneMd = `\n\n![${head} — 场景示意：这论文要解决的现实问题](${url(`/images/inline/${slug}-scene.webp`)})\n`;
-    const sceneRe = new RegExp(`(${SCENE_SECTION_RE.source}[^\\n]*\\n[\\s\\S]*?)(?=\\n## )`);
-    result = result.replace(sceneRe, (m) => m + sceneMd);
-  }
-  // 在「方法」H2 段后插方法图（支持 ## 方法 / ## 5. 方法 等）
-  if (fs.existsSync(methodImg)) {
-    const methodMd = `\n\n![${head} — 方法示意：核心 pipeline](${url(`/images/inline/${slug}-method.webp`)})\n`;
-    const methodRe = new RegExp(`(${METHOD_SECTION_RE.source}[^\\n]*\\n[\\s\\S]*?)(?=\\n## )`);
-    result = result.replace(methodRe, (m) => m + methodMd);
-  }
-  return result;
-}
-
 function buildNotePage(note, backlinks = [], prev = null, next = null, issuesMentioning = [], guideChaptersMentioning = []) {
-  figureCounter = 0; // reset for each note
+  resetFigureCounter(); // reset for each note
   headingIds.clear();
   const enrichedBody = injectInlineFigures(note.slug, note.body, note.title);
   const html = marked.parse(enrichedBody);
@@ -3169,127 +2982,12 @@ ${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
 }
 
 // --- main -------------------------------------------------------------------
-function loadNotes() {
-  const notes = [];
-  for (const p of PAPERS) {
-    // 复用 discoverPapers 缓存的 raw + parsed
-    const cached = NOTE_CACHE.get(p.slug);
-    if (!cached) {
-      notes.push({ ...p, status: "missing", body: "# 笔记尚未生成\n\n请稍后回来看。" });
-      continue;
-    }
-    const { data, content } = cached;
-    const stripped = stripFirstH1(rewriteGuideLinks(rewriteImagePaths(content, p.slug)));
-    const wc = countWords(stripped);
-    notes.push({
-      ...p,
-      title: data.title || p.title,
-      difficulty: data.difficulty || "",
-      status: data.status || "auto-summary",
-      sourcePath: data["来源"] || data.source || "",
-      dek: data.dek || "",
-      era: data.era || "classic",
-      year: data.year || null,
-      venue: data.venue || "",
-      tags: [], // 待 build 后注入
-
-      tldr: extractTLDR(content),
-      wordCount: wc,
-      readingTime: readingTime(wc),
-      body: stripped,
-    });
-  }
-  return notes;
-}
-
-function extractTLDR(md) {
-  // 1) 优先：## 一句话讲什么 / ## TL;DR / ## 一句话 / ## 一句话讲清 后的第一段实质内容
-  const headingPatterns = [
-    /##\s*(?:一句话讲什么|一句话|一句话讲清|一句话总结|TL;DR|TLDR|tl;dr)[^\n]*\n+([\s\S]*?)(?=\n##|$)/,
-  ];
-  for (const re of headingPatterns) {
-    const m = md.match(re);
-    if (m) {
-      // 取第一个非空、非引用、非列表标记的行/段
-      const text = m[1]
-        .split('\n')
-        .map(l => l.trim())
-        .filter(l => l && !l.startsWith('>') && !l.startsWith('*所以') && !l.startsWith('---'))
-        .map(l => l.replace(/^[-*]\s*/, '').replace(/\*\*/g, '').replace(/`/g, ''))
-        .filter(l => !/^[（(].+?[）)]$/.test(l)) // 整行括号注释
-        .join(' ');
-      const cleaned = text.replace(/^[（(].+?[）)]\s*/, '').trim();
-      if (cleaned) return cleaned.slice(0, 140);
-    }
-  }
-  // 2) 兜底：第一个非引用非标题的实质段
-  const lines = md.split('\n')
-    .filter(l => l.trim() && !l.startsWith('#') && !l.startsWith('>') && !l.startsWith('```') && !l.startsWith('---') && !l.startsWith('*'))
-    .map(l => l.replace(/^[-*]\s*/, '').replace(/\*\*/g, ''));
-  return (lines[0] || '').trim().slice(0, 140);
-}
-
-function countWords(md) {
-  // 中文按字数算，英文按词算
-  const stripped = md
-    .replace(/```[\s\S]*?```/g, "")
-    .replace(/`[^`]+`/g, "")
-    .replace(/!\[[^\]]*\]\([^)]+\)/g, "")
-    .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
-    .replace(/[#>*_\-=|]/g, " ");
-  const cn = (stripped.match(/[一-龥]/g) || []).length;
-  const en = (stripped.match(/[a-zA-Z]+/g) || []).length;
-  return cn + en;
-}
-
-function readingTime(wc) {
-  // 中文 350 字/分钟，英文已折算同一单位
-  return Math.max(1, Math.round(wc / 350));
-}
-
 function makeDifficultyBadge(stars) {
   // 1-2 星 → easy, 3 星 → medium, 4-5 星 → hard
   const n = (stars || "").length;
   if (n <= 2) return { class: "diff-easy", label: "入门" };
   if (n === 3) return { class: "diff-medium", label: "进阶" };
   return { class: "diff-hard", label: "硬核" };
-}
-
-function extractOutline(md) {
-  // 扫所有 H2，提取标题 + slug，用于右栏 outline
-  const lines = md.split("\n");
-  const out = [];
-  const seen = new Map();
-  for (const line of lines) {
-    const m = line.match(/^##\s+(.+?)\s*$/);
-    if (!m) continue;
-    const text = m[1].replace(/`/g, "").trim();
-    let base = slugify(text);
-    let id = base;
-    let n = 2;
-    while (seen.has(id)) id = `${base}-${n++}`;
-    seen.set(id, true);
-    out.push({ id, text });
-  }
-  return out;
-}
-
-function rewriteImagePaths(md, slug) {
-  // normalize relative paths so build copies them under /assets/<slug>/
-  return md.replace(/!\[([^\]]*)\]\((?:\.\.\/)?papers\/[^/]+\/images\/([^)]+)\)/g,
-    (_, alt, file) => `![${alt}](${url(`/assets/${slug}/${file}`)})`);
-}
-
-function rewriteGuideLinks(md) {
-  // 笔记内 [text](../guide/chXX-name.md#anchor) → [text](/guide/chXX-name/#anchor)
-  // NOTE: bare absolute path (no BASE prefix) — renderer.link 会自动给 "/" 开头的 href 加 BASE
-  return md.replace(/\]\((?:\.\.\/)?guide\/([\w-]+)\.md(#[^)]*)?\)/g,
-    (_, name, anchor) => `](/guide/${name}/${anchor ?? ""})`);
-}
-
-function stripFirstH1(md) {
-  // remove the first H1 heading anywhere near the top (titled page already shows the H1 in note-shell)
-  return md.replace(/^\s*#\s+[^\n]+\n+/, "");
 }
 
 function build() {
