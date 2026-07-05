@@ -14,8 +14,7 @@
 - [x] 22 章导读完成（guide/ch01 ~ ch22）
 - [x] 11 主题 × 3 篇 primer 入门体系
 - [x] 站点功能：30 天路径 / 主题 / Timeline / Graph / Heatmap / 搜索 / PWA
-- [ ] 笔记质量提升：46 篇 auto-summary + 110 篇 auto-summary-light → 逐步补精读
-  - [x] **2026-07-01：156/156 全部升级为 deep-read**（见 `DEEPREAD-BATCH.md`）
+- [x] 笔记质量提升：**2026-07-01 完成 156/156 全部升级为 deep-read**（见 `DEEPREAD-BATCH.md`）
 
 ### 先打基础（5 篇入门轨道，learn track）
 
@@ -37,30 +36,30 @@
 主线三连（6 月 30 日前必须挑一篇做英文汇报）：
 
 - [x] **LLaVA** — VLM 最经典入门款（✅ 已完成 14 页英文 deck → `deck/index.html`）
-- [ ] SayCan — 让机器人把"我想喝水"拆成"走过去 → 拿杯子 → 倒水"（已建笔记，等精读）
-- [ ] OpenVLA — 端到端的 VLA，看图听话直接出动作（已建笔记，等精读）
+- [ ] SayCan — 让机器人把"我想喝水"拆成"走过去 → 拿杯子 → 倒水"（deep-read 笔记已就绪，等本人消化）
+- [ ] OpenVLA — 端到端的 VLA，看图听话直接出动作（deep-read 笔记已就绪，等本人消化）
 
 3D 与多模态扩展：
 
-- [ ] 3DShape2VecSet — 怎么把一个 3D 物体压成一串数字让 AI 看懂（已建笔记，等精读）
-- [ ] MLA — 给机器人装"多模态大脑"的方案（已建笔记，等精读）
-- [ ] VLAS — VLA 的另一种做法（已建笔记，等精读）
+- [ ] 3DShape2VecSet — 怎么把一个 3D 物体压成一串数字让 AI 看懂（deep-read 笔记已就绪，等本人消化）
+- [ ] MLA — 给机器人装"多模态大脑"的方案（deep-read 笔记已就绪，等本人消化）
+- [ ] VLAS — VLA 的另一种做法（deep-read 笔记已就绪，等本人消化）
 
 世界模型（最难，最后啃）：
 
-- [ ] Cosmos Policy — 让 AI 在脑内"预演"动作再决定怎么做（已建笔记，等精读）
+- [ ] Cosmos Policy — 让 AI 在脑内"预演"动作再决定怎么做（deep-read 笔记已就绪，等本人消化）
 
 射频感知（用电磁波看东西，类似蝙蝠用超声波）：
 
-- [ ] CartoRadar (RF-SLAM) — 用 wifi 一样的电磁波画屋子地图（已建笔记，等精读）
-- [ ] mmCLIP — 让 AI 既看图又"听"电磁波回声（已建笔记，等精读）
-- [ ] mmNorm (NLOS mmWave) — 隔着墙看人（已建笔记，等精读）
+- [ ] CartoRadar (RF-SLAM) — 用 wifi 一样的电磁波画屋子地图（deep-read 笔记已就绪，等本人消化）
+- [ ] mmCLIP — 让 AI 既看图又"听"电磁波回声（deep-read 笔记已就绪，等本人消化）
+- [ ] mmNorm (NLOS mmWave) — 隔着墙看人（deep-read 笔记已就绪，等本人消化）
 
 听觉感知（让 AI 像戴耳机一样听清楚目标声音）：
 
-- [ ] Proactive Hearing — 主动选你想听的人（已建笔记，等精读）
-- [ ] NeuralAids — 神经网络助听器（已建笔记，等精读）
-- [ ] Acoustic Swarms — 一群小麦克风协作分离声音（已建笔记，等精读）
+- [ ] Proactive Hearing — 主动选你想听的人（deep-read 笔记已就绪，等本人消化）
+- [ ] NeuralAids — 神经网络助听器（deep-read 笔记已就绪，等本人消化）
+- [ ] Acoustic Swarms — 一群小麦克风协作分离声音（deep-read 笔记已就绪，等本人消化）
 
 ### Task 1 状态
 
