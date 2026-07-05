@@ -311,6 +311,19 @@ for (const f of top5) {
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
+// 性能预算（1.0.0 固化当前健康值，防劣化）
+const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
+check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+
+const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
+check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);
+
+// 单张图片预算：现存论文附图（dist/assets/）最大 ~1025KB，暂按 1100KB 设线；
+// 待附图压缩后可收紧到 600KB（站点自产图 dist/images/ 当前全部 <340KB）
+const IMG_EXT = /\.(webp|png|jpe?g|gif|svg|avif)$/i;
+const heavyImages = allFiles.filter(f => IMG_EXT.test(f.path) && f.size > 1100 * 1024);
+check(`单张图片均 < 1100KB`, () => heavyImages.length === 0 || `${heavyImages.length} 张超 1100KB: ${heavyImages.map(f => path.relative(DIST, f.path)).join(", ")}`);
+
 console.log("\n=== Guide chapter pages ===");
 {
   const guideDir = path.join(ROOT, "guide");
