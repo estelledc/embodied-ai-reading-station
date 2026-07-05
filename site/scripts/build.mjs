@@ -7,7 +7,7 @@ import matter from "gray-matter";
 import { SITE, ROOT, DIST, url } from "./lib/config.mjs";
 import { ensure, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
 import { stripFirstH1 } from "./lib/markdown.mjs";
-import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes } from "./lib/content.mjs";
+import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes, eraComparator } from "./lib/content.mjs";
 import { buildIndex, buildNotePage } from "./lib/views/papers.mjs";
 import { buildGuideIndex, buildGuidePage } from "./lib/views/guide.mjs";
 import {
@@ -202,15 +202,9 @@ function build() {
   }
 
   // prev/next: 同主题内按 era + year 排序，跨主题就用 PAPERS 全局序
-  const eraRank2 = { founder: 0, classic: 1, frontier: 2 };
-  const rankEra = e => eraRank2[e] ?? eraRank2.classic;
   const sortedByTopic = new Map();
   for (const t of TOPIC_ORDER) {
-    const inT = notes.filter(n => n.topic === t.id).sort((a, b) => {
-      const ea = rankEra(a.era) - rankEra(b.era);
-      if (ea !== 0) return ea;
-      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-    });
+    const inT = notes.filter(n => n.topic === t.id).sort(eraComparator({ tiebreak: "year" }));
     sortedByTopic.set(t.id, inT);
   }
 

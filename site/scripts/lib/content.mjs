@@ -56,6 +56,31 @@ export const GUIDE_CHAPTER_COUNT = fs.existsSync(GUIDE_DIR)
   ? fs.readdirSync(GUIDE_DIR).filter(f => f.startsWith("ch") && f.endsWith(".md")).length
   : 0;
 
+// --- era 排序 -----------------------------------------------------------------
+// era 升序：祖师爷 founder → 经典 classic → 前沿 frontier；未知 era 按 classic 处理。
+const ERA_RANK = { founder: 0, classic: 1, frontier: 2 };
+
+// era 比较器工厂。各视图共用同一套 era 主序，真实差异只有两个维度，用参数表达：
+// - pinTask: true 时 num ≤ 13 的原始任务论文整体置顶（组内按 num 升序）
+// - tiebreak: 同 era 内次级排序，"num"（编号升序）或 "year"（年份升序，缺年份排最后）
+export function eraComparator({ pinTask = false, tiebreak = "num" } = {}) {
+  const tie = tiebreak === "year"
+    ? (a, b) => (Number(a.year) || 9999) - (Number(b.year) || 9999)
+    : (a, b) => a.num - b.num;
+  return (a, b) => {
+    if (pinTask) {
+      const aPin = a.num <= 13 ? 0 : 1;
+      const bPin = b.num <= 13 ? 0 : 1;
+      if (aPin !== bPin) return aPin - bPin;
+      if (aPin === 0) return a.num - b.num;
+    }
+    const ea = ERA_RANK[a.era] ?? 1;
+    const eb = ERA_RANK[b.era] ?? 1;
+    if (ea !== eb) return ea - eb;
+    return tie(a, b);
+  };
+}
+
 // --- tags -------------------------------------------------------------------
 // 自动从笔记 title + body 关键词推断 tag（每篇 0-5 个）
 const TAG_RULES = [

@@ -6,7 +6,7 @@ import { execSync as _execSync } from "node:child_process";
 import { marked } from "marked";
 import { SITE, ROOT, PAPERS_DIR, url, SITE_URL, BUILD_DATE } from "../config.mjs";
 import { resetFigureCounter, headingIds, injectInlineFigures, extractOutline } from "../markdown.mjs";
-import { TOPIC_ORDER, PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT } from "../content.mjs";
+import { TOPIC_ORDER, PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT, eraComparator } from "../content.mjs";
 import { page } from "../layout.mjs";
 
 function makeDifficultyBadge(stars) {
@@ -240,17 +240,7 @@ export function buildIndex(notes, latestIssue = null) {
     // 排序优先级：1) num<=13 的原始 13 篇置顶 (按 num)
     //              2) era: founder → classic → frontier
     //              3) 同 era 内按 num 升序
-    const eraRank = { founder: 0, classic: 1, frontier: 2 };
-    const sorted = [...inTopic].sort((a, b) => {
-      const aPin = a.num <= 13 ? 0 : 1;
-      const bPin = b.num <= 13 ? 0 : 1;
-      if (aPin !== bPin) return aPin - bPin;
-      if (aPin === 0) return a.num - b.num; // 原 13 篇按 num
-      const ea = eraRank[a.era] ?? 1;
-      const eb = eraRank[b.era] ?? 1;
-      if (ea !== eb) return ea - eb;
-      return a.num - b.num;
-    });
+    const sorted = [...inTopic].sort(eraComparator({ pinTask: true, tiebreak: "num" }));
     body += `<p class="era-hint">按演进顺序：祖师爷 → 现代经典 → 前沿延伸</p>`;
     for (const n of sorted) {
       const badge = makeDifficultyBadge(n.difficulty);

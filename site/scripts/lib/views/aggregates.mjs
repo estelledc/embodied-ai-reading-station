@@ -4,7 +4,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { SITE, NOTES_DIR, url } from "../config.mjs";
-import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT } from "../content.mjs";
+import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT, eraComparator } from "../content.mjs";
 import { page, pageHeroHtml } from "../layout.mjs";
 
 // --- topics page ------------------------------------------------------------
@@ -15,17 +15,7 @@ export function buildTopics(notes) {
     <span class="eyebrow">Index by · topic</span>
     <h1><em>${topicCount} chapters</em> · ${totalPapers} papers.</h1>
     ${pageHeroHtml("topics-index", "Topic taxonomy — seven labeled doors")}`;
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
-  const sortInTopic = (a, b) => {
-    const aPin = a.num <= 13 ? 0 : 1;
-    const bPin = b.num <= 13 ? 0 : 1;
-    if (aPin !== bPin) return aPin - bPin;
-    if (aPin === 0) return a.num - b.num;
-    const ea = eraRank[a.era] ?? 1;
-    const eb = eraRank[b.era] ?? 1;
-    if (ea !== eb) return ea - eb;
-    return a.num - b.num;
-  };
+  const sortInTopic = eraComparator({ pinTask: true, tiebreak: "num" });
   for (const t of TOPIC_ORDER) {
     const inTopic = notes.filter(n => n.topic === t.id).sort(sortInTopic);
     body += `<section>
@@ -101,17 +91,8 @@ export function buildGlossary(notes) {
 
 // --- per-topic landing ------------------------------------------------------
 export function buildTopicLanding(t, notes) {
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
-  const inTopic = notes.filter(n => n.topic === t.id).sort((a, b) => {
-    const aPin = a.num <= 13 ? 0 : 1;
-    const bPin = b.num <= 13 ? 0 : 1;
-    if (aPin !== bPin) return aPin - bPin;
-    if (aPin === 0) return a.num - b.num;
-    const ea = eraRank[a.era] ?? 1;
-    const eb = eraRank[b.era] ?? 1;
-    if (ea !== eb) return ea - eb;
-    return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-  });
+  const inTopic = notes.filter(n => n.topic === t.id)
+    .sort(eraComparator({ pinTask: true, tiebreak: "year" }));
 
   const primerSlugs = t.primer || [];
   const primerNotes = primerSlugs.map(s => notes.find(n => n.slug === s)).filter(Boolean);
@@ -606,13 +587,7 @@ export function buildSyllabus(notes) {
 // --- /cheatsheet/ all papers tldr in one page ------------------------------
 export function buildCheatsheet(notes) {
   // 按主题分组
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
-  const sortInTopic = (a, b) => {
-    const ea = eraRank[a.era] ?? 1;
-    const eb = eraRank[b.era] ?? 1;
-    if (ea !== eb) return ea - eb;
-    return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-  };
+  const sortInTopic = eraComparator({ tiebreak: "year" });
   let body = `<main class="shell">
     <span class="eyebrow">Cheatsheet · ${PAPER_COUNT} 篇 tldr 速查</span>
     <h1><em>${PAPER_COUNT} 篇</em>论文一句话<em>速览</em>。</h1>
@@ -1142,7 +1117,6 @@ export function buildHeatmap(notes) {
 
 // --- compare page (per-topic side-by-side) ----------------------------------
 export function buildCompare(notes) {
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
   let body = `<main class="shell">
     <span class="eyebrow">Compare · 同主题对比</span>
     <h1>同一<em>主题</em>下，<em>哪几篇</em>该先读？</h1>
@@ -1152,16 +1126,8 @@ export function buildCompare(notes) {
     <hr class="ornament"/>`;
 
   for (const t of TOPIC_ORDER) {
-    const inTopic = notes.filter(n => n.topic === t.id).sort((a, b) => {
-      const aPin = a.num <= 13 ? 0 : 1;
-      const bPin = b.num <= 13 ? 0 : 1;
-      if (aPin !== bPin) return aPin - bPin;
-      if (aPin === 0) return a.num - b.num;
-      const ea = eraRank[a.era] ?? 1;
-      const eb = eraRank[b.era] ?? 1;
-      if (ea !== eb) return ea - eb;
-      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-    });
+    const inTopic = notes.filter(n => n.topic === t.id)
+      .sort(eraComparator({ pinTask: true, tiebreak: "year" }));
     if (!inTopic.length) continue;
     body += `<section class="compare-section">
       <h2 class="compare-topic"><span class="topic-roman">${t.roman}</span> ${t.label} <span style="color:var(--ink-faint);font-weight:400;font-size:0.7em;margin-left:0.5rem">${t.subtitle}</span></h2>
@@ -1205,13 +1171,9 @@ export function buildGraph(notes) {
     url: url(`/papers/${n.slug}/`),
   }));
   const links = [];
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
   for (const t of TOPIC_ORDER) {
-    const inTopic = nodes.filter(n => n.topic === t.id).sort((a, b) => {
-      const ea = eraRank[a.era] - eraRank[b.era];
-      if (ea !== 0) return ea;
-      return (Number(a.year) || 9999) - (Number(b.year) || 9999);
-    });
+    const inTopic = nodes.filter(n => n.topic === t.id)
+      .sort(eraComparator({ tiebreak: "year" }));
     for (let i = 0; i < inTopic.length - 1; i++) {
       links.push({ source: inTopic[i].id, target: inTopic[i + 1].id, kind: "topic-chain" });
     }
@@ -1300,14 +1262,9 @@ export function buildTimeline(notes) {
     return ERA_BANDS.find(b => yn >= b.from && yn <= b.to);
   }
   let lastBand = null;
-  const eraRank = { founder: 0, classic: 1, frontier: 2 };
+  const sortInYear = eraComparator({ tiebreak: "num" });
   for (const y of years) {
-    const yearNotes = byYear.get(y).sort((a, b) => {
-      const ea = eraRank[a.era] ?? 1;
-      const eb = eraRank[b.era] ?? 1;
-      if (ea !== eb) return ea - eb;
-      return a.num - b.num;
-    });
+    const yearNotes = byYear.get(y).sort(sortInYear);
     const band = bandFor(y);
     if (band && band !== lastBand) {
       body += `<div class="timeline-band" data-from="${band.from}" data-to="${band.to}">
