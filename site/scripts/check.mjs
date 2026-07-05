@@ -453,6 +453,32 @@ console.log("\n=== Figure coverage (deep-read) ===");
   if (localUnused > 0) console.log(`  ⚠ ${localUnused} 篇本地图未引用（warn only）`);
 }
 
+console.log("\n=== Deep-read required sections ===");
+{
+  // 兼容两种标题体例：`## 思考题` 与 `## 7. 思考题`
+  const REQUIRED_SECTIONS = [
+    ["实验结果说明了什么", /^## (\d+\. )?.*实验结果说明了什么/m],
+    ["和本导读的关系", /^## (\d+\. )?.*和本导读的关系/m],
+    ["思考题", /^## (\d+\. )?.*思考题/m],
+    ["原文信息", /^## (\d+\. )?.*原文信息/m],
+  ];
+  const missing = [];
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data, content } = matter(raw);
+    if (data.status !== "deep-read") continue;
+    const slug = f.replace(/\.md$/, "");
+    for (const [name, re] of REQUIRED_SECTIONS) {
+      if (!re.test(content)) missing.push(`${slug} 缺「${name}」`);
+    }
+  }
+  if (missing.length > 0) {
+    console.log(`  缺失清单（前 20 条）:`);
+    for (const msg of missing.slice(0, 20)) console.log(`    ✗ ${msg}`);
+  }
+  check("deep-read 笔记含 4 个强制章节（实验解读/导读关系/思考题/原文信息）", () => missing.length === 0 || `${missing.length} 处缺失`);
+}
+
 console.log(`\n=== Summary ===`);
 console.log(`  ${pass} passed, ${fail} failed`);
 process.exit(fail === 0 ? 0 : 1);
