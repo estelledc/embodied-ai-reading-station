@@ -36,6 +36,8 @@
 
 ## 批次 0:v1.2 发布收口
 
+> **详细逐步清单、可复制命令与证据栏**见 [docs/batch-0-v1.2-release.md](docs/batch-0-v1.2-release.md)（阶段 A 前置合并 → B O1 → C 最终验证 → D 切版 → E tag）。本节省略为索引；执行时以该手册为准。
+
 ### O1(owner 外部依赖,agent 不可代办)
 
 - [ ] 把实际 check `Validate pull request / build` 设为 main 的 required status check。

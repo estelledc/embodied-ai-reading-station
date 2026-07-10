@@ -7,6 +7,7 @@
 ### Added
 - 新增 [ROADMAP.md](ROADMAP.md)：定下项目未来方向——v1.2 发布收口 → v1.3「从读到做」Lab 实践板块 → v2.0 读+做闭环，四条主线（发布与工程治理 / Lab 实践 / 内容可信度清偿 / 学习闭环与时效性）与明确不做清单；README 头部增加入口。
 - 新增 [PLAN-1.3.md](PLAN-1.3.md)：ROADMAP 的执行层——批次 0（v1.2 发布收口，owner/agent 分工）→ 批次 1–7（工程 P1 队列 T008–T019 编排）→ 批次 8（Lab 板块脚手架）→ 批次 9（llava 核验试点），含依赖原则、PR/门禁约定与本计划范围的明确不做。
+- 新增 [docs/batch-0-v1.2-release.md](docs/batch-0-v1.2-release.md)：批次 0 发布手册——阶段 A–E（前置合并 PR #10、owner 仓库保护 O1、最终验证命令与浏览器手测清单、切版文件表、annotated tag），含证据栏与完成闸；不在本文档内实际切版。
 - `EAI-T003`：新增学习路径、Guide/topic 覆盖、公开质量声明、来源完整性和移动端导航契约测试。
 - `EAI-T009`：新增可重复生成的 `papers/provenance.json`，记录 46 份本地解析文本的 SHA-256。
 - `EAI-T014`：新增 Pull Request 专用 CI；只运行测试、根路径/仓库子路径构建检查与 high-level audit，不部署 Pages；README 增加 protected-main owner checklist。
