@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 新增 [ROADMAP.md](ROADMAP.md)：定下项目未来方向——v1.2 发布收口 → v1.3「从读到做」Lab 实践板块 → v2.0 读+做闭环，四条主线（发布与工程治理 / Lab 实践 / 内容可信度清偿 / 学习闭环与时效性）与明确不做清单；README 头部增加入口。
 - `EAI-T003`：新增学习路径、Guide/topic 覆盖、公开质量声明、来源完整性和移动端导航契约测试。
 - `EAI-T009`：新增可重复生成的 `papers/provenance.json`，记录 46 份本地解析文本的 SHA-256。
 - `EAI-T014`：新增 Pull Request 专用 CI；只运行测试、根路径/仓库子路径构建检查与 high-level audit，不部署 Pages；README 增加 protected-main owner checklist。

@@ -2,7 +2,7 @@
 
 > **从零开始学具身智能——22 章系统教程 + 156 篇论文笔记。**
 > 零术语假设，日常类比起步。从 CLIP 到 π0，11 主题全景。
-> v1.1.0 · 2026-07（v1.2 改进中，更新记录见 [CHANGELOG.md](CHANGELOG.md)）
+> v1.1.0 · 2026-07（v1.2 改进中，更新记录见 [CHANGELOG.md](CHANGELOG.md)，未来方向见 [ROADMAP.md](ROADMAP.md)）
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
 
