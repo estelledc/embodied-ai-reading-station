@@ -1,0 +1,129 @@
+notes/3d-diffusion-policy.md
+  s_9340ed41c548fc::t_2b60360fb9b39a 9
+notes/3dshape2vecset.md
+  s_9340ed41c548fc::t_ecc4803df3d010 7
+notes/anymal.md
+  s_9340ed41c548fc::t_974775f43cceb7 7
+notes/blip.md
+  s_9340ed41c548fc::t_813b557d5a2e4d 7
+notes/clip.md
+  s_9340ed41c548fc::t_261654de0b4424 7
+notes/code-as-policies.md
+  s_9340ed41c548fc::t_c02ef963a3359b 7
+notes/consistency-policy.md
+  s_9340ed41c548fc::t_f1c4f2df567988 7
+notes/conv-tasnet.md
+  s_9340ed41c548fc::t_c8993ed9bad072 7
+notes/cosmos-policy.md
+  s_9340ed41c548fc::t_c2b4ea426a6fcf 7
+notes/dagger.md
+  s_9340ed41c548fc::t_5765f8eec3d33f 7
+notes/diffusion-policy.md
+  s_9340ed41c548fc::t_4a9ef859b2ed68 7
+notes/dreamer-v1.md
+  s_9340ed41c548fc::t_a2f57c33a7b9a6 7
+notes/dreamer-v2.md
+  s_9340ed41c548fc::t_77d8c37c6aca23 7
+notes/flamingo.md
+  s_9340ed41c548fc::t_f86fea45a950be 7
+notes/gail.md
+  s_9340ed41c548fc::t_179146de81788a 7
+notes/habitat.md
+  s_9340ed41c548fc::t_c4945fa01f7051 7
+notes/ibc.md
+  s_9340ed41c548fc::t_22f5a993b03fc4 7
+notes/imagebind.md
+  s_9340ed41c548fc::t_54f6ff771dfc59 7
+notes/inner-monologue.md
+  s_9340ed41c548fc::t_e082a32c607e4a 7
+notes/isaac-gym.md
+  s_9340ed41c548fc::t_831138077c1c66 7
+notes/llava.md
+  s_9340ed41c548fc::t_b1712c28fe9338 7
+notes/meta-world.md
+  s_9340ed41c548fc::t_c6f4e122aafde9 7
+notes/millimap.md
+  s_9340ed41c548fc::t_2f6548ca395d21 7
+notes/mla.md
+  s_9340ed41c548fc::t_6ac89676de4921 7
+notes/mmclip.md
+  s_9340ed41c548fc::t_04459350179792 7
+notes/neuralaids.md
+  s_9340ed41c548fc::t_469d9cb41ab7e8 7
+notes/nlos-mmwave.md
+  s_9340ed41c548fc::t_b394c6d4b51772 7
+notes/openvla.md
+  s_9340ed41c548fc::t_ddd0dd1139bf38 7
+notes/palm-e.md
+  s_9340ed41c548fc::t_59ae42deeec5c9 7
+notes/person-in-wifi.md
+  s_9340ed41c548fc::t_40b7cd2bd9103d 7
+notes/proactive-hearing.md
+  s_9340ed41c548fc::t_e4936aa7dfaca8 7
+notes/rf-pose-through-wall.md
+  s_9340ed41c548fc::t_271b30f69fb33d 7
+notes/rf-slam.md
+  s_9340ed41c548fc::t_afd087aa40dff9 7
+notes/rlbench.md
+  s_9340ed41c548fc::t_d255aaf3c5fa23 7
+notes/robosuite.md
+  s_9340ed41c548fc::t_7dc59e9b50a800 7
+notes/rt-1.md
+  s_9340ed41c548fc::t_b1cd5a1851c84b 7
+notes/rt-2.md
+  s_9340ed41c548fc::t_ce0bed7d100ba3 7
+notes/rt-trajectory.md
+  s_9340ed41c548fc::t_072be7fd0d977e 7
+notes/sapien.md
+  s_9340ed41c548fc::t_73d7d0f79c4bc2 7
+notes/saycan.md
+  s_9340ed41c548fc::t_b471a92b32bb5a 7
+notes/soundstream.md
+  s_9340ed41c548fc::t_06595c7d12d1fd 7
+notes/touch-vision-cross-modal.md
+  s_9340ed41c548fc::t_9e2e1e695b6dcd 7
+notes/vlas.md
+  s_9340ed41c548fc::t_d1ae76e87a497f 7
+notes/whisper.md
+  s_9340ed41c548fc::t_7bfac1d36869f3 7
+notes/world-models-ha.md
+  s_9340ed41c548fc::t_6193bc7fee97ba 7
+papers/provenance.json
+  s_9340ed41c548fc::t_82adfda51fe943 1-282
+site/package.json
+  s_9340ed41c548fc::t_883215dc8dfb74 10
+site/scripts/generate-provenance.mjs
+  s_9340ed41c548fc::t_06e310155a039b 1-32
+site/scripts/lib/client-security.test.mjs
+  s_9340ed41c548fc::t_f56b43a62e8d6e 1-192
+site/scripts/lib/markdown-security.test.mjs
+  s_9340ed41c548fc::t_e3f7506365adec 1-93
+site/scripts/lib/markdown.mjs
+  s_9340ed41c548fc::t_2ebc799a845626 12-46,50-52,57,61-63,107-111,113-114
+site/scripts/lib/source-reference.mjs
+  s_9340ed41c548fc::t_7dbc17c02ba784 1-76
+site/scripts/lib/source-reference.test.mjs
+  s_9340ed41c548fc::t_73f60156c4f568 1-95
+site/src/link-preview.js
+  s_9340ed41c548fc::t_6ce4e533f78035 54-67
+site/src/search.js
+  s_9340ed41c548fc::t_aa62916d0606d4 13-22,24-31,35-38,45,48-61
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1f2a5f98969da0431cedf4f927cea98565035ec6",
+  "prompts": {},
+  "sessions": {
+    "s_9340ed41c548fc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9788d74c-dc80-4c60-8ed9-f8f7c8e0039a",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
