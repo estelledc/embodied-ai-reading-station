@@ -1,0 +1,33 @@
+.github/workflows/deploy.yml
+  s_9340ed41c548fc::t_e8eb5cbef6ab0b 9,15-16,21,24,29-35,45-46,51,54-56,61
+.github/workflows/pr.yml
+  s_9340ed41c548fc::t_5fc991c96ff43e 1-46
+CHANGELOG.md
+  s_9340ed41c548fc::t_5cbd80a0555c10 5-29
+README.md
+  s_9340ed41c548fc::t_a0f9c0ac758348 5,17,20,22,24-27,29,40,45,76,141-148,153,188-189
+docs/v1.2-healthcheck-roadmap.md
+  s_9340ed41c548fc::t_28218bd8b6fc98 1-121
+site/scripts/check.mjs
+  s_9340ed41c548fc::t_63092b163038fb 8-10,367-447,505-510,512-516,520-531,534-540,606-632
+site/scripts/workflow.test.mjs
+  s_9340ed41c548fc::t_d147fd438915c2 1-54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "667fc4cf3fadcb623532673fba5c5e3d1a46c615",
+  "prompts": {},
+  "sessions": {
+    "s_9340ed41c548fc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9788d74c-dc80-4c60-8ed9-f8f7c8e0039a",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
