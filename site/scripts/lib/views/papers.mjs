@@ -18,6 +18,21 @@ function makeDifficultyBadge(stars) {
   return { class: "diff-hard", label: "硬核" };
 }
 
+export function renderRecentCommits(logOutput) {
+  return logOutput.split("\n").filter(Boolean).map(line => {
+    const [hash, date, ...subjectParts] = line.split("|");
+    const subject = subjectParts.join("|");
+    if (!hash || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !subject) return "";
+    const cleanSubj = subject
+      .replace(/^(feat|fix|docs|chore|ci|perf|refactor)[:(].*?:\s*/, "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    const shortSubject = `${cleanSubj.slice(0, 60)}${cleanSubj.length > 60 ? "…" : ""}`;
+    return `<li><time class="lc-ago" datetime="${date}">${date}</time> <span class="lc-subject">${shortSubject}</span></li>`;
+  }).join("");
+}
+
 export function buildPaperJsonLd(note, ogImage) {
   const dates = contentDatesForNote(note);
   const article = {
@@ -70,12 +85,8 @@ export function buildIndex(notes, latestIssue = null) {
   // 最新 3 commit
   let lastCommits = "";
   try {
-    const lines = _execSync(`git -C "${ROOT}" log -3 --pretty=format:'%h|%ar|%s'`, { encoding: "utf8" }).split("\n");
-    lastCommits = lines.map(l => {
-      const [hash, ago, subject] = l.split("|");
-      const cleanSubj = subject.replace(/^(feat|fix|docs|chore|ci|perf|refactor)[:(].*?:\s*/, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      return `<li><span class="lc-ago">${ago}</span> <span class="lc-subject">${cleanSubj.slice(0, 60)}${cleanSubj.length > 60 ? "…" : ""}</span></li>`;
-    }).join("");
+    const logOutput = _execSync(`git -C "${ROOT}" log -3 --pretty=format:'%h|%cs|%s'`, { encoding: "utf8" });
+    lastCommits = renderRecentCommits(logOutput);
   } catch {}
 
   let body = `<main class="shell">
