@@ -5,6 +5,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
+import { countWords } from "./lib/markdown.mjs";
+import { validateSourceReference } from "./lib/source-reference.mjs";
+import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -361,6 +364,87 @@ console.log("\n=== Task-required notes ===");
   check(`13 篇任务论文均有 task: required`, () => taskNoFlag === 0 || `${taskNoFlag} 篇缺 task 标记`);
 }
 
+console.log("\n=== Learning path contract ===");
+{
+  const syllabusDays = SYLLABUS_WEEKS.flatMap((week) => week.days);
+  const expectedDays = Array.from({ length: 30 }, (_, index) => index + 1);
+  const paperDays = syllabusDays.filter((day) => day.slug);
+  check("syllabus 是连续 Day 1–30", () => (
+    JSON.stringify(syllabusDays.map((day) => day.d)) === JSON.stringify(expectedDays)
+  ) || "SYLLABUS_WEEKS 不是连续 1..30");
+  check("30 天核心 = 25 个论文日 + 5 个复习/输出日", () => (
+    paperDays.length === 25 && syllabusDays.length - paperDays.length === 5
+  ) || `${paperDays.length} 个论文日 + ${syllabusDays.length - paperDays.length} 个复习/输出日`);
+
+  const pathSource = fs.readFileSync(path.join(SITE, "content", "path.md"), "utf8");
+  const optionalMarker = "## 可选任务扩展 · Day 31–35";
+  const optionalIndex = pathSource.indexOf(optionalMarker);
+  const extension = optionalIndex >= 0 ? pathSource.slice(optionalIndex) : "";
+  const extensionRows = [...extension.matchAll(/^\|\s*(3[1-5])\s*\|[^\n]*?\]\(\/papers\/([^/]+)\/\)/gm)];
+  check("Day 31–35 明确为不计入核心的可选扩展", () => (
+    optionalIndex >= 0
+    && pathSource.includes("不计入 30 天核心进度")
+    && extensionRows.length === 10
+  ) || `optional marker=${optionalIndex >= 0}, rows=${extensionRows.length}`);
+
+  const syllabusHtml = fs.readFileSync(path.join(DIST, "syllabus", "index.html"), "utf8");
+  const renderedDays = syllabusHtml.match(/data-syl-day="\d+"/g) || [];
+  check("/syllabus/ 渲染 30 个核心 checkbox", () => renderedDays.length === 30 || `${renderedDays.length} 个`);
+  check("/syllabus/ 不再内联写旧混合进度键", () => !syllabusHtml.includes("eaireading.syllabus") || "仍引用 legacy key");
+
+  const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
+  const faq = fs.readFileSync(path.join(SITE, "content", "faq.md"), "utf8");
+  check("README/FAQ 统一 30 天核心 + 5 天可选扩展", () => (
+    readme.includes("30 天核心学习 + 5 天可选扩展")
+    && faq.includes("30 天核心（25 篇 + 5 个复习/输出日）")
+    && !/30\s*天\s*30\s*篇/.test(`${readme}\n${faq}`)
+  ) || "公开入口文案与 30+5 taxonomy 不一致");
+  check("学习路径提供可勾选 Syllabus 入口", () => (
+    pathSource.includes("](/syllabus/)")
+  ) || "/learn/path/ 缺少 /syllabus/ 入口");
+
+  const publicContent = fs.readdirSync(path.join(SITE, "content"))
+    .filter((file) => file.endsWith(".md"))
+    .map((file) => fs.readFileSync(path.join(SITE, "content", file), "utf8"))
+    .join("\n");
+  check("公开页面不再使用旧的 30 天 30 篇口径", () => (
+    !/30\s*天\s*30\s*篇|30\s*天完整路径/.test(`${readme}\n${publicContent}`)
+  ) || "仍存在旧学习路径口径");
+}
+
+console.log("\n=== Client state contract ===");
+{
+  const progressSource = fs.readFileSync(path.join(SITE, "src", "reading-progress.js"), "utf8");
+  for (const key of [
+    "eaireading.path.days.v1",
+    "eaireading.guide.chapters.v1",
+    "eaireading.guide.chapterTs.v1",
+  ]) {
+    check(`versioned state key: ${key}`, () => progressSource.includes(key) || "missing");
+  }
+  check("旧 syllabus key 仅迁移读取，不再写入", () => (
+    !/setItem\(LEGACY_(?:PROGRESS|GUIDE_TS)_KEY/.test(progressSource)
+  ) || "legacy key still written");
+  check("进度脚本提供版本化 export/import/reset", () => (
+    progressSource.includes("window.EAI_STATE")
+    && progressSource.includes("exportObject")
+    && progressSource.includes("importObject")
+    && progressSource.includes("reset: resetState")
+  ) || "EAI_STATE API incomplete");
+
+  const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  const missingControls = [
+    "eai-state-export",
+    "eai-state-import",
+    "eai-state-import-file",
+    "eai-state-restore-import",
+    "eai-state-reset-path",
+    "eai-state-reset-guide",
+    "eai-state-reset-all",
+  ].filter((id) => !indexHtml.includes(`id="${id}"`));
+  check("首页提供进度备份/导入/分区重置控件", () => missingControls.length === 0 || `missing: ${missingControls.join(", ")}`);
+}
+
 console.log("\n=== Metadata consistency ===");
 {
   // A. topics.json 的 primer slug 全部有对应笔记
@@ -418,21 +502,42 @@ console.log("\n=== Status field validity ===");
 
 console.log("\n=== Source path integrity ===");
 {
+  const provenancePath = path.join(ROOT, "papers", "provenance.json");
+  const provenance = fs.existsSync(provenancePath)
+    ? JSON.parse(fs.readFileSync(provenancePath, "utf8"))
+    : null;
+  const entries = provenance?.entries;
+  const localSources = new Set();
   let sourceBroken = 0;
+  check("papers/provenance.json schema v1", () => (
+    provenance?.schema_version === "1.0.0"
+    && provenance?.algorithm === "sha256"
+    && Array.isArray(entries)
+  ) || "missing or invalid provenance manifest");
   for (const f of noteFiles) {
     const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
     const { data } = matter(raw);
-    const src = data["来源"] || data.source || "";
-    if (src.startsWith("papers/")) {
-      // 检查 papers/<slug>/ 目录是否存在（至少有 paper.md 或 paper.pdf）
-      const papersDir = path.join(ROOT, path.dirname(src));
-      if (!fs.existsSync(papersDir)) {
-        sourceBroken++;
-        console.log(`  ✗ ${f}: 来源引用 ${src} 但目录不存在`);
-      }
+    const src = String(data["来源"] || data.source || "");
+    const slug = f.replace(/\.md$/, "");
+    const result = validateSourceReference({
+      root: ROOT,
+      noteSlug: slug,
+      source: src,
+      manifest: src.startsWith("papers/") && Array.isArray(entries) ? entries : null,
+    });
+    if (src.startsWith("papers/")) localSources.add(src);
+    if (!result.ok) {
+      sourceBroken++;
+      console.log(`  ✗ ${f}: 来源 ${src || "<empty>"} — ${result.reason}`);
     }
   }
-  check("来源引用 papers/ 的笔记目录均存在", () => sourceBroken === 0 || `${sourceBroken} 篇来源目录缺失`);
+  const manifestSources = new Set(Array.isArray(entries) ? entries.map((entry) => entry.path) : []);
+  const manifestDrift = [
+    ...[...localSources].filter((source) => !manifestSources.has(source)).map((source) => `manifest missing ${source}`),
+    ...[...manifestSources].filter((source) => !localSources.has(source)).map((source) => `manifest orphan ${source}`),
+  ];
+  check("全部来源使用安全 HTTPS 或精确本地文件+SHA-256", () => sourceBroken === 0 || `${sourceBroken} 篇来源无效`);
+  check("本地来源与 provenance manifest 双向一致", () => manifestDrift.length === 0 || manifestDrift.join("; "));
 }
 
 console.log("\n=== Figure coverage (deep-read) ===");
@@ -496,6 +601,33 @@ console.log("\n=== Deep-read required sections ===");
     for (const msg of missing.slice(0, 20)) console.log(`    ✗ ${msg}`);
   }
   check("deep-read 笔记含 4 个强制章节（实验解读/导读关系/思考题/原文信息）", () => missing.length === 0 || `${missing.length} 处缺失`);
+}
+
+console.log("\n=== Public quality contract ===");
+{
+  const tooShort = [];
+  for (const f of noteFiles) {
+    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
+    const { data, content } = matter(raw);
+    if (data.status !== "deep-read") continue;
+    const words = countWords(content);
+    if (words < 4000) tooShort.push(`${f.replace(/\.md$/, "")} (${words})`);
+  }
+  check("deep-read 长篇结构化笔记均 ≥ 4000 字", () => tooShort.length === 0 || tooShort.join(", "));
+
+  const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
+  const faq = fs.readFileSync(path.join(SITE, "content", "faq.md"), "utf8");
+  const unenforcedClaims = [
+    [/Method[^\n]*(?:≥|>=)\s*40\s*%/i, "统一 Method ≥40%"],
+    [/精读笔记是手动写的/, "全部手动写作"],
+    [/≥\s*3\s*条「局限与批评」/, "统一局限数量"],
+    [/5[–-]8\s*道思考题/, "统一思考题数量"],
+  ].filter(([pattern]) => pattern.test(`${readme}\n${faq}`)).map(([, label]) => label);
+  check("公开质量文案不承诺未执行的统一指标", () => unenforcedClaims.length === 0 || unenforcedClaims.join(", "));
+  check("README 明示 deep-read 不等于逐页人工复核", () => (
+    readme.includes("不等于“作者已逐页人工复核原论文”")
+    && readme.includes("AI 辅助整理")
+  ) || "缺少可验证的质量边界说明");
 }
 
 console.log(`\n=== Summary ===`);
