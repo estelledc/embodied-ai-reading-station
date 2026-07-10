@@ -19,7 +19,7 @@
 
 | 维度 | 状态 |
 |------|------|
-| 版本 | v1.1.0 已发布;v1.2 处于 RC 收口([docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)),P0 基本落地,剩 owner 侧仓库保护与切版 |
+| 版本 | **v1.2.0 已发布**（见 [CHANGELOG.md](CHANGELOG.md)）；O1/T014 仓库保护由 owner 决定延后，不声称已关闭。后续按 [PLAN-1.3.md](PLAN-1.3.md) 批次 1+ 推进 |
 | 内容 | 156 篇全部 deep-read 格式;正文债务已冻结待清偿:42 篇 Method 低于 1,500 字、110 篇仅远程来源 |
 | 科研任务 | Task 1 完成(LLaVA 14 页 deck);Task 2(mujoco + SmolVLA)未开始 |
 | 学习闭环 | 13 篇任务论文中 12 篇"笔记已就绪、等本人消化"([progress.md](progress.md)) |
