@@ -279,7 +279,8 @@ Canonical: ${SITE_URL}/.well-known/security.txt
 
 > ${PAPER_COUNT} 篇具身智能顶会论文，用零基础也能读懂的中文重写。
 
-This is a static reading site for embodied AI papers. All content is hand-curated Chinese notes (CC BY 4.0).
+This is a static reading site for embodied AI papers. The notes are AI-assisted, long-form structured Chinese study aids (CC BY 4.0).
+Automated gates verify minimum length, required sections, links, and source references; they do not mean all ${PAPER_COUNT} papers were reread page by page by a human. Verify critical facts, numbers, and conclusions against the original papers.
 
 ## Best entry points for AI agents
 

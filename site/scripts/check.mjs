@@ -617,17 +617,27 @@ console.log("\n=== Public quality contract ===");
 
   const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
   const faq = fs.readFileSync(path.join(SITE, "content", "faq.md"), "utf8");
+  const roadmap = fs.readFileSync(path.join(ROOT, "docs", "v1.2-healthcheck-roadmap.md"), "utf8");
+  const llmsPath = path.join(DIST, "llms.txt");
+  const llms = fs.existsSync(llmsPath) ? fs.readFileSync(llmsPath, "utf8") : "";
   const unenforcedClaims = [
     [/Method[^\n]*(?:≥|>=)\s*40\s*%/i, "统一 Method ≥40%"],
     [/精读笔记是手动写的/, "全部手动写作"],
+    [/All content is hand-curated/i, "全部 hand-curated"],
     [/≥\s*3\s*条「局限与批评」/, "统一局限数量"],
     [/5[–-]8\s*道思考题/, "统一思考题数量"],
-  ].filter(([pattern]) => pattern.test(`${readme}\n${faq}`)).map(([, label]) => label);
+  ].filter(([pattern]) => pattern.test(`${readme}\n${faq}\n${llms}`)).map(([, label]) => label);
   check("公开质量文案不承诺未执行的统一指标", () => unenforcedClaims.length === 0 || unenforcedClaims.join(", "));
-  check("README 明示 deep-read 不等于逐页人工复核", () => (
+  check("README、llms 与路线图使用一致且可审计的质量边界", () => (
     readme.includes("不等于“作者已逐页人工复核原论文”")
     && readme.includes("AI 辅助整理")
-  ) || "缺少可验证的质量边界说明");
+    && llms.includes("AI-assisted, long-form structured Chinese study aids")
+    && llms.includes(`do not mean all ${noteFiles.length} papers were reread page by page by a human`)
+    && roadmap.includes("42 篇 Method 章节低于 1,500 字")
+    && roadmap.includes("120 篇低于旧版宣传的 Method 占比")
+    && roadmap.includes("至少 39 篇明确标注了摘要或需回到原文核验的限制")
+    && roadmap.includes("不得据此盲目扩写")
+  ) || "README/llms/路线图缺少一致的 AI 辅助、人工复核边界或冻结债务计数");
 }
 
 console.log(`\n=== Summary ===`);

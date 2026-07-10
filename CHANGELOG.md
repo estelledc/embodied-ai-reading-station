@@ -12,7 +12,7 @@
 
 ### Changed
 - `EAI-T001` / `EAI-T002`：学习路径统一为“30 天核心（25 篇论文 + 5 个复习/输出日）+ Day 31–35 可选任务扩展”；核心路径与 Guide 使用独立完成度，扩展不计入 30 天核心进度。
-- `EAI-T007`：`deep-read` 改为可验证的长篇结构化格式说明，移除未被门禁支持的统一 Method 占比和“全部人工精读”承诺；论文笔记正文保持不变。
+- `EAI-T007`：`deep-read` 改为可验证的长篇结构化格式说明，移除未被门禁支持的统一 Method 占比和“全部人工精读”承诺；README、About、llms.txt 统一 AI 辅助/结构门禁/非逐页人工复核边界，治理路线图冻结既有正文债务计数；论文笔记正文保持不变。
 - `EAI-T009`：本地来源改为实际跟踪的 `paper.md`，并以 `papers/provenance.json` 固定 SHA-256。
 - `EAI-T012`：CI 从 checkout commit 注入确定性构建时间；生成时间、笔记生命周期和原论文年份使用不同字段，不再用部署时间冒充发布日期。
 - `EAI-T015`：GitHub Actions 固定到完整 commit SHA，并把 Pages/OIDC 权限缩小到 deploy job。
