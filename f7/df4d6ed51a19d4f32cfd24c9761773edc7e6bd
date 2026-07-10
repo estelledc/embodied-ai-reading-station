@@ -1,0 +1,51 @@
+site/content/faq.md
+  s_9340ed41c548fc::t_934b9e141aeece 11,24-25,28,97,113,121-122
+site/content/issue-05.md
+  s_9340ed41c548fc::t_d060998e83ac0b 22,37
+site/content/path.md
+  s_9340ed41c548fc::t_562d74ffc7caa2 2,4,7-9,15,84-91,93-95,110,131
+site/scripts/lib/config.mjs
+  s_9340ed41c548fc::t_cacf1ff7e95bca 25-44
+site/scripts/lib/config.test.mjs
+  s_9340ed41c548fc::t_5b044a2a851569 16-30,51-72
+site/scripts/lib/learning-path.test.mjs
+  s_9340ed41c548fc::t_59ee62e2123947 1-85
+site/scripts/lib/mobile-nav.test.mjs
+  s_9340ed41c548fc::t_f75c168d4baa6c 1-35
+site/scripts/lib/reading-progress.test.mjs
+  s_9340ed41c548fc::t_0ae9cf6bd70c5e 1-465
+site/scripts/lib/views/aggregates.mjs
+  s_9340ed41c548fc::t_445c039256d421 468,528-529,531,559-562
+site/scripts/lib/views/learn.mjs
+  s_9340ed41c548fc::t_0b74428de15668 11,23,30-31
+site/scripts/lib/views/meta.mjs
+  s_9340ed41c548fc::t_699172d149dc32 94,436,459-461,497
+site/scripts/lib/views/papers.mjs
+  s_9340ed41c548fc::t_860268a830e8bd 7,11,21-64,103,171-184,212-213,408,460
+site/scripts/lib/views/seo.mjs
+  s_9340ed41c548fc::t_68326713532982 3,5-8,13-55,58,67-68,73,86,91,114-136,140,184-186,210,220-232,235,261
+site/scripts/lib/views/seo.test.mjs
+  s_9340ed41c548fc::t_36c77e20f265a6 1-71
+site/src/reading-progress.js
+  s_9340ed41c548fc::t_09dfcc9110297b 5-162,165,171,231-539,582-584,657,858-948,959,963-964,1147-1151,1153-1175,1177,1180,1183,1190-1193,1197-1200,1204-1207
+site/src/theme.css
+  s_9340ed41c548fc::t_1e7f8cd7d83ab0 466-471,2559,2566
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f7df4d6ed51a19d4f32cfd24c9761773edc7e6bd",
+  "prompts": {},
+  "sessions": {
+    "s_9340ed41c548fc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9788d74c-dc80-4c60-8ed9-f8f7c8e0039a",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
