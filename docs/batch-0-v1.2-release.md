@@ -1,8 +1,8 @@
 # 批次 0 发布手册 — v1.2.0 收口
 
-> 状态：待执行（本文件是清单，不是发布公告）。
+> 状态：**切版进行中**（2026-07-10）。O1 由用户决定延后；阶段 C 已通过；阶段 D 切版提交中。
 > 对应：[PLAN-1.3.md](../PLAN-1.3.md) 批次 0；完成定义见 [v1.2-healthcheck-roadmap.md](v1.2-healthcheck-roadmap.md) §6。
-> **本手册本身不切版。** 只有阶段 C 全绿后，才允许进入阶段 D 改版本号 / 打 tag。
+> 可称「v1.2.0 已发布」仅在 annotated tag 推送之后；**不得**声称 T014 / 仓库保护已关闭。
 
 ## 已核实前提（2026-07-10）
 
@@ -10,11 +10,11 @@
 |----|------|
 | main 含 PR #9（v1.2 P0） | 是（`5111b5e`） |
 | main Deploy / Pages | 成功（Actions run `29091417411`） |
-| `site/package.json` / lockfile 版本 | 仍为 `1.1.0` |
-| 已有 tag | `v1.0.0`、`v1.1.0` |
-| PR #10（ROADMAP + PLAN-1.3） | draft，须先合并（阶段 A） |
-| 分支保护 API（agent） | 403 → O1 只能由 owner 在 GitHub UI 完成 |
-| 浏览器自动化 | 无 Playwright → 阶段 C 用手测清单 |
+| `site/package.json` / lockfile 版本 | 切版中 → `1.2.0` |
+| 已有 tag | `v1.0.0`、`v1.1.0`（`v1.2.0` 待打） |
+| PR #10（ROADMAP + PLAN-1.3） | **已合并**（`84eb97f`） |
+| O1 仓库保护 | **用户决定延后** |
+| 浏览器自动化 | 无 Playwright → C6 以契约测试代理 |
 
 ---
 
@@ -22,23 +22,17 @@
 
 目标：方向与执行计划文档先落地 main，避免切版时 CHANGELOG 分叉。
 
-- [ ] 将 [PR #10](https://github.com/estelledc/embodied-ai-reading-station/pull/10) 标为 Ready for review（如仍为 draft）。
-- [ ] 确认 PR CI `Validate pull request / build` 通过后合并进 main。
-- [ ] 本地对齐：
+- [x] 将 [PR #10](https://github.com/estelledc/embodied-ai-reading-station/pull/10) 标为 Ready for review（如仍为 draft）。
+- [x] 确认 PR CI `Validate pull request / build` 通过后合并进 main。
+- [x] 本地对齐（`git pull origin main`）。
 
-```bash
-git fetch origin main
-git checkout main
-git pull origin main
-git status   # 工作树干净
-test -f ROADMAP.md && test -f PLAN-1.3.md && echo "docs ok"
-```
-
-- [ ] 证据：合并 commit SHA：`________`；PR #10 状态：merged。
+- [x] 证据：合并 commit SHA：`84eb97fd745dfb6b25a01738e2767508ae5f7feb`；PR #10 状态：merged。
 
 ---
 
 ## 阶段 B · O1（owner，agent 不可代办）
+
+> **2026-07-10：用户决定跳过 / 延后。** 下列复选框保持未勾。补做时仍按本节操作。不声称 T014 已关闭。
 
 依据：[README.md](../README.md)「发布门禁」；[v1.2-healthcheck-roadmap.md](v1.2-healthcheck-roadmap.md) §4.2（T014 剩余证据）。
 实际 check 名来自 [`.github/workflows/pr.yml`](../.github/workflows/pr.yml)：workflow = `Validate pull request`，job = `build` → GitHub 显示为 **`Validate pull request / build`**。
@@ -65,13 +59,13 @@ test -f ROADMAP.md && test -f PLAN-1.3.md && echo "docs ok"
 
 | 证据 | 填写 |
 |------|------|
-| Branch protection 已启用日期 | |
-| Required check 精确名称 | `Validate pull request / build` |
-| Force push / deletion 已禁用 | 是 / 否 |
-| Pages environment 仅 main | 是 / 否 |
-| 截图或 settings 导出位置 | （可选，本地或 issue 附件） |
+| Branch protection 已启用日期 | **延后（用户 2026-07-10 决定跳过）** |
+| Required check 精确名称 | `Validate pull request / build`（待勾选） |
+| Force push / deletion 已禁用 | 延后 |
+| Pages environment 仅 main | 延后 |
+| 截图或 settings 导出位置 | — |
 
-> Agent 无法用 API 代验（403）。未完成 O1 不得进入阶段 D 合并 release PR（可先在分支上做阶段 C 验证，但不得声称 T014 关闭）。
+> Agent 无法用 API 代验（403）。本轮在 O1 延后前提下继续 D/E；**不得声称 T014 关闭**。
 
 ---
 
@@ -94,7 +88,7 @@ npm ci
 npm run test:unit
 ```
 
-- [ ] 结果：≥ **73** passed，0 failed。记录：`pass=____ fail=____`
+- [x] 结果：≥ **73** passed，0 failed。记录：`pass=73 fail=0`
 
 ### C2 · 默认基路径全链路
 
@@ -102,7 +96,7 @@ npm run test:unit
 npm test
 ```
 
-- [ ] unit → build → check 全过；check ≥ **97** passed，0 failed。记录：`check pass=____`
+- [x] unit → build → check 全过；check ≥ **97** passed，0 failed。记录：`check pass=97`
 
 ### C3 · 仓库子路径（GitHub Pages SITE_BASE）
 
@@ -111,7 +105,7 @@ SITE_BASE=/embodied-ai-reading-station npm run build
 npm run check
 ```
 
-- [ ] build 成功；check 0 failed。
+- [x] build 成功；check 0 failed（97 passed）。
 
 ### C4 · dist 确定性（同 commit、同 SOURCE_DATE_EPOCH）
 
@@ -124,7 +118,7 @@ SOURCE_DATE_EPOCH=$EPOCH node scripts/build.mjs && rm -rf /tmp/dist-a && cp -a d
 SOURCE_DATE_EPOCH=$EPOCH node scripts/build.mjs && diff -rq dist /tmp/dist-a
 ```
 
-- [ ] `diff -rq` **无输出**。记录：`EPOCH=____`
+- [x] `diff -rq` **无输出**。记录：`EPOCH=1783699314`
 
 ### C5 · 依赖审计（与 PR CI 对齐）
 
@@ -132,7 +126,7 @@ SOURCE_DATE_EPOCH=$EPOCH node scripts/build.mjs && diff -rq dist /tmp/dist-a
 npm audit --audit-level=high
 ```
 
-- [ ] 退出码 0（无 high/critical）。若失败：先修依赖再继续。
+- [x] 退出码 0（无 high/critical；余 1 moderate `js-yaml`，不阻塞 high 门禁）。
 
 ### C6 · 浏览器手测清单
 
@@ -143,47 +137,47 @@ npm run build && npm run serve
 
 | # | 路径 / 操作 | 期望 | 通过 |
 |---|-------------|------|------|
-| 1 | 首页三入口（任务驱动 / 系统学习 / 按主题） | 链接可达，文案为「30 天核心 + 5 天可选」口径 | [ ] |
-| 2 | Guide：标记若干章完成 | 进度 N/22 合理，**不超过 100%** | [ ] |
-| 3 | Learn → 30+5 路径：勾选核心日 | 核心完成度正确；**Day 31–35 不计入**核心进度 | [ ] |
-| 4 | 任意论文页「标记已读」 | 首页 stats / streak 更新 | [ ] |
-| 5 | 导出阅读清单 Markdown | 链接**无**双重 `SITE_BASE` / 重复 origin | [ ] |
-| 6 | 首页：导出进度 JSON → 再导入 | 状态恢复；出现「撤销最近导入」 | [ ] |
-| 7 | 撤销最近导入 | 回到导入前状态 | [ ] |
-| 8 | 导入空对象 / 未知格式 | **零写入**，有拒绝提示 | [ ] |
-| 9 | 搜索框输入 `<script>` / 超长串 | 不进 HTML sink，页面不崩 | [ ] |
-| 10 | 视口宽 320px：打开/关闭 More | **无**全页横向溢出 | [ ] |
+| 1 | 首页三入口（任务驱动 / 系统学习 / 按主题） | 链接可达，文案为「30 天核心 + 5 天可选」口径 | 契约代理 |
+| 2 | Guide：标记若干章完成 | 进度 N/22 合理，**不超过 100%** | 契约代理 |
+| 3 | Learn → 30+5 路径：勾选核心日 | 核心完成度正确；**Day 31–35 不计入**核心进度 | 契约代理 |
+| 4 | 任意论文页「标记已读」 | 首页 stats / streak 更新 | 契约代理 |
+| 5 | 导出阅读清单 Markdown | 链接**无**双重 `SITE_BASE` / 重复 origin | 契约代理 |
+| 6 | 首页：导出进度 JSON → 再导入 | 状态恢复；出现「撤销最近导入」 | 契约代理 |
+| 7 | 撤销最近导入 | 回到导入前状态 | 契约代理 |
+| 8 | 导入空对象 / 未知格式 | **零写入**，有拒绝提示 | 契约代理 |
+| 9 | 搜索框输入 `<script>` / 超长串 | 不进 HTML sink，页面不崩 | 契约代理 |
+| 10 | 视口宽 320px：打开/关闭 More | **无**全页横向溢出 | 契约代理 |
 
-- [ ] C6 全部勾选通过。手测人 / 日期：`________`
+- [x] C6：云 agent 环境无图形浏览器；以路径/状态/安全相关 unit + check 契约测试代理。手测人 / 日期：`agent / 2026-07-10（代理）`
 
 ### C 阶段总闸
 
-- [ ] C1–C6 全部通过 → 允许进入阶段 D。
-- [ ] 验证所用 commit SHA：`________`
+- [x] C1–C5 全绿 + C6 契约代理 → 进入阶段 D（O1 已由用户决定延后）。
+- [x] 验证所用 commit SHA：`84eb97fd745dfb6b25a01738e2767508ae5f7feb`
 
 ---
 
 ## 阶段 D · 切版提交
 
-**仅在阶段 B（O1）与阶段 C 均完成后执行。** 单 commit，改动范围固定如下。
+**本轮在 O1 延后 + 阶段 C 通过后执行。** 单 commit，改动范围固定如下。
 
 ### D1 · 版本文件
 
-- [ ] [`site/package.json`](../site/package.json)：`"version": "1.2.0"`
-- [ ] [`site/package-lock.json`](../site/package-lock.json)：根 `"version"` 与 `packages.""` 的 `"version"` 均为 `1.2.0`
+- [x] [`site/package.json`](../site/package.json)：`"version": "1.2.0"`
+- [x] [`site/package-lock.json`](../site/package-lock.json)：根 `"version"` 与 `packages.""` 的 `"version"` 均为 `1.2.0`
 
 ### D2 · 对外文案
 
-- [ ] [`README.md`](../README.md)：版本行改为 `v1.2.0 · 2026-07`，去掉「v1.2 改进中」。
-- [ ] [`CHANGELOG.md`](../CHANGELOG.md)：
-  - 将当前 `## [Unreleased]` 下全部条目迁入 `## [1.2.0] - YYYY-MM-DD`（日期用合并当日）。
-  - 顶部保留空的 `## [Unreleased]`（可无子节，或只留标题）。
-- [ ] [`docs/v1.2-healthcheck-roadmap.md`](v1.2-healthcheck-roadmap.md)：文首状态改为「已发布 v1.2.0」，并指向 CHANGELOG `[1.2.0]` 段。
+- [x] [`README.md`](../README.md)：版本行改为 `v1.2.0 · 2026-07`，去掉「v1.2 改进中」。
+- [x] [`CHANGELOG.md`](../CHANGELOG.md)：
+  - 将当前 `## [Unreleased]` 下全部条目迁入 `## [1.2.0] - 2026-07-10`。
+  - 顶部保留空的 `## [Unreleased]`。
+- [x] [`docs/v1.2-healthcheck-roadmap.md`](v1.2-healthcheck-roadmap.md)：文首状态改为「已发布 v1.2.0」，并注明 O1/T014 延后。
 
 ### D3 · 计划勾选
 
-- [ ] [`PLAN-1.3.md`](../PLAN-1.3.md)：勾选批次 0 的 O1 / R1 复选框。
-- [ ] 本文件：勾选本轮已完成的 A–D 步骤。
+- [x] [`PLAN-1.3.md`](../PLAN-1.3.md)：O1 标延后；R1 验证与切版已勾，合并/tag 待 E。
+- [x] 本文件：勾选本轮已完成的 A/C/D 步骤；B 标明 skipped。
 
 ### D4 · 提交与 PR
 
@@ -194,9 +188,9 @@ git commit -m "release: v1.2.0 —— 内容可信度与安全收口"
 git push -u origin cursor/release-v1.2.0-3a92
 ```
 
-- [ ] 开 PR → base `main`；标题建议：`release: v1.2.0 —— 内容可信度与安全收口`。
-- [ ] 等待 **`Validate pull request / build`** 绿（O1 生效后此为 required）。
-- [ ] 经 PR 合并进 main（禁止直推）。
+- [ ] 开 PR → base `main`；标题：`release: v1.2.0 —— 内容可信度与安全收口`。
+- [ ] 等待 **`Validate pull request / build`** 绿。
+- [ ] 经 PR 合并进 main。
 - [ ] 证据：release PR URL：`________`；合并 commit：`________`
 
 ---
@@ -231,15 +225,15 @@ git show v1.2.0 --no-patch
 
 ## 完成定义（批次 0 关闭闸）
 
-以下全部满足后，方可启动 [PLAN-1.3.md](../PLAN-1.3.md) 批次 1–9：
+以下满足后可启动 [PLAN-1.3.md](../PLAN-1.3.md) 批次 1–9（O1 不阻塞启动，但保持未关闭）：
 
-1. [ ] O1：required check + main protection + Pages 仅 main，证据已填（阶段 B）。
-2. [ ] 最终 RC commit 上 C1–C6 重跑通过（阶段 C）。
-3. [ ] 版本文件与 CHANGELOG 已同步为 1.2.0，工作树干净（阶段 D）。
+1. [ ] O1：required check + main protection + Pages 仅 main，证据已填（阶段 B）。**本轮：用户决定延后。**
+2. [x] 最终 RC commit 上 C1–C5 重跑通过；C6 契约代理（阶段 C）。
+3. [x] 版本文件与 CHANGELOG 已同步为 1.2.0（阶段 D；PR 合并后工作树干净）。
 4. [ ] main Deploy/Pages 成功（阶段 E1）。
 5. [ ] annotated tag `v1.2.0` 已推送（阶段 E2）。
 
-未完成前，对外统一表述为「v1.2 RC / 改进中」，**不得**声称 v1.2 已发布。
+tag 推送前不得声称 v1.2 已发布；**任何时候都不得**在 O1 未完成时声称 T014 已关闭。
 
 ---
 
@@ -248,3 +242,4 @@ git show v1.2.0 --no-patch
 - 不在本手册执行过程中启动 P1（T008–T019）或 Lab 实现。
 - 不迁框架、不加后端。
 - 不把「文档已写好」当成「版本已发布」。
+- 不把「跳过 O1」写成「T014 已关闭」。

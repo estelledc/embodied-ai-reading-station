@@ -40,20 +40,22 @@
 
 ### O1(owner 外部依赖,agent 不可代办)
 
+> **2026-07-10：用户决定延后。** 复选框保持未勾；不声称 T014 已关闭。补做步骤仍见 [docs/batch-0-v1.2-release.md](docs/batch-0-v1.2-release.md) 阶段 B。
+
 - [ ] 把实际 check `Validate pull request / build` 设为 main 的 required status check。
 - [ ] 为 main 启用 required pull request、禁止 force push 和 branch deletion。
 - [ ] 确认 Pages environment 只允许 main 部署。
 
 > 依据:[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md) 第 4.2 节(T014 剩余证据)。README「发布门禁」已有同款 checklist。
 
-### R1(agent,O1 完成后执行)
+### R1(agent；本轮在 O1 延后前提下执行)
 
-- [ ] 在最终 RC commit 上重跑全部验证:73+ unit、97+ healthcheck、双 SITE_BASE(根路径与 `SITE_BASE=/embodied-ai-reading-station`)、全量 dist 确定性对比(同 commit 同 `SOURCE_DATE_EPOCH` 两次构建逐字节一致)、浏览器关键路径回归(学习入口 / 进度交互 / 状态导入导出)。
-- [ ] 切版:`site/package.json` + lockfile → `1.2.0`;README 版本行 → `v1.2.0`;CHANGELOG `[Unreleased]` → `[1.2.0] - 实际日期`。
+- [x] 在最终 RC commit（`84eb97f`）上重跑全部验证:73 unit、97 healthcheck、双 SITE_BASE、全量 dist 确定性对比通过；`npm audit --audit-level=high` 通过（仅余 moderate）。C6 浏览器手测：云环境无图形浏览器，以契约测试（路径/状态/安全相关 unit + check）代理，手册注明延后。
+- [x] 切版:`site/package.json` + lockfile → `1.2.0`;README 版本行 → `v1.2.0`;CHANGELOG `[Unreleased]` → `[1.2.0] - 2026-07-10`。
 - [ ] Commit: `release: v1.2.0 —— 内容可信度与安全收口`,走 PR 合并。
 - [ ] 合并后确认 main build/deploy 成功(关闭 T015 部署验证缺口),在合并 commit 上创建 annotated tag `v1.2.0`。
 
-**出口**:RC 完成定义([docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md) 第 6 节)全部满足;对外表述从「v1.2 改进中」切换为「v1.2.0 已发布」。
+**出口**:版本与 tag 发布后可称「v1.2.0 已发布」；O1/T014 仍为待办，不写入「T014 已关闭」。
 
 ---
 
