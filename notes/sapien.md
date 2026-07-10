@@ -4,7 +4,7 @@ slug: sapien
 topic: sim
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/sapien/paper.pdf
+来源: papers/sapien/paper.md
 venue: CVPR
 year: 2020
 era: classic

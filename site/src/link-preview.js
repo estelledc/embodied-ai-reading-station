@@ -51,11 +51,20 @@
       const p = idx.get(slug);
       if (!p) return;
       const t = ensureTooltip();
-      t.innerHTML = `
-        <div class="lp-meta">${p.topic} · ${p.year || ""} ${p.venue ? `· ${p.venue}` : ""}</div>
-        <div class="lp-title">${p.title}</div>
-        ${p.tldr ? `<div class="lp-tldr">${p.tldr}…</div>` : ""}
-      `;
+      const meta = document.createElement("div");
+      meta.className = "lp-meta";
+      meta.textContent = `${String(p.topic ?? "")} · ${p.year || ""}${p.venue ? ` · ${String(p.venue)}` : ""}`;
+      const title = document.createElement("div");
+      title.className = "lp-title";
+      title.textContent = String(p.title ?? "");
+      const children = [meta, title];
+      if (p.tldr) {
+        const tldr = document.createElement("div");
+        tldr.className = "lp-tldr";
+        tldr.textContent = `${String(p.tldr)}…`;
+        children.push(tldr);
+      }
+      t.replaceChildren(...children);
       t.hidden = false;
       requestAnimationFrame(() => {
         t.classList.add("show");

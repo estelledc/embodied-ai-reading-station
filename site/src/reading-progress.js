@@ -2,17 +2,173 @@
 (function () {
   const KEY = "eaireading.read";
   const TS_KEY = "eaireading.readts";
+  const LEGACY_PROGRESS_KEY = "eaireading.syllabus";
+  const LEGACY_GUIDE_TS_KEY = "eaireading.syllabusTs";
+  const PATH_KEY = "eaireading.path.days.v1";
+  const GUIDE_KEY = "eaireading.guide.chapters.v1";
+  const GUIDE_TS_KEY = "eaireading.guide.chapterTs.v1";
+  const PROGRESS_MIGRATION_KEY = "eaireading.progress.split.v1";
+  const SEARCH_HISTORY_KEY = "eaireading.searches";
+  const STATE_SCHEMA_VERSION = 1;
+  const RECOVERY_PREFIX = "eaireading.recovery.";
+  const PRE_IMPORT_BACKUP_KEY = `${RECOVERY_PREFIX}pre-import.v1`;
+  const DAILY_GOAL_KEY = "eaireading.dailygoal";
+  const TIMING_KEY = "eaireading.timing";
+  const PATH_DAY_COUNT = 30;
+  const GUIDE_CHAPTER_COUNT = 22;
+  const recoveryMessages = [];
+
+  function parseJson(raw, fallback) {
+    try { return raw == null ? fallback : JSON.parse(raw); }
+    catch { return fallback; }
+  }
+
+  function readStorageJson(key, fallback) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (raw === null) return fallback;
+      try { return JSON.parse(raw); }
+      catch {
+        const safeKey = key.replace(/[^a-z0-9._-]/gi, "_");
+        const backupKey = `${RECOVERY_PREFIX}${Date.now()}.${safeKey}`;
+        try {
+          localStorage.setItem(backupKey, raw);
+          localStorage.setItem(key, JSON.stringify(fallback));
+          recoveryMessages.push(`${key} 数据损坏，已备份并恢复为空值。`);
+        } catch {}
+        return fallback;
+      }
+    } catch { return fallback; }
+  }
+
+  function normalizeReadSlugs(values) {
+    if (!Array.isArray(values)) return [];
+    return [...new Set(values.filter(value => (
+      typeof value === "string" && /^[a-z0-9][a-z0-9-]{0,119}$/i.test(value)
+    )))].sort();
+  }
+
+  function normalizeTimestampMap(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const result = {};
+    for (const [key, rawTimestamp] of Object.entries(value)) {
+      if (!/^[a-z0-9][a-z0-9-]{0,119}$/i.test(key)) continue;
+      const timestamp = Number(rawTimestamp);
+      if (Number.isFinite(timestamp) && timestamp > 0) result[key] = timestamp;
+    }
+    return result;
+  }
+
+  function normalizeSearchHistory(values) {
+    if (!Array.isArray(values)) return [];
+    const seen = new Set();
+    const result = [];
+    for (const item of values) {
+      const q = typeof item?.q === "string" ? [...item.q.trim()].slice(0, 200).join("") : "";
+      if (q.length < 2 || /[\u0000-\u001f\u007f]/.test(q) || seen.has(q)) continue;
+      seen.add(q);
+      result.push({ q, t: Number.isFinite(Number(item.t)) ? Number(item.t) : 0 });
+      if (result.length === 5) break;
+    }
+    return result;
+  }
+
+  function normalizeTiming(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const result = {};
+    for (const [slug, timing] of Object.entries(value)) {
+      if (!/^[a-z0-9][a-z0-9-]{0,119}$/i.test(slug) || !timing || typeof timing !== "object") continue;
+      const seconds = Number(timing.seconds);
+      const wordCount = Number(timing.wordCount);
+      if (!Number.isFinite(seconds) || seconds < 0 || !Number.isFinite(wordCount) || wordCount < 0) continue;
+      result[slug] = { seconds, wordCount };
+    }
+    return result;
+  }
+
+  function normalizePathDays(values) {
+    if (!Array.isArray(values)) return [];
+    const days = new Set();
+    for (const value of values) {
+      const day = typeof value === "number"
+        ? value
+        : typeof value === "string" && /^\d+$/.test(value.trim())
+          ? Number(value)
+          : NaN;
+      if (Number.isInteger(day) && day >= 1 && day <= PATH_DAY_COUNT) days.add(day);
+    }
+    return [...days].sort((a, b) => a - b);
+  }
+
+  function guideChapterId(value) {
+    if (typeof value === "number" || /^\d+$/.test(String(value).trim())) {
+      const id = Number(value);
+      return Number.isInteger(id) && id >= 1 && id <= GUIDE_CHAPTER_COUNT ? id : null;
+    }
+    const match = String(value).match(/^ch(\d{2})(?:-|$)/);
+    if (!match) return null;
+    const id = Number(match[1]);
+    return id >= 1 && id <= GUIDE_CHAPTER_COUNT ? id : null;
+  }
+
+  function normalizeGuideChapters(values) {
+    if (!Array.isArray(values)) return [];
+    const chapters = new Set();
+    for (const value of values) {
+      const id = guideChapterId(value);
+      if (id !== null) chapters.add(id);
+    }
+    return [...chapters].sort((a, b) => a - b);
+  }
+
+  function normalizeGuideTimestamps(value) {
+    if (!value || typeof value !== "object" || Array.isArray(value)) return {};
+    const timestamps = {};
+    for (const [key, rawTimestamp] of Object.entries(value)) {
+      const id = guideChapterId(key);
+      const timestamp = Number(rawTimestamp);
+      if (id === null || !Number.isFinite(timestamp) || timestamp <= 0) continue;
+      timestamps[id] = Math.max(timestamps[id] || 0, timestamp);
+    }
+    return timestamps;
+  }
+
+  // v1.2: split the legacy mixed syllabus array into independent namespaces.
+  // Keep legacy keys read-only for one release so users can roll back without losing old state.
+  function migrateProgressState() {
+    try {
+      if (localStorage.getItem(PROGRESS_MIGRATION_KEY) === "1") return;
+      const legacy = readStorageJson(LEGACY_PROGRESS_KEY, []);
+
+      if (localStorage.getItem(PATH_KEY) === null) {
+        localStorage.setItem(PATH_KEY, JSON.stringify(normalizePathDays(legacy)));
+      }
+      if (localStorage.getItem(GUIDE_KEY) === null) {
+        const legacyGuideSlugs = Array.isArray(legacy)
+          ? legacy.filter(value => typeof value === "string" && /^ch\d{2}(?:-|$)/.test(value))
+          : [];
+        localStorage.setItem(GUIDE_KEY, JSON.stringify(normalizeGuideChapters(legacyGuideSlugs)));
+      }
+      if (localStorage.getItem(GUIDE_TS_KEY) === null) {
+        const legacyTimestamps = readStorageJson(LEGACY_GUIDE_TS_KEY, {});
+        localStorage.setItem(GUIDE_TS_KEY, JSON.stringify(normalizeGuideTimestamps(legacyTimestamps)));
+      }
+      localStorage.setItem(PROGRESS_MIGRATION_KEY, "1");
+    } catch {
+      // localStorage may be unavailable (privacy mode / quota). The page should still render.
+    }
+  }
+
+  migrateProgressState();
 
   function load() {
-    try { return new Set(JSON.parse(localStorage.getItem(KEY) || "[]")); }
-    catch { return new Set(); }
+    return new Set(normalizeReadSlugs(readStorageJson(KEY, [])));
   }
   function save(set) {
     localStorage.setItem(KEY, JSON.stringify([...set]));
   }
   function loadTs() {
-    try { return JSON.parse(localStorage.getItem(TS_KEY) || "{}"); }
-    catch { return {}; }
+    return normalizeTimestampMap(readStorageJson(TS_KEY, {}));
   }
   function saveTs(o) {
     localStorage.setItem(TS_KEY, JSON.stringify(o));
@@ -72,6 +228,315 @@
     },
   };
 
+  function loadPath() {
+    return new Set(normalizePathDays(readStorageJson(PATH_KEY, [])));
+  }
+  function savePath(set) {
+    localStorage.setItem(PATH_KEY, JSON.stringify(normalizePathDays([...set])));
+  }
+
+  window.EAI_PATH = {
+    has(day) { return loadPath().has(Number(day)); },
+    list() { return [...loadPath()]; },
+    count() { return loadPath().size; },
+    mark(day) {
+      const normalized = normalizePathDays([day]);
+      if (!normalized.length) return;
+      const set = loadPath(); set.add(normalized[0]); savePath(set);
+      this._notify();
+    },
+    unmark(day) {
+      const normalized = normalizePathDays([day]);
+      if (!normalized.length) return;
+      const set = loadPath(); set.delete(normalized[0]); savePath(set);
+      this._notify();
+    },
+    toggle(day) {
+      this.has(day) ? this.unmark(day) : this.mark(day);
+    },
+    _notify() {
+      window.dispatchEvent(new CustomEvent("eai:path-changed", {
+        detail: { count: this.count(), list: this.list() }
+      }));
+    },
+  };
+
+  function normalizedDailyGoal(value) {
+    const goal = Number(value);
+    return Number.isInteger(goal) && goal >= 1 && goal <= 10 ? goal : null;
+  }
+
+  function stateSnapshot() {
+    return {
+      schema_version: STATE_SCHEMA_VERSION,
+      state: {
+        read: normalizeReadSlugs([...load()]),
+        read_timestamps: loadTs(),
+        daily_goal: normalizedDailyGoal(localStorage.getItem(DAILY_GOAL_KEY)),
+        timing: normalizeTiming(readStorageJson(TIMING_KEY, {})),
+        path_days: normalizePathDays(readStorageJson(PATH_KEY, [])),
+        guide_chapters: normalizeGuideChapters(readStorageJson(GUIDE_KEY, [])),
+        guide_chapter_timestamps: normalizeGuideTimestamps(readStorageJson(GUIDE_TS_KEY, {})),
+        searches: normalizeSearchHistory(readStorageJson(SEARCH_HISTORY_KEY, [])),
+      },
+    };
+  }
+
+  const VERSIONED_STATE_FIELDS = new Set([
+    "read",
+    "read_timestamps",
+    "daily_goal",
+    "timing",
+    "path_days",
+    "guide_chapters",
+    "guide_chapter_timestamps",
+    "searches",
+  ]);
+  const LEGACY_IMPORT_KEYS = new Set([
+    KEY,
+    TS_KEY,
+    DAILY_GOAL_KEY,
+    TIMING_KEY,
+    LEGACY_PROGRESS_KEY,
+    LEGACY_GUIDE_TS_KEY,
+    SEARCH_HISTORY_KEY,
+  ]);
+
+  function hasOwn(value, key) {
+    return Object.prototype.hasOwnProperty.call(value, key);
+  }
+
+  function decodeImportValue(value, label) {
+    if (typeof value !== "string") return value;
+    try { return JSON.parse(value); }
+    catch { throw new Error(`${label} 不是有效 JSON`); }
+  }
+
+  function importArray(value, label) {
+    const decoded = decodeImportValue(value, label);
+    if (!Array.isArray(decoded)) throw new Error(`${label} 必须是数组`);
+    return decoded;
+  }
+
+  function importObjectValue(value, label) {
+    const decoded = decodeImportValue(value, label);
+    if (!decoded || typeof decoded !== "object" || Array.isArray(decoded)) {
+      throw new Error(`${label} 必须是对象`);
+    }
+    return decoded;
+  }
+
+  function importDailyGoal(value, label) {
+    const decoded = decodeImportValue(value, label);
+    if (decoded === null) return null;
+    const goal = normalizedDailyGoal(decoded);
+    if (goal === null) throw new Error(`${label} 必须是 1–10 的整数或 null`);
+    return String(goal);
+  }
+
+  function jsonOperation(operations, key, value) {
+    operations.set(key, JSON.stringify(value));
+  }
+
+  function prepareVersionedImport(state) {
+    if (!state || typeof state !== "object" || Array.isArray(state)) {
+      throw new Error("进度备份缺少 state 对象");
+    }
+    const fields = Object.keys(state);
+    const unknown = fields.filter(field => !VERSIONED_STATE_FIELDS.has(field));
+    if (unknown.length) throw new Error(`进度备份包含未知字段：${unknown.join(", ")}`);
+    if (!fields.length) throw new Error("进度备份 state 不能为空");
+
+    const operations = new Map();
+    if (hasOwn(state, "read")) {
+      jsonOperation(operations, KEY, normalizeReadSlugs(importArray(state.read, "state.read")));
+    }
+    if (hasOwn(state, "read_timestamps")) {
+      jsonOperation(operations, TS_KEY, normalizeTimestampMap(importObjectValue(state.read_timestamps, "state.read_timestamps")));
+    }
+    if (hasOwn(state, "daily_goal")) {
+      operations.set(DAILY_GOAL_KEY, importDailyGoal(state.daily_goal, "state.daily_goal"));
+    }
+    if (hasOwn(state, "timing")) {
+      jsonOperation(operations, TIMING_KEY, normalizeTiming(importObjectValue(state.timing, "state.timing")));
+    }
+    if (hasOwn(state, "path_days")) {
+      jsonOperation(operations, PATH_KEY, normalizePathDays(importArray(state.path_days, "state.path_days")));
+      operations.set(PROGRESS_MIGRATION_KEY, "1");
+    }
+    if (hasOwn(state, "guide_chapters")) {
+      jsonOperation(operations, GUIDE_KEY, normalizeGuideChapters(importArray(state.guide_chapters, "state.guide_chapters")));
+      operations.set(PROGRESS_MIGRATION_KEY, "1");
+    }
+    if (hasOwn(state, "guide_chapter_timestamps")) {
+      jsonOperation(operations, GUIDE_TS_KEY, normalizeGuideTimestamps(importObjectValue(state.guide_chapter_timestamps, "state.guide_chapter_timestamps")));
+      operations.set(PROGRESS_MIGRATION_KEY, "1");
+    }
+    if (hasOwn(state, "searches")) {
+      jsonOperation(operations, SEARCH_HISTORY_KEY, normalizeSearchHistory(importArray(state.searches, "state.searches")));
+    }
+    return operations;
+  }
+
+  function prepareLegacyImport(payload) {
+    const knownKeys = [...LEGACY_IMPORT_KEYS].filter(key => hasOwn(payload, key));
+    if (!knownKeys.length) throw new Error("旧版进度备份不含任何已知状态字段");
+
+    const operations = new Map();
+    if (hasOwn(payload, KEY)) {
+      jsonOperation(operations, KEY, normalizeReadSlugs(importArray(payload[KEY], KEY)));
+    }
+    if (hasOwn(payload, TS_KEY)) {
+      jsonOperation(operations, TS_KEY, normalizeTimestampMap(importObjectValue(payload[TS_KEY], TS_KEY)));
+    }
+    if (hasOwn(payload, DAILY_GOAL_KEY)) {
+      operations.set(DAILY_GOAL_KEY, importDailyGoal(payload[DAILY_GOAL_KEY], DAILY_GOAL_KEY));
+    }
+    if (hasOwn(payload, TIMING_KEY)) {
+      jsonOperation(operations, TIMING_KEY, normalizeTiming(importObjectValue(payload[TIMING_KEY], TIMING_KEY)));
+    }
+    if (hasOwn(payload, LEGACY_PROGRESS_KEY)) {
+      const mixedProgress = importArray(payload[LEGACY_PROGRESS_KEY], LEGACY_PROGRESS_KEY);
+      const guideValues = mixedProgress.filter(value => (
+        typeof value === "string" && /^ch\d{2}(?:-|$)/.test(value)
+      ));
+      jsonOperation(operations, PATH_KEY, normalizePathDays(mixedProgress));
+      jsonOperation(operations, GUIDE_KEY, normalizeGuideChapters(guideValues));
+      operations.set(PROGRESS_MIGRATION_KEY, "1");
+    }
+    if (hasOwn(payload, LEGACY_GUIDE_TS_KEY)) {
+      jsonOperation(operations, GUIDE_TS_KEY, normalizeGuideTimestamps(importObjectValue(payload[LEGACY_GUIDE_TS_KEY], LEGACY_GUIDE_TS_KEY)));
+      operations.set(PROGRESS_MIGRATION_KEY, "1");
+    }
+    if (hasOwn(payload, SEARCH_HISTORY_KEY)) {
+      jsonOperation(operations, SEARCH_HISTORY_KEY, normalizeSearchHistory(importArray(payload[SEARCH_HISTORY_KEY], SEARCH_HISTORY_KEY)));
+    }
+    return operations;
+  }
+
+  function prepareImport(input) {
+    let payload;
+    try { payload = typeof input === "string" ? JSON.parse(input) : input; }
+    catch { throw new Error("进度备份不是有效 JSON"); }
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      throw new Error("进度备份必须是 JSON 对象");
+    }
+    if (payload.schema_version != null && payload.schema_version !== STATE_SCHEMA_VERSION) {
+      throw new Error(`不支持的进度备份版本：${payload.schema_version}`);
+    }
+    return payload.schema_version === STATE_SCHEMA_VERSION
+      ? prepareVersionedImport(payload.state)
+      : prepareLegacyImport(payload);
+  }
+
+  function applyStorageTransaction(operations, { backupPayload = null, consumeBackup = false } = {}) {
+    const writes = [];
+    if (backupPayload) writes.push([PRE_IMPORT_BACKUP_KEY, JSON.stringify(backupPayload)]);
+    writes.push(...operations);
+    if (consumeBackup) writes.push([PRE_IMPORT_BACKUP_KEY, null]);
+
+    const originals = new Map();
+    for (const [key] of writes) {
+      if (!originals.has(key)) originals.set(key, localStorage.getItem(key));
+    }
+    const applied = [];
+    try {
+      for (const [key, value] of writes) {
+        if (value === null) localStorage.removeItem(key);
+        else localStorage.setItem(key, value);
+        applied.push(key);
+      }
+    } catch (error) {
+      const appliedKeys = [...new Set(applied)];
+      const rollbackErrors = [];
+      for (const key of appliedKeys.filter(key => originals.get(key) === null).reverse()) {
+        try { localStorage.removeItem(key); }
+        catch (rollbackError) { rollbackErrors.push(rollbackError); }
+      }
+      for (const key of appliedKeys.filter(key => originals.get(key) !== null).reverse()) {
+        try { localStorage.setItem(key, originals.get(key)); }
+        catch (rollbackError) { rollbackErrors.push(rollbackError); }
+      }
+      if (rollbackErrors.length) {
+        throw new Error(`导入失败且自动回滚不完整：${error.message || error}`);
+      }
+      throw new Error(`导入失败，原状态已恢复：${error.message || error}`);
+    }
+  }
+
+  function notifyStateChange() {
+    window.EAI_READ._notify();
+    window.EAI_PATH._notify();
+    window.EAI_GUIDE?._notify();
+    window.dispatchEvent(new CustomEvent("eai:state-changed"));
+  }
+
+  function importStateObject(input) {
+    const operations = prepareImport(input);
+    const backup = stateSnapshot();
+    applyStorageTransaction(operations, { backupPayload: backup });
+    notifyStateChange();
+    return stateSnapshot();
+  }
+
+  function lastImportBackup() {
+    const raw = localStorage.getItem(PRE_IMPORT_BACKUP_KEY);
+    if (raw === null) return null;
+    try {
+      const backup = JSON.parse(raw);
+      prepareImport(backup);
+      return backup;
+    } catch {
+      throw new Error("最近一次导入前的自动备份已损坏");
+    }
+  }
+
+  function restoreLastImport() {
+    const backup = lastImportBackup();
+    if (!backup) throw new Error("没有可恢复的导入前备份");
+    const operations = prepareImport(backup);
+    applyStorageTransaction(operations, { consumeBackup: true });
+    notifyStateChange();
+    return stateSnapshot();
+  }
+
+  const RESET_KEYS = {
+    read: [KEY, TS_KEY, DAILY_GOAL_KEY, TIMING_KEY],
+    path: [PATH_KEY],
+    guide: [GUIDE_KEY, GUIDE_TS_KEY],
+    search: [SEARCH_HISTORY_KEY],
+  };
+
+  function resetState(surface) {
+    const keys = surface === "all"
+      ? [...new Set([
+          ...Object.values(RESET_KEYS).flat(),
+          LEGACY_PROGRESS_KEY,
+          LEGACY_GUIDE_TS_KEY,
+          PROGRESS_MIGRATION_KEY,
+          PRE_IMPORT_BACKUP_KEY,
+        ])]
+      : RESET_KEYS[surface];
+    if (!keys) throw new Error(`未知进度范围：${surface}`);
+    for (const key of keys) localStorage.removeItem(key);
+    notifyStateChange();
+  }
+
+  window.EAI_STATE = {
+    schemaVersion: STATE_SCHEMA_VERSION,
+    exportObject: stateSnapshot,
+    exportText() { return `${JSON.stringify(stateSnapshot(), null, 2)}\n`; },
+    importObject: importStateObject,
+    importText(text) { return importStateObject(text); },
+    hasImportBackup() {
+      try { return localStorage.getItem(PRE_IMPORT_BACKUP_KEY) !== null; }
+      catch { return false; }
+    },
+    lastImportBackup,
+    restoreLastImport,
+    reset: resetState,
+  };
+
   // 共享 papers.json 加载器：优先用 inline JSON（向后兼容），否则 fetch /data/papers.json
   let _papersCache = null;
   let _papersPromise = null;
@@ -108,17 +573,14 @@
     "eaireading.readts",
     "eaireading.dailygoal",
     "eaireading.timing",
-    "eaireading.syllabus",
-    "eaireading.syllabusTs",
   ]);
   window.addEventListener("storage", (e) => {
     if (e.key && SYNCED_KEYS.has(e.key)) {
       window.EAI_READ._notify();
-      // Also notify guide system for syllabus keys
-      if (e.key.includes("syllabus") && window.EAI_GUIDE) {
-        window.EAI_GUIDE._notify();
-      }
     }
+  });
+  window.addEventListener("storage", (e) => {
+    if (e.key === PATH_KEY) window.EAI_PATH._notify();
   });
 
   function bindButton(btn) {
@@ -192,7 +654,7 @@
           md += `## ${topic}\n\n`;
           for (const p of ps) {
             const date = ts[p.slug] ? new Date(ts[p.slug]).toISOString().slice(0, 10) : "";
-            md += `- [№ ${String(p.num).padStart(2, "0")} · ${p.title}](https://estelledc.github.io/embodied-ai-reading-station${p.url}) — ${p.tldr || ""}${date ? ` *(读于 ${date})*` : ""}\n`;
+            md += `- [№ ${String(p.num).padStart(2, "0")} · ${p.title}](${p.url}) — ${p.tldr || ""}${date ? ` *(读于 ${date})*` : ""}\n`;
           }
           md += "\n";
         }
@@ -393,6 +855,97 @@
     window.addEventListener("eai:read-changed", render);
   }
 
+  function showStateMessage(message, { error = false } = {}) {
+    if (!document.body || !message) return;
+    const toast = document.createElement("div");
+    toast.className = "auto-mark-toast show";
+    toast.setAttribute("role", error ? "alert" : "status");
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.classList.remove("show");
+      setTimeout(() => toast.remove(), 300);
+    }, 5000);
+  }
+
+  function showRecoveryMessages() {
+    if (!recoveryMessages.length) return;
+    showStateMessage(recoveryMessages.join(" "), { error: true });
+    recoveryMessages.length = 0;
+  }
+
+  function downloadStateBackup() {
+    const blob = new Blob([window.EAI_STATE.exportText()], { type: "application/json" });
+    const objectUrl = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = objectUrl;
+    link.download = `eai-progress-v${STATE_SCHEMA_VERSION}-${new Date().toISOString().slice(0, 10)}.json`;
+    link.hidden = true;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+  }
+
+  function bindStateControls() {
+    const exportButton = document.getElementById("eai-state-export");
+    const importButton = document.getElementById("eai-state-import");
+    const importFile = document.getElementById("eai-state-import-file");
+    const restoreButton = document.getElementById("eai-state-restore-import");
+    function renderRestoreButton() {
+      if (restoreButton) restoreButton.hidden = !window.EAI_STATE.hasImportBackup();
+    }
+    exportButton?.addEventListener("click", () => {
+      downloadStateBackup();
+      showStateMessage("进度备份已导出。");
+    });
+    importButton?.addEventListener("click", () => importFile?.click());
+    importFile?.addEventListener("change", async () => {
+      const file = importFile.files?.[0];
+      if (!file) return;
+      const promptText = "导入将覆盖当前状态中备份文件包含的进度。现有状态会先自动备份，可用“撤销最近导入”恢复。继续导入？";
+      if (typeof window.confirm === "function" && !window.confirm(promptText)) {
+        importFile.value = "";
+        return;
+      }
+      try {
+        window.EAI_STATE.importText(await file.text());
+        renderRestoreButton();
+        showStateMessage("进度备份已导入；原状态已自动备份，可撤销。");
+      } catch (error) {
+        showStateMessage(`导入失败：${error.message}`, { error: true });
+      } finally {
+        importFile.value = "";
+      }
+    });
+    restoreButton?.addEventListener("click", () => {
+      const promptText = "用最近一次导入前的自动备份覆盖当前状态？";
+      if (typeof window.confirm === "function" && !window.confirm(promptText)) return;
+      try {
+        window.EAI_STATE.restoreLastImport();
+        renderRestoreButton();
+        showStateMessage("已恢复到最近一次导入前的状态。");
+      } catch (error) {
+        showStateMessage(`恢复失败：${error.message}`, { error: true });
+      }
+    });
+    renderRestoreButton();
+
+    const resets = [
+      ["eai-state-reset-path", "path", "只清空 30 天核心进度？Guide 和论文已读状态会保留。"],
+      ["eai-state-reset-guide", "guide", "只清空 Guide 章节进度？路径和论文已读状态会保留。"],
+      ["eai-state-reset-all", "all", "清空全部阅读进度、目标、搜索历史和计时数据？此操作不可撤销。"],
+    ];
+    for (const [id, surface, promptText] of resets) {
+      document.getElementById(id)?.addEventListener("click", () => {
+        if (typeof window.confirm === "function" && !window.confirm(promptText)) return;
+        window.EAI_STATE.reset(surface);
+        renderRestoreButton();
+        showStateMessage(surface === "all" ? "全部本地进度已清空。" : `${surface} 进度已清空。`);
+      });
+    }
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".read-btn[data-slug]").forEach(bindButton);
     bindCards();
@@ -403,9 +956,12 @@
     bindTopicProgress();
     bindMyStats();
     bindDailyPick();
+    bindPathSyllabus();
     bindGuideButton();
     bindGuideCards();
     bindGuideStats();
+    bindStateControls();
+    showRecoveryMessages();
   });
 
   function bindDailyPick() {
@@ -588,37 +1144,67 @@
     window.addEventListener("eai:read-changed", render);
   }
 
-  // === Guide 章节进度追踪 ===
-  const GUIDE_KEY = "eaireading.syllabus";
-  const GUIDE_TS_KEY = "eaireading.syllabusTs";
+  function bindPathSyllabus() {
+    const checkboxes = [...document.querySelectorAll(".syl-check[data-syl-day]")];
+    if (!checkboxes.length) return;
+    const fill = document.querySelector(".syl-fill");
+    const count = document.querySelector("[data-syl-done]");
 
+    function render() {
+      const done = new Set(window.EAI_PATH.list());
+      for (const checkbox of checkboxes) {
+        const day = Number(checkbox.dataset.sylDay);
+        checkbox.checked = done.has(day);
+        checkbox.closest(".syl-day")?.classList.toggle("syl-done", checkbox.checked);
+      }
+      if (fill) fill.style.width = (done.size / PATH_DAY_COUNT * 100) + "%";
+      if (count) count.textContent = done.size;
+    }
+
+    for (const checkbox of checkboxes) {
+      checkbox.addEventListener("change", () => {
+        const day = Number(checkbox.dataset.sylDay);
+        if (checkbox.checked) window.EAI_PATH.mark(day);
+        else window.EAI_PATH.unmark(day);
+      });
+    }
+    render();
+    window.addEventListener("eai:path-changed", render);
+  }
+
+  // === Guide 章节进度追踪 ===
   function loadGuide() {
-    try { return new Set(JSON.parse(localStorage.getItem(GUIDE_KEY) || "[]")); }
-    catch { return new Set(); }
+    return new Set(normalizeGuideChapters(readStorageJson(GUIDE_KEY, [])));
   }
   function saveGuide(set) {
-    localStorage.setItem(GUIDE_KEY, JSON.stringify([...set]));
+    localStorage.setItem(GUIDE_KEY, JSON.stringify(normalizeGuideChapters([...set])));
   }
   function loadGuideTs() {
-    try { return JSON.parse(localStorage.getItem(GUIDE_TS_KEY) || "{}"); }
-    catch { return {}; }
+    return normalizeGuideTimestamps(readStorageJson(GUIDE_TS_KEY, {}));
   }
   function saveGuideTs(o) {
     localStorage.setItem(GUIDE_TS_KEY, JSON.stringify(o));
   }
 
   window.EAI_GUIDE = {
-    has(slug) { return loadGuide().has(slug); },
+    has(slug) {
+      const id = guideChapterId(slug);
+      return id !== null && loadGuide().has(id);
+    },
     list() { return [...loadGuide()]; },
     count() { return loadGuide().size; },
     mark(slug) {
-      const s = loadGuide(); s.add(slug); saveGuide(s);
-      const t = loadGuideTs(); t[slug] = Date.now(); saveGuideTs(t);
+      const id = guideChapterId(slug);
+      if (id === null) return;
+      const s = loadGuide(); s.add(id); saveGuide(s);
+      const t = loadGuideTs(); t[id] = Date.now(); saveGuideTs(t);
       this._notify();
     },
     unmark(slug) {
-      const s = loadGuide(); s.delete(slug); saveGuide(s);
-      const t = loadGuideTs(); delete t[slug]; saveGuideTs(t);
+      const id = guideChapterId(slug);
+      if (id === null) return;
+      const s = loadGuide(); s.delete(id); saveGuide(s);
+      const t = loadGuideTs(); delete t[id]; saveGuideTs(t);
       this._notify();
     },
     toggle(slug) {

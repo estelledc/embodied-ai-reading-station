@@ -465,7 +465,7 @@ export function buildEraPage(era, notes) {
 }
 
 // --- /syllabus/ checkable 30-day course plan -------------------------------
-const SYLLABUS_WEEKS = [
+export const SYLLABUS_WEEKS = [
   {
     week: 1, title: "Week 1 · 把视觉和语言连起来",
     goal: "理解为什么所有 VLA 都先有一个 VLM",
@@ -525,10 +525,10 @@ const SYLLABUS_WEEKS = [
 export function buildSyllabus(notes) {
   const slugMap = new Map(notes.map(n => [n.slug, n]));
   let body = `<main class="shell">
-    <span class="eyebrow">Syllabus · 30 天课程提纲</span>
-    <h1>30 个<em>检查框</em>，30 天读完。</h1>
+    <span class="eyebrow">Syllabus · 30 天核心课程</span>
+    <h1>30 个<em>检查框</em>，完成核心路径。</h1>
     <p style="font-size:1.1rem;color:var(--ink-soft);max-width:48ch;line-height:1.55">
-      可勾选版本的 [30 天路径](/learn/path/)。每天勾完会存到浏览器，第二天回来自动恢复。完成度同步到顶部进度条。
+      这是 <a href="${url("/learn/path/")}">30 天核心路径</a> 的可勾选版本：25 个论文日 + 5 个复习/输出日。每天勾完会存到浏览器，第二天回来自动恢复。
     </p>
 
     <aside class="syl-progress" id="syl-progress">
@@ -556,31 +556,10 @@ export function buildSyllabus(notes) {
     }
     body += `</ol></section>`;
   }
-  body += `</main>
-  <script>
-  (function(){
-    var KEY = 'eaireading.syllabus';
-    var done = new Set();
-    try { done = new Set(JSON.parse(localStorage.getItem(KEY) || '[]')); } catch(e) {}
-    function save() { localStorage.setItem(KEY, JSON.stringify([...done])); render(); }
-    function render() {
-      var pct = (done.size / 30) * 100;
-      document.querySelector('.syl-fill').style.width = pct + '%';
-      document.querySelector('[data-syl-done]').textContent = done.size;
-    }
-    document.querySelectorAll('.syl-check').forEach(function(cb){
-      var d = parseInt(cb.dataset.sylDay, 10);
-      cb.checked = done.has(d);
-      cb.addEventListener('change', function(){
-        if (cb.checked) done.add(d); else done.delete(d);
-        save();
-        cb.closest('.syl-day').classList.toggle('syl-done', cb.checked);
-      });
-      if (cb.checked) cb.closest('.syl-day').classList.add('syl-done');
-    });
-    render();
-  })();
-  </script>`;
+  body += `<aside style="margin-top:2.5rem;padding:1.2rem;border:1px solid var(--paper-dark);background:var(--paper-warm)">
+    <strong>还要完成导师任务清单？</strong>
+    <p style="margin:0.45rem 0 0;color:var(--ink-soft)">继续走 <a href="${url("/learn/path/#可选任务扩展-day-3135")}">Day 31–35 可选任务扩展 →</a>。这 5 天不计入 30 天核心进度。</p>
+  </aside></main>`;
   return page({ title: "Syllabus — Embodied AI: Zero to One", body, active: "syllabus" });
 }
 

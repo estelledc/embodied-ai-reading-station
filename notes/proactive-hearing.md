@@ -4,7 +4,7 @@ slug: proactive-hearing
 difficulty: ⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/proactive-hearing/paper.pdf
+来源: papers/proactive-hearing/paper.md
 generated_at: 2026-06-25
 era: frontier
 num: 11

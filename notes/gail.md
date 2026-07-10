@@ -4,7 +4,7 @@ slug: gail
 topic: imitation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/gail/paper.pdf
+来源: papers/gail/paper.md
 venue: NeurIPS
 year: 2016
 era: founder

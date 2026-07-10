@@ -4,10 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync as _execSync } from "node:child_process";
 import { marked } from "marked";
-import { SITE, ROOT, PAPERS_DIR, url, SITE_URL, BUILD_DATE } from "../config.mjs";
+import { SITE, ROOT, PAPERS_DIR, url, SITE_URL } from "../config.mjs";
 import { resetPageState, injectInlineFigures, extractOutline } from "../markdown.mjs";
 import { TOPIC_ORDER, PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT, eraComparator } from "../content.mjs";
 import { page } from "../layout.mjs";
+import { contentDatesForNote } from "./seo.mjs";
 
 function makeDifficultyBadge(stars) {
   // 1-2 星 → easy, 3 星 → medium, 4-5 星 → hard
@@ -15,6 +16,65 @@ function makeDifficultyBadge(stars) {
   if (n <= 2) return { class: "diff-easy", label: "入门" };
   if (n === 3) return { class: "diff-medium", label: "进阶" };
   return { class: "diff-hard", label: "硬核" };
+}
+
+export function renderRecentCommits(logOutput) {
+  return logOutput.split("\n").filter(Boolean).map(line => {
+    const [hash, date, ...subjectParts] = line.split("|");
+    const subject = subjectParts.join("|");
+    if (!hash || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !subject) return "";
+    const cleanSubj = subject
+      .replace(/^(feat|fix|docs|chore|ci|perf|refactor)[:(].*?:\s*/, "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+    const shortSubject = `${cleanSubj.slice(0, 60)}${cleanSubj.length > 60 ? "…" : ""}`;
+    return `<li><time class="lc-ago" datetime="${date}">${date}</time> <span class="lc-subject">${shortSubject}</span></li>`;
+  }).join("");
+}
+
+export function buildPaperJsonLd(note, ogImage) {
+  const dates = contentDatesForNote(note);
+  const article = {
+    "@type": "Article",
+    "headline": note.title,
+    "description": note.tldr || "",
+    "author": { "@type": "Person", "name": "Jason" },
+    "publisher": { "@type": "Organization", "name": "Embodied AI: Zero to One" },
+    // Article dates describe this note's content lifecycle. The source paper year
+    // remains a separate ScholarlyArticle field below.
+    ...(dates.generatedAt ? { "datePublished": dates.generatedAt } : {}),
+    ...(dates.contentModified ? { "dateModified": dates.contentModified } : {}),
+    "about": note.year ? {
+      "@type": "ScholarlyArticle",
+      "name": note.title,
+      "datePublished": note.year + "-01-01",
+    } : undefined,
+    "inLanguage": "zh-CN",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${SITE_URL}/papers/${note.slug}/`,
+    },
+    "image": ogImage,
+    "url": `${SITE_URL}/papers/${note.slug}/`,
+    "wordCount": note.wordCount || 0,
+    "keywords": [note.topicLabel, note.era, note.venue, "embodied AI"].filter(Boolean).join(", "),
+  };
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      article,
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/" },
+          { "@type": "ListItem", "position": 2, "name": note.topicLabel, "item": `${SITE_URL}/topics/${note.topic}/` },
+          { "@type": "ListItem", "position": 3, "name": note.title, "item": `${SITE_URL}/papers/${note.slug}/` },
+        ],
+      },
+    ],
+  };
 }
 
 // --- index page -------------------------------------------------------------
@@ -25,12 +85,8 @@ export function buildIndex(notes, latestIssue = null) {
   // 最新 3 commit
   let lastCommits = "";
   try {
-    const lines = _execSync(`git -C "${ROOT}" log -3 --pretty=format:'%h|%ar|%s'`, { encoding: "utf8" }).split("\n");
-    lastCommits = lines.map(l => {
-      const [hash, ago, subject] = l.split("|");
-      const cleanSubj = subject.replace(/^(feat|fix|docs|chore|ci|perf|refactor)[:(].*?:\s*/, "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-      return `<li><span class="lc-ago">${ago}</span> <span class="lc-subject">${cleanSubj.slice(0, 60)}${cleanSubj.length > 60 ? "…" : ""}</span></li>`;
-    }).join("");
+    const logOutput = _execSync(`git -C "${ROOT}" log -3 --pretty=format:'%h|%cs|%s'`, { encoding: "utf8" });
+    lastCommits = renderRecentCommits(logOutput);
   } catch {}
 
   let body = `<main class="shell">
@@ -55,7 +111,7 @@ export function buildIndex(notes, latestIssue = null) {
         <span>开始学习 · 从 Ch01 起步</span>
       </a>
       <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;padding:0.85rem 1.4rem;background:transparent;color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
-        <span>30 天路径 · FAQ · 公式速查</span>
+        <span>30+5 路径 · FAQ · 公式速查</span>
       </a>
     </div>
 
@@ -123,6 +179,20 @@ export function buildIndex(notes, latestIssue = null) {
       <button class="streak-export" id="eai-streak-export" type="button" title="导出已读清单为 markdown">↓ 导出</button>
     </aside>
 
+    <details class="state-tools" style="margin:1rem 0 2rem;padding:0.9rem 1rem;border:1px solid var(--paper-dark);background:var(--paper-warm)">
+      <summary style="cursor:pointer;font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-soft)">本地进度备份 / 导入 / 重置</summary>
+      <p style="margin:0.7rem 0;font-size:0.88rem;color:var(--ink-mute)">进度只保存在当前浏览器。升级或清缓存前先导出 JSON 备份；可导入 v1.1 旧状态并自动迁移。</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.55rem">
+        <button class="streak-export" id="eai-state-export" type="button">↓ 备份进度</button>
+        <button class="streak-export" id="eai-state-import" type="button">↑ 导入进度</button>
+        <button class="streak-export" id="eai-state-restore-import" type="button" hidden>撤销最近导入</button>
+        <button class="streak-export" id="eai-state-reset-path" type="button">重置路径</button>
+        <button class="streak-export" id="eai-state-reset-guide" type="button">重置 Guide</button>
+        <button class="streak-export" id="eai-state-reset-all" type="button">清空全部</button>
+        <input id="eai-state-import-file" type="file" accept="application/json,.json" hidden>
+      </div>
+    </details>
+
     <aside class="next-pick" id="eai-next-pick" hidden>
       <div class="next-pick-eyebrow">读完上一篇了？接着这篇 →</div>
       <a class="next-pick-card" href="#">
@@ -150,8 +220,8 @@ export function buildIndex(notes, latestIssue = null) {
         <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">${GUIDE_CHAPTER_COUNT} 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
       </a>
       <a href="${url("/learn/path/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
-        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30 天论文路径</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">每天 1-2 篇论文，30 天后能讲清具身 AI 这一年在干什么。</p>
+        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30+5 学习路径</strong>
+        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">30 天核心含 25 篇论文 + 5 个复习/输出日；任务驱动读者再选做 Day 31–35。</p>
       </a>
       <a href="${url("/topics/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
         <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读</strong>
@@ -346,7 +416,7 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
       <span class="dot">·</span>
       <span>${note.difficulty || ""}</span>
       <span class="dot">·</span>
-      <span class="status-chip status-${note.status === "deep-read" ? "deep" : note.status === "auto-summary" ? "summary" : "light"}" title="${note.status === "deep-read" ? "精读笔记 · 手写" : note.status === "auto-summary" ? "auto + 校对" : "auto 短摘要"}">${note.status === "deep-read" ? "深度精读" : note.status === "auto-summary" ? "auto 摘要" : "短摘要"}</span>
+      <span class="status-chip status-${note.status === "deep-read" ? "deep" : note.status === "auto-summary" ? "summary" : "light"}" title="${note.status === "deep-read" ? "长篇结构化笔记 · AI 辅助整理（非逐页人工复核）" : note.status === "auto-summary" ? "AI 辅助短摘要" : "短摘要"}">${note.status === "deep-read" ? "长篇结构化" : note.status === "auto-summary" ? "auto 摘要" : "短摘要"}</span>
       <button class="read-btn" data-slug="${note.slug}" type="button" aria-pressed="false">标记已读</button>
       <button class="copy-md-btn" type="button" data-md="[${note.title.split(":")[0]}](${SITE_URL}/papers/${note.slug}/)" title="复制 markdown 链接" aria-label="复制 markdown 链接到剪贴板"><span aria-hidden="true">⧉</span> MD</button>
       <button class="share-btn" type="button" data-share-title="${note.title.replace(/"/g, "&quot;")}" data-share-url="${SITE_URL}/papers/${note.slug}/" data-share-text="${(note.tldr || "").replace(/"/g, "&quot;").slice(0, 100)}" title="分享" aria-label="分享这篇笔记"><span aria-hidden="true">⤴</span></button>
@@ -398,43 +468,7 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
     : fs.existsSync(cardImg)
       ? `${SITE_URL}/images/cards/${note.slug}.webp`
       : `${SITE_URL}/images/hero.webp`;
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Article",
-        "headline": note.title,
-        "description": note.tldr || "",
-        "author": { "@type": "Person", "name": "Jason" },
-        "publisher": { "@type": "Organization", "name": "Embodied AI: Zero to One" },
-        // 笔记的发布时间用 build 时间戳；论文原始年份用 about 字段单独保留
-        "datePublished": BUILD_DATE.toISOString().slice(0, 10),
-        "dateModified": BUILD_DATE.toISOString().slice(0, 10),
-        "about": note.year ? {
-          "@type": "ScholarlyArticle",
-          "name": note.title,
-          "datePublished": note.year + "-01-01",
-        } : undefined,
-        "inLanguage": "zh-CN",
-        "mainEntityOfPage": {
-          "@type": "WebPage",
-          "@id": `${SITE_URL}/papers/${note.slug}/`,
-        },
-        "image": ogImage,
-        "url": `${SITE_URL}/papers/${note.slug}/`,
-        "wordCount": note.wordCount || 0,
-        "keywords": [note.topicLabel, note.era, note.venue, "embodied AI"].filter(Boolean).join(", "),
-      },
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/" },
-          { "@type": "ListItem", "position": 2, "name": note.topicLabel, "item": `${SITE_URL}/topics/${note.topic}/` },
-          { "@type": "ListItem", "position": 3, "name": note.title, "item": `${SITE_URL}/papers/${note.slug}/` },
-        ],
-      },
-    ],
-  };
+  const jsonLd = buildPaperJsonLd(note, ogImage);
   const linkRel = `${prev ? `<link rel="prev" href="${SITE_URL}/papers/${prev.slug}/">` : ""}
 ${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
   return page({

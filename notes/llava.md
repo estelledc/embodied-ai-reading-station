@@ -4,7 +4,7 @@ slug: llava
 difficulty: ⭐⭐
 status: deep-read
 task: required
-来源: papers/llava/paper.pdf
+来源: papers/llava/paper.md
 generated_at: 2026-05-30
 era: founder
 num: 1

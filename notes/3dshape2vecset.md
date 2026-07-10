@@ -4,7 +4,7 @@ slug: 3dshape2vecset
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/3dshape2vecset/paper.pdf
+来源: papers/3dshape2vecset/paper.md
 generated_at: 2026-06-25
 era: classic
 num: 2

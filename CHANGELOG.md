@@ -2,6 +2,31 @@
 
 本项目遵循 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.1.0/) 与语义化版本。
 
+## [Unreleased]
+
+### Added
+- `EAI-T003`：新增学习路径、Guide/topic 覆盖、公开质量声明、来源完整性和移动端导航契约测试。
+- `EAI-T009`：新增可重复生成的 `papers/provenance.json`，记录 46 份本地解析文本的 SHA-256。
+- `EAI-T014`：新增 Pull Request 专用 CI；只运行测试、根路径/仓库子路径构建检查与 high-level audit，不部署 Pages；README 增加 protected-main owner checklist。
+- `EAI-T022`：首页新增版本化 JSON 进度备份、导入、分区/全量重置与“撤销最近导入”。
+
+### Changed
+- `EAI-T001` / `EAI-T002`：学习路径统一为“30 天核心（25 篇论文 + 5 个复习/输出日）+ Day 31–35 可选任务扩展”；核心路径与 Guide 使用独立完成度，扩展不计入 30 天核心进度。
+- `EAI-T007`：`deep-read` 改为可验证的长篇结构化格式说明，移除未被门禁支持的统一 Method 占比和“全部人工精读”承诺；README、About、llms.txt 统一 AI 辅助/结构门禁/非逐页人工复核边界，治理路线图冻结既有正文债务计数；论文笔记正文保持不变。
+- `EAI-T009`：本地来源改为实际跟踪的 `paper.md`，并以 `papers/provenance.json` 固定 SHA-256。
+- `EAI-T012`：CI 从 checkout commit 注入确定性构建时间；生成时间、笔记生命周期和原论文年份使用不同字段，不再用部署时间冒充发布日期；首页最近提交改用稳定 commit 日期，避免相同输入因墙上时钟产生不同 HTML。
+- `EAI-T015`：GitHub Actions 固定到完整 commit SHA，并把 Pages/OIDC 权限缩小到 deploy job。
+
+### Fixed
+- `EAI-T004`：旧版混合 syllabus 状态一次性迁移为互不覆盖的路径和 Guide 命名空间，损坏 JSON 会先备份再恢复安全默认值。
+- `EAI-T006`：阅读清单 Markdown 导出不再重复拼接 `SITE_URL` / `SITE_BASE`。
+- `EAI-T022`：拒绝空或未知导入；导入先完整校验并自动备份，部分输入只更新显式 surface，任一存储写入失败会事务回滚。
+- 修复 320px 窄屏下关闭的 More 面板与导航 max-content 宽度造成的全页横向溢出。
+
+### Security
+- `EAI-T005`：搜索历史与 link preview 改用 DOM API / `textContent`，查询长度与控制字符受限，用户输入不再进入 HTML sink。
+- `EAI-T021`：Markdown 链接和图片启用协议 allowlist，统一转义 URL、title、alt 和 caption，并锁定唯一获准的原始 iframe。
+
 ## [1.1.0] - 2026-07-05
 
 工程债清偿：build.mjs 模块化 + 单元测试骨架 + 拆分中记录的坏味道逐条清偿（行为不变重构全程以固定时间戳 dist 逐字节对比护航）。

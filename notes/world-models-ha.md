@@ -4,7 +4,7 @@ slug: world-models-ha
 topic: world-model
 difficulty: "\u2B50\u2B50\u2B50"
 status: deep-read
-来源: papers/world-models-ha/paper.pdf
+来源: papers/world-models-ha/paper.md
 venue: NeurIPS
 year: 2018
 era: founder

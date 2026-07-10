@@ -1,12 +1,12 @@
-name: Deploy reading station to GitHub Pages
+name: Validate pull request
 
 on:
-  push:
-    branches: [main]
-  workflow_dispatch:
+  pull_request:
+
+permissions: {}
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pr-validation-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -34,29 +34,13 @@ jobs:
           echo "SOURCE_DATE_EPOCH=$epoch" >> "$GITHUB_ENV"
           echo "SOURCE_DATE_EPOCH=$epoch"
       - run: npm ci
+      - name: Test default-base build
+        run: npm test
       - name: Build with repo-name base path
         env:
           SITE_BASE: /${{ github.event.repository.name }}
         run: npm run build
-      - name: Unit tests
-        run: npm run test:unit
-      - name: Healthcheck
+      - name: Healthcheck repo-name base path
         run: npm run check
-      - if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
-        with:
-          path: site/dist
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4.0.5
-        id: deployment
+      - name: Audit dependencies
+        run: npm audit --audit-level=high

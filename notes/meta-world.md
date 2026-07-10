@@ -4,7 +4,7 @@ slug: meta-world
 topic: dataset-eval
 difficulty: ⭐⭐
 status: deep-read
-来源: papers/meta-world/paper.pdf
+来源: papers/meta-world/paper.md
 venue: CoRL
 year: 2019
 era: founder

@@ -4,7 +4,7 @@ slug: cosmos-policy
 difficulty: ⭐⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/cosmos-policy/paper.pdf
+来源: papers/cosmos-policy/paper.md
 generated_at: 2026-06-25
 era: frontier
 num: 7

@@ -4,7 +4,7 @@ slug: dagger
 topic: imitation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/dagger/paper.pdf
+来源: papers/dagger/paper.md
 venue: AISTATS
 year: 2011
 era: founder

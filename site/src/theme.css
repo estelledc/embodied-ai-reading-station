@@ -463,7 +463,12 @@ footer .fin { color: var(--coral); font-family: var(--font-serif); font-style: i
 @media (max-width: 600px) {
   html { font-size: 16px; }
   .masthead { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
-  .masthead nav { gap: 1rem; }
+  .masthead nav {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    gap: 0.6rem 1rem;
+  }
 }
 
 /* === print === */
@@ -2551,18 +2556,14 @@ html.dark-theme body::after {
   min-width: 12rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   z-index: 50;
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 0;
   margin-top: 0.4rem;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.15s, visibility 0.15s;
 }
 .more-nav:hover .more-nav-panel,
 .more-nav:focus-within .more-nav-panel {
-  visibility: visible;
-  opacity: 1;
+  display: flex;
 }
 .more-nav-panel a {
   padding: 0.4rem 1rem;

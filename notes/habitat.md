@@ -4,7 +4,7 @@ slug: habitat
 topic: sim
 difficulty: ⭐⭐
 status: deep-read
-来源: papers/habitat/paper.pdf
+来源: papers/habitat/paper.md
 venue: ICCV
 year: 2019
 era: founder

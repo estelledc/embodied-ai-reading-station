@@ -4,7 +4,7 @@ slug: dreamer-v1
 topic: world-model
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/dreamer-v1/paper.pdf
+来源: papers/dreamer-v1/paper.md
 venue: ICLR
 year: 2020
 era: founder

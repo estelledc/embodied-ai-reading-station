@@ -4,7 +4,7 @@ slug: mla
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/mla/paper.pdf
+来源: papers/mla/paper.md
 generated_at: 2026-06-25
 era: frontier
 num: 6

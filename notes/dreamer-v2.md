@@ -4,7 +4,7 @@ slug: dreamer-v2
 topic: world-model
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/dreamer-v2/paper.pdf
+来源: papers/dreamer-v2/paper.md
 venue: ICLR
 year: 2021
 era: classic

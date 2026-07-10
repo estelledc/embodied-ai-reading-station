@@ -4,7 +4,7 @@ slug: robosuite
 topic: dataset-eval
 difficulty: ⭐⭐
 status: deep-read
-来源: papers/robosuite/paper.pdf
+来源: papers/robosuite/paper.md
 venue: arXiv
 year: 2020
 era: founder

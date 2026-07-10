@@ -4,7 +4,7 @@ slug: blip
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/blip/paper.pdf
+来源: papers/blip/paper.md
 venue: ICML
 year: 2022
 era: classic

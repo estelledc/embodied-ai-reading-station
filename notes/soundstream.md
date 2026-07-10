@@ -4,7 +4,7 @@ slug: soundstream
 topic: auditory
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/soundstream/paper.pdf
+来源: papers/soundstream/paper.md
 venue: IEEE/ACM TASLP
 year: 2022
 era: founder

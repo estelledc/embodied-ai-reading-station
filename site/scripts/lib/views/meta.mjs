@@ -91,7 +91,7 @@ export function buildSiteMap(notes, issuePages, learnPages) {
       title: "入口",
       items: [
         { url: "/", label: "Index", desc: `${PAPER_COUNT} 张论文卡 + 主题分组 + 快筛` },
-        { url: "/learn/path/", label: "30 天路径", desc: "零基础入门推荐顺序" },
+        { url: "/learn/path/", label: "30+5 学习路径", desc: "30 天核心 + 5 天可选任务扩展" },
         { url: "/learn/faq/", label: "FAQ", desc: "新人 12 题" },
         { url: "/lists/", label: "Reading lists", desc: "5 套主题精选包" },
       ],
@@ -433,7 +433,7 @@ export function buildAbout(notes = []) {
     ${bigNums}
     <div class="note-content" style="max-width:68ch">
       <p>这站是为想读懂顶会论文、但还在入门阶段的人做的。<strong>具身智能（Embodied AI）</strong>讲的是「怎么让机器人有身体地融入世界」——它要看见、要听见、要听懂指令、要决定下一步怎么做。听起来像科幻，但 2024-2025 已经在论文里跑通了一大半。</p>
-      <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。我把它们重写成<strong>能读懂的版本</strong>——保留所有数字和方法，但用基础的类比解释每个新词。</p>
+      <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。笔记用 AI 辅助整理成<strong>能读懂的长篇结构化版本</strong>——用基础类比解释新词，但不把结构门禁等同于逐页人工复核；关键数字和结论仍应回到来源核验。</p>
       <p>七个主题是这样：</p>
       <ul>
         <li><strong>I. VLM Foundation</strong> — 视觉与语言对齐的基座模型</li>
@@ -456,8 +456,9 @@ export function buildAbout(notes = []) {
 
       <h2>Workflow</h2>
       <ol>
-        <li><code>lr pdf bundle paper.pdf</code> — 把 PDF 转成带图 markdown</li>
-        <li><code>notes/&lt;slug&gt;.md</code> — 用统一模板写精读笔记</li>
+        <li><code>lr pdf bundle paper.pdf</code> — 把授权 PDF 转成带图 markdown</li>
+        <li><code>notes/&lt;slug&gt;.md</code> — 用统一模板整理长篇结构化笔记</li>
+        <li><code>npm run provenance:generate</code> — 固定本地解析文本的 SHA-256</li>
         <li><code>node site/scripts/build.mjs</code> — 期刊风 HTML 渲染</li>
         <li>GitHub Actions → GitHub Pages — 部署</li>
       </ol>
@@ -493,7 +494,7 @@ export function buildAbout(notes = []) {
         <li><strong>MinerU + pdftotext</strong>：PDF → markdown 解析</li>
         <li><strong>lr (LightRead)</strong>：arXiv 检索 + PDF bundle 工具</li>
       </ul>
-      <p>所有 AI 输出都经过手动校对。错误归人不归 AI。</p>
+      <p>AI 输出经过自动结构、链接、来源和构建门禁；这不代表 156 篇都已逐页人工复核。重要事实请以原论文为准，发现错误欢迎提交 issue。</p>
 
       ${sizeBars}
 

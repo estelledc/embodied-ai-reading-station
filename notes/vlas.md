@@ -4,7 +4,7 @@ slug: vlas
 difficulty: ⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/vlas/paper.pdf
+来源: papers/vlas/paper.md
 generated_at: 2026-06-25
 era: frontier
 num: 5

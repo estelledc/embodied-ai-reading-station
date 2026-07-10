@@ -4,7 +4,7 @@ slug: openvla
 difficulty: ⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/openvla/paper.pdf
+来源: papers/openvla/paper.md
 generated_at: 2026-06-25
 era: classic
 num: 4

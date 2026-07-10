@@ -4,7 +4,7 @@ slug: nlos-mmwave
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/nlos-mmwave/paper.pdf
+来源: papers/nlos-mmwave/paper.md
 venue: MobiSys 2025
 authors: "Dodds, Boroushaki, Zhou, Adib (MIT)"
 generated_at: 2026-06-25

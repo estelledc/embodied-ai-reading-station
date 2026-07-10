@@ -2,7 +2,7 @@
 
 > **从零开始学具身智能——22 章系统教程 + 156 篇论文笔记。**
 > 零术语假设，日常类比起步。从 CLIP 到 π0，11 主题全景。
-> v1.0.0 · 2026-07（更新记录见 [CHANGELOG.md](CHANGELOG.md)）
+> v1.1.0 · 2026-07（v1.2 改进中，更新记录见 [CHANGELOG.md](CHANGELOG.md)）
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
 
@@ -14,19 +14,19 @@
 
 - ✅ 第一次出现的术语必有一句话定义 + 生活类比
 - ✅ 公式后面必有人话翻译
-- ✅ 平均每篇 4000 字，30 分钟读完
+- ✅ 每篇至少 4000 字；可按需跳读，不把篇幅等同于人工复核深度
 - ✅ 关键数字配生活语境（"13 万段示范" = "每天 8 小时连续示范 5 个月"）
 
-### 内容质量说明
+### 内容状态与质量边界
 
-156 篇笔记已于 2026-07 全部升级为 **deep-read（深度精读）** 标准（升级过程见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)，标准定义见 [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)）：
+156 篇笔记都采用 **deep-read（长篇结构化笔记）** 格式。这个状态表示页面结构和最低内容门禁，不等于“作者已逐页人工复核原论文”：
 
-- 每篇 ≥4000 字，Method 拆解占比 ≥40%
-- 主实验表用 Markdown 表格还原，关键数字带生活语境
-- 每篇 ≥2 个视觉元素（架构图 / ASCII 图 / 论文原图）
-- ≥3 条「局限与批评」+ 5–8 道思考题
+- 每篇 ≥4000 字（构建门禁校验）
+- 每篇 ≥2 个视觉元素（架构图 / ASCII 图 / 论文原图，构建门禁校验）
+- 统一包含实验解读、导读关系、思考题和原文信息
+- 笔记由 AI 辅助整理；关键事实、数字和结论仍应回到原论文核验
 
-其中 46 篇有本地 PDF 全文解析（`papers/<slug>/`），110 篇基于 arxiv 原文 + 公开资料撰写。
+其中 46 篇保留了本地解析文本（`papers/<slug>/paper.md`）及 SHA-256 清单，110 篇引用 arXiv 等 HTTPS 原文页面。旧版宣称的统一 Method 占比并未被现有内容满足，因此不再作为公开承诺；待补深度被记录为后续内容工作，不在 v1.2 中盲目扩写。
 
 这站起源于导师布置的 **13 篇精读任务**（详见 [research-task.md](research-task.md)），扩展到 156 篇是为了看到全景。13 篇任务论文在站内标有 `task: required` 标记。
 
@@ -37,12 +37,12 @@
 **根据你的目标选一条路径**：
 
 1. **任务驱动**（有科研任务要交 / 6-30 截止）→ [research-task.md](research-task.md) 看 13 篇任务论文 → [22 章导读 Task 1 路径](guide/README.md)（Ch01→Ch03→Ch04→Ch08→Ch09→Ch10→Ch12→Ch22）→ [学习进度](progress.md)
-2. **30 天系统学习**（想全面入门）→ [30 天学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)（Week 1 VLM → Week 2 VLA → Week 3 模仿+扩散 → Week 4 周边）
+2. **30 天核心学习 + 5 天可选扩展**（想全面入门）→ [30+5 学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)（核心为 25 篇论文 + 5 个复习/输出日；Day 31–35 补齐任务论文）
 3. **按主题浏览**（对特定方向感兴趣）→ [11 主题入门三连](https://estelledc.github.io/embodied-ai-reading-station/topics/)，每个主题 3 篇 primer 带你入门
 
 ### 更多导航
 
-- **[30 天学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)** — Week 1 VLM → Week 2 VLA → Week 3 模仿+扩散 → Week 4 周边
+- **[30+5 学习路径](https://estelledc.github.io/embodied-ai-reading-station/learn/path/)** — 30 天核心（25 篇 + 5 个复习/输出日）+ 5 天可选任务扩展
 - **[新人 FAQ](https://estelledc.github.io/embodied-ai-reading-station/learn/faq/)** — 12 题最常被问
 - **[5 套主题阅读包](https://estelledc.github.io/embodied-ai-reading-station/lists/)** — 50-90 分钟一包
 
@@ -73,6 +73,7 @@
 - 暗色模式 toggle (☀ ☾ ⊙)
 - 论文页阅读计时器 + 顶部进度条
 - 已读清单导出 markdown
+- 首页可导出/导入版本化 JSON 进度，并分别重置 30 天路径、Guide 或全部状态
 
 ## 给研究者
 
@@ -137,11 +138,19 @@ npm run build      # 输出到 dist/
 npm run serve      # 本地 dev server
 ```
 
+### 发布门禁（仓库 owner）
+
+- `main` 只通过 Pull Request 合并，不直接推送。
+- 首次运行 PR CI 后，把实际 check `Validate pull request / build` 设为 required。
+- 禁止 `main` force-push 和 branch deletion；Pages environment 只允许 `main` 部署。
+- 工作流 action 固定到完整 commit SHA；升级 action 时单独审查并更新 SHA。
+- 合并前必须通过 `npm test`、仓库名 `SITE_BASE` 构建检查和 `npm audit --audit-level=high`。
+
 ## 项目结构
 
 ```
 notes/             156 篇论文笔记 (.md, frontmatter + body)
-papers/            原 PDF + 解析图片
+papers/            解析文本 + 解析图片 + provenance SHA-256 清单
 site/
   scripts/build.mjs   主构建脚本（discoverPapers + buildIndex + ...）
   src/                CSS / JS / images / templates
@@ -176,8 +185,8 @@ content/*.md ┤                              │
                                   ├─ sw.js (PWA)
                                   └─ index.html ... 2400+ files
 
-   ↓ npm run check (70+ 项)
-   ↓ GitHub Actions (build → check → deploy)
+   ↓ npm run check（静态、链接、来源与产品契约）
+   ↓ GitHub Actions（PR: test/build/check/audit；main: build/check/deploy）
    ↓
    estelledc.github.io/embodied-ai-reading-station/
 ```

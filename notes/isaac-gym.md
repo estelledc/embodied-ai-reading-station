@@ -4,7 +4,7 @@ slug: isaac-gym
 topic: sim
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/isaac-gym/paper.pdf
+来源: papers/isaac-gym/paper.md
 venue: NeurIPS Datasets
 year: 2021
 era: founder

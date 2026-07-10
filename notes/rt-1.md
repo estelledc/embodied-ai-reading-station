@@ -4,7 +4,7 @@ slug: rt-1
 topic: vla
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/rt-1/paper.pdf
+来源: papers/rt-1/paper.md
 venue: RSS
 year: 2022
 era: founder

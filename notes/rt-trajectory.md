@@ -4,7 +4,7 @@ slug: rt-trajectory
 topic: vla
 difficulty: 3
 status: deep-read
-来源: papers/rt-trajectory/paper.pdf
+来源: papers/rt-trajectory/paper.md
 venue: ICLR
 year: 2023
 era: classic
