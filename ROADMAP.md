@@ -110,7 +110,8 @@ v1.2 冻结的正文债务(42 篇 Method 低于 1,500 字、120 篇低于旧宣�
 |------|------|
 | 方向(本文) | ROADMAP.md |
 | 完成记录(唯一权威) | [CHANGELOG.md](CHANGELOG.md) |
-| 工程执行计划 | [docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)(现行);[PLAN-1.0.0.md](PLAN-1.0.0.md)、[PLAN-1.1.md](PLAN-1.1.md)(已完成) |
+| 推进执行计划(现行) | [PLAN-1.3.md](PLAN-1.3.md)(本文的执行层:批次 0–9,出口 = v1.3.0) |
+| 工程执行计划 | [docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)(v1.2 RC,现行);[PLAN-1.0.0.md](PLAN-1.0.0.md)、[PLAN-1.1.md](PLAN-1.1.md)(已完成) |
 | 科研任务与进度 | [research-task.md](research-task.md)、[progress.md](progress.md) |
 | 内容工作流 | [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)(精读标准)、[DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)(批量升级记录) |
 | 历史存档 | [AUDIT.md](AUDIT.md)、[BACKLOG.md](BACKLOG.md)、[IMPROVEMENTS.md](IMPROVEMENTS.md)、[TRANSFORMATION.md](TRANSFORMATION.md)、[delivery-checklist.md](delivery-checklist.md) |
