@@ -4,7 +4,7 @@ slug: mmclip
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/mmclip/paper.pdf
+来源: papers/mmclip/paper.md
 venue: SenSys 2024
 authors: "Cao, Xue, Liu, Wang, Wang, Zhang, Su (Purdue + UNC Charlotte)"
 generated_at: 2026-06-25

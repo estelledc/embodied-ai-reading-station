@@ -4,7 +4,7 @@ slug: flamingo
 topic: vlm-foundation
 difficulty: "\u2B50\u2B50\u2B50\u2B50"
 status: deep-read
-来源: papers/flamingo/paper.pdf
+来源: papers/flamingo/paper.md
 venue: NeurIPS
 year: 2022
 era: founder

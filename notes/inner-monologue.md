@@ -4,7 +4,7 @@ slug: inner-monologue
 topic: planning
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/inner-monologue/paper.pdf
+来源: papers/inner-monologue/paper.md
 venue: CoRL
 year: 2022
 era: founder

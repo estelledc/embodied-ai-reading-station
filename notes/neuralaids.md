@@ -4,7 +4,7 @@ slug: neuralaids
 difficulty: ⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/neuralaids/paper.pdf
+来源: papers/neuralaids/paper.md
 generated_at: 2026-06-25
 era: classic
 num: 12

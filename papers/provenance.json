@@ -1,0 +1,282 @@
+{
+  "schema_version": "1.0.0",
+  "algorithm": "sha256",
+  "entries": [
+    {
+      "slug": "3d-diffusion-policy",
+      "path": "papers/3d-diffusion-policy/paper.md",
+      "sha256": "823f721d5cfc87e5cca376c64b219335f2c12d850297aa035e6d29ae6a7b4dc3",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "3dshape2vecset",
+      "path": "papers/3dshape2vecset/paper.md",
+      "sha256": "d7e001604ac3edcfffb5eb133c02efdb8cea4033a27f97ea44d96bbc1a6ea79a",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "acoustic-swarms",
+      "path": "papers/acoustic-swarms/paper.md",
+      "sha256": "391f4976d285d8bdb037dcd4107846a27afb8296370baf25ae1f815d9b9d5004",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "anymal",
+      "path": "papers/anymal/paper.md",
+      "sha256": "7d82d9ddd36ce646ff742e17eb7a1105f33c91126f9005eba63346933b43063e",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "blip",
+      "path": "papers/blip/paper.md",
+      "sha256": "0887e885f24acb4ed2ca2e7af2aa70c68dec9e0faf5b5560dcd79012d372ae98",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "clip",
+      "path": "papers/clip/paper.md",
+      "sha256": "7320f8684dc320b515b09fef2f34099e4b1beac91732548ff34c6bd275aa8108",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "code-as-policies",
+      "path": "papers/code-as-policies/paper.md",
+      "sha256": "035db5ea0f967fb1d7a0b5ab83e74bfd9ac7514c173cdacc133d22c652f59a8d",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "consistency-policy",
+      "path": "papers/consistency-policy/paper.md",
+      "sha256": "8c92834e4a15514f023e5f0e474b80224beb91443c285fadfba56569bfc1c912",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "conv-tasnet",
+      "path": "papers/conv-tasnet/paper.md",
+      "sha256": "b3e03dc7e770b340a67303473ad9d8728ffcd921e08c915ab666a9e9f001c8b8",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "cosmos-policy",
+      "path": "papers/cosmos-policy/paper.md",
+      "sha256": "8600ed89083960fa81ad934a1cb2701a2fadf1440a14bbdbcb80c88bb51240d4",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "dagger",
+      "path": "papers/dagger/paper.md",
+      "sha256": "c071efa16dc68002145ef182609405449bffd4bac89888257892b1a557edafaf",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "diffusion-policy",
+      "path": "papers/diffusion-policy/paper.md",
+      "sha256": "574eeffdf6ffb2ba5ebf45404c89fa7c26f9ab5d11202261b458d04881d7b322",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "dreamer-v1",
+      "path": "papers/dreamer-v1/paper.md",
+      "sha256": "8938e54fd629b088b2b09e3cc9eef80c5535e350bdb77116cd1959c56277f6cb",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "dreamer-v2",
+      "path": "papers/dreamer-v2/paper.md",
+      "sha256": "60258e4605c379731ca60d2d9ccee4e71a58801b9ffde560cffb736fb36f31a8",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "flamingo",
+      "path": "papers/flamingo/paper.md",
+      "sha256": "49ec0155adfb43fb1c17017368c4c123344bcf17b2c3357f88af73dfaa1e71a0",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "gail",
+      "path": "papers/gail/paper.md",
+      "sha256": "f4e39daaadec09df2bfbb73316365ea01a1f524af9e729b768cff749af0c3645",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "habitat",
+      "path": "papers/habitat/paper.md",
+      "sha256": "ba819203e786f2e63b39fc487be45976817a1b5002feff48d3168b2ae93a0bc7",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "ibc",
+      "path": "papers/ibc/paper.md",
+      "sha256": "3fddeea544566ccaeb7997ac4eb8126e302165a28162c3a0cee4381c43b3d0b7",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "imagebind",
+      "path": "papers/imagebind/paper.md",
+      "sha256": "7853cb4015923d2316f1e9a82793c8df6475646ec1ad370ca53b83c15383e07d",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "inner-monologue",
+      "path": "papers/inner-monologue/paper.md",
+      "sha256": "c16a0f31ea268866b6ab703420dab1ee2b7bbd2caf6b987888d0b297aaf8ef6e",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "isaac-gym",
+      "path": "papers/isaac-gym/paper.md",
+      "sha256": "94cfd30c1b175a24be8ad2d9f25f1a881060f0123e5d4be8478a7cc4b556e59e",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "llava",
+      "path": "papers/llava/paper.md",
+      "sha256": "b05c5b516738940a41c67ee765a081696f34138e29f50070b000dbebfe2e1882",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "meta-world",
+      "path": "papers/meta-world/paper.md",
+      "sha256": "dec1f3d91905c775076e7b1e6154badce0fbd277b4c9575a1638b64c56a7df76",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "millimap",
+      "path": "papers/millimap/paper.md",
+      "sha256": "4dbb5d62b43e1059cb02e680252d52e3e0e5a62d60412ebf1148d8d0fb4c806e",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "mla",
+      "path": "papers/mla/paper.md",
+      "sha256": "f761a09afd5b65afc8b4195eddf85cc98542fc8ad106fed8d11b1b8d37b89336",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "mmclip",
+      "path": "papers/mmclip/paper.md",
+      "sha256": "eb5ee02c9c55c839bd580e5a67cf8c25c811e392465ea24b94ea26570dc63905",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "neuralaids",
+      "path": "papers/neuralaids/paper.md",
+      "sha256": "9787dc758157fe99c547e8a3b8dfe8fb288f9a1be421146fdb694a68f9f44171",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "nlos-mmwave",
+      "path": "papers/nlos-mmwave/paper.md",
+      "sha256": "eee2c8b3d9ec97c403e668d963defeeace80783a91d195853007aa06932c357d",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "openvla",
+      "path": "papers/openvla/paper.md",
+      "sha256": "641e128bbeeafd5369c0daa5395457f91485afe0c7e62e8b433ea63c90318faf",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "palm-e",
+      "path": "papers/palm-e/paper.md",
+      "sha256": "06f0cb69f9f42f39f9fd9503dc5ad965a1f33b753eba40611cfddb8d9f15cdb4",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "person-in-wifi",
+      "path": "papers/person-in-wifi/paper.md",
+      "sha256": "906be60c9f77f168ad797e4e538732fced9ab44f70868e2174d45aea46d94266",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "proactive-hearing",
+      "path": "papers/proactive-hearing/paper.md",
+      "sha256": "4354d89003f5e71ab642107fdd19ed5c911ecbf36ed9ce59e870468a2dcf29b8",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rf-pose-through-wall",
+      "path": "papers/rf-pose-through-wall/paper.md",
+      "sha256": "0898648ac9f51cc20f27a08d0ece773e97d4bf62774113715bdaa13f7bc4f6dc",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rf-slam",
+      "path": "papers/rf-slam/paper.md",
+      "sha256": "0cd0fb143d5bccffdde2657c3f421239466bf3cac3f1219c196f43d46871ffbe",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rlbench",
+      "path": "papers/rlbench/paper.md",
+      "sha256": "db18e908649d61152a9b2130bb75f8d85f57a082db78723476ef02a745b9dadb",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "robosuite",
+      "path": "papers/robosuite/paper.md",
+      "sha256": "b7bd39f52292a676760c68661a60fd31e8a5cb0be8a7923187c9345b6fa710f6",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rt-1",
+      "path": "papers/rt-1/paper.md",
+      "sha256": "76293e6a6971f8ac1099f44bf058352fdcd0dbd467448c10c4ed3bc389964841",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rt-2",
+      "path": "papers/rt-2/paper.md",
+      "sha256": "f4f87c23a8eb3076b838cc06c02f7eff9fad37d95da486ba8b06be7db1b2daf2",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "rt-trajectory",
+      "path": "papers/rt-trajectory/paper.md",
+      "sha256": "9ed37b40fbac8c3b92bba391e5eeb7a4ed7b0227aca4f18e19a3e67d1a93b261",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "sapien",
+      "path": "papers/sapien/paper.md",
+      "sha256": "bc896a6fd9d27cd16ba67dbc122d3c97c7f6a49855694e81edeb3370427b839a",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "saycan",
+      "path": "papers/saycan/paper.md",
+      "sha256": "04acb8a6fdbe3a0f41d36a3445184d7500d8ea01b89aaf2fb08279d32bdb7d35",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "soundstream",
+      "path": "papers/soundstream/paper.md",
+      "sha256": "dab13cd3c3d5849b1ac1d5348fa015ad5403dc7a2b4bb26ff2cc5f52bf08d981",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "touch-vision-cross-modal",
+      "path": "papers/touch-vision-cross-modal/paper.md",
+      "sha256": "d72271e378c2ef89082be24ba4faa5e110b1942d71eb45c550cf2c0e9c83f25e",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "vlas",
+      "path": "papers/vlas/paper.md",
+      "sha256": "f4065fed228bf8e28674897965a27945f96d9fe0d4091d3c3cf80cce3d9e856a",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "whisper",
+      "path": "papers/whisper/paper.md",
+      "sha256": "b9aa230200d935c28bb9da46cf5bea99d6b3a4265ba6d6d7238e13e6e27c4f97",
+      "artifact_type": "parsed-paper-markdown"
+    },
+    {
+      "slug": "world-models-ha",
+      "path": "papers/world-models-ha/paper.md",
+      "sha256": "15264b3274612cb7cdca0b9767efa9454d72bcb1c0c0b7f867240eb890ca124b",
+      "artifact_type": "parsed-paper-markdown"
+    }
+  ]
+}

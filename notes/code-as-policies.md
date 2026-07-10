@@ -4,7 +4,7 @@ slug: code-as-policies
 topic: planning
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/code-as-policies/paper.pdf
+来源: papers/code-as-policies/paper.md
 venue: ICRA
 year: 2023
 era: founder

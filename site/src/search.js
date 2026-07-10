@@ -10,25 +10,55 @@
 
   // 搜索历史
   const HISTORY_KEY = "eaireading.searches";
+  const MAX_HISTORY_QUERY_LENGTH = 200;
+  const CONTROL_CHAR_RE = /[\u0000-\u001f\u007f]/;
+
+  function normalizeHistoryQuery(value) {
+    if (typeof value !== "string") return null;
+    const trimmed = value.trim();
+    if (trimmed.length < 2 || CONTROL_CHAR_RE.test(trimmed)) return null;
+    return [...trimmed].slice(0, MAX_HISTORY_QUERY_LENGTH).join("");
+  }
+
   function loadHistory() {
-    try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]"); }
+    try {
+      const stored = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+      if (!Array.isArray(stored)) return [];
+      return stored.flatMap(item => {
+        const q = normalizeHistoryQuery(item?.q);
+        return q ? [{ q, t: Number.isFinite(item?.t) ? item.t : 0 }] : [];
+      }).slice(0, 5);
+    }
     catch { return []; }
   }
   function pushHistory(q) {
-    if (!q || q.length < 2) return;
-    const cur = loadHistory().filter(x => x.q !== q);
-    cur.unshift({ q, t: Date.now() });
+    const normalized = normalizeHistoryQuery(q);
+    if (!normalized) return;
+    const cur = loadHistory().filter(x => x.q !== normalized);
+    cur.unshift({ q: normalized, t: Date.now() });
     localStorage.setItem(HISTORY_KEY, JSON.stringify(cur.slice(0, 5)));
   }
   function renderHistory() {
     const wrap = document.querySelector(".search-history");
     if (!wrap) return;
     const items = loadHistory();
+    wrap.replaceChildren();
     if (!items.length) { wrap.hidden = true; return; }
     wrap.hidden = false;
-    wrap.innerHTML = `<div class="sh-eyebrow">最近搜过</div><ul>${items.map(i =>
-      `<li><button type="button" data-q="${i.q.replace(/"/g, "&quot;")}">${i.q}</button></li>`
-    ).join("")}</ul>`;
+    const eyebrow = document.createElement("div");
+    eyebrow.className = "sh-eyebrow";
+    eyebrow.textContent = "最近搜过";
+    const list = document.createElement("ul");
+    for (const item of items) {
+      const row = document.createElement("li");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.q = item.q;
+      button.textContent = item.q;
+      row.appendChild(button);
+      list.appendChild(row);
+    }
+    wrap.append(eyebrow, list);
     wrap.querySelectorAll("button[data-q]").forEach(b => {
       b.addEventListener("click", () => {
         const input = container.querySelector("input");

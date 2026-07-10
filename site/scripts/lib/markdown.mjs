@@ -9,18 +9,58 @@ import { SITE, BASE, url } from "./config.mjs";
 // --- markdown renderer ------------------------------------------------------
 const renderer = new marked.Renderer();
 let figureCounter = 0;
+
+// Marked 已会把 token text/title 中的危险字符编码成实体。这里保留已有实体，
+// 同时补齐直接调用 renderer 时的属性/文本转义，避免双重编码。
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&(?!(?:#\d+|#x[\da-f]+|[a-z][\da-z]+);)/gi, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+const URL_BASE = "https://same-site.invalid/";
+const URL_CONTROL_CHAR_RE = /[\u0000-\u001f\u007f]/;
+const HTML_ENTITY_RE = /&(?:#\d+|#x[\da-f]+|[a-z][\da-z]+);/i;
+
+function allowedMarkdownUrl(raw, { allowMailto = true } = {}) {
+  if (typeof raw !== "string") return null;
+  const candidate = raw.trim();
+  if (URL_CONTROL_CHAR_RE.test(candidate) || HTML_ENTITY_RE.test(candidate)) return null;
+  if (candidate.startsWith("//") || candidate.startsWith("\\\\")) return null;
+
+  let parsed;
+  try { parsed = new URL(candidate, URL_BASE); }
+  catch { return null; }
+
+  const hasScheme = /^[a-z][a-z\d+.-]*:/i.test(candidate);
+  if (!hasScheme) {
+    return parsed.origin === new URL(URL_BASE).origin ? candidate : null;
+  }
+  if (parsed.protocol === "http:" || parsed.protocol === "https:") return candidate;
+  if (allowMailto && parsed.protocol === "mailto:") return candidate;
+  return null;
+}
+
 renderer.image = (token) => {
   // marked v14 token: { href, title, text }
   const { href, title, text } = token;
+  const safeHref = allowedMarkdownUrl(href, { allowMailto: false });
+  const safeText = escapeHtml(text || "");
+  if (safeHref === null) return safeText;
   figureCounter++;
   const roman = ["i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii"][figureCounter - 1] ?? String(figureCounter);
   // codex 生图全部 16:9，1672×941。给 inline / cards 默认尺寸避免 CLS
   let dims = "";
-  if (href && (href.includes("/images/inline/") || href.includes("/images/cards/") || href.includes("/images/topics/"))) {
+  if (safeHref.includes("/images/inline/") || safeHref.includes("/images/cards/") || safeHref.includes("/images/topics/")) {
     dims = ` width="1672" height="941"`;
   }
   // lazy 加载 + decoding async（首屏图片可能例外，但 inline figures 都在首屏下方）
-  return `<figure><img src="${href}" alt="${text || ""}"${title ? ` title="${title}"` : ""}${dims} loading="lazy" decoding="async"/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${text || title || ""}</figcaption></figure>`;
+  const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
+  const caption = safeText || escapeHtml(title || "");
+  return `<figure><img src="${escapeHtml(safeHref)}" alt="${safeText}"${titleAttr}${dims} loading="lazy" decoding="async"/><figcaption><span class="plate">Plate Nº ${roman.toUpperCase()}</span>${caption}</figcaption></figure>`;
 };
 
 // 给 H2/H3 加 id（让 outline 能锚点跳转）
@@ -64,12 +104,14 @@ renderer.paragraph = function (token) {
 renderer.link = function (token) {
   const { href, title, tokens } = token;
   const inner = (tokens && this && this.parser) ? this.parser.parseInline(tokens) : (token.text || href);
-  let finalHref = href;
-  if (href && href.startsWith("/") && !href.startsWith("//")) {
-    finalHref = BASE + href;
+  const safeHref = allowedMarkdownUrl(href);
+  if (safeHref === null) return inner;
+  let finalHref = safeHref;
+  if (safeHref.startsWith("/") && !safeHref.startsWith("//")) {
+    finalHref = BASE + safeHref;
   }
-  const titleAttr = title ? ` title="${title}"` : "";
-  return `<a href="${finalHref}"${titleAttr}>${inner}</a>`;
+  const titleAttr = title ? ` title="${escapeHtml(title)}"` : "";
+  return `<a href="${escapeHtml(finalHref)}"${titleAttr}>${inner}</a>`;
 };
 
 marked.use({ renderer, gfm: true, breaks: false });

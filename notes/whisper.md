@@ -4,7 +4,7 @@ slug: whisper
 topic: auditory
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/whisper/paper.pdf
+来源: papers/whisper/paper.md
 venue: ICML
 year: 2023
 era: classic

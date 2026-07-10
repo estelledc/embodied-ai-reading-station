@@ -4,7 +4,7 @@ slug: saycan
 difficulty: ⭐⭐
 status: deep-read
 task: required
-来源: papers/saycan/paper.pdf
+来源: papers/saycan/paper.md
 generated_at: 2026-06-25
 era: founder
 num: 3

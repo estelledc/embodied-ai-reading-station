@@ -4,7 +4,7 @@ slug: person-in-wifi
 topic: rf
 difficulty: "\u2B50\u2B50\u2B50"
 status: deep-read
-来源: papers/person-in-wifi/paper.pdf
+来源: papers/person-in-wifi/paper.md
 venue: ICCV
 year: 2019
 era: founder

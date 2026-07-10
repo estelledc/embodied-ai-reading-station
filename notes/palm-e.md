@@ -4,7 +4,7 @@ slug: palm-e
 topic: planning
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/palm-e/paper.pdf
+来源: papers/palm-e/paper.md
 venue: ICML
 year: 2023
 era: founder

@@ -4,7 +4,7 @@ slug: imagebind
 topic: multimodal
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/imagebind/paper.pdf
+来源: papers/imagebind/paper.md
 venue: CVPR
 year: 2023
 era: founder

@@ -4,7 +4,7 @@ slug: touch-vision-cross-modal
 topic: multimodal
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/touch-vision-cross-modal/paper.pdf
+来源: papers/touch-vision-cross-modal/paper.md
 venue: CVPR
 year: 2019
 era: founder

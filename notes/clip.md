@@ -4,7 +4,7 @@ slug: clip
 topic: vlm-foundation
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/clip/paper.pdf
+来源: papers/clip/paper.md
 venue: ICML
 year: 2021
 era: founder

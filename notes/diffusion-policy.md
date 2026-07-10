@@ -4,7 +4,7 @@ slug: diffusion-policy
 topic: diffusion-policy
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/diffusion-policy/paper.pdf
+来源: papers/diffusion-policy/paper.md
 venue: RSS
 year: 2023
 era: founder

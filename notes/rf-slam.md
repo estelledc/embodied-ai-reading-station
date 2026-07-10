@@ -4,7 +4,7 @@ slug: rf-slam
 difficulty: ⭐⭐⭐⭐
 status: deep-read
 task: required
-来源: papers/rf-slam/paper.pdf
+来源: papers/rf-slam/paper.md
 venue: MobiCom 2025 (Best Artifact Award)
 authors: "Haowen Lai, Zhiwei Zheng, Mingmin Zhao (UPenn WAVES Lab)"
 generated_at: 2026-06-25

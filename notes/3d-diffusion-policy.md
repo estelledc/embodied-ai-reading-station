@@ -6,7 +6,7 @@ slug: 3d-diffusion-policy
 topic: diffusion-policy
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/3d-diffusion-policy/paper.pdf
+来源: papers/3d-diffusion-policy/paper.md
 venue: RSS
 year: 2024
 era: classic

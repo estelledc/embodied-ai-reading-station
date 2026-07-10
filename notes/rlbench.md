@@ -4,7 +4,7 @@ slug: rlbench
 topic: dataset-eval
 difficulty: ⭐⭐
 status: deep-read
-来源: papers/rlbench/paper.pdf
+来源: papers/rlbench/paper.md
 venue: RA-L
 year: 2019
 era: founder

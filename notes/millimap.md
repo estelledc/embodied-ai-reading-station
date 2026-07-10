@@ -4,7 +4,7 @@ slug: millimap
 topic: rf
 difficulty: "\u2B50\u2B50\u2B50"
 status: deep-read
-来源: papers/millimap/paper.pdf
+来源: papers/millimap/paper.md
 venue: MobiSys
 year: 2020
 era: founder

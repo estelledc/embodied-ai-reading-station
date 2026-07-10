@@ -4,7 +4,7 @@ slug: rf-pose-through-wall
 topic: rf
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/rf-pose-through-wall/paper.pdf
+来源: papers/rf-pose-through-wall/paper.md
 venue: arXiv
 year: 2019
 era: classic

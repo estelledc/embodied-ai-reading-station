@@ -4,7 +4,7 @@ slug: ibc
 topic: imitation
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/ibc/paper.pdf
+来源: papers/ibc/paper.md
 venue: CoRL
 year: 2021
 era: classic

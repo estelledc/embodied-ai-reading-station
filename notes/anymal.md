@@ -4,7 +4,7 @@ slug: anymal
 topic: multimodal
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/anymal/paper.pdf
+来源: papers/anymal/paper.md
 venue: EACL
 year: 2023
 era: classic

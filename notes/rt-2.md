@@ -4,7 +4,7 @@ slug: rt-2
 topic: vla
 difficulty: ⭐⭐⭐⭐
 status: deep-read
-来源: papers/rt-2/paper.pdf
+来源: papers/rt-2/paper.md
 venue: CoRL
 year: 2023
 era: classic

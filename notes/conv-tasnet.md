@@ -4,7 +4,7 @@ slug: conv-tasnet
 topic: auditory
 difficulty: ⭐⭐⭐
 status: deep-read
-来源: papers/conv-tasnet/paper.pdf
+来源: papers/conv-tasnet/paper.md
 venue: IEEE/ACM TASLP
 year: 2019
 era: founder
