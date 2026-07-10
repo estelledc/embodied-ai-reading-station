@@ -1,14 +1,61 @@
 // SEO / 机器可读产物：Atom feed、sitemap、robots、humans、security、llms、opensearch、data JSON/CSV。
 
+import fs from "node:fs";
 import path from "node:path";
-import { DIST, SITE_URL, BUILD_DATE } from "../config.mjs";
+import matter from "gray-matter";
+import {
+  DIST, NOTES_DIR, SITE_URL, BUILD_DATE, GENERATED_AT, normalizeContentDate,
+} from "../config.mjs";
 import { write } from "../assets.mjs";
 import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT } from "../content.mjs";
 import { READING_LISTS } from "./aggregates.mjs";
 
+const noteDateCache = new Map();
+
+// Note dates are content metadata, not deploy metadata. Existing notes expose
+// generated_at in frontmatter; future writers may add an explicit publication or
+// modification field without changing the public API again.
+export function contentDatesForNote(note) {
+  const explicit = {
+    published: note.datePublished ?? note.published_at ?? note.generated_at ?? note.generatedAt,
+    modified: note.content_modified ?? note.updated_at ?? note.updatedAt ?? note.dateModified,
+  };
+  if (explicit.published !== undefined || explicit.modified !== undefined) {
+    const generatedAt = normalizeContentDate(explicit.published);
+    return {
+      generatedAt,
+      contentModified: normalizeContentDate(explicit.modified) ?? generatedAt,
+    };
+  }
+
+  if (!note.slug) return { generatedAt: null, contentModified: null };
+  if (noteDateCache.has(note.slug)) return noteDateCache.get(note.slug);
+
+  const notePath = path.join(NOTES_DIR, `${note.slug}.md`);
+  let dates = { generatedAt: null, contentModified: null };
+  if (fs.existsSync(notePath)) {
+    const data = matter(fs.readFileSync(notePath, "utf8")).data;
+    const generatedAt = normalizeContentDate(
+      data.datePublished ?? data.published_at ?? data.generated_at
+    );
+    dates = {
+      generatedAt,
+      contentModified: normalizeContentDate(
+        data.content_modified ?? data.updated_at ?? data.dateModified
+      ) ?? generatedAt,
+    };
+  }
+  noteDateCache.set(note.slug, dates);
+  return dates;
+}
+
+function atomTimestamp(date, fallback = GENERATED_AT) {
+  return date ? `${date}T00:00:00.000Z` : fallback;
+}
+
 // --- RSS / Atom feed --------------------------------------------------------
 export function buildFeed(issuePages, notes) {
-  const updated = BUILD_DATE.toISOString();
+  const updated = GENERATED_AT;
   const xmlEscape = s => String(s)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;").replace(/'/g, "&apos;");
@@ -17,12 +64,13 @@ export function buildFeed(issuePages, notes) {
   for (const p of issuePages) {
     const slug = p.slug.replace("issue-", "");
     const link = `${SITE_URL}/issues/${slug}/`;
-    const pubDate = p.issueDate || updated;
+    const issueDate = normalizeContentDate(p.content_modified ?? p.updated_at ?? p.issueDate);
+    const pubDate = issueDate || updated.slice(0, 10);
     entries.push(`  <entry>
     <title>${xmlEscape(p.title)}</title>
     <link href="${link}"/>
     <id>${link}</id>
-    <updated>${updated}</updated>
+    <updated>${atomTimestamp(issueDate)}</updated>
     <summary>${xmlEscape(p.intro || "")}</summary>
     <content type="html">${xmlEscape(`<p>${p.intro || ""}</p><p>Published: ${pubDate}</p><p><a href="${link}">Read full issue →</a></p>`)}</content>
   </entry>`);
@@ -35,11 +83,12 @@ export function buildFeed(issuePages, notes) {
     .slice(0, 10);
   for (const n of recentNotes) {
     const link = `${SITE_URL}/papers/${n.slug}/`;
+    const dates = contentDatesForNote(n);
     entries.push(`  <entry>
     <title>${xmlEscape(`№ ${n.num} · ${n.title}`)}</title>
     <link href="${link}"/>
     <id>${link}</id>
-    <updated>${updated}</updated>
+    <updated>${atomTimestamp(dates.contentModified ?? dates.generatedAt)}</updated>
     <category term="${xmlEscape(n.topicLabel)}"/>
     <summary>${xmlEscape(n.tldr || "")}</summary>
   </entry>`);
@@ -62,28 +111,33 @@ ${entries.join("\n")}
 // --- data endpoints ---------------------------------------------------------
 export function writeDataFiles(notes) {
   // data endpoints (public JSON for research / external use)
-  const papersJson = notes.map(n => ({
-    slug: n.slug,
-    num: n.num,
-    title: n.title,
-    topic: n.topic,
-    topicLabel: n.topicLabel,
-    era: n.era || "classic",
-    year: n.year || null,
-    venue: n.venue || "",
-    difficulty: (n.difficulty || "").length || 2,
-    tldr: n.tldr || "",
-    wordCount: n.wordCount || 0,
-    readingMinutes: n.readingTime || 0,
-    tags: n.tags || [],
-    url: `${SITE_URL}/papers/${n.slug}/`,
-    sourcePath: n.sourcePath || "",
-    status: n.status || "auto-summary",
-  }));
+  const papersJson = notes.map(n => {
+    const dates = contentDatesForNote(n);
+    return {
+      slug: n.slug,
+      num: n.num,
+      title: n.title,
+      topic: n.topic,
+      topicLabel: n.topicLabel,
+      era: n.era || "classic",
+      year: n.year || null,
+      venue: n.venue || "",
+      difficulty: (n.difficulty || "").length || 2,
+      tldr: n.tldr || "",
+      wordCount: n.wordCount || 0,
+      readingMinutes: n.readingTime || 0,
+      tags: n.tags || [],
+      url: `${SITE_URL}/papers/${n.slug}/`,
+      sourcePath: n.sourcePath || "",
+      status: n.status || "auto-summary",
+      generated_at: dates.generatedAt,
+      content_modified: dates.contentModified,
+    };
+  });
   write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
 
   // CSV (R/Pandas 友好)
-  const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url", "sourcePath", "status"];
+  const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url", "sourcePath", "status", "generated_at", "content_modified"];
   function csvEscape(v) {
     if (v == null) return "";
     const s = String(v);
@@ -127,7 +181,9 @@ export function writeDataFiles(notes) {
   // index manifest
   const manifest = {
     site: SITE_URL,
-    generated: BUILD_DATE.toISOString(),
+    generated_at: GENERATED_AT,
+    // Legacy alias retained for existing API consumers.
+    generated: GENERATED_AT,
     counts: {
       papers: notes.length,
       topics: TOPIC_ORDER.length,
@@ -151,7 +207,7 @@ export function writeSeoFiles(notes, guideData, issuePages, learnPages) {
   {
     const today = BUILD_DATE.toISOString().slice(0, 10);
     const guideUrls = guideData.chapters.length > 0 ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
-    const urls = [
+    const staticUrls = [
       "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
       ...(issuePages.length ? ["/issues/"] : []),
       "/about/",
@@ -159,13 +215,24 @@ export function writeSeoFiles(notes, guideData, issuePages, learnPages) {
       "/deck/",
       ...guideUrls,
       ...TOPIC_ORDER.map(t => `/topics/${t.id}/`),
-      ...notes.map(n => `/papers/${n.slug}/`),
-      ...issuePages.map(p => `/issues/${p.slug.replace("issue-", "")}/`),
       ...learnPages.map(p => `/learn/${p.slug}/`),
+    ];
+    const urls = [
+      ...staticUrls.map(url => ({ url, lastmod: today })),
+      ...notes.map(note => ({
+        url: `/papers/${note.slug}/`,
+        lastmod: contentDatesForNote(note).contentModified ?? today,
+      })),
+      ...issuePages.map(issue => ({
+        url: `/issues/${issue.slug.replace("issue-", "")}/`,
+        lastmod: normalizeContentDate(
+          issue.content_modified ?? issue.updated_at ?? issue.issueDate
+        ) ?? today,
+      })),
     ];
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc><lastmod>${today}</lastmod></url>`).join("\n")}
+${urls.map(({ url, lastmod }) => `  <url><loc>${SITE_URL}${url}</loc><lastmod>${lastmod}</lastmod></url>`).join("\n")}
 </urlset>
 `;
     write(path.join(DIST, "sitemap.xml"), sitemap);
@@ -191,7 +258,7 @@ AI tools: Claude Code, Codex CLI, MinerU, lr (LightRead)
 Static stack: Node.js, marked, gray-matter, Pagefind, KaTeX, D3.js v7
 
 /* SITE */
-Last update: ${BUILD_DATE.toISOString().slice(0, 10)}
+Build generated: ${BUILD_DATE.toISOString().slice(0, 10)}
 Language: zh-CN (Chinese, simplified)
 Doctype: HTML5
 Components: pure HTML + CSS, no framework

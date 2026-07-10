@@ -8,7 +8,7 @@ import { page, pageHeroHtml } from "../layout.mjs";
 
 // --- learn pages (beginner supplements) -------------------------------------
 export function buildLearnIndex(pages) {
-  // 优先卡：30-day path / FAQ / Math primer 突出推荐
+  // 优先卡：30+5 path / FAQ / Math primer 突出推荐
   const featured = ["path", "faq", "math-primer"];
   const featuredPages = featured.map(s => pages.find(p => p.slug === s)).filter(Boolean);
   const others = pages.filter(p => !featured.includes(p.slug));
@@ -20,15 +20,15 @@ export function buildLearnIndex(pages) {
       ${PAPER_COUNT} 篇顶会论文堆在那里。不知道从哪开始？先看下面这三张卡，每张回答一个具体问题。
     </p>
     <p style="font-size:0.97rem;line-height:1.6;color:var(--ink-mute);max-width:52ch;margin-top:0.6rem">
-      <strong>Learn</strong> 是工具箱——速查公式、常见 FAQ、30 天路径。
+      <strong>Learn</strong> 是工具箱——速查公式、常见 FAQ、30 天核心 + 5 天可选扩展。
       系统学习请走 <a href="${url('/guide/')}" style="color:var(--coral);text-decoration:underline">Guide 教材主线</a>（${GUIDE_CHAPTER_COUNT} 章，从感知到部署）。
     </p>
 
     ${featuredPages.length ? `<section class="learn-featured">
       <div class="lf-grid">
         ${featuredPages.map((p, i) => {
-          const labels = { "path": "30 天路径", "faq": "新人 FAQ", "math-primer": "公式速查" };
-          const subs = { "path": "每天读什么", "faq": "12 题最常问", "math-primer": "Σ ∇ 怎么读" };
+          const labels = { "path": "30+5 学习路径", "faq": "新人 FAQ", "math-primer": "公式速查" };
+          const subs = { "path": "30 天核心 + 可选任务扩展", "faq": "12 题最常问", "math-primer": "Σ ∇ 怎么读" };
           return `<a class="lf-card" href="${url(`/learn/${p.slug}/`)}">
             <span class="lf-num">${["I","II","III"][i] || ""}</span>
             <span class="lf-title">${labels[p.slug] || p.title}</span>

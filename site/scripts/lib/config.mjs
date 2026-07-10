@@ -22,7 +22,23 @@ export const url = (p) => BASE + (p.startsWith("/") ? p : `/${p}`);
 export const SITE_URL = (process.env.SITE_URL ?? "https://estelledc.github.io/embodied-ai-reading-station").replace(/\/$/, "");
 export const SITE_ORIGIN = new URL(SITE_URL).origin;
 
-// 可复现构建：设置 SOURCE_DATE_EPOCH（秒）可固定所有产物内的构建时间戳
-export const BUILD_DATE = process.env.SOURCE_DATE_EPOCH
-  ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000)
-  : new Date();
+// 可复现构建：CI 用被构建 commit 的 Unix timestamp 注入 SOURCE_DATE_EPOCH。
+// BUILD_DATE 保留为 Date 以兼容现有调用方；GENERATED_AT 明确表示它是构建元数据，
+// 不能拿来冒充内容或论文的发布日期。
+const sourceDateEpoch = process.env.SOURCE_DATE_EPOCH;
+const sourceDateSeconds = sourceDateEpoch === undefined ? null : Number(sourceDateEpoch);
+if (sourceDateSeconds !== null && (!Number.isInteger(sourceDateSeconds) || sourceDateSeconds < 0)) {
+  throw new Error("SOURCE_DATE_EPOCH must be a non-negative integer Unix timestamp");
+}
+export const BUILD_DATE = sourceDateSeconds === null
+  ? new Date()
+  : new Date(sourceDateSeconds * 1000);
+export const GENERATED_AT = BUILD_DATE.toISOString();
+
+// Frontmatter dates may be parsed by gray-matter as Date objects or remain ISO strings.
+// Return a date-only ISO value for public metadata, and omit invalid/missing values.
+export function normalizeContentDate(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const date = value instanceof Date ? value : new Date(value);
+  return Number.isNaN(date.getTime()) ? null : date.toISOString().slice(0, 10);
+}
