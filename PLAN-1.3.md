@@ -52,10 +52,10 @@
 
 - [x] 在最终 RC commit（`84eb97f`）上重跑全部验证:73 unit、97 healthcheck、双 SITE_BASE、全量 dist 确定性对比通过；`npm audit --audit-level=high` 通过（仅余 moderate）。C6 浏览器手测：云环境无图形浏览器，以契约测试（路径/状态/安全相关 unit + check）代理，手册注明延后。
 - [x] 切版:`site/package.json` + lockfile → `1.2.0`;README 版本行 → `v1.2.0`;CHANGELOG `[Unreleased]` → `[1.2.0] - 2026-07-10`。
-- [ ] Commit: `release: v1.2.0 —— 内容可信度与安全收口`,走 PR 合并。
-- [ ] 合并后确认 main build/deploy 成功(关闭 T015 部署验证缺口),在合并 commit 上创建 annotated tag `v1.2.0`。
+- [x] Commit: `release: v1.2.0 —— 内容可信度与安全收口`,走 PR 合并（[#11](https://github.com/estelledc/embodied-ai-reading-station/pull/11) → `0712328`）。
+- [x] 合并后确认 main build/deploy 成功(关闭 T015 部署验证缺口),在合并 commit 上创建 annotated tag `v1.2.0`。
 
-**出口**:版本与 tag 发布后可称「v1.2.0 已发布」；O1/T014 仍为待办，不写入「T014 已关闭」。
+**出口**:版本与 tag 已发布，可称「v1.2.0 已发布」；O1/T014 仍为待办，不写入「T014 已关闭」。
 
 ---
 

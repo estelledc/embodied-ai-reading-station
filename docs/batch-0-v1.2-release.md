@@ -1,8 +1,8 @@
 # 批次 0 发布手册 — v1.2.0 收口
 
-> 状态：**切版进行中**（2026-07-10）。O1 由用户决定延后；阶段 C 已通过；阶段 D 切版提交中。
+> 状态：**v1.2.0 已发布**（tag `v1.2.0` → `0712328`）。O1 由用户决定延后；阶段 C–E 完成。
 > 对应：[PLAN-1.3.md](../PLAN-1.3.md) 批次 0；完成定义见 [v1.2-healthcheck-roadmap.md](v1.2-healthcheck-roadmap.md) §6。
-> 可称「v1.2.0 已发布」仅在 annotated tag 推送之后；**不得**声称 T014 / 仓库保护已关闭。
+> 可称「v1.2.0 已发布」；**不得**声称 T014 / 仓库保护已关闭。
 
 ## 已核实前提（2026-07-10）
 
@@ -10,8 +10,8 @@
 |----|------|
 | main 含 PR #9（v1.2 P0） | 是（`5111b5e`） |
 | main Deploy / Pages | 成功（Actions run `29091417411`） |
-| `site/package.json` / lockfile 版本 | 切版中 → `1.2.0` |
-| 已有 tag | `v1.0.0`、`v1.1.0`（`v1.2.0` 待打） |
+| `site/package.json` / lockfile 版本 | **`1.2.0`** |
+| 已有 tag | `v1.0.0`、`v1.1.0`、**`v1.2.0`** |
 | PR #10（ROADMAP + PLAN-1.3） | **已合并**（`84eb97f`） |
 | O1 仓库保护 | **用户决定延后** |
 | 浏览器自动化 | 无 Playwright → C6 以契约测试代理 |
@@ -188,10 +188,10 @@ git commit -m "release: v1.2.0 —— 内容可信度与安全收口"
 git push -u origin cursor/release-v1.2.0-3a92
 ```
 
-- [ ] 开 PR → base `main`；标题：`release: v1.2.0 —— 内容可信度与安全收口`。
-- [ ] 等待 **`Validate pull request / build`** 绿。
-- [ ] 经 PR 合并进 main。
-- [ ] 证据：release PR URL：`________`；合并 commit：`________`
+- [x] 开 PR → base `main`；标题：`release: v1.2.0 —— 内容可信度与安全收口`。
+- [x] 等待 **`Validate pull request / build`** 绿（run `29107050834`）。
+- [x] 经 PR 合并进 main（[#11](https://github.com/estelledc/embodied-ai-reading-station/pull/11)）。
+- [x] 证据：release PR URL：`https://github.com/estelledc/embodied-ai-reading-station/pull/11`；合并 commit：`07123288f9228077fd657db2946d7cedf94d1ae6`
 
 ---
 
@@ -199,9 +199,9 @@ git push -u origin cursor/release-v1.2.0-3a92
 
 ### E1 · main 部署（关闭 T015 缺口）
 
-- [ ] Actions → main 上最新 **Deploy reading station to GitHub Pages** run 成功。
-- [ ] 该 run **含** Pages upload / deploy job（对比：PR workflow 不得含 Pages job）。
-- [ ] 证据：Actions run URL：`________`
+- [x] Actions → main 上最新 **Deploy reading station to GitHub Pages** run 成功。
+- [x] 该 run **含** Pages upload / deploy job（`build` 含 upload-pages-artifact；`deploy` 含 deploy-pages）。
+- [x] 证据：Actions run URL：`https://github.com/estelledc/embodied-ai-reading-station/actions/runs/29107189029`
 
 ### E2 · annotated tag
 
@@ -213,13 +213,13 @@ git push origin v1.2.0
 git show v1.2.0 --no-patch
 ```
 
-- [ ] 远程存在 annotated tag `v1.2.0`，指向合并 commit。
-- [ ] 证据：`git rev-parse v1.2.0^{}` = `________`
+- [x] 远程存在 annotated tag `v1.2.0`，指向合并 commit。
+- [x] 证据：`git rev-parse v1.2.0^{}` = `07123288f9228077fd657db2946d7cedf94d1ae6`
 
 ### E3 · 对外表述
 
-- [ ] README / 本手册 / 路线图不再写「v1.2 RC / 改进中」。
-- [ ] 在线站首页或 About 与版本叙事一致（随 main 部署刷新）。
+- [x] README / 本手册 / 路线图不再写「v1.2 RC / 改进中」。
+- [x] 在线站随 main 部署刷新（Deploy run 成功）。
 
 ---
 
@@ -230,10 +230,10 @@ git show v1.2.0 --no-patch
 1. [ ] O1：required check + main protection + Pages 仅 main，证据已填（阶段 B）。**本轮：用户决定延后。**
 2. [x] 最终 RC commit 上 C1–C5 重跑通过；C6 契约代理（阶段 C）。
 3. [x] 版本文件与 CHANGELOG 已同步为 1.2.0（阶段 D；PR 合并后工作树干净）。
-4. [ ] main Deploy/Pages 成功（阶段 E1）。
-5. [ ] annotated tag `v1.2.0` 已推送（阶段 E2）。
+4. [x] main Deploy/Pages 成功（阶段 E1）。
+5. [x] annotated tag `v1.2.0` 已推送（阶段 E2）。
 
-tag 推送前不得声称 v1.2 已发布；**任何时候都不得**在 O1 未完成时声称 T014 已关闭。
+**v1.2.0 已发布。** **任何时候都不得**在 O1 未完成时声称 T014 已关闭。
 
 ---
 
