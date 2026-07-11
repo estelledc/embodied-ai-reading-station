@@ -11,12 +11,15 @@
 - `EAI13-T004`：发布 `/data/v2/index.json` 与 `/data/v2/papers.json` 四字段 envelope，逐字复制 canonical provenance 的 `content_commit`，并让 156 条 v2 paper data 与 legacy 裸数组共用同一 18 字段投影；新增共享浏览器适配器，将 reading-progress、link-preview 和 404 推荐迁移到 base-aware v2 endpoint，未知主版本、坏 commit、缺 data、HTTP/JSON/网络错误均走可观察诊断与显式降级。`/data/papers.json` 在完整 v1.3 窗口继续支持；producer/consumer/check 测试、root/repo 双 base healthcheck 与固定时间的全 data SHA-256 对比均通过。
 
 ### Changed
-- `EAI13-T011`：统一现行文档为“v1.2.0 已发布、O1/T014 外部待办未关闭”，把 RC 条件保留为历史证据；新增 EAI-T008–T020 共 13 项 carry-over crosswalk，并规定 Lab 与新公共数据消费者必须晚于 `EAI13-T001 → T002 → T003 → T004` 和本次状态治理。
+- `EAI13-T011`：统一现行文档为“v1.2.0 已发布、O1/T014 外部待办未关闭”，把 RC 条件保留为历史证据；新增 EAI-T008–T020 共 13 项 carry-over crosswalk，并规定 Lab 与新公共数据消费者必须晚于 `EAI13-T001 → T002 → T003 → T004` 和本次状态治理；以窄回归门禁冻结 Unreleased 边界、最终 data cache 容量与 provenance 完成态措辞。
 - `EAI13-T005`：首页 156 张论文卡片由 CSS 背景图改为装饰性 `picture/img`；54 张原论文缩略图保持原来源，102 张生成卡图使用 800w/full 候选，并统一 lazy loading、异步解码、固定比例与窄屏单列。新增 root/repo 等价的首页图片路由门禁，分别限制默认静态代理与全部 `srcset` 候选；320/375/768 浏览器矩阵无横向溢出或图片加载位移，全页滚动实际选择 169 个图片资源、响应体合计 6.49MiB。
-- `EAI13-T006`：Service Worker 缓存命名绑定部署 scope、构建 commit、Data API schema major 与内容快照，页面/图片/data 分别限制为 48/96/2 条并维护最近使用顺序；核心壳以 `cache: reload` 原子预缓存，缺项时保留旧 worker。运行时 Cache Storage 故障不再吞掉在线响应；新版本只进入 waiting，用户点击“立即更新”后才接管。root/repo 浏览器矩阵已验证首次安装、A→B 受控升级、缺核心资源回退、已访问论文与图片离线恢复，以及未访问页的 scope 内 503 fallback。
+- `EAI13-T006`：Service Worker 缓存命名绑定部署 scope、构建 commit、Data API schema major 与内容快照，页面/图片/data 分别限制为 48/96/3 条并维护最近使用顺序；核心壳以 `cache: reload` 原子预缓存，缺项时保留旧 worker。运行时 Cache Storage 故障不再吞掉在线响应；新版本只进入 waiting，用户点击“立即更新”后才接管。root/repo 浏览器矩阵已验证首次安装、A→B 受控升级、缺核心资源回退、已访问论文与图片离线恢复，以及未访问页的 scope 内 503 fallback。
 - `EAI13-T008`：More 导航从 hover/focus CSS 隐式展开改为原生 button disclosure；`aria-expanded`、`hidden` 与视觉状态同步，支持 Escape 关闭并恢复焦点、焦点离开自动收起，窄屏面板限制在 masthead gutter 内并可纵向滚动；当前态改用 class 与非颜色提示，再移除 40 个 inline style。
 - `EAI13-T009`：新增 MIT `LICENSE`、四类资产 `NOTICE` 与 provenance v2 流程文档；v2 index 用稳定策略 ID 发布许可/来源映射，并提供 canonical provenance 的逐字节公开副本。legacy manifest 保留原许可字段，构建门禁新增治理文档、公开副本、字段绑定与基线后二进制增量校验；版权与既有第三方素材法律状态继续标为未独立核验。
 - `EAI13-T010`：四条资产生成脚本统一为先计划、再 preflight 的零隐式写入流程，移除开发者目录解析与 shell 字符串命令，新增结构化生成器结果、输入/输出分离 fingerprint、full/800 批次回滚和 portable receipt。生成资产与 provenance 登记改为两阶段：先原子安装并提交资产快照，再验证 receipt、Git blob、真实解码、manifest CAS 后登记；既有未登记图片保持 legacy skip，本批不回填或改写生产图片与清单。
+
+### Security
+- `EAI13-T007`：移除全站 inline event handler、可执行 inline script 与 inline `<style>`，将 theme、KaTeX、Next/Random/Discover/404 和 deck 行为外移为同源资源；生成 canonical Report-Only CSP、真实响应头本地预览与零未批准违规门禁。论文模板样式迁移使生成 `style=` 从 30,972 降到 4,715，并以精确数量、唯一值和 digest 冻结剩余例外。当前 GitHub Pages 部署无响应头注入层，生产状态明确为 `NOT_APPLIED`，不把静态 meta 或 `_headers` 冒充已生效策略。
 
 ## [1.2.0] - 2026-07-10
 
@@ -45,7 +48,6 @@
 - 修复 320px 窄屏下关闭的 More 面板与导航 max-content 宽度造成的全页横向溢出。
 
 ### Security
-- `EAI13-T007`：移除全站 inline event handler、可执行 inline script 与 inline `<style>`，将 theme、KaTeX、Next/Random/Discover/404 和 deck 行为外移为同源资源；生成 canonical Report-Only CSP、真实响应头本地预览与零未批准违规门禁。论文模板样式迁移使生成 `style=` 从 30,972 降到 4,715，并以精确数量、唯一值和 digest 冻结剩余例外。当前 GitHub Pages 部署无响应头注入层，生产状态明确为 `NOT_APPLIED`，不把静态 meta 或 `_headers` 冒充已生效策略。
 - `EAI-T005`：搜索历史与 link preview 改用 DOM API / `textContent`，查询长度与控制字符受限，用户输入不再进入 HTML sink。
 - `EAI-T021`：Markdown 链接和图片启用协议 allowlist，统一转义 URL、title、alt 和 caption，并锁定唯一获准的原始 iframe。
 
