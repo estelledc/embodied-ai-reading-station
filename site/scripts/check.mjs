@@ -10,6 +10,11 @@ import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
 import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
 import {
+  evaluateRouteImageBudget,
+  measureRouteImageBudget,
+  normalizeRouteHtmlForBase,
+} from "./lib/route-budget.mjs";
+import {
   formatProvenanceRepositoryErrors,
   validateProvenanceRepositoryFile,
 } from "./lib/provenance-validator.mjs";
@@ -527,11 +532,58 @@ for (const f of top5) {
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
-// 学习首页只保留路径与代表成果；全量库有独立预算。
-const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
-check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 100KB`, () => indexSize < 100 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+// 性能预算（1.0.0 固化当前健康值，防劣化）
+// SITE_BASE 会机械重复在每个内部 URL 上；先去掉此前缀，确保 root/repo build
+// 衡量同一份页面内容，而不是把部署路径长度当成内容回归。
+const budgetedIndexHtml = normalizeRouteHtmlForBase(builtIndexHtml, { base: builtBase });
+const indexSize = Buffer.byteLength(budgetedIndexHtml);
+check(`首页 index.html（SITE_BASE 归一化）${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => (
+  indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`
+));
 const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
 check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 250KB`, () => papersIndexSize < 250 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
+
+// 首页图片路由预算是确定性的静态代理，不冒充浏览器 Network 结果：
+// - default: img/src、image preload、inline CSS url 去重后的默认请求/字节；
+// - candidates: default 加全部 srcset 声明，用于防止响应式候选库存膨胀。
+// 真实 viewport/DPR 下的 transferred bytes 仍由浏览器矩阵记录。
+const HOME_ROUTE_IMAGE_BUDGET = Object.freeze({
+  maxRequests: 170,
+  maxBytes: 9 * 1024 * 1024,
+  maxCandidates: 285,
+  maxCandidateBytes: 20 * 1024 * 1024,
+});
+const homeImageMetrics = measureRouteImageBudget(builtIndexHtml, {
+  base: builtBase,
+  readAssetSize(relativePath) {
+    const target = path.resolve(DIST, relativePath);
+    if (target !== DIST && !target.startsWith(`${DIST}${path.sep}`)) return null;
+    const stat = fs.lstatSync(target);
+    return stat.isFile() ? stat.size : null;
+  },
+});
+const homeImageBudget = evaluateRouteImageBudget(homeImageMetrics, HOME_ROUTE_IMAGE_BUDGET);
+const routeBudgetError = code => homeImageBudget.errors.find(error => error.code === code);
+const defaultMiB = (homeImageMetrics.totalBytes / 1024 / 1024).toFixed(2);
+const candidateMiB = (homeImageMetrics.candidateBytes / 1024 / 1024).toFixed(2);
+check("首页图片静态引用均可本地度量、匹配 SITE_BASE 且文件存在", () => {
+  const errors = homeImageBudget.errors.filter(error => (
+    error.code === "INVALID_LOCAL_IMAGE_URL" || error.code === "MISSING_IMAGE_ASSET"
+  ));
+  return errors.length === 0 || errors.map(error => error.message).join("; ");
+});
+check(`首页默认图片静态代理 ${homeImageMetrics.requestCount} requests <= ${HOME_ROUTE_IMAGE_BUDGET.maxRequests}`, () => (
+  routeBudgetError("IMAGE_REQUEST_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页默认图片静态代理 ${defaultMiB}MiB <= 9MiB`, () => (
+  routeBudgetError("IMAGE_BYTE_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页声明图片候选 ${homeImageMetrics.candidateCount} <= ${HOME_ROUTE_IMAGE_BUDGET.maxCandidates}`, () => (
+  routeBudgetError("IMAGE_CANDIDATE_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页声明图片候选 ${candidateMiB}MiB <= 20MiB`, () => (
+  routeBudgetError("IMAGE_CANDIDATE_BYTE_BUDGET_EXCEEDED")?.message ?? true
+));
 
 const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
 check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);

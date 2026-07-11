@@ -128,6 +128,94 @@ export function buildHomeJsonLd({ paperCount, topicCount, guideChapterCount }) {
   };
 }
 
+const PAPER_CARD_IMAGE_SIZES = "(max-width: 600px) calc(100vw - 2.5rem), (max-width: 656px) 92vw, (max-width: 997px) calc(46vw - 0.7rem), (max-width: 1240px) calc(30.667vw - 0.934rem), 360px";
+
+const JPEG_START_OF_FRAME_MARKERS = new Set([
+  0xc0, 0xc1, 0xc2, 0xc3,
+  0xc5, 0xc6, 0xc7,
+  0xc9, 0xca, 0xcb,
+  0xcd, 0xce, 0xcf,
+]);
+
+export function readJpegIntrinsicWidth(filePath, {
+  readFile = fs.readFileSync,
+} = {}) {
+  let bytes;
+  try {
+    bytes = readFile(filePath);
+  } catch {
+    return null;
+  }
+  if (!Buffer.isBuffer(bytes)) bytes = Buffer.from(bytes);
+  if (bytes.length < 4 || bytes[0] !== 0xff || bytes[1] !== 0xd8) return null;
+
+  let offset = 2;
+  while (offset < bytes.length) {
+    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+    if (offset >= bytes.length) return null;
+    const marker = bytes[offset];
+    offset += 1;
+
+    if (marker === 0xd9 || marker === 0xda) return null;
+    if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd7)) continue;
+    if (offset + 2 > bytes.length) return null;
+
+    const segmentLength = bytes.readUInt16BE(offset);
+    if (segmentLength < 2 || offset + segmentLength > bytes.length) return null;
+    if (JPEG_START_OF_FRAME_MARKERS.has(marker)) {
+      if (segmentLength < 7) return null;
+      const width = bytes.readUInt16BE(offset + 5);
+      return width > 0 ? width : null;
+    }
+    offset += segmentLength;
+  }
+  return null;
+}
+
+export function renderPaperCardThumbnail(note, topicRoman, {
+  fileExists = fs.existsSync,
+  readImageWidth = readJpegIntrinsicWidth,
+} = {}) {
+  const realPath = path.join(PAPERS_DIR, note.slug, "images", "img_000.jpg");
+  const cardPath = path.join(SITE, "src", "images", "cards", `${note.slug}.webp`);
+  const card800Path = path.join(SITE, "src", "images", "cards", `${note.slug}-800.webp`);
+
+  let src = "";
+  let srcset = "";
+  let hasWidthDescriptors = false;
+  if (fileExists(realPath)) {
+    src = url(`/assets/${note.slug}/img_000.jpg`);
+    let intrinsicWidth = null;
+    try {
+      intrinsicWidth = readImageWidth(realPath);
+    } catch {}
+    if (Number.isSafeInteger(intrinsicWidth) && intrinsicWidth > 0) {
+      srcset = `${src} ${intrinsicWidth}w`;
+      hasWidthDescriptors = true;
+    } else {
+      srcset = src;
+    }
+  } else if (fileExists(cardPath)) {
+    const full = url(`/images/cards/${note.slug}.webp`);
+    if (fileExists(card800Path)) {
+      const compact = url(`/images/cards/${note.slug}-800.webp`);
+      src = compact;
+      srcset = `${compact} 800w, ${full} 1672w`;
+    } else {
+      src = full;
+      srcset = `${full} 1672w`;
+    }
+    hasWidthDescriptors = true;
+  } else {
+    return `<div class="thumb thumb-placeholder" aria-hidden="true"><span>${topicRoman}</span></div>`;
+  }
+
+  return `<picture class="thumb" aria-hidden="true">
+          <source srcset="${srcset}"${hasWidthDescriptors ? ` sizes="${PAPER_CARD_IMAGE_SIZES}"` : ""}>
+          <img src="${src}" alt="" loading="lazy" decoding="async" width="800" height="450">
+        </picture>`;
+}
+
 // --- index page -------------------------------------------------------------
 export function buildIndex(notes, latestIssue = null) {
   const total = PAPERS.length;
@@ -531,17 +619,9 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
     body += `<p class="era-hint">按演进顺序：祖师爷 → 现代经典 → 前沿延伸</p>`;
     for (const n of sorted) {
       const badge = makeDifficultyBadge(n.difficulty);
-      const realThumb = path.join(PAPERS_DIR, n.slug, "images", "img_000.jpg");
-      const cardThumb = path.join(SITE, "src", "images", "cards", `${n.slug}.webp`);
-      const hasReal = fs.existsSync(realThumb);
-      const hasCard = fs.existsSync(cardThumb);
-      const thumbDiv = hasReal
-        ? `<div class="thumb"><img src="${url(`/assets/${n.slug}/img_000.jpg`)}" alt="" loading="lazy" decoding="async" width="800" height="450"></div>`
-        : hasCard
-          ? `<div class="thumb"><img src="${url(`/images/cards/${n.slug}.webp`)}" alt="" loading="lazy" decoding="async" width="800" height="450"></div>`
-          : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
+      const thumbnail = renderPaperCardThumbnail(n, t.roman);
       body += `<article class="paper-card" data-slug="${n.slug}" data-topic="${n.topic}" data-difficulty="${(n.difficulty || "").length || 2}" data-era="${n.era || "classic"}" data-status="${n.status || "auto-summary"}">
-        ${thumbDiv}
+        ${thumbnail}
         <span class="num">№ ${String(n.num).padStart(2,"0")}</span>
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
