@@ -6,6 +6,11 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
 import { loadCanonicalContentCommit } from "./lib/data-api.mjs";
+import {
+  formatServiceWorkerBuildId,
+  loadSiteCommit,
+} from "./lib/assets.mjs";
+import { BUILD_DATE, GENERATED_AT } from "./lib/config.mjs";
 import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
 import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
@@ -24,6 +29,26 @@ const SITE = path.resolve(__dirname, "..");
 const ROOT = path.resolve(SITE, "..");
 const DIST = path.join(SITE, "dist");
 const NOTES = path.join(ROOT, "notes");
+const REQUIRED_CORE_SHELL_URLS = Object.freeze([
+  "./",
+  "./styles.css",
+  "./jx/tokens.css",
+  "./jx/components.css",
+  "./pagefind/pagefind-ui.css",
+  "./pagefind/pagefind-ui.js",
+  "./search.js",
+  "./outline.js",
+  "./data-api.js",
+  "./reading-progress.js",
+  "./quick-filter.js",
+  "./keyboard.js",
+  "./theme-toggle.js",
+  "./link-preview.js",
+  "./sw-register.js",
+  "./svg-export.js",
+  "./favicon.svg",
+  "./site.webmanifest",
+]);
 
 let pass = 0, fail = 0;
 function check(name, fn) {
@@ -40,6 +65,52 @@ function check(name, fn) {
     console.log(`  ✗ ${name}: ${e.message}`);
     fail++;
   }
+}
+
+function readWorkerStringConstant(source, name) {
+  const matches = [...source.matchAll(new RegExp(`^const\\s+${name}\\s*=\\s*"([^"]*)"\\s*;$`, "gm"))];
+  if (matches.length > 1) throw new Error(`${name} must have one exact declaration`);
+  return matches.length === 1 ? matches[0][1] : null;
+}
+
+function readWorkerTemplateConstant(source, name) {
+  const matches = [...source.matchAll(new RegExp(`^const\\s+${name}\\s*=\\s*\\x60([^\\x60]*)\\x60\\s*;$`, "gm"))];
+  if (matches.length > 1) throw new Error(`${name} must have one exact declaration`);
+  return matches.length === 1 ? matches[0][1] : null;
+}
+
+function parseWorkerShellUrls(source) {
+  const match = source.match(/\bconst\s+SHELL_URLS\s*=\s*\[([\s\S]*?)\]\s*;/);
+  if (!match) throw new Error("SHELL_URLS array missing");
+  const withoutComments = match[1]
+    .replace(/^\s*\/\/.*$/gm, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/,\s*$/, "");
+  let urls;
+  try {
+    urls = JSON.parse(`[${withoutComments}]`);
+  } catch {
+    throw new Error("SHELL_URLS must contain only static JSON string entries");
+  }
+  if (!Array.isArray(urls) || urls.length === 0 || urls.some(value => typeof value !== "string")) {
+    throw new Error("SHELL_URLS must be a non-empty string array");
+  }
+  if (new Set(urls).size !== urls.length) {
+    throw new Error("SHELL_URLS must not contain duplicate entries");
+  }
+  return urls;
+}
+
+function shellUrlToDistPath(value) {
+  if (value === "./") return "index.html";
+  if (!value.startsWith("./") || value.includes("?") || value.includes("#")) {
+    throw new Error(`invalid shell URL: ${value}`);
+  }
+  const relative = value.slice(2);
+  if (!relative || path.posix.normalize(relative) !== relative || relative.startsWith("../")) {
+    throw new Error(`unsafe shell URL: ${value}`);
+  }
+  return relative.endsWith("/") ? `${relative}index.html` : relative;
 }
 
 // Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
@@ -175,6 +246,9 @@ check("v2 papers/index generated_at 是同一确定性构建时间", () => {
   if (papersV2.generated_at !== indexV2.generated_at) return "generated_at mismatch";
   const parsed = new Date(papersV2.generated_at);
   if (Number.isNaN(parsed.getTime()) || parsed.toISOString() !== papersV2.generated_at) return "generated_at invalid";
+  if (process.env.SOURCE_DATE_EPOCH !== undefined && papersV2.generated_at !== GENERATED_AT) {
+    return `generated_at 未使用当前 SOURCE_DATE_EPOCH: ${papersV2.generated_at}`;
+  }
   return true;
 });
 check("legacy 数组与 v2 data 的 18 字段逐条一致", () => {
@@ -258,7 +332,68 @@ for (const f of pwaFiles) {
 }
 {
   const sw = fs.readFileSync(path.join(DIST, "sw.js"), "utf8");
-  check("sw.js VERSION 已注入构建时间戳", () => /const VERSION = "\d{12}"/.test(sw) || `VERSION 未替换`);
+  let expectedBuildId = null;
+  try {
+    expectedBuildId = formatServiceWorkerBuildId(
+      process.env.SOURCE_DATE_EPOCH === undefined
+        ? new Date(String(papersV2.generated_at ?? ""))
+        : BUILD_DATE,
+      loadSiteCommit(),
+    );
+  } catch {
+    // The checks below report the invalid/missing build identity without aborting
+    // the remainder of the healthcheck.
+  }
+  const workerBuildId = readWorkerStringConstant(sw, "BUILD_ID");
+  const workerSchemaVersion = readWorkerStringConstant(sw, "DATA_SCHEMA_VERSION");
+  const workerContentCommit = readWorkerStringConstant(sw, "CONTENT_COMMIT");
+
+  check("sw.js 注入精确 build/schema/content 常量", () => {
+    if (!expectedBuildId) return "v2 generated_at 无法生成 build id";
+    if (workerBuildId !== expectedBuildId) return `BUILD_ID drift: ${workerBuildId ?? "missing"}`;
+    if (workerSchemaVersion !== DATA_API_CONTRACT.schema_version) {
+      return `DATA_SCHEMA_VERSION drift: ${workerSchemaVersion ?? "missing"}`;
+    }
+    if (workerContentCommit !== canonicalContentCommit) {
+      return `CONTENT_COMMIT drift: ${workerContentCommit ?? "missing"}`;
+    }
+    return true;
+  });
+  check("sw.js 不含未替换 build sentinel", () => {
+    const unresolved = [...new Set(sw.match(/__EAI_[A-Z0-9_]+__/g) ?? [])];
+    return unresolved.length === 0 || `unresolved: ${unresolved.join(", ")}`;
+  });
+  check("data cache namespace 绑定 scope + build + schema major + content commit", () => {
+    if (!expectedBuildId) return "v2 generated_at 无法生成 build id";
+    if (!/\bconst\s+DATA_SCHEMA_MAJOR\s*=\s*DATA_SCHEMA_VERSION\.split\(["']\.["']\)\[0\]\s*;/.test(sw)) {
+      return "DATA_SCHEMA_MAJOR 未从 DATA_SCHEMA_VERSION 派生";
+    }
+    const prefixTemplate = readWorkerTemplateConstant(sw, "CACHE_PREFIX");
+    if (prefixTemplate !== "eai-${encodeURIComponent(SCOPE_PATH)}-") {
+      return `CACHE_PREFIX drift: ${prefixTemplate ?? "missing"}`;
+    }
+    const template = readWorkerTemplateConstant(sw, "DATA_CACHE");
+    if (template === null) return "DATA_CACHE template missing";
+    const expected = "${CACHE_PREFIX}data-${BUILD_ID}-v${DATA_SCHEMA_MAJOR}-${CONTENT_COMMIT}";
+    return template === expected || `DATA_CACHE drift: ${template}`;
+  });
+  check("SHELL_URLS 保留固定核心预缓存集合", () => {
+    const urls = new Set(parseWorkerShellUrls(sw));
+    const missing = REQUIRED_CORE_SHELL_URLS.filter(value => !urls.has(value));
+    return missing.length === 0 || `missing core entries: ${missing.join(", ")}`;
+  });
+  check("SHELL_URLS 核心预缓存文件全部存在", () => {
+    const urls = parseWorkerShellUrls(sw);
+    const missing = [];
+    for (const value of urls) {
+      const relative = shellUrlToDistPath(value);
+      const target = path.resolve(DIST, relative);
+      if (!target.startsWith(`${DIST}${path.sep}`) || !fs.statSync(target, { throwIfNoEntry: false })?.isFile()) {
+        missing.push(`${value} -> ${relative}`);
+      }
+    }
+    return missing.length === 0 || `missing: ${missing.join(", ")}`;
+  });
   const idx = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
   check("data-api.js 在两个 v2 消费者之前加载", () => {
     const scriptPosition = name => idx.indexOf(`src="${builtBase}/${name}"`);

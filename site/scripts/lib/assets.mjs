@@ -2,7 +2,22 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import { execFileSync as defaultExecFileSync } from "node:child_process";
 import { SITE, DIST, BASE, BUILD_DATE, PAPERS_DIR } from "./config.mjs";
+import { ROOT } from "./config.mjs";
+import { loadCanonicalContentCommit } from "./data-api.mjs";
+import { DATA_API_CONTRACT } from "./provenance-schema.mjs";
+
+const SERVICE_WORKER_SENTINELS = Object.freeze({
+  BUILD_ID: "__EAI_BUILD_ID__",
+  DATA_SCHEMA_VERSION: "__EAI_DATA_SCHEMA_VERSION__",
+  CONTENT_COMMIT: "__EAI_CONTENT_COMMIT__",
+});
+const BUILD_ID_RE = /^\d{14}-[0-9a-f]{12}$/;
+const SEMVER_RE = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*)(?:\.(?:0|[1-9]\d*|\d*[A-Za-z-][0-9A-Za-z-]*))*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+const CONTENT_COMMIT_RE = /^[0-9a-f]{40}$/;
+const SITE_COMMIT_RE = /^[0-9a-f]{40}$/;
+const ANY_SERVICE_WORKER_SENTINEL_RE = /__EAI_[A-Z0-9_]+__/g;
 
 // --- helpers ----------------------------------------------------------------
 export function ensure(dir) { fs.mkdirSync(dir, { recursive: true }); }
@@ -27,6 +42,111 @@ export function copyDir(src, dst) {
 export function read(p) { return fs.existsSync(p) ? fs.readFileSync(p, "utf8") : null; }
 
 export function write(p, content) { ensure(path.dirname(p)); fs.writeFileSync(p, content); }
+
+export function loadSiteCommit({
+  executor = defaultExecFileSync,
+  cwd = ROOT,
+  environment = process.env,
+} = {}) {
+  const env = Object.fromEntries(
+    Object.entries(environment).filter(([name]) => !name.startsWith("GIT_")),
+  );
+  Object.assign(env, {
+    GIT_TRACE2: "0",
+    GIT_TRACE2_EVENT: "0",
+    GIT_TRACE2_PERF: "0",
+  });
+  const options = {
+    cwd,
+    encoding: "utf8",
+    env,
+    stdio: ["ignore", "pipe", "pipe"],
+  };
+  let topLevel;
+  let output;
+  try {
+    topLevel = executor("git", ["rev-parse", "--show-toplevel"], options);
+    output = executor("git", ["rev-parse", "HEAD"], options);
+  } catch {
+    throw new Error("site commit must be readable with git rev-parse HEAD");
+  }
+  if (path.resolve(String(topLevel).trim()) !== path.resolve(cwd)) {
+    throw new Error("site commit must come from the project repository root");
+  }
+  const commit = String(output).trim();
+  if (!SITE_COMMIT_RE.test(commit)) {
+    throw new Error("site commit must be 40 lowercase hexadecimal characters");
+  }
+  return commit;
+}
+
+export function formatServiceWorkerBuildId(buildDate, siteCommit = loadSiteCommit()) {
+  if (!(buildDate instanceof Date) || Number.isNaN(buildDate.getTime())) {
+    throw new TypeError("service worker build date must be a valid Date");
+  }
+  if (!SITE_COMMIT_RE.test(siteCommit ?? "")) {
+    throw new Error("service worker site commit must be 40 lowercase hexadecimal characters");
+  }
+  // Deterministic site-build identity: UTC second keeps chronological readability while
+  // the HEAD prefix prevents different commits built in the same second from colliding.
+  const utcSecond = buildDate.toISOString().slice(0, 19).replace(/\D/g, "");
+  return `${utcSecond}-${siteCommit.slice(0, 12)}`;
+}
+
+export function renderServiceWorker(source, {
+  buildId,
+  schemaVersion,
+  contentCommit,
+} = {}) {
+  if (typeof source !== "string") {
+    throw new TypeError("service worker source must be a string");
+  }
+  if (!BUILD_ID_RE.test(buildId ?? "")) {
+    throw new Error("service worker buildId must be 14 UTC digits plus a 12-character lowercase commit prefix");
+  }
+  if (!SEMVER_RE.test(schemaVersion ?? "")) {
+    throw new Error("service worker schemaVersion must be valid semver");
+  }
+  if (!CONTENT_COMMIT_RE.test(contentCommit ?? "")) {
+    throw new Error("service worker contentCommit must be 40 lowercase hexadecimal characters");
+  }
+
+  const replacements = {
+    BUILD_ID: buildId,
+    DATA_SCHEMA_VERSION: schemaVersion,
+    CONTENT_COMMIT: contentCommit,
+  };
+  const lines = source.split("\n");
+  let firstCodeLine = 0;
+  while (
+    firstCodeLine < lines.length
+    && (lines[firstCodeLine].trim() === "" || lines[firstCodeLine].trimStart().startsWith("//"))
+  ) {
+    firstCodeLine += 1;
+  }
+  const invalid = Object.entries(SERVICE_WORKER_SENTINELS)
+    .filter(([name, sentinel], offset) => (
+      lines[firstCodeLine + offset] !== `const ${name} = "${sentinel}";`
+    ))
+    .map(([, sentinel]) => sentinel);
+  if (invalid.length > 0) {
+    throw new Error(`service worker source requires one exact sentinel declaration for: ${invalid.join(", ")}`);
+  }
+
+  let rendered = source;
+  for (const [name, value] of Object.entries(replacements)) {
+    const sentinel = SERVICE_WORKER_SENTINELS[name];
+    rendered = rendered.replace(
+      `const ${name} = "${sentinel}";`,
+      `const ${name} = ${JSON.stringify(value)};`,
+    );
+  }
+  const unresolved = [...new Set(rendered.match(ANY_SERVICE_WORKER_SENTINEL_RE) ?? [])];
+  if (unresolved.length > 0) {
+    throw new Error(`service worker source has unreplaced sentinel(s): ${unresolved.join(", ")}`);
+  }
+  return rendered;
+}
 
 function vendorFonts() {
   // [包名, 需要的 css 文件, Fontsource 内的 family 名 → 站点字体栈用的名字]
@@ -78,12 +198,16 @@ export function copyStatic() {
       .replaceAll("__BASE__", BASE || "");
     write(path.join(DIST, "site.webmanifest"), manifest);
   }
-  // sw.js: 注入 build timestamp 作版本号
+  // sw.js: 注入构建、Data API schema 与 canonical content snapshot 身份。
   {
     const swSrc = fs.readFileSync(path.join(SITE, "src", "sw.js"), "utf8");
-    const buildId = BUILD_DATE.toISOString().slice(0, 16).replace(/[-:T]/g, "");
-    const swOut = swSrc.replace(/const VERSION = "[^"]*";/, `const VERSION = "${buildId}";`);
-    fs.writeFileSync(path.join(DIST, "sw.js"), swOut);
+    const siteCommit = loadSiteCommit();
+    const swOut = renderServiceWorker(swSrc, {
+      buildId: formatServiceWorkerBuildId(BUILD_DATE, siteCommit),
+      schemaVersion: DATA_API_CONTRACT.schema_version,
+      contentCommit: loadCanonicalContentCommit(),
+    });
+    write(path.join(DIST, "sw.js"), swOut);
   }
   copy(path.join(SITE, "src", "sw-register.js"), path.join(DIST, "sw-register.js"));
 
