@@ -22,7 +22,7 @@ gh auth login -h github.com
 ## 第 2 步：建仓库 + push
 
 ```bash
-cd ~/intern-journal/explorations/research/embodied-ai
+cd /path/to/embodied-ai-reading-station
 
 # 建公开仓库（不会自动 push）
 gh repo create embodied-ai-reading-station \
@@ -55,7 +55,7 @@ gh api -X POST repos/estelledc/embodied-ai-reading-station/pages \
 写新笔记 / 改 deck 后：
 
 ```bash
-cd ~/intern-journal/explorations/research/embodied-ai
+cd /path/to/embodied-ai-reading-station
 git add notes/llava.md   # 改了哪个就 add 哪个（不能用 git add .）
 git commit -m "feat: 精读 LLaVA 第 1 段补充"
 git push
@@ -71,4 +71,4 @@ push 完 GitHub Actions 会自动重新 build + 部署。
 
 ---
 
-**一切都 OK 后告诉我 URL，我会帮你把 GitHub Pages 链接写进 `intern-journal/CLAUDE.md` 工作目录地图里。**
+**一切都 OK 后，把 GitHub Pages URL 写进你自己的项目索引或作品集导航。**

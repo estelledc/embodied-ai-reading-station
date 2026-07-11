@@ -49,7 +49,7 @@ export function buildLearnIndex(pages) {
       </article>`).join("")}
     </div>` : ""}
   </main>`;
-  return page({ title: "Learn — Embodied AI: Zero to One", body, active: "learn" });
+  return page({ title: "Learn — Embodied AI: Zero to One", body, active: "learn", canonicalPath: "/learn/" });
 }
 
 export function buildLearnPage(p, allPages) {
@@ -73,7 +73,7 @@ export function buildLearnPage(p, allPages) {
       <ul style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem;list-style:none">${otherLinks}</ul>
     </details>
   </main>`;
-  return page({ title: `${p.title} — Learn`, body, active: "learn" });
+  return page({ title: `${p.title} — Learn`, body, active: "learn", canonicalPath: `/learn/${p.slug}/` });
 }
 
 // --- issue cover pages ------------------------------------------------------
@@ -110,7 +110,7 @@ export function buildIssueIndex(issues) {
       </a>`).join("")}
     </div>
   </main>`;
-  return page({ title: "Issues — Embodied AI: Zero to One", body, active: "issues" });
+  return page({ title: "Issues — Embodied AI: Zero to One", body, active: "issues", canonicalPath: "/issues/" });
 }
 
 function toRoman(n) {
@@ -171,5 +171,11 @@ export function buildIssuePage(issue, notes) {
     ${outlineHtml}
     ${platesSection}
   </main>`;
-  return page({ title: `${issue.title} — Embodied AI: Zero to One`, body, active: "issues" });
+  return page({
+    title: `${issue.title} — Embodied AI: Zero to One`,
+    body,
+    active: "issues",
+    canonicalPath: `/issues/${issue.slug.replace("issue-", "")}/`,
+    ogType: "article",
+  });
 }

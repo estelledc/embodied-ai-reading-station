@@ -22,7 +22,7 @@ function callCodex(prompt) {
     encoding: "utf8",
   });
   const stdout = r.stdout || "";
-  const m = stdout.match(/\/Users\/jason\/\.codex\/generated_images\/[^\s]+\.png/);
+  const m = stdout.match(/\/[^\s]+\/generated_images\/[^\s]+\.png/);
   if (!m) return null;
   const png = m[0];
   if (!fs.existsSync(png)) return null;

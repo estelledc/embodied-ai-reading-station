@@ -210,7 +210,7 @@ for (const n of todo) {
     encoding: "utf8",
   });
   const stdout = r.stdout || "";
-  const m = stdout.match(/\/Users\/jason\/\.codex\/generated_images\/[^\s]+\.png/);
+  const m = stdout.match(/\/[^\s]+\/generated_images\/[^\s]+\.png/);
   if (!m) {
     console.error(`  FAIL no PNG path`);
     failed++;

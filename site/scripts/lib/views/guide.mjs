@@ -85,7 +85,7 @@ export function buildGuideIndex(guideData) {
       </div>
     </section>
   </main>`;
-  return page({ title: "Guide — 具身智能系统教程", body, active: "guide",
+  return page({ title: "Guide — 具身智能系统教程", body, active: "guide", canonicalPath: "/guide/",
     ogDescription: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统教程——从 CLIP 到 VLA 到 Diffusion Policy，每章含代码示例和自测题。` });
 }
 

@@ -39,9 +39,12 @@ test("paper JSON-LD separates note lifecycle from source paper publication year"
   }, "https://example.test/example.webp");
 
   const article = jsonLd["@graph"][0];
+  const person = jsonLd["@graph"][1];
   assert.equal(article.datePublished, "2026-06-25");
   assert.equal(article.dateModified, "2026-07-02");
   assert.equal(article.about.datePublished, "2021-01-01");
+  assert.equal(article.author["@id"], "https://estelledc.github.io/#person");
+  assert.equal(person.name, "Jason Xun");
 });
 
 test("paper JSON-LD omits unknown content dates instead of using build time", () => {
@@ -68,4 +71,6 @@ test("Atom entry updated time comes from content metadata", () => {
   }]);
 
   assert.match(feed, /<updated>2026-07-02T00:00:00\.000Z<\/updated>/);
+  assert.match(feed, /<author><name>Jason Xun<\/name><\/author>/);
+  assert.doesNotMatch(feed, /<author><name>Jason<\/name><\/author>/);
 });

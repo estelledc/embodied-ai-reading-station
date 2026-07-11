@@ -37,7 +37,7 @@ export function buildTopics(notes) {
     body += `</ul></section>`;
   }
   body += `</main>`;
-  return page({ title: "Topics — Embodied AI: Zero to One", body, active: "topics" });
+  return page({ title: "Topics — Embodied AI: Zero to One", body, active: "topics", canonicalPath: "/topics/" });
 }
 
 // --- glossary page ----------------------------------------------------------
@@ -86,7 +86,7 @@ export function buildGlossary(notes) {
     body += `</dl></section>`;
   }
   body += `</main>`;
-  return page({ title: "Glossary — Embodied AI: Zero to One", body, active: "glossary" });
+  return page({ title: "Glossary — Embodied AI: Zero to One", body, active: "glossary", canonicalPath: "/glossary/" });
 }
 
 // --- per-topic landing ------------------------------------------------------
@@ -238,7 +238,7 @@ export function buildTopicLanding(t, notes) {
 
   body += `</main>`;
 
-  return page({ title: `${t.label} — Embodied AI: Zero to One`, body, active: "topics" });
+  return page({ title: `${t.label} — Embodied AI: Zero to One`, body, active: "topics", canonicalPath: `/topics/${t.id}/` });
 }
 
 // --- tags -------------------------------------------------------------------
@@ -266,7 +266,7 @@ export function buildTagsIndex(notes) {
     </a>`;
   }
   body += `</div></main>`;
-  return page({ title: "Tags — Embodied AI: Zero to One", body, active: "tags" });
+  return page({ title: "Tags — Embodied AI: Zero to One", body, active: "tags", canonicalPath: "/tags/" });
 }
 
 export function buildTagPage(tag, notes) {
@@ -291,7 +291,7 @@ export function buildTagPage(tag, notes) {
       </tr>`).join("")}</tbody>
     </table>
   </main>`;
-  return page({ title: `#${tag} — Embodied AI: Zero to One`, body, active: "tags" });
+  return page({ title: `#${tag} — Embodied AI: Zero to One`, body, active: "tags", canonicalPath: `/tags/${tag}/` });
 }
 
 // --- reading lists ----------------------------------------------------------
@@ -373,7 +373,7 @@ export function buildReadingLists(notes) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Reading lists — Embodied AI: Zero to One", body, active: "lists" });
+  return page({ title: "Reading lists — Embodied AI: Zero to One", body, active: "lists", canonicalPath: "/lists/" });
 }
 
 // --- era landing pages ------------------------------------------------------
@@ -461,7 +461,7 @@ export function buildEraPage(era, notes) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: `${info.label} — Embodied AI: Zero to One`, body, active: "eras" });
+  return page({ title: `${info.label} — Embodied AI: Zero to One`, body, active: "eras", canonicalPath: `/eras/${era}/` });
 }
 
 // --- /syllabus/ checkable 30-day course plan -------------------------------
@@ -560,7 +560,7 @@ export function buildSyllabus(notes) {
     <strong>还要完成导师任务清单？</strong>
     <p style="margin:0.45rem 0 0;color:var(--ink-soft)">继续走 <a href="${url("/learn/path/#可选任务扩展-day-3135")}">Day 31–35 可选任务扩展 →</a>。这 5 天不计入 30 天核心进度。</p>
   </aside></main>`;
-  return page({ title: "Syllabus — Embodied AI: Zero to One", body, active: "syllabus" });
+  return page({ title: "Syllabus — Embodied AI: Zero to One", body, active: "syllabus", canonicalPath: "/syllabus/" });
 }
 
 // --- /cheatsheet/ all papers tldr in one page ------------------------------
@@ -596,7 +596,7 @@ export function buildCheatsheet(notes) {
     body += `</ol></section>`;
   }
   body += `</main>`;
-  return page({ title: "Cheatsheet — Embodied AI: Zero to One", body, active: "cheatsheet" });
+  return page({ title: "Cheatsheet — Embodied AI: Zero to One", body, active: "cheatsheet", canonicalPath: "/cheatsheet/" });
 }
 
 // --- /discover/ exploration page -------------------------------------------
@@ -703,7 +703,7 @@ export function buildDiscover(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Discover — Embodied AI: Zero to One", body, active: "discover" });
+  return page({ title: "Discover — Embodied AI: Zero to One", body, active: "discover", canonicalPath: "/discover/" });
 }
 
 // --- quality dashboard (作者用，不放主导航) ---------------------------------
@@ -761,7 +761,7 @@ export function buildQuality(notes) {
       </tbody>
     </table>
   </main>`;
-  return page({ title: "Quality — Embodied AI: Zero to One", body, active: "quality" });
+  return page({ title: "Quality — Embodied AI: Zero to One", body, active: "quality", canonicalPath: "/quality/" });
 }
 
 // --- stats dashboard --------------------------------------------------------
@@ -952,7 +952,7 @@ export function buildStats(notes, backlinkMap = new Map()) {
     </section>
 <!-- inline data island moved to /data/papers.json -->
   </main>`;
-  return page({ title: "Stats — Embodied AI: Zero to One", body, active: "stats" });
+  return page({ title: "Stats — Embodied AI: Zero to One", body, active: "stats", canonicalPath: "/stats/" });
 }
 
 // --- venue stats ------------------------------------------------------------
@@ -1022,7 +1022,7 @@ export function buildVenueStats(notes) {
     body += `<p style="color:var(--ink-faint);font-size:0.85rem">${unknown} 篇 venue 未标记，未计入。</p>`;
   }
   body += `</main>`;
-  return page({ title: "Venues — Embodied AI: Zero to One", body, active: "venues" });
+  return page({ title: "Venues — Embodied AI: Zero to One", body, active: "venues", canonicalPath: "/venues/" });
 }
 
 // --- tag co-occurrence heatmap ---------------------------------------------
@@ -1091,7 +1091,7 @@ export function buildHeatmap(notes) {
       ★ 对角线 mustard = 该 tag 论文数 / 非对角 coral = 共现数 / 数字 ≥3 才显示
     </p>
   </main>`;
-  return page({ title: "Heatmap — Embodied AI: Zero to One", body, active: "heatmap" });
+  return page({ title: "Heatmap — Embodied AI: Zero to One", body, active: "heatmap", canonicalPath: "/heatmap/" });
 }
 
 // --- compare page (per-topic side-by-side) ----------------------------------
@@ -1131,7 +1131,7 @@ export function buildCompare(notes) {
     body += `</tbody></table></section>`;
   }
   body += `</main>`;
-  return page({ title: "Compare — Embodied AI: Zero to One", body, active: "compare" });
+  return page({ title: "Compare — Embodied AI: Zero to One", body, active: "compare", canonicalPath: "/compare/" });
 }
 
 // --- graph page (force-directed) --------------------------------------------
@@ -1193,6 +1193,7 @@ export function buildGraph(notes) {
     title: "Graph — Embodied AI: Zero to One",
     body,
     active: "graph",
+    canonicalPath: "/graph/",
     extraHead: `<script src="${url("/vendor/d3.min.js")}" defer></script>
     <script src="${url("/graph.js")}" defer></script>`,
   });
@@ -1268,5 +1269,5 @@ export function buildTimeline(notes) {
     body += `</ul></section>`;
   }
   body += `</main>`;
-  return page({ title: "Timeline — Embodied AI: Zero to One", body, active: "timeline" });
+  return page({ title: "Timeline — Embodied AI: Zero to One", body, active: "timeline", canonicalPath: "/timeline/" });
 }

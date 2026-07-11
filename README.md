@@ -1,10 +1,26 @@
 # Embodied AI: Zero to One
 
-> **从零开始学具身智能——22 章系统教程 + 156 篇论文笔记。**
-> 零术语假设，日常类比起步。从 CLIP 到 π0，11 主题全景。
+> **把具身智能的论文海洋，编成一条从零基础到研究任务的学习路径。**
+> 22 章系统教程 + 156 篇结构化论文笔记，从 CLIP 到 π0，覆盖 11 个主题。
 > v1.2.0 · 2026-07（更新记录见 [CHANGELOG.md](CHANGELOG.md)，未来方向见 [ROADMAP.md](ROADMAP.md)）
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
+
+[Jason / Works](https://estelledc.github.io/) · [About](https://estelledc.github.io/about/) · [Résumé](https://estelledc.github.io/resume/) · [GitHub](https://github.com/estelledc/embodied-ai-reading-station)
+
+---
+
+## Project brief / 对外展示
+
+**Status:** Maintained · v1.2.0
+
+- **Problem**：新手缺的不是另一篇孤立摘要，而是一条能回答“先学什么、论文如何关联、怎样走到真实研究任务”的路线。
+- **Role**：个人项目；独立完成产品定义、内容架构、静态站工程、交互设计、公开数据与发布门禁。
+- **System**：Node 静态生成器把教程、论文笔记、主题/时间线/关系图、Pagefind 搜索和浏览器本地进度统一到一份内容数据上。
+- **Evidence**：22 章教程、156 篇笔记、11 个主题；公开 [质量页](https://estelledc.github.io/embodied-ai-reading-station/quality/)、[数据接口](https://estelledc.github.io/embodied-ai-reading-station/data/index.json) 和 [Actions 构建记录](https://github.com/estelledc/embodied-ai-reading-station/actions)。
+- **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明。
+
+> An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief. It is an owner-led, independently maintained, evidence-aware product—not a claim that every note has received line-by-line human review.
 
 ---
 
@@ -93,7 +109,7 @@ curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    
 ```bibtex
 @misc{eai_rt_1_2022,
   title  = {RT-1: Robotics Transformer for Real-World Control at Scale},
-  author = {Jason},
+  author = {Jason Xun},
   year   = {2022},
   note   = {Embodied AI: Zero to One — readable note},
   url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/rt-1/}
@@ -133,7 +149,7 @@ curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    
 ```bash
 git clone git@github.com:estelledc/embodied-ai-reading-station.git
 cd embodied-ai-reading-station/site
-npm install
+npm ci
 npm run build      # 输出到 dist/
 npm run serve      # 本地 dev server
 ```
@@ -183,7 +199,7 @@ content/*.md ┤                              │
                                   ├─ data/papers.json + .csv
                                   ├─ feed.xml + sitemap.xml
                                   ├─ sw.js (PWA)
-                                  └─ index.html ... 2400+ files
+                                  └─ 256 个 HTML 页面 + 静态资产
 
    ↓ npm run check（静态、链接、来源与产品契约）
    ↓ GitHub Actions（PR: test/build/check/audit；main: build/check/deploy）
@@ -191,7 +207,7 @@ content/*.md ┤                              │
    estelledc.github.io/embodied-ai-reading-station/
 ```
 
-构建用时约 2 秒，dist 输出 ~120MB（71MB 是 590 张 webp 图）。
+构建时间和体积随机器、依赖及 `SITE_BASE` 变化；`npm run check` 会全量扫描 256 个 HTML 页面、内部链接、来源证据和性能预算，并阻止 dist 超过 200MB。
 
 ## 许可
 

@@ -4,7 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { execSync as _execSync } from "node:child_process";
 import { marked } from "marked";
-import { SITE, ROOT, PAPERS_DIR, url, SITE_URL } from "../config.mjs";
+import { SITE, ROOT, PAPERS_DIR, url, SITE_URL, SITE_ORIGIN } from "../config.mjs";
 import { resetPageState, injectInlineFigures, extractOutline } from "../markdown.mjs";
 import { TOPIC_ORDER, PAPERS, PAPER_COUNT, TOPIC_COUNT, GUIDE_CHAPTER_COUNT, eraComparator } from "../content.mjs";
 import { page } from "../layout.mjs";
@@ -35,11 +35,12 @@ export function renderRecentCommits(logOutput) {
 
 export function buildPaperJsonLd(note, ogImage) {
   const dates = contentDatesForNote(note);
+  const personId = `${SITE_ORIGIN}/#person`;
   const article = {
     "@type": "Article",
     "headline": note.title,
     "description": note.tldr || "",
-    "author": { "@type": "Person", "name": "Jason" },
+    "author": { "@id": personId },
     "publisher": { "@type": "Organization", "name": "Embodied AI: Zero to One" },
     // Article dates describe this note's content lifecycle. The source paper year
     // remains a separate ScholarlyArticle field below.
@@ -66,6 +67,13 @@ export function buildPaperJsonLd(note, ogImage) {
     "@graph": [
       article,
       {
+        "@type": "Person",
+        "@id": personId,
+        "name": "Jason Xun",
+        "url": `${SITE_ORIGIN}/`,
+        "sameAs": ["https://github.com/estelledc"],
+      },
+      {
         "@type": "BreadcrumbList",
         "itemListElement": [
           { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE_URL + "/" },
@@ -77,8 +85,190 @@ export function buildPaperJsonLd(note, ogImage) {
   };
 }
 
+export function buildHomeJsonLd({ paperCount, topicCount, guideChapterCount }) {
+  const personId = `${SITE_ORIGIN}/#person`;
+  const websiteId = `${SITE_URL}/#website`;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": personId,
+        "name": "Jason Xun",
+        "url": `${SITE_ORIGIN}/`,
+        "sameAs": ["https://github.com/estelledc"],
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+        "url": `${SITE_URL}/`,
+        "name": "Embodied AI: Zero to One",
+        "inLanguage": "zh-CN",
+        "author": { "@id": personId },
+      },
+      {
+        "@type": "LearningResource",
+        "@id": `${SITE_URL}/#learning-resource`,
+        "url": `${SITE_URL}/`,
+        "name": "Embodied AI: Zero to One",
+        "description": "面向零基础读者的中文具身智能学习系统：系统教程、论文笔记、阅读路径与可验证的公开数据。",
+        "inLanguage": "zh-CN",
+        "isAccessibleForFree": true,
+        "educationalLevel": "Beginner",
+        "learningResourceType": "系统教程与论文阅读站",
+        "audience": { "@type": "Audience", "audienceType": "具身智能入门学习者" },
+        "creator": { "@id": personId },
+        "additionalProperty": [
+          { "@type": "PropertyValue", "name": "Guide chapters", "value": guideChapterCount },
+          { "@type": "PropertyValue", "name": "Paper notes", "value": paperCount },
+          { "@type": "PropertyValue", "name": "Topics", "value": topicCount },
+        ],
+      },
+    ],
+  };
+}
+
 // --- index page -------------------------------------------------------------
 export function buildIndex(notes, latestIssue = null) {
+  const total = PAPERS.length;
+  const issueHref = latestIssue
+    ? url(`/issues/${latestIssue.slug.replace("issue-", "")}/`)
+    : url("/issues/01/");
+  const issueLabel = latestIssue
+    ? `Issue Nº ${latestIssue.issueNumber}`
+    : "Issue Nº 01";
+
+  const body = `<main class="shell showcase-home showcase-home--lean">
+    <div class="home-status"><span class="jx-chip" data-state="maintained">Maintained · v1.2</span><span class="eyebrow">Embodied AI · editorial learning system</span></div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <h1>把论文海洋，编成一条<em>从零到研究任务</em>的路。</h1>
+        <p class="hero-lede">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。首页只负责帮你选路、比较和形成输出；${total} 篇论文笔记留在独立浏览页按需检索。</p>
+        <p class="hero-summary-en" lang="en">An owner-led, independently maintained learning product that turns embodied-AI literature into guided paths, comparisons, and research briefs.</p>
+        <div class="hero-actions">
+          <a class="jx-action" href="${url("/guide/ch01-why-embodied-ai/")}"><span aria-hidden="true">→</span><span>开始学习 · 从 Ch01 起步</span></a>
+          <a class="jx-action jx-action--secondary" href="${url("/papers/")}"><span>浏览 ${total} 篇论文笔记</span></a>
+        </div>
+      </div>
+      <figure class="hero-figure">
+        <picture>
+          <source type="image/webp" srcset="${url("/images/hero-1200.webp")} 1200w, ${url("/images/hero.webp")} 1672w" sizes="(max-width: 900px) 100vw, 50vw">
+          <img src="${url("/images/hero.webp")}" alt="A robotic hand reaching toward floating eyes, text fragments, and arrows — abstract editorial illustration of embodied AI" loading="eager" fetchpriority="high" decoding="async" width="1672" height="941">
+        </picture>
+        <figcaption><span class="plate">Plate Nº 0</span>— Vision, language, action, then a research question.</figcaption>
+      </figure>
+    </div>
+
+    <section class="eai-journey" aria-labelledby="eai-journey-title">
+      <div class="jx-case-question">
+        <p class="jx-case-question__label">Learning question / 学习问题</p>
+        <div>
+          <h2 class="jx-case-question__prompt" id="eai-journey-title">零基础读者怎样从“听说过具身 AI”，走到一份能继续研究的简报？</h2>
+          <p class="jx-case-question__context">顺序不是先吞完 ${total} 篇笔记，而是先建立主线，再比较同主题方法，最后把判断写成可回查的 research brief。</p>
+        </div>
+      </div>
+      <ol class="eai-journey__steps">
+        <li><span>01</span><div><strong>选路径</strong><p>从 ${GUIDE_CHAPTER_COUNT} 章 Guide 或 30+5 路径建立术语与问题主线。</p><a href="${url("/guide/")}">进入 Guide →</a></div></li>
+        <li><span>02</span><div><strong>做对比</strong><p>把同主题的祖师爷、现代经典和前沿工作并排，看到方法为何变化。</p><a href="${url("/compare/")}">打开 Compare →</a></div></li>
+        <li><span>03</span><div><strong>形成简报</strong><p>用来源、差异、未决问题和下一步实验组织一份可继续讨论的编辑输出。</p><a href="${issueHref}">查看 ${issueLabel} →</a></div></li>
+      </ol>
+    </section>
+
+    <section class="eai-outcomes" aria-labelledby="eai-outcomes-title">
+      <div class="eai-section-heading">
+        <span class="eyebrow">Three representative outcomes ↘</span>
+        <h2 id="eai-outcomes-title">三件代表成果，对应学习路径的三个阶段。</h2>
+      </div>
+      <ul class="jx-proof-rail">
+        <li><a href="${url("/guide/")}"><span class="jx-proof-rail__label">Guided foundation</span><strong class="jx-proof-rail__value">${GUIDE_CHAPTER_COUNT} 章 Guide</strong><span class="jx-proof-rail__detail">从概念、主线到任务实战；每章带示例与自测。</span><span class="jx-proof-rail__source">Source · guide markdown</span></a></li>
+        <li><a href="${url("/compare/")}"><span class="jx-proof-rail__label">Comparative view</span><strong class="jx-proof-rail__value">${TOPIC_COUNT} 主题对比</strong><span class="jx-proof-rail__detail">按时代与主题并排方法，避免把论文读成孤立摘要。</span><span class="jx-proof-rail__source">Source · shared content data</span></a></li>
+        <li><a href="${issueHref}"><span class="jx-proof-rail__label">Editorial synthesis</span><strong class="jx-proof-rail__value">${issueLabel}</strong><span class="jx-proof-rail__detail">把多篇材料重组为研究问题、判断与下一步。</span><span class="jx-proof-rail__source">Source · issue markdown</span></a></li>
+      </ul>
+      <p class="jx-verification-line">构建会验证 Guide、Compare、Issue 与论文浏览页的路由；结构检查不等于逐页人工事实复核。</p>
+    </section>
+
+    <section class="eai-library-gateway" aria-labelledby="eai-library-title">
+      <div>
+        <span class="jx-source-tag" data-source="build">独立论文浏览页</span>
+        <h2 id="eai-library-title">需要查证时，再进入 ${total} 篇论文库。</h2>
+        <p>论文页保留主题、难度、era 与内容状态筛选；首页不再渲染全量卡片，也不把篇数当成学习成果。</p>
+      </div>
+      <a class="jx-action" href="${url("/papers/")}">浏览全部论文 →</a>
+    </section>
+
+    <details class="eai-method">
+      <summary>How this is made / 角色、来源与边界</summary>
+      <div class="eai-method__grid">
+        <div><span class="jx-source-tag" data-source="build">Owner-led</span><h3>Jason Xun</h3><p>负责产品定义、内容架构、静态站工程、交互设计、发布门禁与最终验收。</p></div>
+        <div><span class="jx-source-tag" data-source="external">AI-assisted notes</span><h3>内容生产</h3><p>AI 辅助整理笔记；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。</p></div>
+        <div><span class="jx-source-tag" data-source="history">Review boundary</span><h3>尚未证明</h3><p>结构门禁不等于逐页人工复核，也不证明学习效果；重要事实仍需回到原论文。</p></div>
+      </div>
+      <div class="eai-state-tools">
+        <div><h3>本地进度工具</h3><p>进度只保存在当前浏览器。升级或清缓存前可导出 JSON；导入和重置都需要明确确认。</p></div>
+        <div class="eai-state-tools__actions">
+          <button class="streak-export" id="eai-state-export" type="button">备份进度</button>
+          <button class="streak-export" id="eai-state-import" type="button">导入进度</button>
+          <button class="streak-export" id="eai-state-restore-import" type="button" hidden>撤销最近导入</button>
+          <button class="streak-export" id="eai-state-reset-path" type="button">重置路径</button>
+          <button class="streak-export" id="eai-state-reset-guide" type="button">重置 Guide</button>
+          <button class="streak-export" id="eai-state-reset-all" type="button">清空全部</button>
+          <input id="eai-state-import-file" type="file" accept="application/json,.json" hidden>
+        </div>
+      </div>
+    </details>
+  </main>`;
+
+  const homeDescription = `面向零基础读者的中文具身智能学习系统：选路径、做对比、形成研究简报，并按需浏览 ${total} 篇论文笔记。`;
+  return page({
+    title: "Embodied AI: Zero to One",
+    body,
+    active: "index",
+    canonicalPath: "/",
+    ogType: "website",
+    ogTitle: "Embodied AI: Zero to One — 从学习路径到研究简报",
+    ogDescription: homeDescription,
+    ogImageAlt: "暖纸期刊风插画：机器人手伸向视觉、语言与行动符号",
+    jsonLd: buildHomeJsonLd({
+      paperCount: total,
+      topicCount: TOPIC_COUNT,
+      guideChapterCount: GUIDE_CHAPTER_COUNT,
+    }),
+  });
+}
+
+export function buildPapersIndex(notes) {
+  const legacy = buildLegacyPaperIndex(notes);
+  const marker = '<section id="paper-library"';
+  const libraryStart = legacy.indexOf(marker);
+  const libraryEnd = legacy.indexOf("</main>", libraryStart);
+  if (libraryStart < 0 || libraryEnd < 0) {
+    throw new Error("paper library marker missing from generated index");
+  }
+
+  const body = `<main class="shell paper-library-page">
+    <section class="paper-library-intro">
+      <span class="eyebrow">Papers · full browse</span>
+      <span class="jx-chip" data-state="maintained">${PAPERS.length} notes · ${TOPIC_COUNT} topics</span>
+      <h1>把全量论文留在<em>需要查证</em>的时候。</h1>
+      <p>按主题、难度、era 与内容状态筛选。想先建立主线，请回首页或 Guide；这里负责检索和逐篇进入。</p>
+      <div class="hero-actions"><a class="jx-action" href="${url("/")}">回到学习首页</a><a class="jx-action jx-action--secondary" href="${url("/guide/")}">进入 Guide</a></div>
+    </section>
+    ${legacy.slice(libraryStart, libraryEnd)}
+  </main>`;
+
+  return page({
+    title: "Papers — Embodied AI: Zero to One",
+    body,
+    active: "papers",
+    canonicalPath: "/papers/",
+    ogType: "website",
+    ogTitle: `Embodied AI Papers — ${PAPERS.length} 篇论文笔记`,
+    ogDescription: `按主题、难度、era 与内容状态浏览 ${PAPERS.length} 篇具身智能论文笔记。`,
+    ogImageAlt: "Embodied AI 论文浏览页",
+  });
+}
+
+function buildLegacyPaperIndex(notes, latestIssue = null) {
   const total = PAPERS.length;
   const done = notes.filter(n => n.status && n.status !== "stub" && n.status !== "missing").length;
 
@@ -89,12 +279,22 @@ export function buildIndex(notes, latestIssue = null) {
     lastCommits = renderRecentCommits(logOutput);
   } catch {}
 
-  let body = `<main class="shell">
-    <span class="eyebrow">Embodied AI: Zero to One · 22 chapters · ${notes.length} papers</span>
+  let body = `<main class="shell showcase-home">
+    <div class="home-status"><span class="jx-chip" data-state="maintained">Maintained · v1.2</span><span class="eyebrow">Embodied AI · editorial learning system</span></div>
     <div class="hero-grid">
       <div class="hero-text">
-        <h1><em>从零开始</em>学具身智能 — <em>${GUIDE_CHAPTER_COUNT} 章</em>系统教程 + <em>${total} 篇</em>论文笔记。</h1>
-        <p style="font-size:1.18rem;line-height:1.55;color:var(--ink-soft);max-width:46ch">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这站用零术语假设、日常类比起步的方式，从 CLIP 讲到 π0，${GUIDE_CHAPTER_COUNT} 章教程带你系统入门，${total} 篇论文笔记做你的参考文献库。</p>
+        <h1>把论文海洋，编成一条<em>从零到研究任务</em>的路。</h1>
+        <p class="hero-lede">具身智能 = 让 AI 长出眼睛和手，在真实世界里做事。这套中文学习系统用 ${GUIDE_CHAPTER_COUNT} 章教程建立主线、${total} 篇论文笔记补足证据，再用路径、主题和关系视图帮零基础读者从 CLIP 走到 π0。</p>
+        <p class="hero-summary-en" lang="en">An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief.</p>
+        <div class="hero-actions">
+          <a class="jx-action" href="${url("/guide/ch01-why-embodied-ai/")}">
+            <span aria-hidden="true">→</span>
+            <span>开始学习 · 从 Ch01 起步</span>
+          </a>
+          <a class="jx-action jx-action--secondary" href="${url("/learn/")}">
+            <span>30+5 路径 · FAQ · 公式速查</span>
+          </a>
+        </div>
       </div>
       <figure class="hero-figure">
         <picture>
@@ -105,15 +305,32 @@ export function buildIndex(notes, latestIssue = null) {
       </figure>
     </div>
 
-    <div style="display:flex;flex-wrap:wrap;gap:0.8rem;margin:1.6rem 0 0">
-      <a href="${url("/guide/ch01-why-embodied-ai/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;padding:0.85rem 1.4rem;background:var(--ink);color:var(--paper);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
-        <span style="color:var(--coral)">→</span>
-        <span>开始学习 · 从 Ch01 起步</span>
-      </a>
-      <a href="${url("/learn/")}" style="display:inline-flex;align-items:baseline;gap:0.6rem;padding:0.85rem 1.4rem;background:transparent;color:var(--ink);text-decoration:none;font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.06em;text-transform:uppercase;border:1px solid var(--ink);transition:background 0.15s">
-        <span>30+5 路径 · FAQ · 公式速查</span>
-      </a>
-    </div>
+    <section class="jx-proof eai-proof" aria-labelledby="project-proof-title">
+      <div class="eai-proof-story">
+        <div class="eai-proof-kicker"><span class="jx-chip" data-state="maintained">Maintained</span><span>Project proof / 项目证明</span></div>
+        <h2 id="project-proof-title">不是论文仓库，而是一套把阅读变成路径的学习产品。</h2>
+        <p class="jx-proof__summary">新手面对的不是“少一篇摘要”，而是论文、术语、工具和研究任务彼此断开。本站把教程主线、论文证据、学习路径、关系视图与本地进度放进同一套静态系统。</p>
+        <p class="jx-proof__summary-en" lang="en">A solo-built, evidence-aware learning product that connects tutorials, paper notes, research views and browser-local progress.</p>
+        <div class="jx-proof__metrics" aria-label="项目规模">
+          <div class="jx-proof__metric"><strong>${GUIDE_CHAPTER_COUNT}</strong><span>章零基础系统教程</span></div>
+          <div class="jx-proof__metric"><strong>${total}</strong><span>篇长篇结构化论文笔记</span></div>
+          <div class="jx-proof__metric"><strong>${TOPIC_COUNT}</strong><span>个跨模态研究主题</span></div>
+        </div>
+        <div class="jx-proof__links" aria-label="公开证据">
+          <a class="eai-proof-route" href="${url("/guide/")}">进入系统教程 <span aria-hidden="true">→</span></a>
+          <a class="jx-pill" href="${url("/quality/")}">公开质量页</a>
+          <a class="jx-pill" href="${url("/data/index.json")}">数据接口</a>
+          <a class="jx-pill" href="https://github.com/estelledc/embodied-ai-reading-station/actions">构建与检查</a>
+        </div>
+      </div>
+      <dl class="jx-proof__meta">
+        <div><dt>问题 / Problem</dt><dd>碎片化论文无法回答“零基础下一步读什么、如何连到研究任务”。</dd></div>
+        <div><dt>个人角色 / Role</dt><dd>独立完成产品定义、内容架构、静态站工程、交互设计与发布门禁。</dd></div>
+        <div><dt>系统 / System</dt><dd>Node 静态生成 + Pagefind + D3 + KaTeX；路径、主题、时间线、关系图和本地进度共享同一份内容数据。</dd></div>
+        <div><dt>证据 / Evidence</dt><dd>构建时检查来源路径、内容结构、图像覆盖、内部链接、公开数据和 PWA 资产。</dd></div>
+        <div><dt>局限 / Limitations</dt><dd class="jx-proof__limitation">笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不被包装成学习效果证明。</dd></div>
+      </dl>
+    </section>
 
     ${lastCommits ? `<aside class="last-commits">
       <span class="lc-eyebrow">Recently updated ↘</span>
@@ -253,7 +470,7 @@ export function buildIndex(notes, latestIssue = null) {
   <hr/>`;
 
   // --- 论文库分隔 ---
-  body += `<section style="margin:1.5rem 0 0.5rem">
+  body += `<section id="paper-library" style="margin:1.5rem 0 0.5rem">
     <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute)">论文笔记库 · ${total} papers ↘</h2>
     <p style="font-size:0.95rem;color:var(--ink-soft);max-width:52ch">教程之外，这里是 ${total} 篇论文的详细笔记——每篇含架构图、实验数据、踩坑提醒。可按主题、难度、era 筛选。</p>
   </section>`;
@@ -319,9 +536,9 @@ export function buildIndex(notes, latestIssue = null) {
       const hasReal = fs.existsSync(realThumb);
       const hasCard = fs.existsSync(cardThumb);
       const thumbDiv = hasReal
-        ? `<div class="thumb" style="background-image:url('${url(`/assets/${n.slug}/img_000.jpg`)}')"></div>`
+        ? `<div class="thumb"><img src="${url(`/assets/${n.slug}/img_000.jpg`)}" alt="" loading="lazy" decoding="async" width="800" height="450"></div>`
         : hasCard
-          ? `<div class="thumb" style="background-image:url('${url(`/images/cards/${n.slug}.webp`)}')"></div>`
+          ? `<div class="thumb"><img src="${url(`/images/cards/${n.slug}.webp`)}" alt="" loading="lazy" decoding="async" width="800" height="450"></div>`
           : `<div class="thumb thumb-placeholder"><span>${t.roman}</span></div>`;
       body += `<article class="paper-card" data-slug="${n.slug}" data-topic="${n.topic}" data-difficulty="${(n.difficulty || "").length || 2}" data-era="${n.era || "classic"}" data-status="${n.status || "auto-summary"}">
         ${thumbDiv}
@@ -340,7 +557,22 @@ export function buildIndex(notes, latestIssue = null) {
   }
 
   body += `</main>`;
-  return page({ title: "Embodied AI: Zero to One", body, active: "index" });
+  const homeDescription = `面向零基础读者的中文具身智能学习系统：${GUIDE_CHAPTER_COUNT} 章教程、${total} 篇论文笔记、${TOPIC_COUNT} 个主题与可验证的公开数据。`;
+  return page({
+    title: "Embodied AI: Zero to One",
+    body,
+    active: "index",
+    canonicalPath: "/",
+    ogType: "website",
+    ogTitle: "Embodied AI: Zero to One — 具身智能零基础学习系统",
+    ogDescription: homeDescription,
+    ogImageAlt: "暖纸期刊风插画：机器人手伸向视觉、语言与行动符号",
+    jsonLd: buildHomeJsonLd({
+      paperCount: total,
+      topicCount: TOPIC_COUNT,
+      guideChapterCount: GUIDE_CHAPTER_COUNT,
+    }),
+  });
 }
 
 // --- single note page -------------------------------------------------------
@@ -440,7 +672,7 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
         </div>
         <pre class="cite-code">@online{eai_${note.slug.replace(/-/g, "_")}_2026,
   title       = {(readable note) ${note.title}},
-  author      = {Zhou, Jason},
+  author      = {Xun, Jason},
   year        = {2026},${note.year ? `
   note        = {Note on a ${note.year} paper},` : ""}
   howpublished = {\\url{${SITE_URL}/papers/${note.slug}/}},
@@ -479,6 +711,7 @@ ${next ? `<link rel="next" href="${SITE_URL}/papers/${next.slug}/">` : ""}`;
     ogDescription: note.tldr || `${note.topicLabel} · ${note.year || ""} ${note.venue || ""} · ${note.readingTime} min read`,
     ogImage,
     ogUrl: `${SITE_URL}/papers/${note.slug}/`,
+    ogType: "article",
     jsonLd,
     extraHead: linkRel,
   });

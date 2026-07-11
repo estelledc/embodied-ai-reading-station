@@ -102,7 +102,7 @@ export function buildFeed(issuePages, notes) {
   <link href="${SITE_URL}/" rel="alternate" type="text/html"/>
   <id>${SITE_URL}/</id>
   <updated>${updated}</updated>
-  <author><name>Jason</name></author>
+  <author><name>Jason Xun</name></author>
 ${entries.join("\n")}
 </feed>
 `;
@@ -208,7 +208,7 @@ export function writeSeoFiles(notes, guideData, issuePages, learnPages) {
     const today = BUILD_DATE.toISOString().slice(0, 10);
     const guideUrls = guideData.chapters.length > 0 ? ["/guide/", ...guideData.chapters.map(c => `/guide/${c.slug}/`)] : [];
     const staticUrls = [
-      "/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
+      "/", "/papers/", "/topics/", "/timeline/", "/compare/", "/glossary/", "/graph/",
       ...(issuePages.length ? ["/issues/"] : []),
       "/about/",
       ...(learnPages.length ? ["/learn/"] : []),
@@ -246,7 +246,7 @@ Sitemap: ${SITE_URL}/sitemap.xml
 
   // /humans.txt — 谁做的（humanstxt.org spec）
   write(path.join(DIST, "humans.txt"), `/* TEAM */
-Author: Jason
+Author: Jason Xun
 Site: ${SITE_URL}
 GitHub: github.com/estelledc/embodied-ai-reading-station
 Twitter / X: not yet
@@ -284,7 +284,8 @@ Automated gates verify minimum length, required sections, links, and source refe
 
 ## Best entry points for AI agents
 
-- [Site index](${SITE_URL}/) — Hero + ${PAPER_COUNT} paper cards grouped by topic
+- [Learning homepage](${SITE_URL}/) — Choose a path, compare methods, and inspect a representative editorial outcome
+- [Paper library](${SITE_URL}/papers/) — ${PAPER_COUNT} paper cards grouped by topic with filters
 - [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all ${PAPER_COUNT} tldrs (best for quick scan)
 - [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all ${PAPER_COUNT} papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
 - [/data/papers.csv](${SITE_URL}/data/papers.csv) — Same data as CSV
@@ -312,7 +313,7 @@ Automated gates verify minimum length, required sections, links, and source refe
 
 @misc{embodied_ai_reading_station,
   title  = {Embodied AI: Zero to One},
-  author = {Jason},
+  author = {Jason Xun},
   year   = {2026},
   url    = {${SITE_URL}/},
   note   = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}
@@ -327,7 +328,7 @@ Automated gates verify minimum length, required sections, links, and source refe
   <Description>${PAPER_COUNT} 篇具身智能论文搜索</Description>
   <InputEncoding>UTF-8</InputEncoding>
   <Image type="image/svg+xml">${SITE_URL}/favicon.svg</Image>
-  <Url type="text/html" template="${SITE_URL}/?q={searchTerms}"/>
+  <Url type="text/html" template="${SITE_URL}/papers/?q={searchTerms}"/>
   <Url type="application/opensearchdescription+xml" rel="self" template="${SITE_URL}/opensearch.xml"/>
 </OpenSearchDescription>
 `);

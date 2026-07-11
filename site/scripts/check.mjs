@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
 import { countWords } from "./lib/markdown.mjs";
+import { SITE_URL } from "./lib/config.mjs";
 import { validateSourceReference } from "./lib/source-reference.mjs";
 import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
 
@@ -35,6 +36,7 @@ function check(name, fn) {
 console.log("\n=== Static pages ===");
 const requiredPages = [
   "index.html",
+  "papers/index.html",
   "topics/index.html",
   "compare/index.html",
   "timeline/index.html",
@@ -155,6 +157,9 @@ for (const f of pwaFiles) {
   check("index.html 引用 manifest", () => idx.includes("site.webmanifest") || `无 manifest link`);
   check("index.html 引用 favicon.svg", () => idx.includes("favicon.svg") || `无 favicon link`);
   check("index.html 含 OpenSearch link", () => idx.includes("opensearch.xml") || `无 opensearch`);
+  check("index.html 加载 Jason DS v2 base/tokens/components", () => (
+    idx.includes("/jx/tokens.css") && idx.includes("/jx/base.css") && idx.includes("/jx/components.css")
+  ) || "Jason DS stylesheets incomplete");
 }
 
 console.log("\n=== OG / Twitter meta ===");
@@ -181,6 +186,88 @@ for (const p of sample) {
   }
 }
 check(`5 sample pages 全有 OG/Twitter/canonical meta`, () => (metaMissing === 0 && metaMissingFiles === 0) || `${metaMissing} 缺失 + ${metaMissingFiles} 文件不存在`);
+
+console.log("\n=== Public showcase contract ===");
+{
+  const home = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  const papers = fs.readFileSync(path.join(DIST, "papers", "index.html"), "utf8");
+  const glossary = fs.readFileSync(path.join(DIST, "glossary", "index.html"), "utf8");
+  const deck = fs.readFileSync(path.join(DIST, "deck", "index.html"), "utf8");
+  const feed = fs.readFileSync(path.join(DIST, "feed.xml"), "utf8");
+  const notFound = fs.readFileSync(path.join(DIST, "404.html"), "utf8");
+  const hubOrigin = new URL(SITE_URL).origin;
+
+  check("首页包含三步学习旅程与三件代表成果", () => (
+    ["选路径", "做对比", "形成简报"].every((label) => home.includes(label))
+    && (home.match(/jx-proof-rail__label/g) || []).length === 3
+    && home.includes("/papers/")
+  ) || "learning journey or representative outcomes incomplete");
+  check("首页含 owner-led 英文摘要与可审计质量边界", () => (
+    home.includes("An owner-led, independently maintained learning product")
+    && home.includes("结构门禁不等于逐页人工复核")
+    && home.includes("46 篇保留本地解析文本与 SHA-256 清单")
+    && home.includes("110 篇引用 HTTPS 原文")
+  ) || "English summary or limitations missing");
+  check("首页不渲染全量论文墙，独立 Papers 页保留完整筛选库", () => (
+    !home.includes('<article class="paper-card"')
+    && !home.includes('id="eai-quick-filter"')
+    && (papers.match(/<article class="paper-card"/g) || []).length === noteFiles.length
+    && papers.includes('id="eai-quick-filter"')
+    && papers.includes('id="paper-library"')
+  ) || "home/library separation incomplete");
+  check("全站 chrome 暴露 Hub/About/Résumé/GitHub", () => (
+    home.includes(`href="${hubOrigin}/"`)
+    && home.includes(`href="${hubOrigin}/about/"`)
+    && home.includes(`href="${hubOrigin}/resume/"`)
+    && home.includes("https://github.com/estelledc/embodied-ai-reading-station")
+  ) || "portfolio navigation incomplete");
+  const portfolioDestinations = [
+    `${hubOrigin}/`,
+    `${hubOrigin}/about/`,
+    `${hubOrigin}/resume/`,
+    "https://github.com/estelledc/embodied-ai-reading-station",
+  ];
+  for (const [label, html] of [["Glossary", glossary], ["Deck", deck]]) {
+    check(`${label} 暴露一致的 Hub/About/Résumé/GitHub 出口`, () => (
+      portfolioDestinations.every((destination) => html.includes(`href="${destination}"`))
+    ) || `${label} portfolio navigation incomplete`);
+  }
+  check("首页 JSON-LD 标识 Person/WebSite/LearningResource", () => (
+    home.includes('"@type":"Person"')
+    && home.includes('"@type":"WebSite"')
+    && home.includes('"@type":"LearningResource"')
+  ) || "homepage structured data incomplete");
+  check("Atom feed 使用规范作者名", () => (
+    feed.includes("<author><name>Jason Xun</name></author>")
+    && !feed.includes("<author><name>Jason</name></author>")
+  ) || "Atom author identity is stale");
+
+  const canonicalSamples = [
+    ["index.html", "/"],
+    ["papers/index.html", "/papers/"],
+    ["topics/index.html", "/topics/"],
+    ["topics/vlm-foundation/index.html", "/topics/vlm-foundation/"],
+    ["guide/index.html", "/guide/"],
+    ["guide/ch01-why-embodied-ai/index.html", "/guide/ch01-why-embodied-ai/"],
+    ["learn/index.html", "/learn/"],
+    ["learn/path/index.html", "/learn/path/"],
+    ["issues/01/index.html", "/issues/01/"],
+    ["papers/clip/index.html", "/papers/clip/"],
+    ["about/index.html", "/about/"],
+  ];
+  const badCanonicals = [];
+  for (const [file, route] of canonicalSamples) {
+    const html = fs.readFileSync(path.join(DIST, file), "utf8");
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
+    const expected = `${SITE_URL}${route}`;
+    if (canonical !== expected) badCanonicals.push(`${file}: ${canonical || "missing"} != ${expected}`);
+  }
+  check(`${canonicalSamples.length} 个代表页面 canonical 指向自身`, () => badCanonicals.length === 0 || badCanonicals.join("; "));
+  check("404 为 noindex 且不输出 JSON-LD", () => (
+    notFound.includes('<meta name="robots" content="noindex, nofollow">')
+    && !notFound.includes("application/ld+json")
+  ) || "404 indexing contract broken");
+}
 
 console.log("\n=== Issue plate count consistency ===");
 {
@@ -219,6 +306,18 @@ function walkHtml(dir) {
   }
 }
 walkHtml(DIST);
+
+const legacyIdentity = [];
+for (const file of htmlFiles) {
+  const html = fs.readFileSync(file, "utf8");
+  const legacyMarker = html.match(/#jason\b|Jason (?:Zhou|Zhang)|"name"\s*:\s*"Jason"(?=\s*[,}])/);
+  if (legacyMarker) {
+    legacyIdentity.push(`${path.relative(DIST, file)}: ${legacyMarker[0]}`);
+  }
+}
+check(`${htmlFiles.length} 个构建 HTML 不含旧 identity`, () => (
+  legacyIdentity.length === 0 || legacyIdentity.slice(0, 20).join("; ")
+));
 
 const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];
@@ -317,13 +416,15 @@ for (const f of top5) {
   console.log(`    ${kb}KB  ${rel}`);
 }
 
-// HTML 单页超过 350KB 警告（index 因 156 卡片必然较重）
+// HTML 单页超过 350KB 警告（全量 Papers 页也应留在合理范围内）
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
-// 性能预算（1.0.0 固化当前健康值，防劣化）
+// 学习首页只保留路径与代表成果；全量库有独立预算。
 const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
-check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 100KB`, () => indexSize < 100 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
+check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 250KB`, () => papersIndexSize < 250 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
 
 const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
 check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);
