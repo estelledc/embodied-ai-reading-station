@@ -1,0 +1,35 @@
+CHANGELOG.md
+  s_ba8e2aabc58cc3::t_9232463a17c12c 9
+papers/provenance.json
+  s_ba8e2aabc58cc3::t_1c65201ec57141 2-24,27-83,87-103,107-163,167-303,307-403,407-423,427-463,467-483,487-503,507-543,547-663,667-763,767-783,787-923,927-1043,1047-1123,1127-1203,1207-1263,1267-1283,1287-1363,1367-1443,1447-1603,1607-1643,1647-1663,1667-1683,1687-1803,1807-1823,1827-1943,1947-1983,1987-2023,2027-2123,2127-2263,2267-2283,2287-2363,2367-2483,2487-2503,2507-2523,2527-2543,2547-2563,2567-2583,2587-2683,2687-2843,2847-2983,2987-3063,3067-3083,3087-3123
+site/scripts/check.mjs
+  s_ba8e2aabc58cc3::t_d5dab21d2a15fe 9,510-522,525-527
+site/scripts/generate-provenance.mjs
+  s_ba8e2aabc58cc3::t_a678b0a8f067b6 4-6,11-15,17-18,20-29
+site/scripts/lib/content.mjs
+  s_ba8e2aabc58cc3::t_c17400a0d44bad 5,7,22-25,27,51,169-172
+site/scripts/lib/content.test.mjs
+  s_ba8e2aabc58cc3::t_0d6c114a922bc7 4,35-52
+site/scripts/lib/provenance.mjs
+  s_ba8e2aabc58cc3::t_c45112a8f4562a 1-304
+site/scripts/lib/provenance.test.mjs
+  s_ba8e2aabc58cc3::t_d6934901886f8c 1-326
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "919259360098044295e2769a7ec9a8b2f0bb9f97",
+  "prompts": {},
+  "sessions": {
+    "s_ba8e2aabc58cc3": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_ba8e2aabc58cc3",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
