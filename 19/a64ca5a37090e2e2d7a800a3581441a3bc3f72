@@ -1,0 +1,51 @@
+CHANGELOG.md
+  s_9519a567f7f36e::t_106915a8eadc41 11
+README.md
+  s_9519a567f7f36e::t_70a479f8d1f49e 83-86,89-92,187-188
+site/scripts/check.mjs
+  s_9519a567f7f36e::t_032fd385e5c8f1 8,10,79,82,84-85,93-95,138-148,154-213,256-262,338-339
+site/scripts/lib/assets.mjs
+  s_9519a567f7f36e::t_ccf38862cd7800 66
+site/scripts/lib/browser-data-api.test.mjs
+  s_9519a567f7f36e::t_082d2cf4f4dfc1 1-221
+site/scripts/lib/client-security.test.mjs
+  s_9519a567f7f36e::t_82fe291e8cdcbc 10,12,168-180,183-195,199-201,204-205,222-316
+site/scripts/lib/data-api.mjs
+  s_9519a567f7f36e::t_c8c37f520f420c 1-67
+site/scripts/lib/data-api.test.mjs
+  s_9519a567f7f36e::t_e931bf45b6effc 1-130
+site/scripts/lib/layout.mjs
+  s_9519a567f7f36e::t_4cb3f93822d499 256
+site/scripts/lib/reading-progress.test.mjs
+  s_9519a567f7f36e::t_7f2d0f58a13374 10,12-13,47-54,63-64,95-100,112,135-137,153-166,170,186-187,287-332
+site/scripts/lib/views/meta.mjs
+  s_9519a567f7f36e::t_72f8e591a9feed 328,336-344,363-376,379-399
+site/scripts/lib/views/seo.mjs
+  s_9519a567f7f36e::t_c3960a47a185e2 7,11,113-118,143-152,166,182,194,199-200,202,210-211,219,307-309,316-317
+site/scripts/lib/views/seo.test.mjs
+  s_9519a567f7f36e::t_e641900abdffe8 3-5,7-10,78-128
+site/src/data-api.js
+  s_9519a567f7f36e::t_8ba165612c70e7 1-131
+site/src/link-preview.js
+  s_9519a567f7f36e::t_a0d4072bbe77e4 2,6-25,31-39,46-49,77-99,101-128
+site/src/reading-progress.js
+  s_9519a567f7f36e::t_f36189f6ec5274 540,543-564,570-579,581-584
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "19a64ca5a37090e2e2d7a800a3581441a3bc3f72",
+  "prompts": {},
+  "sessions": {
+    "s_9519a567f7f36e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_9519a567f7f36e",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
