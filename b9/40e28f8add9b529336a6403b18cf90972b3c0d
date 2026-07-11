@@ -1,0 +1,23 @@
+.github/workflows/deploy.yml
+  s_4e62d01417f70a::t_83bd099430d867 21,24,46,61
+.github/workflows/pr.yml
+  s_4e62d01417f70a::t_8065c88fc5f96c 21,24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "b940e28f8add9b529336a6403b18cf90972b3c0d",
+  "prompts": {},
+  "sessions": {
+    "s_4e62d01417f70a": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "s_4e62d01417f70a",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
