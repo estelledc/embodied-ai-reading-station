@@ -1,0 +1,51 @@
+README.md
+  s_229a6d23d121f1::t_d3b51103f6d405 3-4,9-24,152,202,210
+site/scripts/check.mjs
+  s_229a6d23d121f1::t_f455c43af3e524 9,159-161,189-242
+site/scripts/lib/layout.mjs
+  s_229a6d23d121f1::t_3ba8f9d389185e 49,53-58,60-67,69,71,73-81,190,193-195,207-219,224-241,247-264,273-274,278-279,281,289,292,306
+site/scripts/lib/layout.test.mjs
+  s_229a6d23d121f1::t_5004fd345b4f8f 1-68
+site/scripts/lib/mobile-nav.test.mjs
+  s_229a6d23d121f1::t_69f4544cd570f3 23,27,38-80
+site/scripts/lib/views/aggregates.mjs
+  s_229a6d23d121f1::t_d006c3e9740cba 40,89,241,269,294,376,464,563,599,706,764,955,1025,1094,1134,1196,1272
+site/scripts/lib/views/guide.mjs
+  s_229a6d23d121f1::t_979ea9d6fd8380 88
+site/scripts/lib/views/learn.mjs
+  s_229a6d23d121f1::t_ab3d1d0f2799d9 52,76,113,174-180
+site/scripts/lib/views/meta.mjs
+  s_229a6d23d121f1::t_cc934e90b71267 57,84,173,234,291,366-373,444,474,537
+site/scripts/lib/views/papers.mjs
+  s_229a6d23d121f1::t_4832e6d63ac83f 7,80-122,135-136,139-150,161-186,413-428,567
+site/scripts/lib/views/papers.test.mjs
+  s_229a6d23d121f1::t_368021aa7dfb02 4,22-46
+site/src/jx/VERSION
+  s_229a6d23d121f1::t_e8654f7b51e098 1
+site/src/jx/base.css
+  s_229a6d23d121f1::t_b7e5d769c74a51 1,10,29-47,81-113,160
+site/src/jx/components.css
+  s_229a6d23d121f1::t_4708b59e545930 22-24,64-83,210-590
+site/src/jx/tokens.css
+  s_229a6d23d121f1::t_4798c7bb7af8c9 1,3,44-55,74,110-111,163-174
+site/src/theme.css
+  s_229a6d23d121f1::t_364f8ada72141c 2543,2549,2567,4537-5014
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "254ec01ee11f222feb771885f53908d3541ce251",
+  "prompts": {},
+  "sessions": {
+    "s_229a6d23d121f1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_229a6d23d121f1",
+        "model": "unknown"
+      },
+      "human_author": "Jason <150260202+estelledc@users.noreply.github.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
