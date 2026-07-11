@@ -7,6 +7,7 @@ import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
 import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
+import { validateProvenanceDocument } from "./lib/provenance-schema.mjs";
 import { validateSourceReference } from "./lib/source-reference.mjs";
 import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
 
@@ -607,14 +608,24 @@ console.log("\n=== Source path integrity ===");
   const provenance = fs.existsSync(provenancePath)
     ? JSON.parse(fs.readFileSync(provenancePath, "utf8"))
     : null;
-  const entries = provenance?.entries;
+  const provenanceShape = provenance === null
+    ? { ok: false, errors: [{ path: "$", message: "manifest is missing" }] }
+    : validateProvenanceDocument(provenance);
+  const entries = provenanceShape.ok
+    ? provenance.notes
+        .filter((note) => note.source.kind === "local")
+        .map((note) => ({
+          slug: note.slug,
+          path: note.source.path,
+          sha256: note.source.sha256,
+          artifact_type: note.source.artifact_type,
+        }))
+    : null;
   const localSources = new Set();
   let sourceBroken = 0;
-  check("papers/provenance.json schema v1", () => (
-    provenance?.schema_version === "1.0.0"
-    && provenance?.algorithm === "sha256"
-    && Array.isArray(entries)
-  ) || "missing or invalid provenance manifest");
+  check("papers/provenance.json schema v2", () => provenanceShape.ok || provenanceShape.errors
+    .map((error) => `${error.path}: ${error.message}`)
+    .join("; "));
   for (const f of noteFiles) {
     const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
     const { data } = matter(raw);

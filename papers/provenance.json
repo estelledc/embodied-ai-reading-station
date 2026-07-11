@@ -1,282 +1,3126 @@
 {
-  "schema_version": "1.0.0",
-  "algorithm": "sha256",
-  "entries": [
+  "schema_version": "2.0.0",
+  "content_commit": "5b02c23a3184cc2c2857fd5b6383780714a2f502",
+  "notes": [
+    {
+      "slug": "1x-world-model-2025",
+      "note_path": "notes/1x-world-model-2025.md",
+      "note_sha256": "f757704e9708f3829815bb12871f5e85add69eb8bb342731d46604b9bc71f779",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2510.07092",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
     {
       "slug": "3d-diffusion-policy",
-      "path": "papers/3d-diffusion-policy/paper.md",
-      "sha256": "823f721d5cfc87e5cca376c64b219335f2c12d850297aa035e6d29ae6a7b4dc3",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/3d-diffusion-policy.md",
+      "note_sha256": "c4d38ace778125f1f25fa564082d60a4f19841610d9fb88ec9f62acbe6e44463",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/3d-diffusion-policy/paper.md",
+        "sha256": "823f721d5cfc87e5cca376c64b219335f2c12d850297aa035e6d29ae6a7b4dc3",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "3d-vla",
+      "note_path": "notes/3d-vla.md",
+      "note_sha256": "87258dd45371e631554e9b3d029e8ff3f0ec2e9a5f81068e0b4fcd3ab6c62f52",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.09631",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "3drimr",
+      "note_path": "notes/3drimr.md",
+      "note_sha256": "b3adf596e8d0bdf266944e8347264d324b6bf0bc7cee01e1b659fc8ff33fe479",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2108.02858",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "3dshape2vecset",
-      "path": "papers/3dshape2vecset/paper.md",
-      "sha256": "d7e001604ac3edcfffb5eb133c02efdb8cea4033a27f97ea44d96bbc1a6ea79a",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/3dshape2vecset.md",
+      "note_sha256": "45c8d182f8db0ff496a98d1286b68a06fab97db19863a170ff61741249c28cbd",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/3dshape2vecset/paper.md",
+        "sha256": "d7e001604ac3edcfffb5eb133c02efdb8cea4033a27f97ea44d96bbc1a6ea79a",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "acoustic-swarms",
-      "path": "papers/acoustic-swarms/paper.md",
-      "sha256": "391f4976d285d8bdb037dcd4107846a27afb8296370baf25ae1f815d9b9d5004",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/acoustic-swarms.md",
+      "note_sha256": "b84d38d95ebc736664c002d39e0b81c530102f0db201745534ec77e3127f3790",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/acoustic-swarms/paper.md",
+        "sha256": "391f4976d285d8bdb037dcd4107846a27afb8296370baf25ae1f815d9b9d5004",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "act-aloha",
+      "note_path": "notes/act-aloha.md",
+      "note_sha256": "71378e6b93bd6d7666d8eadbb36e86fe81e53f32271dcd75e5c1d9f80803c58a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2304.13705",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "aloha-2",
+      "note_path": "notes/aloha-2.md",
+      "note_sha256": "9a6e1d27d3ba142ad144127a1a3eaac0a6120d3274fbb6f729e1299aeaedf3fe",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2405.02292",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "anymal",
-      "path": "papers/anymal/paper.md",
-      "sha256": "7d82d9ddd36ce646ff742e17eb7a1105f33c91126f9005eba63346933b43063e",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/anymal.md",
+      "note_sha256": "01608388a963d3fa225260b3df092538b9199bab8894943970acb13103c0bc8e",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/anymal/paper.md",
+        "sha256": "7d82d9ddd36ce646ff742e17eb7a1105f33c91126f9005eba63346933b43063e",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "anyteleop",
+      "note_path": "notes/anyteleop.md",
+      "note_sha256": "d8db7537428c662d134030b97aa2b92dda295d613add886501778db3d1e68ed7",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2307.04577",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "argus-mmego",
+      "note_path": "notes/argus-mmego.md",
+      "note_sha256": "a668ff4b2eb4797c7fca19ef2edc8c2ddca953217c2f2a4163f30788a46c7d17",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2411.00419",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "audiolm",
+      "note_path": "notes/audiolm.md",
+      "note_sha256": "f89cc0969c3fd1011ad254be0eae16c5a70e57d216d6616b03b2764c44bf4f7f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2209.03143",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "audiopalm",
+      "note_path": "notes/audiopalm.md",
+      "note_sha256": "e123f98c55bbd29bba1ace537fb168bf4e8c07dd2c759a558503e62ebd58831a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2306.12925",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "behavior-1k",
+      "note_path": "notes/behavior-1k.md",
+      "note_sha256": "b7c9a988ceee347f8d48c1081fd02811727bcfda6cdf4c2664b5806249155e9e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.09227",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "bet",
+      "note_path": "notes/bet.md",
+      "note_sha256": "6232d7ce8faaaeef50f30205d713eff4589171c6634ae5870b3661182831a59d",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2206.11251",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "blip",
-      "path": "papers/blip/paper.md",
-      "sha256": "0887e885f24acb4ed2ca2e7af2aa70c68dec9e0faf5b5560dcd79012d372ae98",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/blip.md",
+      "note_sha256": "3be7b860dae61ebf94dd88c6d3c1c2b6a69c4d97ab35cce64d2895138d20b8b8",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/blip/paper.md",
+        "sha256": "0887e885f24acb4ed2ca2e7af2aa70c68dec9e0faf5b5560dcd79012d372ae98",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "blip-2",
+      "note_path": "notes/blip-2.md",
+      "note_sha256": "bae72409cf43b712b27a019a5ec9441471b0ad90a43c92aaf4abac4ef542cf4b",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2301.12597",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "bridgedata-v2",
+      "note_path": "notes/bridgedata-v2.md",
+      "note_sha256": "d2addee0e94fb5112858ba69e71f90ff6cf648913b179ce64600e3dedec8560f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2308.12952",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "calvin",
+      "note_path": "notes/calvin.md",
+      "note_sha256": "ae739d4ffc058951711cf11c9230d791a5af57e0cd1a31c2edab069d77a92ab0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2112.03227",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "chatgpt-for-robotics",
+      "note_path": "notes/chatgpt-for-robotics.md",
+      "note_sha256": "49699bb2a1e0e92c4aa20f63f04a9305ac2fc5131e6d8a8d2e78b3c0098d45dd",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2306.17582",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "clip",
-      "path": "papers/clip/paper.md",
-      "sha256": "7320f8684dc320b515b09fef2f34099e4b1beac91732548ff34c6bd275aa8108",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/clip.md",
+      "note_sha256": "12777897b062e9d85e4dbcd1e98bd64fddbe686df421c4b53bbf872487af489c",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/clip/paper.md",
+        "sha256": "7320f8684dc320b515b09fef2f34099e4b1beac91732548ff34c6bd275aa8108",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "code-as-policies",
-      "path": "papers/code-as-policies/paper.md",
-      "sha256": "035db5ea0f967fb1d7a0b5ab83e74bfd9ac7514c173cdacc133d22c652f59a8d",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/code-as-policies.md",
+      "note_sha256": "3b6be06f595f4af8f42188d0f0d4f80c82d9545406ce1e730b5ba0db8227005a",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/code-as-policies/paper.md",
+        "sha256": "035db5ea0f967fb1d7a0b5ab83e74bfd9ac7514c173cdacc133d22c652f59a8d",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "conformer",
+      "note_path": "notes/conformer.md",
+      "note_sha256": "2d83515d4b382e78daaa96f5aa6685ad6bd87f75cff4b4a72efe90a7b592241a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2005.08100",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "consistency-policy",
-      "path": "papers/consistency-policy/paper.md",
-      "sha256": "8c92834e4a15514f023e5f0e474b80224beb91443c285fadfba56569bfc1c912",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/consistency-policy.md",
+      "note_sha256": "b349167b39535f5932e9ad37492d676c2deb8af0cc4791ca9213ff7a8a856342",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/consistency-policy/paper.md",
+        "sha256": "8c92834e4a15514f023e5f0e474b80224beb91443c285fadfba56569bfc1c912",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "conv-tasnet",
-      "path": "papers/conv-tasnet/paper.md",
-      "sha256": "b3e03dc7e770b340a67303473ad9d8728ffcd921e08c915ab666a9e9f001c8b8",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/conv-tasnet.md",
+      "note_sha256": "47494bcf52ae89efd03a34caa7bb44ae77acbbe5e844ff4b25001f9417efaccc",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/conv-tasnet/paper.md",
+        "sha256": "b3e03dc7e770b340a67303473ad9d8728ffcd921e08c915ab666a9e9f001c8b8",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "cosmos-policy",
-      "path": "papers/cosmos-policy/paper.md",
-      "sha256": "8600ed89083960fa81ad934a1cb2701a2fadf1440a14bbdbcb80c88bb51240d4",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/cosmos-policy.md",
+      "note_sha256": "a09583e10d70f7e4c83b70428162bd4b97826a6a618c55ddbb86bf5964591113",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/cosmos-policy/paper.md",
+        "sha256": "8600ed89083960fa81ad934a1cb2701a2fadf1440a14bbdbcb80c88bb51240d4",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "cosmos-world-foundation",
+      "note_path": "notes/cosmos-world-foundation.md",
+      "note_sha256": "9cefe5029770ed79095d57749cff8726ca47237cc652c6b0e704067e39102237",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2501.03575",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "dagger",
-      "path": "papers/dagger/paper.md",
-      "sha256": "c071efa16dc68002145ef182609405449bffd4bac89888257892b1a557edafaf",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/dagger.md",
+      "note_sha256": "7d5b32f49b2ce846ce6884d7ed55719b1008c365772e82c3592293dc420bd6d4",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/dagger/paper.md",
+        "sha256": "c071efa16dc68002145ef182609405449bffd4bac89888257892b1a557edafaf",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "daydreamer",
+      "note_path": "notes/daydreamer.md",
+      "note_sha256": "542e6c6a5568b8bf463102a2bbf2484bab9a5d25375aeb61220414283cf8f756",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2206.14176",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "deepseek-vl",
+      "note_path": "notes/deepseek-vl.md",
+      "note_sha256": "093023247bcf3f9808dd09deddd9eb8e88400015a2ab8bd91c1008a550b114b8",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.05525",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dexcap",
+      "note_path": "notes/dexcap.md",
+      "note_sha256": "c32f3f4b4e65272ec6350faf33fdc9205392200b953dc6e599d93bff29350f76",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.07788",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dexmv",
+      "note_path": "notes/dexmv.md",
+      "note_sha256": "fd4e9d7d7c93f8a02b3a18576d15984f2470c0dae49a9513c63c57898e20a58f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2108.05877",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dexvla",
+      "note_path": "notes/dexvla.md",
+      "note_sha256": "b2edeae0c78612d7b5adadffabca25ee8d246ad46d698b31389d26c825cbbab7",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2502.05855",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "diffusion-policy",
-      "path": "papers/diffusion-policy/paper.md",
-      "sha256": "574eeffdf6ffb2ba5ebf45404c89fa7c26f9ab5d11202261b458d04881d7b322",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/diffusion-policy.md",
+      "note_sha256": "d246ec62800e937151b8459821be7764f5c372e09cc59b89536fe509d5b5a45c",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/diffusion-policy/paper.md",
+        "sha256": "574eeffdf6ffb2ba5ebf45404c89fa7c26f9ab5d11202261b458d04881d7b322",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dit-policy",
+      "note_path": "notes/dit-policy.md",
+      "note_sha256": "520380a95ea81bca5a05da7b042d933ba33e2a00b6cfd5beb394ba91497ee692",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.10088",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dp3",
+      "note_path": "notes/dp3.md",
+      "note_sha256": "4ca2a91042baef1eb636b1946b5133474b0b4478571b313f69d08ddf6097bdd7",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.03954",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dppo",
+      "note_path": "notes/dppo.md",
+      "note_sha256": "ddd28b92af1120b6013230ee0863521177d3c11c9cbd45a02abf4ee1f0379157",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2409.00588",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dprnn",
+      "note_path": "notes/dprnn.md",
+      "note_sha256": "0afb28c22e9736550e561909dda538112a62c7bcc47d680325155c9e2e7c0dc1",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/1910.06379",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "dreamer-v1",
-      "path": "papers/dreamer-v1/paper.md",
-      "sha256": "8938e54fd629b088b2b09e3cc9eef80c5535e350bdb77116cd1959c56277f6cb",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/dreamer-v1.md",
+      "note_sha256": "e245822fcf702abcb13e227ad16d9d9512c0a2f25236080ceeadb4731717829f",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/dreamer-v1/paper.md",
+        "sha256": "8938e54fd629b088b2b09e3cc9eef80c5535e350bdb77116cd1959c56277f6cb",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "dreamer-v2",
-      "path": "papers/dreamer-v2/paper.md",
-      "sha256": "60258e4605c379731ca60d2d9ccee4e71a58801b9ffde560cffb736fb36f31a8",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/dreamer-v2.md",
+      "note_sha256": "aaca38e1698fff62915d1dc7e5fcfc7639bb38e74be6ea05ae55055664087678",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/dreamer-v2/paper.md",
+        "sha256": "60258e4605c379731ca60d2d9ccee4e71a58801b9ffde560cffb736fb36f31a8",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "dreamer-v3",
+      "note_path": "notes/dreamer-v3.md",
+      "note_sha256": "8232d836c64671160e7c52367003bb3320f36931f007aa7d4119493827350838",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2301.04104",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "droid",
+      "note_path": "notes/droid.md",
+      "note_sha256": "2dfeb3899b141d6bc49858afc6e326f325b08992303b03dd5e711faeb374810b",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.12945",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "encodec",
+      "note_path": "notes/encodec.md",
+      "note_sha256": "b2e546cbe278bf46ab82938b2b3a38c4c2578516ab836d04946da35896ccb4af",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2210.13438",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "equibot",
+      "note_path": "notes/equibot.md",
+      "note_sha256": "0c41899f70d261faf2aac06102671c6800076fabc49f262fbbe24891b9304d9e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2407.01479",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "eva-clip",
+      "note_path": "notes/eva-clip.md",
+      "note_sha256": "a4db1f3256561a2b0daa3070ac83e69df35c234944e40a23ccc46828eed46170",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2303.15389",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "filip",
+      "note_path": "notes/filip.md",
+      "note_sha256": "c1b2287c43c09e41f7ff566bf1b67da98cbf34623925fddc5667c280e40c2dc0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2111.07783",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "flamingo",
-      "path": "papers/flamingo/paper.md",
-      "sha256": "49ec0155adfb43fb1c17017368c4c123344bcf17b2c3357f88af73dfaa1e71a0",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/flamingo.md",
+      "note_sha256": "2680e30384a8063e765c1dfd670d96179a8a3bb6df20e739dd6d9ab1b2deefe5",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/flamingo/paper.md",
+        "sha256": "49ec0155adfb43fb1c17017368c4c123344bcf17b2c3357f88af73dfaa1e71a0",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "florence-2",
+      "note_path": "notes/florence-2.md",
+      "note_sha256": "e19e0a846ba624c40ffe4db15257ef48ccb20be9b2b3506dc6ec3fc77080d6aa",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2311.06242",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "flow-matching-manipulation",
+      "note_path": "notes/flow-matching-manipulation.md",
+      "note_sha256": "e7c281f56b3fd2847aa27dd126a0612614b6efc67c2d1000138fe0f6dbb516c0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2409.01083",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "flow-policy",
+      "note_path": "notes/flow-policy.md",
+      "note_sha256": "4f7d6b3b98be19808a71b5a80fa53e9437e0a121afb5af7712e411bd73fc7653",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2412.04987",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "fromage",
+      "note_path": "notes/fromage.md",
+      "note_sha256": "70172525b6509288a2b67730d6d899987d1a4b8a2e7f6fa39a14e728c79bdf44",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2301.13823",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "gaia-1",
+      "note_path": "notes/gaia-1.md",
+      "note_sha256": "f57310d7dab2d059ae1af7112764f1073091fec20f300422e08d4d04d53c8100",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2309.17080",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "gail",
-      "path": "papers/gail/paper.md",
-      "sha256": "f4e39daaadec09df2bfbb73316365ea01a1f524af9e729b768cff749af0c3645",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/gail.md",
+      "note_sha256": "eac1a6379e1aa3bef5ca8c517f61801a362dfec5d118c3a2d660a91d0f5b35a4",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/gail/paper.md",
+        "sha256": "f4e39daaadec09df2bfbb73316365ea01a1f524af9e729b768cff749af0c3645",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "genie",
+      "note_path": "notes/genie.md",
+      "note_sha256": "a3e8edeb2cd6a9f259045dbc25cb0f1a93b6c7f46f9d3f811f305a5a86b39ac5",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2402.15391",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "gensim",
+      "note_path": "notes/gensim.md",
+      "note_sha256": "77b2c215f1c828119aafd9ab110119769dccb2acef4814bf663e7ccb013c84bf",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.01361",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "gr-2",
+      "note_path": "notes/gr-2.md",
+      "note_sha256": "6987372527d4a1784246db5a1902665b4f4ee959e17077fdec4d2941e0880d07",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.06158",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "habitat",
-      "path": "papers/habitat/paper.md",
-      "sha256": "ba819203e786f2e63b39fc487be45976817a1b5002feff48d3168b2ae93a0bc7",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/habitat.md",
+      "note_sha256": "33a54076e5ce1b9cd0b73ef9e6f4cf79340cecca64941930645c9f6cd9781f7c",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/habitat/paper.md",
+        "sha256": "ba819203e786f2e63b39fc487be45976817a1b5002feff48d3168b2ae93a0bc7",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "habitat-2",
+      "note_path": "notes/habitat-2.md",
+      "note_sha256": "28da237f3726ebe297a38cabed9b610f139058252ba1f8ebb8b30bd545591315",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2106.14405",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "habitat-3",
+      "note_path": "notes/habitat-3.md",
+      "note_sha256": "54aaf0e80d815c899a13ec2215abd5194a31d4a8f332acd40dc6d301ea963352",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.13724",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "humanplus",
+      "note_path": "notes/humanplus.md",
+      "note_sha256": "171b9b27e55698bc44ae989931f0bc61d7b961592459d12170fe14181837f895",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2406.10454",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "ibc",
-      "path": "papers/ibc/paper.md",
-      "sha256": "3fddeea544566ccaeb7997ac4eb8126e302165a28162c3a0cee4381c43b3d0b7",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/ibc.md",
+      "note_sha256": "1d97aa15f099a129fe2bf610820789d55e4ec6069f2eeadb06c7dfbd7c03f263",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/ibc/paper.md",
+        "sha256": "3fddeea544566ccaeb7997ac4eb8126e302165a28162c3a0cee4381c43b3d0b7",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "idefics-2",
+      "note_path": "notes/idefics-2.md",
+      "note_sha256": "3211bfcdebb5a2e22610efcfa2473ed4562fec048b6403404dbc63ff0c118806",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2405.02246",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "idp3",
+      "note_path": "notes/idp3.md",
+      "note_sha256": "09617968cfb62b404dc8f83c022617c0a539fae02ee203cc2d69e35e2ceed181",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.10803",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "imagebind",
-      "path": "papers/imagebind/paper.md",
-      "sha256": "7853cb4015923d2316f1e9a82793c8df6475646ec1ad370ca53b83c15383e07d",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/imagebind.md",
+      "note_sha256": "0e8b23cf2fbaebcd2c44349c804a79bbbe948675428c0deace0f8cb5c70ae0cb",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/imagebind/paper.md",
+        "sha256": "7853cb4015923d2316f1e9a82793c8df6475646ec1ad370ca53b83c15383e07d",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "inner-monologue",
-      "path": "papers/inner-monologue/paper.md",
-      "sha256": "c16a0f31ea268866b6ab703420dab1ee2b7bbd2caf6b987888d0b297aaf8ef6e",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/inner-monologue.md",
+      "note_sha256": "c963f154e0dede9f82f9eca78538ec01d4eae58f2ff63ddcadf6d80405da57be",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/inner-monologue/paper.md",
+        "sha256": "c16a0f31ea268866b6ab703420dab1ee2b7bbd2caf6b987888d0b297aaf8ef6e",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "internvl",
+      "note_path": "notes/internvl.md",
+      "note_sha256": "85f8b2dc5e4e77af6d83544c0b8bbb0b6e43cdf98c13fba4c28c00b0a7cb6496",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2312.14238",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "internvl-2-5",
+      "note_path": "notes/internvl-2-5.md",
+      "note_sha256": "7b9747d0b111f3bdcc65bf11985066ff0ee4204f1eda10cc17fbe714a43a3a37",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2412.05271",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "iris-world-model",
+      "note_path": "notes/iris-world-model.md",
+      "note_sha256": "8d2cfed38314625fdb98b102ea9be536c8856ca71f71b8b19f5cb03e667ee38d",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2209.00588",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "isaac-gym",
-      "path": "papers/isaac-gym/paper.md",
-      "sha256": "94cfd30c1b175a24be8ad2d9f25f1a881060f0123e5d4be8478a7cc4b556e59e",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/isaac-gym.md",
+      "note_sha256": "42fc11fe17bac5eb5bcbe3165884b4d23b5d33f9327d39d488734f95874c0baa",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/isaac-gym/paper.md",
+        "sha256": "94cfd30c1b175a24be8ad2d9f25f1a881060f0123e5d4be8478a7cc4b556e59e",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "isaac-lab",
+      "note_path": "notes/isaac-lab.md",
+      "note_sha256": "9a9ba3f04acb3a5823fc93750dc54675b26602566bfdbb947b9a56f66f2f68fa",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2511.04831",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "libero",
+      "note_path": "notes/libero.md",
+      "note_sha256": "962473cb24227507a028454c980cf7abdbb268b0a6094196eb01be2205abae8d",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2306.03310",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "llama-3-herd",
+      "note_path": "notes/llama-3-herd.md",
+      "note_sha256": "37d8eafa4576c5c93ee02ab0d29a4c69ba48880b9f8d9210e820cf58e1d2aa7f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2407.21783",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "llava",
-      "path": "papers/llava/paper.md",
-      "sha256": "b05c5b516738940a41c67ee765a081696f34138e29f50070b000dbebfe2e1882",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/llava.md",
+      "note_sha256": "1aeceb04cd6c1939a8cb383dd768e57a73fd192e58e8f82d39fdd1d773942692",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/llava/paper.md",
+        "sha256": "b05c5b516738940a41c67ee765a081696f34138e29f50070b000dbebfe2e1882",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "llava-1-5",
+      "note_path": "notes/llava-1-5.md",
+      "note_sha256": "7372fd5a254175f496fa09bfa966fa1467af367b42a07572a9b8bb1a73dd26b2",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.03744",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "llava-next-interleave",
+      "note_path": "notes/llava-next-interleave.md",
+      "note_sha256": "1d1d05d9dade01b5c9f8f8ee51d536c95b5568a4bf251d55cb7a494cd46fe1ca",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2407.07895",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "llava-onevision",
+      "note_path": "notes/llava-onevision.md",
+      "note_sha256": "30b9c85c7706c605e76c039053d3244f34e52a93720b6a379078f31af0a0d9ec",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2408.03326",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "llm-plus-p",
+      "note_path": "notes/llm-plus-p.md",
+      "note_sha256": "bba14aa12557dc0b389f8c7f3455ef720ff659a3ca645c2cd0d654d491c0d4a9",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2304.11477",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "long-clip",
+      "note_path": "notes/long-clip.md",
+      "note_sha256": "3867f92f775f230e4974e7fd0ef989db876aa7f35de654027ccf71e6e0d88f56",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.15378",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "maniskill",
+      "note_path": "notes/maniskill.md",
+      "note_sha256": "c0be61b31c41f0162921b67a245a36013e2390f5b2478a52a24e103d07dacc41",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2107.14483",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "meta-stylespeech",
+      "note_path": "notes/meta-stylespeech.md",
+      "note_sha256": "1e12e7fe3c0778573e5e0b7c4d0c73949bf3d7494745daf851ae2bba033822c0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2106.03153",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "meta-world",
-      "path": "papers/meta-world/paper.md",
-      "sha256": "dec1f3d91905c775076e7b1e6154badce0fbd277b4c9575a1638b64c56a7df76",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/meta-world.md",
+      "note_sha256": "8e0d8e08aa4ab7aa1ae6bc99ce286c23675b2196ee46e6ba38f305c84762b002",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/meta-world/paper.md",
+        "sha256": "dec1f3d91905c775076e7b1e6154badce0fbd277b4c9575a1638b64c56a7df76",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "milliego",
+      "note_path": "notes/milliego.md",
+      "note_sha256": "b6060fce96f4c0c43acf38fb84133b6964011bf4403374e38cc055efdfcd423d",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2006.02266",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "millimap",
-      "path": "papers/millimap/paper.md",
-      "sha256": "4dbb5d62b43e1059cb02e680252d52e3e0e5a62d60412ebf1148d8d0fb4c806e",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/millimap.md",
+      "note_sha256": "745e837520b145f9f72abcb361ff1e511055be99c1cf1f31b44329614b31565a",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/millimap/paper.md",
+        "sha256": "4dbb5d62b43e1059cb02e680252d52e3e0e5a62d60412ebf1148d8d0fb4c806e",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "mla",
-      "path": "papers/mla/paper.md",
-      "sha256": "f761a09afd5b65afc8b4195eddf85cc98542fc8ad106fed8d11b1b8d37b89336",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/mla.md",
+      "note_sha256": "84a858752e788b80f2fb6ddf2a7914e36407431a168c0901385d5b2689660914",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/mla/paper.md",
+        "sha256": "f761a09afd5b65afc8b4195eddf85cc98542fc8ad106fed8d11b1b8d37b89336",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "mmclip",
-      "path": "papers/mmclip/paper.md",
-      "sha256": "eb5ee02c9c55c839bd580e5a67cf8c25c811e392465ea24b94ea26570dc63905",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/mmclip.md",
+      "note_sha256": "19c8862c4adc4023218176a7bb1046712fe560db777c508998b658365f7536d0",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/mmclip/paper.md",
+        "sha256": "eb5ee02c9c55c839bd580e5a67cf8c25c811e392465ea24b94ea26570dc63905",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "mmdiff",
+      "note_path": "notes/mmdiff.md",
+      "note_sha256": "b88e965a90670e8f060d48fe13bdecfabcce99a3f6807e0414ab339ed26530c4",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.16198",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "mobile-aloha",
+      "note_path": "notes/mobile-aloha.md",
+      "note_sha256": "bc5cbbb4010db0ab352c93af1b1a454ada39938fe6030895ba1635a92e206f9e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2401.02117",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "mujoco-playground",
+      "note_path": "notes/mujoco-playground.md",
+      "note_sha256": "20126ea82958b046b160dbd2ce559e3add416240b69f61328454dbadfd642381",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2502.08844",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "musiclm",
+      "note_path": "notes/musiclm.md",
+      "note_sha256": "c312873f5ebe7def3b10be3b35d2ea27f0dde833d2052de4576284e96d7a3ed7",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2301.11325",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "navigation-world-models",
+      "note_path": "notes/navigation-world-models.md",
+      "note_sha256": "01ae855c133c2d5c6eba8c6942fa7105c31e685814b57fcbf29f805e672f2062",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2412.03572",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "neuralaids",
-      "path": "papers/neuralaids/paper.md",
-      "sha256": "9787dc758157fe99c547e8a3b8dfe8fb288f9a1be421146fdb694a68f9f44171",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/neuralaids.md",
+      "note_sha256": "0a79579e6981f66f68946014c2626c05c84939b5b7b230d61a08ab396605c30c",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/neuralaids/paper.md",
+        "sha256": "9787dc758157fe99c547e8a3b8dfe8fb288f9a1be421146fdb694a68f9f44171",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "nlos-mmwave",
-      "path": "papers/nlos-mmwave/paper.md",
-      "sha256": "eee2c8b3d9ec97c403e668d963defeeace80783a91d195853007aa06932c357d",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/nlos-mmwave.md",
+      "note_sha256": "3fcf3448a53720727d3991d83e4904e6c8b031deb47055d1c1be0bfdc0a49eeb",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/nlos-mmwave/paper.md",
+        "sha256": "eee2c8b3d9ec97c403e668d963defeeace80783a91d195853007aa06932c357d",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "obelics",
+      "note_path": "notes/obelics.md",
+      "note_sha256": "bbfd7d7dbf886571080e6e1439d0912185e88394ce7a21b1aac0693369ff1b24",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2306.16527",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "octo",
+      "note_path": "notes/octo.md",
+      "note_sha256": "6dc7c0e8d22553e401b1085306f72f5fddf6a948bc033e29eed7e0775d751649",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2405.12213",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "onellm",
+      "note_path": "notes/onellm.md",
+      "note_sha256": "205c73974703507dc152c9181c571a09fae07c4826212dbf093ba68c5a73cf89",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2312.03700",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "open-x-embodiment",
+      "note_path": "notes/open-x-embodiment.md",
+      "note_sha256": "45f8b94fce7a0faa32c7ebe924e10b693f2721879d9f8c45726326ded21c7392",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.08864",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "openhelix",
+      "note_path": "notes/openhelix.md",
+      "note_sha256": "8f44fe5dbd6c97e622bf1837c4452ac3e851b6f2890c8b30fd6cc48b44166a91",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2505.03912",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "openvla",
-      "path": "papers/openvla/paper.md",
-      "sha256": "641e128bbeeafd5369c0daa5395457f91485afe0c7e62e8b433ea63c90318faf",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/openvla.md",
+      "note_sha256": "44aaa0437ee205624955676e1d003781afd9a82c14e5aa60191b78b2218f43f9",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/openvla/paper.md",
+        "sha256": "641e128bbeeafd5369c0daa5395457f91485afe0c7e62e8b433ea63c90318faf",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "openvla-oft",
+      "note_path": "notes/openvla-oft.md",
+      "note_sha256": "77371060a5fbff47d9258b2ba7a04bc194242fb382b1b0677d7274fa807b7de0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2502.19645",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "palm-e",
-      "path": "papers/palm-e/paper.md",
-      "sha256": "06f0cb69f9f42f39f9fd9503dc5ad965a1f33b753eba40611cfddb8d9f15cdb4",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/palm-e.md",
+      "note_sha256": "45f89d41708dadd4e38506da4d95c6c5e8950dae97660ee71c160e088295945e",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/palm-e/paper.md",
+        "sha256": "06f0cb69f9f42f39f9fd9503dc5ad965a1f33b753eba40611cfddb8d9f15cdb4",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "panoradar",
+      "note_path": "notes/panoradar.md",
+      "note_sha256": "3175c782f128072b365b1696ab2a05d5757529548b59269aa43fd6f6735acbfc",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2405.19516",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "person-in-wifi",
-      "path": "papers/person-in-wifi/paper.md",
-      "sha256": "906be60c9f77f168ad797e4e538732fced9ab44f70868e2174d45aea46d94266",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/person-in-wifi.md",
+      "note_sha256": "ac772a238ff5c4861811beefdec71bcdd39d70aef3a92251df1a1a50396e9f9c",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/person-in-wifi/paper.md",
+        "sha256": "906be60c9f77f168ad797e4e538732fced9ab44f70868e2174d45aea46d94266",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "pi0",
+      "note_path": "notes/pi0.md",
+      "note_sha256": "69e9600b24ec596a20204a033b538f3843f2f87c7a9861710a5ca7f1c0815187",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.24164",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "pi0-fast",
+      "note_path": "notes/pi0-fast.md",
+      "note_sha256": "482a6a4b1de10ee6413153173662a725c3f96ed02fe01ec20e43324c7c8e3791",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2501.09747",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "pi05",
+      "note_path": "notes/pi05.md",
+      "note_sha256": "9c423c99f0938ba2cce08d68a13334140a4fc31da123a49ba0eaccef80902b0f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2504.16054",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "pixtral-12b",
+      "note_path": "notes/pixtral-12b.md",
+      "note_sha256": "f548c8a9999216063697c0f3f5ff3c4ac0dc529202d3fc8a09ed6753342623a3",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.07073",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "proactive-hearing",
-      "path": "papers/proactive-hearing/paper.md",
-      "sha256": "4354d89003f5e71ab642107fdd19ed5c911ecbf36ed9ce59e870468a2dcf29b8",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/proactive-hearing.md",
+      "note_sha256": "356a32ea57a5c4ff28d41960569a52e0f4440f7ee2401ab799959685fdcd5928",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/proactive-hearing/paper.md",
+        "sha256": "4354d89003f5e71ab642107fdd19ed5c911ecbf36ed9ce59e870468a2dcf29b8",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "procthor",
+      "note_path": "notes/procthor.md",
+      "note_sha256": "93882f5ffe4ba44b9fbc90692bad0656e6af34c72f404d4914f3d8ed159d913c",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2206.06994",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "progprompt",
+      "note_path": "notes/progprompt.md",
+      "note_sha256": "d6d4943bd0b3a66a284a3e295da2ed7e3b9232043266b8f2eba76dc0f1cb49c9",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2209.11302",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "qwen-vl",
+      "note_path": "notes/qwen-vl.md",
+      "note_sha256": "31feef8ce039628a77992fba2c9691b2b4e1bf89835656e1d984a41c98682056",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2308.12966",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "radarhd",
+      "note_path": "notes/radarhd.md",
+      "note_sha256": "c6b90bd5e52032ce142c8b721bb14d33f11e28b612c14c24188809ca51a234f0",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2206.09273",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "radarslam",
+      "note_path": "notes/radarslam.md",
+      "note_sha256": "a33f5901cab5a50a3e909632b7f6164c0e24657f87efa54e031007154a9c0920",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2005.02198",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "rdt-1b",
+      "note_path": "notes/rdt-1b.md",
+      "note_sha256": "643245af625b88c8bc73d9b924a5e55d759d2705383545bc7531a9b108165c5a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.07864",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rf-pose-through-wall",
-      "path": "papers/rf-pose-through-wall/paper.md",
-      "sha256": "0898648ac9f51cc20f27a08d0ece773e97d4bf62774113715bdaa13f7bc4f6dc",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rf-pose-through-wall.md",
+      "note_sha256": "b5d54072244ebcdd21da3a5e6d55040f8189eea130094d82694bda9ac746a961",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rf-pose-through-wall/paper.md",
+        "sha256": "0898648ac9f51cc20f27a08d0ece773e97d4bf62774113715bdaa13f7bc4f6dc",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rf-slam",
-      "path": "papers/rf-slam/paper.md",
-      "sha256": "0cd0fb143d5bccffdde2657c3f421239466bf3cac3f1219c196f43d46871ffbe",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rf-slam.md",
+      "note_sha256": "2465fdef94f673745f60e947db60475632590da74619f3eaa8bed3bad1b42c80",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rf-slam/paper.md",
+        "sha256": "0cd0fb143d5bccffdde2657c3f421239466bf3cac3f1219c196f43d46871ffbe",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "rfmask",
+      "note_path": "notes/rfmask.md",
+      "note_sha256": "78f6587b3025c7b64e5fc4bdf60f984b015910db9347551f0fb473f903bf0807",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2201.10175",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "rfpose-ot",
+      "note_path": "notes/rfpose-ot.md",
+      "note_sha256": "fddea2d88cb15f63df8ba5c8f29aa59afeb7d6e6074617d08d35f75209a7d196",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2301.13013",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "rh20t",
+      "note_path": "notes/rh20t.md",
+      "note_sha256": "d18e94b7a9df85416a31425605fa8738fee60d152d47127233e2145623e2663e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2307.00595",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rlbench",
-      "path": "papers/rlbench/paper.md",
-      "sha256": "db18e908649d61152a9b2130bb75f8d85f57a082db78723476ef02a745b9dadb",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rlbench.md",
+      "note_sha256": "9c0954491888fe8425c08956397bbdda76d3958b66af758035964a0aa550fbe8",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rlbench/paper.md",
+        "sha256": "db18e908649d61152a9b2130bb75f8d85f57a082db78723476ef02a745b9dadb",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "robocasa",
+      "note_path": "notes/robocasa.md",
+      "note_sha256": "fdec01aa192dfb7bb4f27304fbc400ad507217cc48523a6ea924c45738ccca2a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2406.02523",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "robocat",
+      "note_path": "notes/robocat.md",
+      "note_sha256": "215a92c8cef8b0295f48a155c0c38b38c89a7705d295962c0def2d5f929d7d37",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2306.11706",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "roboflamingo",
+      "note_path": "notes/roboflamingo.md",
+      "note_sha256": "844e7ab0786a6060c8c7631637f68fefecb3db3b59c167a7b70dddc1c066afd4",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2311.01378",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "robomamba",
+      "note_path": "notes/robomamba.md",
+      "note_sha256": "cb712d488ad682e139f2f9f02ce475608f2f0da473fa1479a618d048e630811b",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2406.04339",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "robomimic",
+      "note_path": "notes/robomimic.md",
+      "note_sha256": "840b48cb8ba59995b88853d521f54678e1aa6fc749a293185b537f7004f5a80e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2108.03298",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "robosuite",
-      "path": "papers/robosuite/paper.md",
-      "sha256": "b7bd39f52292a676760c68661a60fd31e8a5cb0be8a7923187c9345b6fa710f6",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/robosuite.md",
+      "note_sha256": "430f4c07cc06703c1a776a1613337f9b45f1b513039e9174092202106303ad74",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/robosuite/paper.md",
+        "sha256": "b7bd39f52292a676760c68661a60fd31e8a5cb0be8a7923187c9345b6fa710f6",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rt-1",
-      "path": "papers/rt-1/paper.md",
-      "sha256": "76293e6a6971f8ac1099f44bf058352fdcd0dbd467448c10c4ed3bc389964841",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rt-1.md",
+      "note_sha256": "7aa56e9897809c831a985409b91a85feb53a478c0f6334f53e5c5cc19691d8fa",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rt-1/paper.md",
+        "sha256": "76293e6a6971f8ac1099f44bf058352fdcd0dbd467448c10c4ed3bc389964841",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rt-2",
-      "path": "papers/rt-2/paper.md",
-      "sha256": "f4f87c23a8eb3076b838cc06c02f7eff9fad37d95da486ba8b06be7db1b2daf2",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rt-2.md",
+      "note_sha256": "9a8a5e1b50594a6e5d13e8acac2d8b4a1ce761e24dcadaf98bacba48cf477614",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rt-2/paper.md",
+        "sha256": "f4f87c23a8eb3076b838cc06c02f7eff9fad37d95da486ba8b06be7db1b2daf2",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "rt-trajectory",
-      "path": "papers/rt-trajectory/paper.md",
-      "sha256": "9ed37b40fbac8c3b92bba391e5eeb7a4ed7b0227aca4f18e19a3e67d1a93b261",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/rt-trajectory.md",
+      "note_sha256": "98307c888d0e0971ca6abdfa84c389b5ef87ff6152b0d233f20e6e42b46dcec1",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/rt-trajectory/paper.md",
+        "sha256": "9ed37b40fbac8c3b92bba391e5eeb7a4ed7b0227aca4f18e19a3e67d1a93b261",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "sapien",
-      "path": "papers/sapien/paper.md",
-      "sha256": "bc896a6fd9d27cd16ba67dbc122d3c97c7f6a49855694e81edeb3370427b839a",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/sapien.md",
+      "note_sha256": "234ad2f34ae5c3c5d3a828a8a20758eb0d68f8671ce221d7572edf95c91def77",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/sapien/paper.md",
+        "sha256": "bc896a6fd9d27cd16ba67dbc122d3c97c7f6a49855694e81edeb3370427b839a",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "saycan",
-      "path": "papers/saycan/paper.md",
-      "sha256": "04acb8a6fdbe3a0f41d36a3445184d7500d8ea01b89aaf2fb08279d32bdb7d35",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/saycan.md",
+      "note_sha256": "2fa8db7e5ff46c3210e099b4d93a15a74a2a995e8a08149e2f3dc3acaa59f9d3",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/saycan/paper.md",
+        "sha256": "04acb8a6fdbe3a0f41d36a3445184d7500d8ea01b89aaf2fb08279d32bdb7d35",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "seamless-m4t",
+      "note_path": "notes/seamless-m4t.md",
+      "note_sha256": "20020cb4b5094803cde92c292f7c08b54d571acd98ae6fa5b9a0ca31c9c7526c",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2308.11596",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "siglip",
+      "note_path": "notes/siglip.md",
+      "note_sha256": "50b3cb6049dd534b9ec478c2c1194f02d74403e433fc5e631c1750ed322ab1a9",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2303.15343",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "simpler-env",
+      "note_path": "notes/simpler-env.md",
+      "note_sha256": "1c6a53c77d240f5b140986aab48f945dde868720025bd5c2356b1fc8e64a0fb2",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2405.05941",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "smolvla",
+      "note_path": "notes/smolvla.md",
+      "note_sha256": "89b7ae1fd1a260d459028fa6c29ce55707f7c3122e2664a1045aad65edc757d5",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2506.01844",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "soundstream",
-      "path": "papers/soundstream/paper.md",
-      "sha256": "dab13cd3c3d5849b1ac1d5348fa015ad5403dc7a2b4bb26ff2cc5f52bf08d981",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/soundstream.md",
+      "note_sha256": "5a069f6abcad0fa4166652ffae69d0db3db9d7fae1aff88c0be85be2d8f60bd0",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/soundstream/paper.md",
+        "sha256": "dab13cd3c3d5849b1ac1d5348fa015ad5403dc7a2b4bb26ff2cc5f52bf08d981",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "sparsh",
+      "note_path": "notes/sparsh.md",
+      "note_sha256": "0422348247b268daa40252140aa3fb0ecc8f71e742af7785cebae614c609ee67",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2410.24090",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "sparsh-x",
+      "note_path": "notes/sparsh-x.md",
+      "note_sha256": "dc9c311b1732801548dd6f1d818ad2998395d1545a6ba0e6da4c76073f248089",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2506.14754",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "spatialvla",
+      "note_path": "notes/spatialvla.md",
+      "note_sha256": "8e8a00812defb8ebf9d7cb19d8cd658167aa869bf176c931b2501e9d1f678844",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2501.15830",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "stable-audio",
+      "note_path": "notes/stable-audio.md",
+      "note_sha256": "0f774e1a7d64cd71f63ba6272cf8a3583c95d68f8bfb30b7a5558133ad37a40f",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2402.04825",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "tactile-vla",
+      "note_path": "notes/tactile-vla.md",
+      "note_sha256": "c1d6f48dacf93d52a05b99a127f11a5085be3a0da6e9865636426f72ea6c35e9",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2507.09160",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "tinyvla",
+      "note_path": "notes/tinyvla.md",
+      "note_sha256": "8c66d5cdb69083e64d2d15ddd08512c4470a43dd7aec884b44c5f58b60287c95",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2409.12514",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "tla-tactile-language-action",
+      "note_path": "notes/tla-tactile-language-action.md",
+      "note_sha256": "9499b79e84e8440737069d258d3ee23305d045a7e87377a988e468be1f630a35",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2503.08548",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "touch-vision-cross-modal",
-      "path": "papers/touch-vision-cross-modal/paper.md",
-      "sha256": "d72271e378c2ef89082be24ba4faa5e110b1942d71eb45c550cf2c0e9c83f25e",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/touch-vision-cross-modal.md",
+      "note_sha256": "347a9e31268a7f20e81fb02703a59bc531dcbb66169504ba07c1563c42ded1e7",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/touch-vision-cross-modal/paper.md",
+        "sha256": "d72271e378c2ef89082be24ba4faa5e110b1942d71eb45c550cf2c0e9c83f25e",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "tracevla",
+      "note_path": "notes/tracevla.md",
+      "note_sha256": "5436378aec683f572fdcae18ea01fa1864b965e41a2fe8a5327687f6734131e5",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2412.10345",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "transformer-world-model",
+      "note_path": "notes/transformer-world-model.md",
+      "note_sha256": "90d47b146f45f3f1154235423fcc4dea43b65075ff277edb77bfc424104aab89",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2303.07109",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "tree-planner",
+      "note_path": "notes/tree-planner.md",
+      "note_sha256": "47887bc3628706be4fcd0354b4c8d31f333f222c243a1bb9aa6c3a8527dfeb35",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.08582",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "umi",
+      "note_path": "notes/umi.md",
+      "note_sha256": "ff6e071f615f962bfcbbf62b421589cb8cf8815f615b026e746e84de332b5497",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2402.10329",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "unisim",
+      "note_path": "notes/unisim.md",
+      "note_sha256": "4367bf9e4690be1603517e30d7f48beabc4dabf9feeb4f69185af209a9d90488",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2310.06114",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "uss-weakly-labelled",
+      "note_path": "notes/uss-weakly-labelled.md",
+      "note_sha256": "ab28e40cbf3e15674e63ad0d092d0a718c8c3b09f65a2b0a43d5402002cced33",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2305.07447",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "vlas",
-      "path": "papers/vlas/paper.md",
-      "sha256": "f4065fed228bf8e28674897965a27945f96d9fe0d4091d3c3cf80cce3d9e856a",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/vlas.md",
+      "note_sha256": "6693a38d23534a9bef395491fc310521decbe7cc4bde0ba1114d13c29c35a8f0",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/vlas/paper.md",
+        "sha256": "f4065fed228bf8e28674897965a27945f96d9fe0d4091d3c3cf80cce3d9e856a",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "voxposer",
+      "note_path": "notes/voxposer.md",
+      "note_sha256": "965f7875a51019a110a9ca81489b279d81b3e4b756260bd58ecb1da4a163f8bb",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2307.05973",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "vq-bet",
+      "note_path": "notes/vq-bet.md",
+      "note_sha256": "4c16224c9ce0344ce99298fbc21a5891c4df6c8166c868b0306b48775719cd1a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2403.03181",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "wave-former",
+      "note_path": "notes/wave-former.md",
+      "note_sha256": "41772b9137c80c25c567a0ed8dac1b55381edbeb0ee767bd3ae8ba35d77a297a",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2511.14152",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "whisper",
-      "path": "papers/whisper/paper.md",
-      "sha256": "b9aa230200d935c28bb9da46cf5bea99d6b3a4265ba6d6d7238e13e6e27c4f97",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/whisper.md",
+      "note_sha256": "5f8ff72c7fb6feeef24c2fb51732cbb772e5f05da701ce08271259d6efdb04fc",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/whisper/paper.md",
+        "sha256": "b9aa230200d935c28bb9da46cf5bea99d6b3a4265ba6d6d7238e13e6e27c4f97",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     },
     {
       "slug": "world-models-ha",
-      "path": "papers/world-models-ha/paper.md",
-      "sha256": "15264b3274612cb7cdca0b9767efa9454d72bcb1c0c0b7f867240eb890ca124b",
-      "artifact_type": "parsed-paper-markdown"
+      "note_path": "notes/world-models-ha.md",
+      "note_sha256": "c4e02b3fc811af46a5e8996e8aff46af46a0c168265ebafc1d735ac16f059d13",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/world-models-ha/paper.md",
+        "sha256": "15264b3274612cb7cdca0b9767efa9454d72bcb1c0c0b7f867240eb890ca124b",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "x-vlm",
+      "note_path": "notes/x-vlm.md",
+      "note_sha256": "567a5ec5b5f1ce69fa8f5e8ddd4343584ee7e3ca40e16980df0364045d50aa20",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2111.08276",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
     }
   ]
 }

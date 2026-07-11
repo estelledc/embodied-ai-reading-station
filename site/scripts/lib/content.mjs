@@ -2,8 +2,9 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import matter from "gray-matter";
-import { NOTES_DIR, GUIDE_DIR } from "./config.mjs";
+import { NOTES_DIR, GUIDE_DIR, normalizeContentDate } from "./config.mjs";
 import {
   extractTLDR, countWords, readingTime,
   rewriteImagePaths, rewriteGuideLinks, stripFirstH1,
@@ -18,8 +19,12 @@ export const TOPIC_BY_ID = new Map(TOPIC_ORDER.map(t => [t.id, t]));
 // 缓存：discoverPapers 已经读了文件，loadNotes 不要再读一次
 const NOTE_CACHE = new Map(); // slug -> { raw, data, content }
 
+export function comparePaperDisplayOrder(a, b) {
+  return a.num - b.num || a.slug.localeCompare(b.slug, "en");
+}
+
 export function discoverPapers() {
-  const files = fs.readdirSync(NOTES_DIR).filter(f => f.endsWith(".md"));
+  const files = fs.readdirSync(NOTES_DIR).filter(f => f.endsWith(".md")).sort();
   const papers = [];
   for (const f of files) {
     const slug = f.replace(/\.md$/, "");
@@ -43,7 +48,7 @@ export function discoverPapers() {
       era: data.era || "classic",
     });
   }
-  papers.sort((a, b) => a.num - b.num);
+  papers.sort(comparePaperDisplayOrder);
   return papers;
 }
 
@@ -161,6 +166,10 @@ export function loadNotes() {
       difficulty: data.difficulty || "",
       status: data.status || "auto-summary",
       sourcePath: data["来源"] || data.source || "",
+      notePath: `notes/${p.slug}.md`,
+      noteSha256: crypto.createHash("sha256").update(cached.raw).digest("hex"),
+      generated_at: normalizeContentDate(data.datePublished ?? data.published_at ?? data.generated_at),
+      content_modified: normalizeContentDate(data.content_modified ?? data.updated_at ?? data.dateModified),
       dek: data.dek || "",
       era: data.era || "classic",
       year: data.year || null,

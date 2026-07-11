@@ -6,6 +6,7 @@
 
 ### Added
 - `EAI13-T001`：冻结 provenance v2 与 `/data/v2/` 共用合同，新增纯 schema validator、字段字典和 local/remote/人工核验/生成资产正反 fixtures；明确 `content_commit` 指向可复核的既有内容输入快照，可早于 manifest commit，从而避免 Git SHA 自引用。生产 `papers/provenance.json` 与 legacy `/data/papers.json` 本批保持不变。
+- `EAI13-T002`：将 `papers/provenance.json` 确定性迁移为覆盖 156 篇笔记的 v2 清单（46 local / 110 remote），无损保留 v1 本地来源哈希，统一 canonical note 元数据、显式 null 与 `UNVERIFIED` 初态；生成器改为内存校验后同目录临时文件 `fsync` + 原子 `rename`，新增零写入 `--check` 与 v2 healthcheck 兼容桥。
 
 ## [1.2.0] - 2026-07-10
 
