@@ -1,0 +1,33 @@
+CHANGELOG.md
+  s_dae1ef4c74ec5d::t_e9c411627ad110 7-9
+docs/provenance-v2-contract.md
+  s_dae1ef4c74ec5d::t_11cea8eb4215db 1-82
+site/scripts/fixtures/provenance-v1.json
+  s_dae1ef4c74ec5d::t_6a937e41d56f9b 1-12
+site/scripts/fixtures/provenance-v2-invalid.json
+  s_dae1ef4c74ec5d::t_651e03039d8e72 1-193
+site/scripts/fixtures/provenance-v2-valid.json
+  s_dae1ef4c74ec5d::t_86987ed9727a54 1-103
+site/scripts/lib/provenance-schema.mjs
+  s_dae1ef4c74ec5d::t_e317a9af37b1f7 1-792
+site/scripts/lib/provenance-schema.test.mjs
+  s_dae1ef4c74ec5d::t_ff471712694222 1-151
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "dabde09f12c0eee8e4c6ee3be1a201cd22f86205",
+  "prompts": {},
+  "sessions": {
+    "s_dae1ef4c74ec5d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_dae1ef4c74ec5d",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
