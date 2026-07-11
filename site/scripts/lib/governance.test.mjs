@@ -122,7 +122,7 @@ test("document validator rejects missing, symlinked, binary, local-path, and bro
       fs.symlinkSync("LICENSE.real", path.join(root, "LICENSE"));
     }, /LICENSE.*regular file/],
     ["binary", root => fs.appendFileSync(path.join(root, "NOTICE.md"), Buffer.from([0])), /embed binary/],
-    ["absolute path", root => fs.appendFileSync(path.join(root, "NOTICE.md"), "\n/home/example/private\n"), /absolute paths/],
+    ["absolute path", root => fs.appendFileSync(path.join(root, "NOTICE.md"), "\n/home/你/private\n"), /absolute paths/],
     ["broken link", root => fs.appendFileSync(path.join(root, "NOTICE.md"), "\n[Missing](missing.md)\n"), /missing relative link/],
     ["unscoped license", root => fs.writeFileSync(
       path.join(root, "LICENSE"),

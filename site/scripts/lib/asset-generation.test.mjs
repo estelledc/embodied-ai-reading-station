@@ -118,7 +118,7 @@ test("assetFingerprint canonicalizes object keys and changes with any bound inpu
 
 test("formatAssetError redacts local paths while preserving repository-relative diagnostics", () => {
   const formatted = formatAssetError(new Error(
-    "ENOENT opening '/Users/alice/My Project/private.json' from C:\\Users\\alice\\secret and file:///tmp/token",
+    "ENOENT opening '/Users/你/My Project/private.json' from C:\\Users\\你\\secret and file:///tmp/token",
   ));
   assert.doesNotMatch(formatted, /Users|private\.json|secret|file:\/\/\/|\/tmp/);
   assert.match(formatted, /<local-path>/);
@@ -524,17 +524,17 @@ test("asset receipts serialize without absolute paths and reject malformed metad
   assert.throws(() => parseAssetReceipt(JSON.stringify(tamperedGenerator)), /must match inputs.generator.id/);
 
   const leakedPath = structuredClone(receipt);
-  leakedPath.inputs.parameters = { file_url: "file:///Users/alice/private.png" };
+  leakedPath.inputs.parameters = { file_url: "file:///Users/你/private.png" };
   leakedPath.input_fingerprint = assetFingerprint(leakedPath.inputs);
   assert.throws(() => parseAssetReceipt(JSON.stringify(leakedPath)), /local path/);
 
   const embeddedPath = structuredClone(receipt);
-  embeddedPath.inputs.parameters = { arg: "--input=/home/alice/private.png" };
+  embeddedPath.inputs.parameters = { arg: "--input=/home/你/private.png" };
   embeddedPath.input_fingerprint = assetFingerprint(embeddedPath.inputs);
   embeddedPath.asset_fingerprint = assetFingerprint({ input_fingerprint: embeddedPath.input_fingerprint, outputs: embeddedPath.outputs });
   assert.throws(() => parseAssetReceipt(JSON.stringify(embeddedPath)), /local path/);
 
-  for (const localPath of ["/tmp", "/secret", "prefix,/Users/alice/secret", "prefix:/opt/secret"]) {
+  for (const localPath of ["/tmp", "/secret", "prefix,/Users/你/secret", "prefix:/opt/secret"]) {
     const localPathReceipt = structuredClone(receipt);
     localPathReceipt.inputs.parameters = { arg: localPath };
     localPathReceipt.input_fingerprint = assetFingerprint(localPathReceipt.inputs);
@@ -555,7 +555,7 @@ test("asset receipts serialize without absolute paths and reject malformed metad
   assert.equal(parseAssetReceipt(JSON.stringify(portableUrl)).inputs.parameters.endpoint, "https://example.com/models/v1");
 
   const leakedKey = structuredClone(receipt);
-  leakedKey.inputs.parameters = { "/Users/alice/private.png": true };
+  leakedKey.inputs.parameters = { "/Users/你/private.png": true };
   leakedKey.input_fingerprint = assetFingerprint(leakedKey.inputs);
   assert.throws(() => parseAssetReceipt(JSON.stringify(leakedKey)), /unsafe key/);
 
