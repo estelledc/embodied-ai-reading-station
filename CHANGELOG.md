@@ -4,6 +4,9 @@
 
 ## [Unreleased]
 
+### Added
+- `EAI13-T001`：冻结 provenance v2 与 `/data/v2/` 共用合同，新增纯 schema validator、字段字典和 local/remote/人工核验/生成资产正反 fixtures；明确 `content_commit` 指向可复核的既有内容输入快照，可早于 manifest commit，从而避免 Git SHA 自引用。生产 `papers/provenance.json` 与 legacy `/data/papers.json` 本批保持不变。
+
 ## [1.2.0] - 2026-07-10
 
 内容可信度与安全收口。P0 全局体检修复落地；方向与执行文档齐备。**O1 仓库保护（T014 剩余证据）由 owner 决定延后**，不声称 T014 已关闭。

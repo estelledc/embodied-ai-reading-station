@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "algorithm": "sha256",
+  "entries": [
+    {
+      "slug": "demo-local",
+      "path": "papers/demo-local/paper.md",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "artifact_type": "parsed-paper-markdown"
+    }
+  ]
+}
