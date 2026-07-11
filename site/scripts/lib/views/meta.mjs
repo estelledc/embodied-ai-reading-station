@@ -54,7 +54,7 @@ export function buildNext(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Next — Embodied AI: Zero to One", body, active: "" });
+  return page({ title: "Next — Embodied AI: Zero to One", body, active: "", canonicalPath: "/next/" });
 }
 
 // --- random paper redirect --------------------------------------------------
@@ -81,7 +81,7 @@ export function buildRandom(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "Random — Embodied AI: Zero to One", body, active: "" });
+  return page({ title: "Random — Embodied AI: Zero to One", body, active: "", canonicalPath: "/random/" });
 }
 
 // --- human-readable site map -----------------------------------------------
@@ -170,7 +170,7 @@ export function buildSiteMap(notes, issuePages, learnPages) {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Site map — Embodied AI: Zero to One", body, active: "sitemap" });
+  return page({ title: "Site map — Embodied AI: Zero to One", body, active: "sitemap", canonicalPath: "/site-map/" });
 }
 
 // --- contributors page ------------------------------------------------------
@@ -231,7 +231,7 @@ export function buildContributors(notes) {
       </p>
     </section>
   </main>`;
-  return page({ title: "Contributors — Embodied AI: Zero to One", body, active: "about" });
+  return page({ title: "Contributors — Embodied AI: Zero to One", body, active: "about", canonicalPath: "/contributors/" });
 }
 
 // --- changelog (从 git log 自动生成) ---------------------------------------
@@ -288,7 +288,7 @@ export function buildChangelog() {
     </section>`;
   }
   body += `</main>`;
-  return page({ title: "Changelog — Embodied AI: Zero to One", body, active: "changelog" });
+  return page({ title: "Changelog — Embodied AI: Zero to One", body, active: "changelog", canonicalPath: "/changelog/" });
 }
 
 // --- 404 page ---------------------------------------------------------------
@@ -363,7 +363,14 @@ export function build404(notes) {
     })();
     </script>
   </main>`;
-  return page({ title: "404 — 这页没找到 — Embodied AI: Zero to One", body, active: "" });
+  return page({
+    title: "404 — 这页没找到 — Embodied AI: Zero to One",
+    body,
+    active: "",
+    canonicalPath: "/404.html",
+    robots: "noindex, nofollow",
+    jsonLd: false,
+  });
 }
 
 // --- about page -------------------------------------------------------------
@@ -434,7 +441,7 @@ export function buildAbout(notes = []) {
     <div class="note-content" style="max-width:68ch">
       <p>这站是为想读懂顶会论文、但还在入门阶段的人做的。<strong>具身智能（Embodied AI）</strong>讲的是「怎么让机器人有身体地融入世界」——它要看见、要听见、要听懂指令、要决定下一步怎么做。听起来像科幻，但 2024-2025 已经在论文里跑通了一大半。</p>
       <p>项目源于一个本科生科研任务：实验室给了 13 篇代表论文，覆盖 7 个主题。笔记用 AI 辅助整理成<strong>能读懂的长篇结构化版本</strong>——用基础类比解释新词，但不把结构门禁等同于逐页人工复核；关键数字和结论仍应回到来源核验。</p>
-      <p>七个主题是这样：</p>
+      <p>原任务的七个主题是这样：</p>
       <ul>
         <li><strong>I. VLM Foundation</strong> — 视觉与语言对齐的基座模型</li>
         <li><strong>II. High-Level Planning</strong> — 让 LLM 输出"做得到"的指令</li>
@@ -464,7 +471,7 @@ export function buildAbout(notes = []) {
       </ol>
 
       <h2>Visual reference</h2>
-      <p>视觉风格借鉴 <a href="https://github.com/open-design/open-design">open-design</a> 的两个 design system：<strong>atelier-zero</strong>（暖纸 + 珊瑚红 + 罗马数字章节 + 三族字体混排）+ <strong>warm-editorial</strong>（GT Sectra serif + 长读节奏）。色板和字体规则严格按 DESIGN.md 提供的 token 实现。</p>
+      <p>视觉风格以 <a href="https://github.com/open-design/open-design">open-design</a> 的 <strong>atelier-zero</strong>（暖纸 + 珊瑚红 + 罗马数字章节 + 三族字体混排）和 <strong>warm-editorial</strong>（serif + 长读节奏）为起点；全站身份、导航、状态和项目证明层接入 Jason DS v2，并保留本站的期刊气质。</p>
 
       <h2>Stack</h2>
       <ul>
@@ -527,7 +534,7 @@ export function buildAbout(notes = []) {
       <p style="color:var(--ink-soft);font-size:0.9rem">单篇引用请用论文页底部的 BibTeX 块。</p>
     </div>
   </main>`;
-  return page({ title: "About — Embodied AI: Zero to One", body, active: "about" });
+  return page({ title: "About — Embodied AI: Zero to One", body, active: "about", canonicalPath: "/about/" });
 }
 
 // About 页「AI 工具」一节用：实际数 site/src/images/inline 下的内嵌配图

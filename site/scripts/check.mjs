@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
 import { countWords } from "./lib/markdown.mjs";
+import { SITE_URL } from "./lib/config.mjs";
 import { validateSourceReference } from "./lib/source-reference.mjs";
 import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
 
@@ -155,6 +156,9 @@ for (const f of pwaFiles) {
   check("index.html 引用 manifest", () => idx.includes("site.webmanifest") || `无 manifest link`);
   check("index.html 引用 favicon.svg", () => idx.includes("favicon.svg") || `无 favicon link`);
   check("index.html 含 OpenSearch link", () => idx.includes("opensearch.xml") || `无 opensearch`);
+  check("index.html 加载 Jason DS v2 base/tokens/components", () => (
+    idx.includes("/jx/tokens.css") && idx.includes("/jx/base.css") && idx.includes("/jx/components.css")
+  ) || "Jason DS stylesheets incomplete");
 }
 
 console.log("\n=== OG / Twitter meta ===");
@@ -181,6 +185,60 @@ for (const p of sample) {
   }
 }
 check(`5 sample pages 全有 OG/Twitter/canonical meta`, () => (metaMissing === 0 && metaMissingFiles === 0) || `${metaMissing} 缺失 + ${metaMissingFiles} 文件不存在`);
+
+console.log("\n=== Public showcase contract ===");
+{
+  const home = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  const notFound = fs.readFileSync(path.join(DIST, "404.html"), "utf8");
+  const hubOrigin = new URL(SITE_URL).origin;
+
+  check("首页包含问题/角色/系统/证据/局限五段项目证明", () => (
+    ["问题 / Problem", "个人角色 / Role", "系统 / System", "证据 / Evidence", "局限 / Limitations"]
+      .every((label) => home.includes(label))
+  ) || "project proof narrative incomplete");
+  check("首页含英文摘要与可审计质量边界", () => (
+    home.includes("An editorial learning system")
+    && home.includes("结构门禁不等于逐页人工复核")
+    && home.includes("46 篇保留本地解析文本与 SHA-256 清单")
+    && home.includes("110 篇引用 HTTPS 原文")
+  ) || "English summary or limitations missing");
+  check("全站 chrome 暴露 Hub/About/Résumé/GitHub", () => (
+    home.includes(`href="${hubOrigin}/"`)
+    && home.includes(`href="${hubOrigin}/about/"`)
+    && home.includes(`href="${hubOrigin}/resume/"`)
+    && home.includes("https://github.com/estelledc/embodied-ai-reading-station")
+  ) || "portfolio navigation incomplete");
+  check("首页 JSON-LD 标识 Person/WebSite/LearningResource", () => (
+    home.includes('"@type":"Person"')
+    && home.includes('"@type":"WebSite"')
+    && home.includes('"@type":"LearningResource"')
+  ) || "homepage structured data incomplete");
+
+  const canonicalSamples = [
+    ["index.html", "/"],
+    ["topics/index.html", "/topics/"],
+    ["topics/vlm-foundation/index.html", "/topics/vlm-foundation/"],
+    ["guide/index.html", "/guide/"],
+    ["guide/ch01-why-embodied-ai/index.html", "/guide/ch01-why-embodied-ai/"],
+    ["learn/index.html", "/learn/"],
+    ["learn/path/index.html", "/learn/path/"],
+    ["issues/01/index.html", "/issues/01/"],
+    ["papers/clip/index.html", "/papers/clip/"],
+    ["about/index.html", "/about/"],
+  ];
+  const badCanonicals = [];
+  for (const [file, route] of canonicalSamples) {
+    const html = fs.readFileSync(path.join(DIST, file), "utf8");
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)">/)?.[1];
+    const expected = `${SITE_URL}${route}`;
+    if (canonical !== expected) badCanonicals.push(`${file}: ${canonical || "missing"} != ${expected}`);
+  }
+  check(`${canonicalSamples.length} 个代表页面 canonical 指向自身`, () => badCanonicals.length === 0 || badCanonicals.join("; "));
+  check("404 为 noindex 且不输出 JSON-LD", () => (
+    notFound.includes('<meta name="robots" content="noindex, nofollow">')
+    && !notFound.includes("application/ld+json")
+  ) || "404 indexing contract broken");
+}
 
 console.log("\n=== Issue plate count consistency ===");
 {

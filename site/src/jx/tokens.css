@@ -1,6 +1,6 @@
-/* Jason DS · Tokens v1.0.0
+/* Jason DS · Tokens v2.0.0
  * SoT: dotfiles/home-claude/design-system/jx-tokens.css
- * 9 仓通过 vendor copy 同步：scripts/sync-jx-to-repos.sh
+ * 展示站通过 vendor copy 同步：scripts/sync-jx-to-repos.sh
  *
  * 命名空间硬规则：
  * - --jx-* 前缀禁改
@@ -41,6 +41,18 @@
   --jx-state-shipped: #2c5e3a;
   --jx-state-shipped-tint: color-mix(in oklab, var(--jx-state-shipped), white 86%);
   --jx-state-shipped-glyph: "■";
+  --jx-state-concept: #6950a1;
+  --jx-state-concept-tint: color-mix(in oklab, var(--jx-state-concept), white 86%);
+  --jx-state-concept-glyph: "○";
+  --jx-state-prototype: var(--jx-state-building);
+  --jx-state-prototype-tint: var(--jx-state-building-tint);
+  --jx-state-prototype-glyph: "◇";
+  --jx-state-maintained: #285f73;
+  --jx-state-maintained-tint: color-mix(in oklab, var(--jx-state-maintained), white 86%);
+  --jx-state-maintained-glyph: "◆";
+  --jx-state-archived: #62666e;
+  --jx-state-archived-tint: color-mix(in oklab, var(--jx-state-archived), white 86%);
+  --jx-state-archived-glyph: "□";
 
   /* ── Typography ── */
   --jx-font-display: "Source Serif 4", "Spectral", "Songti SC", Georgia, serif;
@@ -59,6 +71,7 @@
   --jx-fs-h2: 32px;
   --jx-fs-h1: 44px;
   --jx-fs-display: 64px;
+  --jx-fs-display-fluid: clamp(2.5rem, 6vw, 4rem);
 
   --jx-weight-reading: 400;
   --jx-weight-ui: 500;
@@ -94,6 +107,8 @@
   --jx-section-y: clamp(48px, 7.5vw, 80px);
   --jx-gutter: clamp(16px, 3vw, 24px);
   --jx-container: 1160px;
+  --jx-container-narrow: 760px;
+  --jx-header-height: 64px;
 
   /* ── Radius ── */
   --jx-radius-1: 2px;
@@ -145,6 +160,18 @@
     --jx-accent-tint: color-mix(in oklab, var(--jx-accent), black 70%);
     --jx-focus-ring: rgba(108,138,255,0.36);
     --jx-shadow-stack: var(--jx-shadow-stack-dark);
+    --jx-state-learning: #69b6bf;
+    --jx-state-learning-tint: color-mix(in oklab, var(--jx-state-learning), black 76%);
+    --jx-state-building: #d49a57;
+    --jx-state-building-tint: color-mix(in oklab, var(--jx-state-building), black 76%);
+    --jx-state-shipped: #77b88b;
+    --jx-state-shipped-tint: color-mix(in oklab, var(--jx-state-shipped), black 76%);
+    --jx-state-concept: #b9a1eb;
+    --jx-state-concept-tint: color-mix(in oklab, var(--jx-state-concept), black 76%);
+    --jx-state-maintained: #79b4ca;
+    --jx-state-maintained-tint: color-mix(in oklab, var(--jx-state-maintained), black 76%);
+    --jx-state-archived: #a4a8b0;
+    --jx-state-archived-tint: color-mix(in oklab, var(--jx-state-archived), black 76%);
   }
 }
 

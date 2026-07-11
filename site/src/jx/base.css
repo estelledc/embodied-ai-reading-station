@@ -1,4 +1,4 @@
-/* Jason DS · Base v1.0.0
+/* Jason DS · Base v2.0.0
  * 默认 reset + body 排版基底 + chrome layer 强制 sans
  */
 
@@ -7,6 +7,7 @@
 *::after { box-sizing: border-box; }
 
 html {
+  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
   -moz-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -23,6 +24,25 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+}
+
+img,
+picture,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:target {
+  scroll-margin-top: calc(var(--jx-header-height) + var(--jx-space-4));
 }
 
 body :lang(en) {
@@ -56,6 +76,39 @@ a:focus-visible {
   outline: none;
   box-shadow: var(--jx-shadow-focus);
   border-radius: var(--jx-radius-2);
+}
+
+button:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--jx-accent);
+  outline-offset: 3px;
+}
+
+.jx-container {
+  width: min(calc(100% - (2 * var(--jx-gutter))), var(--jx-container));
+  margin-inline: auto;
+}
+
+.jx-container--narrow {
+  width: min(calc(100% - (2 * var(--jx-gutter))), var(--jx-container-narrow));
+  margin-inline: auto;
+}
+
+.jx-section {
+  padding-block: var(--jx-section-y);
+}
+
+.jx-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }
 
 /* Mono inline */
@@ -104,6 +157,7 @@ hr {
 
 /* Reduce motion */
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   * {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
