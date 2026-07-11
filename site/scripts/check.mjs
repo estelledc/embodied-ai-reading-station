@@ -54,6 +54,7 @@ const REQUIRED_CORE_SHELL_URLS = Object.freeze([
   "./reading-progress.js",
   "./quick-filter.js",
   "./keyboard.js",
+  "./more-nav.js",
   "./theme-toggle.js",
   "./page-behaviors.js",
   "./math-render.js",

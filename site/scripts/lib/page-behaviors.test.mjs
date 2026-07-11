@@ -131,12 +131,14 @@ const NOTES = [
   { slug: "robot", num: 3, title: "Robot", topicLabel: "Robotics", era: "frontier", tldr: "robot", year: 2024 },
 ];
 
-test("layout externalizes theme, keyboard and KaTeX behavior in deterministic order", () => {
+test("layout externalizes theme, navigation, and KaTeX behavior in deterministic order", () => {
   const html = page({ title: "math", body: "<main>$x$</main>", active: "", hasMath: true });
 
   assertNoInlineBehavior(html);
   assert.match(html, /<head>[\s\S]*<script src="[^"]*\/theme-toggle\.js"><\/script>[\s\S]*<\/head>/);
   assert.equal((html.match(/theme-toggle\.js/g) ?? []).length, 1);
+  assert.equal((html.match(/more-nav\.js/g) ?? []).length, 1);
+  assert.ok(html.indexOf("/keyboard.js") < html.indexOf("/more-nav.js"));
   const katex = html.indexOf("/vendor/katex/katex.min.js");
   const autoRender = html.indexOf("/vendor/katex/contrib/auto-render.min.js");
   const mathRender = html.indexOf("/math-render.js");

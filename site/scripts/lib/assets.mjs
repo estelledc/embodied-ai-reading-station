@@ -192,6 +192,7 @@ export function copyStatic() {
   copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
   copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
+  copy(path.join(SITE, "src", "more-nav.js"), path.join(DIST, "more-nav.js"));
   copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
   copy(path.join(SITE, "src", "page-behaviors.js"), path.join(DIST, "page-behaviors.js"));
   copy(path.join(SITE, "src", "math-render.js"), path.join(DIST, "math-render.js"));

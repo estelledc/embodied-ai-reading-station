@@ -72,12 +72,12 @@ export function masthead(active) {
       <a class="masthead-brand" href="${url("/")}"><span class="star" aria-hidden="true">★</span><span>Embodied AI</span><small>Zero to One</small></a>
     </div>
     <nav class="primary-nav" aria-label="站内主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
-      <details class="more-nav">
-        <summary class="more-nav-trigger"${moreActive ? ' aria-current="page"' : ''} aria-label="更多站内导航">More ▾</summary>
-        <div class="more-nav-panel">
+      <div class="more-nav" data-more-nav>
+        <button type="button" class="more-nav-trigger${moreActive ? " is-current" : ""}" aria-controls="more-nav-panel" aria-expanded="false" aria-label="更多站内导航">More <span aria-hidden="true">▾</span></button>
+        <div class="more-nav-panel" id="more-nav-panel" hidden>
           ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
         </div>
-      </details>
+      </div>
     </nav>
     <nav class="portfolio-nav" aria-label="Jason 作品集导航">
       ${portfolioLinks.slice(1).map(i => `<a href="${i.href}">${i.label}</a>`).join("")}
@@ -332,6 +332,7 @@ export function page({
   <script src="${url("/reading-progress.js")}" defer></script>
   <script src="${url("/quick-filter.js")}" defer></script>
   <script src="${url("/keyboard.js")}" defer></script>
+  <script src="${url("/more-nav.js")}" defer></script>
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
   <script src="${url("/svg-export.js")}" defer></script>

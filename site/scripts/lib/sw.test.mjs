@@ -49,6 +49,7 @@ const REQUIRED_SHELL_URLS = [
   "./reading-progress.js",
   "./quick-filter.js",
   "./keyboard.js",
+  "./more-nav.js",
   "./theme-toggle.js",
   "./page-behaviors.js",
   "./math-render.js",
