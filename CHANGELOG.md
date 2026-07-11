@@ -9,6 +9,9 @@
 - `EAI13-T002`：将 `papers/provenance.json` 确定性迁移为覆盖 156 篇笔记的 v2 清单（46 local / 110 remote），无损保留 v1 本地来源哈希，统一 canonical note 元数据、显式 null 与 `UNVERIFIED` 初态；生成器改为内存校验后同目录临时文件 `fsync` + 原子 `rename`，新增零写入 `--check` 与 v2 healthcheck 兼容桥。
 - `EAI13-T003`：新增独立于 generator 的 fail-closed repository validator，并在任何笔记加载前接入 `npm run check`；同时校验 exact schema、156 条 inventory、frontmatter/source 一致性、逐段 symlink/普通文件/跟踪状态、worktree/index/HEAD/manifest/`content_commit` snapshot 字节，以及脱敏的稳定错误码。
 
+### Changed
+- `EAI13-T011`：统一现行文档为“v1.2.0 已发布、O1/T014 外部待办未关闭”，把 RC 条件保留为历史证据；新增 EAI-T008–T020 共 13 项 carry-over crosswalk，并规定 Lab 与新公共数据消费者必须晚于 `EAI13-T001 → T002 → T003 → T004` 和本次状态治理。
+
 ## [1.2.0] - 2026-07-10
 
 内容可信度与安全收口。P0 全局体检修复落地；方向与执行文档齐备。**O1 仓库保护（T014 剩余证据）由 owner 决定延后**，不声称 T014 已关闭。

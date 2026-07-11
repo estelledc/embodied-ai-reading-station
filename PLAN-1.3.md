@@ -1,42 +1,45 @@
-# 1.3 推进计划 — v1.2 发布收口 → 工程 P1 队列 → Lab 板块启动
+# 1.3 推进计划 — v1.2 已发布 → EAI13 合同/API 门禁 → 工程与 Lab
 
 > **执行路由：** 本文是里程碑、依赖与验收候选档案，不是自动执行队列。独立 agent 必须先读取 [AGENTS.md](AGENTS.md)、[操作索引](docs/operations-index.md) 和 [当前 handoff](SESSION-HANDOFF.md)，声明有限 `run contract` 后才能执行被纳入 scope 的批次。Batch 8/9 与任何内容生产必须显式激活。
+> **For agentic workers:** 按依赖顺序执行，每个 EAI13 task 一个分支/PR，任务内保持原子 commit；分支命名 `<agent>/eai13-<task>-<slug>`。
 > 本计划是 [ROADMAP.md](ROADMAP.md) 的执行层:出口 = v1.3.0。
-> 各工程任务(EAI-T0xx)的目标与最小验收以 [docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md) 第 5 节为准,本文只做编排,不重复设计。
+> **状态权威顺序**：运行代码与验证证据 → [CHANGELOG.md](CHANGELOG.md) → 本计划 → 历史计划复选框。旧 `EAI-T0xx` 只用于下文 crosswalk，不再直接调度实现。
 > 里程碑只定义出口条件与依赖顺序,不做日历时间承诺。
 
-**门禁基线**(2026-07-10,commit `a19b88d`):`npm run test:unit` 73 passed + `npm run check` 97 passed, 0 failed。任何批次结束时不得低于此基线;涉及构建产物的批次须补跑双 SITE_BASE 与 dist 确定性对比。
+**现行门禁基线**（2026-07-11，commit `19a64ca`）：`npm run test:unit` 183 passed；`npm run check` 110 passed、0 failed；根路径与 `/embodied-ai-reading-station` 双 SITE_BASE 通过，同一 `SOURCE_DATE_EPOCH` 下全部 7 个 data 文件两次构建 SHA-256 一致。任何后续批次不得低于该基线；v1.2 发布时的 73/97 证据保留在历史 runbook。
 
 ---
 
 ## 批次总览与依赖
 
 ```
-批次 0(v1.2 发布收口)
-  O1 owner 设置 ──▶ R1 最终验证 + 切版 + tag
-        │
-        ▼
-批次 1(T008 provenance schema + T011 契约冻结)──▶ 批次 9(C 线核验试点)
-        │
-        ▼
-批次 2(T010)▶ 批次 3(T011)▶ 批次 4(T013)▶ 批次 5(T016)▶ 批次 6(T017/T018)▶ 批次 7(T019)
-                                                                                    │
-                                                                                    ▼
-                                                                          批次 8(Lab 板块脚手架)
+批次 0（历史）：v1.2.0 已发布；O1/T014 外部待办仍开放
+
+硬门禁：EAI13-T001 ─▶ T002 ─▶ T003 ─▶ T004
+
+工程分支：
+  T003 ─▶ T007
+  T004 ─▶ T005 ─▶ T008
+       ├▶ T006
+  T001 + T004 ─▶ T009
+  T002 + T003 + T009 ─▶ T010
+
+Lab / 新公共消费者：T001–T004 + T011 状态治理全部通过后启动
+owner 外部证据：EAI13-T012 独立跟踪，不得伪装成已完成
 ```
 
 **依赖处理原则**:
 
-1. 批次 1–9 原则上在 v1.2.0 tag 之后启动(遵守 RC 纪律:发布前不扩大改动面)。
-2. 若 owner 侧 O1 长期未完成,仅允许提前做纯文档类工作(批次 1 的 schema 设计稿、批次 8 的板块设计稿),实现代码一律等发布。
-3. 每批绑定不可变 commit;高风险改动后重跑相关门禁;不能用文档声明代替运行验证。
-4. 批次 8 可视内容进展与批次 2–7 并行(它不依赖 P1 队列的具体任务,只依赖 v1.2.0 发布),图中排在批次 7 后是默认保守顺序。
+1. v1.2.0 已发布；O1 未完成不回滚已发生的发布，但 `EAI13-T012` 必须保持外部未验证状态。
+2. **Lab 和任何新的公共数据消费者必须晚于 `EAI13-T001 → T002 → T003 → T004`，并在 `EAI13-T011` 收口状态后启动。** 此前最多做设计稿，不得实现第二套内容/API 合同。
+3. 每批绑定不可变 commit；高风险改动后重跑相关门禁；不能用文档声明代替运行验证。
+4. 后续工程仅在 backlog 显式依赖允许时并行；依赖 T004 的 `T005/T006`、依赖 T005 的 `T008`、依赖 T009 的 `T010` 必须保持顺序。
 
 ---
 
-## 批次 0:v1.2 发布收口
+## 批次 0：v1.2 发布收口（历史完成）
 
-> **详细逐步清单、可复制命令与证据栏**见 [docs/batch-0-v1.2-release.md](docs/batch-0-v1.2-release.md)（阶段 A 前置合并 → B O1 → C 最终验证 → D 切版 → E tag）。本节省略为索引；执行时以该手册为准。
+> v1.2.0 已于 2026-07-10 发布。详细命令与证据栏保存在 [docs/batch-0-v1.2-release.md](docs/batch-0-v1.2-release.md)；A/C/D/E 是历史记录，不应作为现行步骤重复执行。B/O1 仍是 owner follow-up。
 
 ### O1(owner 外部依赖,agent 不可代办)
 
@@ -48,7 +51,7 @@
 
 > 依据:[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md) 第 4.2 节(T014 剩余证据)。README「发布门禁」已有同款 checklist。
 
-### R1(agent；本轮在 O1 延后前提下执行)
+### R1（agent；已在 O1 延后例外下完成）
 
 - [x] 在最终 RC commit（`84eb97f`）上重跑全部验证:73 unit、97 healthcheck、双 SITE_BASE、全量 dist 确定性对比通过；`npm audit --audit-level=high` 通过（仅余 moderate）。C6 浏览器手测：云环境无图形浏览器，以契约测试（路径/状态/安全相关 unit + check）代理，手册注明延后。
 - [x] 切版:`site/package.json` + lockfile → `1.2.0`;README 版本行 → `v1.2.0`;CHANGELOG `[Unreleased]` → `[1.2.0] - 2026-07-10`。
@@ -59,29 +62,56 @@
 
 ---
 
-## 批次 1:EAI-T008 provenance schema(+ T011 契约冻结)
+## 批次 1：EAI13 合同/API 硬门禁（已完成）
 
-主线 C(内容可信度清偿)的地基,也是 P1 队列第 1 项。
+该批是 Lab、新公共数据消费者与生成资产治理的共同地基；完成事实以 [CHANGELOG.md](CHANGELOG.md) `[Unreleased]` 和对应运行验证为准。
 
-- [ ] 设计 provenance schema v2:笔记、来源、生成资产(inline/card/抽图)与人工复核状态全部字段化;156 篇每篇必须有合法元数据或明确 `blocked_reason`;公开文件不得带入被排除的论文二进制。
-- [ ] 与 T011 一起冻结数据合同:`schema_version`、`content_commit`、稳定 nullable 语义、人工复核字段(如 `verified: {by, date, scope}`)。设计冻结后 T008 先落地数据来源,T011 再发布公共 API。
-- [ ] 实现生成/校验脚本(扩展 `papers/provenance.json` 或新清单),接入 `npm run check` 门禁。
-- [ ] 验收:v1.2 路线图第 5 节 T008 行;check 新增项 0 fail;`npm test` 全链路通过。
+- [x] `EAI13-T001`：冻结 provenance v2 与 Data API 共用合同和正反 fixtures。
+- [x] `EAI13-T002`：迁移 156 条 canonical provenance，保留 46 条本地来源证据并实现原子生成。
+- [x] `EAI13-T003`：独立验证 worktree/index/HEAD/manifest/`content_commit` snapshot 字节闭环。
+- [x] `EAI13-T004`：发布 `/data/v2/`，迁移三个站内消费者并保留 v1.3 legacy endpoint。
+- [x] `EAI13-T011`：统一发布时态、旧任务 crosswalk 与 Lab 启动边界（本次文档治理）。
 
-## 批次 2–7:工程 P1 队列(每批一个 PR)
+**出口**：183 unit、110 healthcheck、双 SITE_BASE 与固定时间 data SHA-256 对比通过；任何后续分支必须包含这些提交，回归失败即重新关闭硬门禁。
 
-| 批次 | Task | 内容(验收以 v1.2 路线图第 5 节对应行为准) |
+## 批次 2–7：EAI13 后续工程队列
+
+| 批次 | EAI13 task | 依赖与内容 |
 |---|---|---|
-| 2 | `EAI-T010` | 首页 CSS 缩略图背景改语义化、lazy、responsive 图片;建立首页请求数/字节预算;保持卡片可访问名称。T018 的性能前置。 |
-| 3 | `EAI-T011` | 发布带 `schema_version`、`content_commit` 的版本化数据 API(字段沿用批次 1 冻结的合同);旧客户端能检测不兼容版本。 |
-| 4 | `EAI-T013` | 明确 Service Worker cache coverage、更新提示、离线 fallback 与容量上限;已访问论文离线重载、版本更新、缓存限制须有自动/浏览器证据。建立在 T011 版本化语义之上。 |
-| 5 | `EAI-T016` | 外移 inline behavior,建立 report-only CSP;普通导航零未批准违规。复用 T005/T021 的 sink 与 protocol 安全边界。 |
-| 6 | `EAI-T017` + `EAI-T018` | 联合验收:More 导航键盘打开/遍历/Escape/焦点返回/`aria-expanded`;移动端、键盘、读屏、对比度、表格、reduced-motion 矩阵;覆盖 320/375/768 宽度。先实现交互,再用矩阵做最终验收。 |
-| 7 | `EAI-T019` | 独立 LICENSE / NOTICE / PROVENANCE 治理文件,区分代码、笔记、生成图与原论文/图版权。复用 T008 provenance 合同。 |
+| 2 | `EAI13-T005` | 依赖 T004；首页卡片改为语义化、lazy、responsive 图片并建立路由级请求/字节预算。 |
+| 3 | `EAI13-T006` | 依赖 T004；让 Service Worker 识别 API schema/commit，补更新、离线 fallback 与容量策略。 |
+| 4 | `EAI13-T007` | 依赖 T003；外移 inline behavior，建立 report-only CSP 和批准违规预算。 |
+| 5 | `EAI13-T008` | 依赖 T005；合并 More disclosure 键盘/焦点实现与完整无障碍矩阵。 |
+| 6 | `EAI13-T009` | 依赖 T001/T004；增加 LICENSE、NOTICE、PROVENANCE 并映射到 v2 字段。 |
+| 7 | `EAI13-T010` | 依赖 T002/T003/T009；为生成资产补 preflight、结构化输出、幂等写入与 provenance。 |
 
-P2 的 `EAI-T020`(资产生成可复现)不排入本计划,发布 v1.3.0 前视余力决定。
+`EAI13-T012` 是 owner required check、main protection 与 Pages environment 的外部证据项；它独立跟踪、保持 `UNVERIFIED`，不得由 agent 代勾或写成 T014 已关闭。
+
+## Carry-over crosswalk：EAI-T008–EAI-T020
+
+旧 ID 全部保留用于历史追溯；`KEEP` 表示目标或已实现保护继续有效，`REFINE/SPLIT/MERGE` 表示按可回滚边界重组，`UNVERIFIED` 只用于源码无法证明的外部状态。
+
+| 旧 ID | 判定 | 原因 | EAI13 映射 |
+|---|---|---|---|
+| `EAI-T008` | `SPLIT` | 原任务混合合同、迁移、独立校验、许可和资产字段。 | `EAI13-T001`, `EAI13-T002`, `EAI13-T003`, `EAI13-T009`, `EAI13-T010` |
+| `EAI-T009` | `REFINE` | v1 的 46 份本地来源 SHA 已实现，转为 v2 迁移不丢失与独立门禁不回退约束。 | `EAI13-T002`, `EAI13-T003` |
+| `EAI-T010` | `KEEP` | 首页 CSS background 缩略图和请求/字节预算缺口仍成立。 | `EAI13-T005` |
+| `EAI-T011` | `SPLIT` | 共同合同先冻结，再单独发布版本化 API 与迁移消费者；不要与新的 EAI13-T011 混淆。 | `EAI13-T001`, `EAI13-T004` |
+| `EAI-T012` | `KEEP` | 确定性构建已实现，继续作为四个关键切片的不可回退验收条件。 | `EAI13-T001`, `EAI13-T002`, `EAI13-T003`, `EAI13-T004` |
+| `EAI-T013` | `REFINE` | Service Worker 需识别 schema/commit，并覆盖更新、离线与容量。 | `EAI13-T006` |
+| `EAI-T014` | `UNVERIFIED` | workflow 代码存在不等于 required check、branch protection 与 Pages environment 已启用。 | `EAI13-T012` |
+| `EAI-T015` | `KEEP` | main-only 部署代码与既有发布证据保留，外部治理证据统一收口。 | `EAI13-T012` |
+| `EAI-T016` | `KEEP` | inline behavior 与 CSP report-only 缺口仍存在。 | `EAI13-T007` |
+| `EAI-T017` | `MERGE` | More 交互必须与完整无障碍矩阵联合验收。 | `EAI13-T008` |
+| `EAI-T018` | `MERGE` | 矩阵是交互/响应式实现的完成闸，不是独立文档任务。 | `EAI13-T008` |
+| `EAI-T019` | `REFINE` | 治理文件继续实施，并绑定 provenance v2 字段。 | `EAI13-T009` |
+| `EAI-T020` | `REFINE` | 保留资产可复现目标，增加 preflight、幂等写入并移除本机路径假设。 | `EAI13-T010` |
+
+没有旧任务被静默删除或重编号；若 crosswalk 与代码/CHANGELOG 冲突，以代码和 CHANGELOG 为准并修订本表。
 
 ## 批次 8:Lab 板块脚手架(v1.3 主题启动)
+
+> **硬门禁**：Lab 实现只能基于同时包含 `EAI13-T001 → T002 → T003 → T004` 与 `T011` 的提交，并先确认 `npm test`、双 SITE_BASE 和确定性门禁仍通过。该规则取代旧版允许提前启动 Lab 的安排。
 
 把 [research-task.md](research-task.md) Task 2 的实践过程沉淀为站点新板块,脚手架与内容解耦。
 
@@ -110,16 +140,16 @@ P2 的 `EAI-T020`(资产生成可复现)不排入本计划,发布 v1.3.0 前视�
 
 ## PR 与门禁约定
 
-1. 一份有限 run contract 使用一个交付分支，默认最多 3 个可独立验收切片；需要独立 PR 的任务从已接受基线开启新的 run，不从另一条未接受的 PR 栈继续分叉。分支名描述本次交付目标，PR 描述引用本文对应批次与 v1.2 路线图对应 Task 行。
+1. 一份有限 run contract 使用一个交付分支，默认最多 3 个可独立验收切片；需要独立 PR 的任务从已接受基线开启新的 run，不从另一条未接受的 PR 栈继续分叉。分支名描述本次交付目标（EAI13 task 遵循 `<agent>/eai13-<task>-<slug>` 命名），PR 描述引用本文对应批次、task 与对应验收标准。
 2. 每个 PR 合并前:`npm test`(unit → build → check)全过;涉及构建产物的批次补跑 `SITE_BASE=/embodied-ai-reading-station` 场景与 dist 确定性对比。
-3. 每批完成后更新本文对应复选框 + CHANGELOG Unreleased 记录,状态漂移以 CHANGELOG 为准。
+3. 每批完成后更新本文对应复选框 + CHANGELOG Unreleased 记录；状态漂移以运行代码/验证结果和 CHANGELOG 为准。
 4. 发现超出批次范围的问题:记录进本文末尾「执行中记录的坏味道」,不顺手修(沿用 PLAN-1.1 纪律)。
 
 ## 明确不做(本计划范围)
 
 - 不迁框架、不加后端(ROADMAP 全局边界)。
 - 不在批次 9 之外重写任何既有笔记正文;核验试点的修正必须有原文依据。
-- 不提前实现 P2(T020)与季度 Issue 内容。
+- 不绕过 EAI13 依赖提前实现旧 P2 `EAI-T020` 的映射任务 `EAI13-T010`，也不提前编写季度 Issue 内容。
 - Task 2 的 MuJoCo/SmolVLA 实际复现属仓库外工作,本计划只承接其成文与站点化。
 
 ## 执行中记录的坏味道
