@@ -15,6 +15,14 @@ import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
 import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
 import {
+  GOVERNANCE_CONTRACT,
+  buildGovernanceReferences,
+  validateGovernanceBinaryDelta,
+  validateGovernanceDocuments,
+  validateGovernanceFieldBindings,
+  validateGovernanceSurfaceMappings,
+} from "./lib/governance.mjs";
+import {
   CSP_PRODUCTION_STATUS,
   CSP_REPORT_ONLY_HEADER_NAME,
   CSP_STYLE_ATTRIBUTE_BUDGET,
@@ -149,6 +157,25 @@ if (!provenance.ok) {
   process.exit(1);
 }
 
+console.log("\n=== License governance ===");
+const provenanceDocument = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "papers", "provenance.json"), "utf8"),
+);
+const governanceDocuments = validateGovernanceDocuments({ root: ROOT });
+const governanceBindings = validateGovernanceFieldBindings();
+const governanceBinaryDelta = validateGovernanceBinaryDelta({
+  root: ROOT,
+});
+check("LICENSE/NOTICE/PROVENANCE 是互链的纯文本治理文件", () => (
+  governanceDocuments.ok || governanceDocuments.errors.slice(0, 3).join("; ")
+));
+check("四类许可映射只绑定已冻结的 provenance v2 字段", () => (
+  governanceBindings.ok || governanceBindings.errors.slice(0, 3).join("; ")
+));
+check("审查基线后无新增或修改二进制", () => (
+  governanceBinaryDelta.ok || governanceBinaryDelta.errors.slice(0, 3).join("; ")
+));
+
 const { SYLLABUS_WEEKS } = await import("./lib/views/aggregates.mjs");
 
 console.log("\n=== Static pages ===");
@@ -178,9 +205,13 @@ const requiredPages = [
   "data/papers.json",
   "data/v2/papers.json",
   "data/v2/index.json",
+  "data/v2/provenance.json",
   "data/tags.json",
   "data/topics.json",
   "data/index.json",
+  "governance/LICENSE",
+  "governance/NOTICE.md",
+  "governance/PROVENANCE.md",
   "csp-report-only.json",
 ];
 for (const p of requiredPages) {
@@ -234,6 +265,8 @@ const papersJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "papers.js
 const legacyIndex = JSON.parse(fs.readFileSync(path.join(DIST, "data", "index.json"), "utf8"));
 const papersV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "papers.json"), "utf8"));
 const indexV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "index.json"), "utf8"));
+const publishedProvenanceBytes = fs.readFileSync(path.join(DIST, "data", "v2", "provenance.json"));
+const canonicalProvenanceBytes = fs.readFileSync(path.join(ROOT, "papers", "provenance.json"));
 const canonicalContentCommit = loadCanonicalContentCommit();
 const exactKeys = (value, expected) => (
   value !== null
@@ -260,6 +293,10 @@ check("v2 papers/index content_commit 与 canonical provenance 一致", () => {
   if (papersV2.content_commit !== canonicalContentCommit) return "canonical content_commit mismatch";
   return true;
 });
+check("公开 provenance v2 与 canonical manifest 逐字节一致", () => (
+  publishedProvenanceBytes.equals(canonicalProvenanceBytes)
+    || "data/v2/provenance.json bytes drift from papers/provenance.json"
+));
 check("v2 papers/index generated_at 是同一确定性构建时间", () => {
   if (papersV2.generated_at !== indexV2.generated_at) return "generated_at mismatch";
   const parsed = new Date(papersV2.generated_at);
@@ -280,10 +317,28 @@ check("legacy 数组与 v2 data 的 18 字段逐条一致", () => {
 check("v2 index endpoint 与兼容窗口精确匹配", () => {
   if (!exactKeys(indexV2.data, DATA_API_CONTRACT.index_data_fields)) return "index data fields drift";
   if (!exactKeys(indexV2.data.deprecation, DATA_API_CONTRACT.deprecation_fields)) return "deprecation fields drift";
+  if (!exactKeys(indexV2.data.license, DATA_API_CONTRACT.license_fields)) return "license fields drift";
+  if (!Array.isArray(indexV2.data.license.asset_classes)) return "license asset classes missing";
+  if (indexV2.data.license.asset_classes.length !== GOVERNANCE_CONTRACT.asset_classes.length) {
+    return "license asset class count drift";
+  }
+  if (indexV2.data.license.asset_classes.some(assetClass => (
+    !exactKeys(assetClass, DATA_API_CONTRACT.license_asset_class_fields)
+  ))) return "license asset class fields drift";
+  if (!exactKeys(indexV2.data.provenance, DATA_API_CONTRACT.provenance_reference_fields)) {
+    return "provenance reference fields drift";
+  }
   if (indexV2.data.papers_endpoint !== builtBase + DATA_API_CONTRACT.versioned_papers_endpoint) return "papers endpoint base drift";
   if (indexV2.data.legacy_endpoint !== builtBase + DATA_API_CONTRACT.legacy_endpoint) return "legacy endpoint base drift";
   if (indexV2.data.deprecation.status !== "supported" || indexV2.data.deprecation.removal_version !== null) {
     return "legacy compatibility policy drift";
+  }
+  const expectedGovernance = buildGovernanceReferences({ route: value => builtBase + value });
+  if (JSON.stringify(indexV2.data.license) !== JSON.stringify(expectedGovernance.license)) {
+    return "license governance mapping drift";
+  }
+  if (JSON.stringify(indexV2.data.provenance) !== JSON.stringify(expectedGovernance.provenance)) {
+    return "provenance governance mapping drift";
   }
   return true;
 });
@@ -291,7 +346,13 @@ check("legacy data manifest 保留旧形状并发现 v2", () => {
   if (legacyIndex.content_commit !== canonicalContentCommit) return "legacy manifest content_commit drift";
   if (!legacyIndex.endpoints?.index_v2?.endsWith("/data/v2/index.json")) return "missing v2 index discovery";
   if (!legacyIndex.endpoints?.papers_v2?.endsWith("/data/v2/papers.json")) return "missing v2 papers discovery";
+  if (!legacyIndex.endpoints?.provenance_v2?.endsWith("/data/v2/provenance.json")) return "missing v2 provenance discovery";
   if (!legacyIndex.endpoints?.papers?.endsWith("/data/papers.json")) return "missing legacy papers endpoint";
+  if (legacyIndex.license !== "CC BY 4.0 — Attribution required") return "legacy license compatibility alias drift";
+  if (JSON.stringify(legacyIndex.governance) !== JSON.stringify({
+    license: indexV2.data.license,
+    provenance: indexV2.data.provenance,
+  })) return "legacy governance discovery drift";
   return true;
 });
 check("三个站内消费者均不再直连 legacy papers endpoint", () => {
@@ -305,10 +366,46 @@ check("README 与 llms.txt 区分内容快照和构建时间", () => {
   const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
   const llms = fs.readFileSync(path.join(DIST, "llms.txt"), "utf8");
   for (const document of [readme, llms]) {
-    if (!document.includes("/data/v2/index.json") || !document.includes("/data/v2/papers.json")) return "missing v2 discovery docs";
+    if (!document.includes("/data/v2/index.json")
+      || !document.includes("/data/v2/papers.json")
+      || !document.includes("/data/v2/provenance.json")) return "missing v2 discovery docs";
     if (!document.includes("content_commit") || !document.includes("generated_at")) return "missing metadata semantics";
   }
   return true;
+});
+check("README/About/llms 使用同一许可与 provenance 策略 ID", () => {
+  const surfaces = [
+    fs.readFileSync(path.join(ROOT, "README.md"), "utf8"),
+    fs.readFileSync(path.join(DIST, "about", "index.html"), "utf8"),
+    fs.readFileSync(path.join(DIST, "llms.txt"), "utf8"),
+  ];
+  for (const surface of surfaces) {
+    const result = validateGovernanceSurfaceMappings(surface);
+    if (!result.ok) return result.errors.slice(0, 3).join("; ");
+  }
+  return true;
+});
+check("About 的 generated_assets 计数来自 canonical manifest", () => {
+  const expected = provenanceDocument.notes.reduce((total, note) => (
+    total + note.generated_assets.length
+  ), 0);
+  const about = fs.readFileSync(path.join(DIST, "about", "index.html"), "utf8");
+  return about.includes(
+    `generated_assets</code> 记录数为 <strong>${expected}</strong>`,
+  ) || `About generated_assets count is not ${expected}`;
+});
+check("公开治理文件与仓库源文档逐字节一致", () => {
+  for (const [key, sourcePath] of Object.entries(GOVERNANCE_CONTRACT.source_documents)) {
+    const publicPath = GOVERNANCE_CONTRACT.public_documents[key].replace(/^\//, "");
+    const source = fs.readFileSync(path.join(ROOT, sourcePath));
+    const published = fs.readFileSync(path.join(DIST, publicPath));
+    if (!source.equals(published)) return `${publicPath} bytes drift from ${sourcePath}`;
+  }
+  return true;
+});
+check("公开 NOTICE/PROVENANCE 相对链接在 governance 路由内可达", () => {
+  const result = validateGovernanceDocuments({ root: path.join(DIST, "governance") });
+  return result.ok || result.errors.slice(0, 3).join("; ");
 });
 
 const tagsJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "tags.json"), "utf8"));
@@ -394,6 +491,12 @@ for (const f of pwaFiles) {
     if (template === null) return "DATA_CACHE template missing";
     const expected = "${CACHE_PREFIX}data-${BUILD_ID}-v${DATA_SCHEMA_MAJOR}-${CONTENT_COMMIT}";
     return template === expected || `DATA_CACHE drift: ${template}`;
+  });
+  check("data cache 覆盖三个 v2 endpoint 且容量精确为 3", () => {
+    for (const endpoint of ["index.json", "papers.json", "provenance.json"]) {
+      if (!sw.includes(`./data/v2/${endpoint}`)) return `missing data endpoint: ${endpoint}`;
+    }
+    return /\bdata\s*:\s*3\b/.test(sw) || "data cache limit must be 3";
   });
   check("SHELL_URLS 保留固定核心预缓存集合", () => {
     const urls = new Set(parseWorkerShellUrls(sw));

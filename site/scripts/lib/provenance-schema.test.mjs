@@ -81,8 +81,18 @@ test("field dictionary freezes type, null, default, source, consumer, and migrat
   assert.equal(DATA_API_CONTRACT.legacy_endpoint, "/data/papers.json");
   assert.equal(DATA_API_CONTRACT.versioned_papers_endpoint, "/data/v2/papers.json");
   assert.equal(DATA_API_CONTRACT.versioned_index_endpoint, "/data/v2/index.json");
+  assert.equal(DATA_API_CONTRACT.versioned_provenance_endpoint, "/data/v2/provenance.json");
   assert.deepEqual(DATA_API_CONTRACT.envelope_fields, ["schema_version", "content_commit", "generated_at", "data"]);
-  assert.deepEqual(DATA_API_CONTRACT.index_data_fields, ["papers_endpoint", "legacy_endpoint", "deprecation"]);
+  assert.deepEqual(DATA_API_CONTRACT.index_data_fields, [
+    "papers_endpoint", "legacy_endpoint", "deprecation", "license", "provenance",
+  ]);
+  assert.deepEqual(DATA_API_CONTRACT.license_fields, ["policy_id", "asset_classes", "document", "notice"]);
+  assert.deepEqual(DATA_API_CONTRACT.license_asset_class_fields, [
+    "id", "license_expression", "reference_url", "project_license_declared", "provenance_fields",
+  ]);
+  assert.deepEqual(DATA_API_CONTRACT.provenance_reference_fields, [
+    "policy_id", "schema_version", "endpoint", "policy",
+  ]);
   assert.deepEqual(DATA_API_CONTRACT.deprecation_default, { status: "supported", removal_version: null });
   assert.deepEqual(
     DATA_API_CONTRACT.paper_record_fields,
@@ -101,6 +111,21 @@ test("field dictionary freezes type, null, default, source, consumer, and migrat
     "data.deprecation",
     "data.deprecation.status",
     "data.deprecation.removal_version",
+    "data.license",
+    "data.license.policy_id",
+    "data.license.asset_classes",
+    "data.license.asset_classes[].id",
+    "data.license.asset_classes[].license_expression",
+    "data.license.asset_classes[].reference_url",
+    "data.license.asset_classes[].project_license_declared",
+    "data.license.asset_classes[].provenance_fields",
+    "data.license.document",
+    "data.license.notice",
+    "data.provenance",
+    "data.provenance.policy_id",
+    "data.provenance.schema_version",
+    "data.provenance.endpoint",
+    "data.provenance.policy",
   ]) {
     assert.ok(Object.hasOwn(DATA_API_FIELD_DICTIONARY, field), `missing ${field}`);
   }

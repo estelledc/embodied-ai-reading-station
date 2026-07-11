@@ -197,6 +197,10 @@ export function copyStatic() {
   copy(path.join(SITE, "src", "page-behaviors.js"), path.join(DIST, "page-behaviors.js"));
   copy(path.join(SITE, "src", "math-render.js"), path.join(DIST, "math-render.js"));
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
+  // Public governance copies stay byte-identical to the repository source documents.
+  copy(path.join(ROOT, "LICENSE"), path.join(DIST, "governance", "LICENSE"));
+  copy(path.join(ROOT, "NOTICE.md"), path.join(DIST, "governance", "NOTICE.md"));
+  copy(path.join(ROOT, "PROVENANCE.md"), path.join(DIST, "governance", "PROVENANCE.md"));
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
   write(

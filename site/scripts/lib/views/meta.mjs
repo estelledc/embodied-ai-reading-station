@@ -5,6 +5,11 @@ import path from "node:path";
 import { execSync as _execSync } from "node:child_process";
 import { SITE, ROOT, DIST, url, SITE_URL } from "../config.mjs";
 import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT } from "../content.mjs";
+import {
+  buildGovernanceReferences,
+  LICENSE_POLICY_ID,
+  PROVENANCE_POLICY_ID,
+} from "../governance.mjs";
 import { page, pageHeroHtml, safeJsonForScript } from "../layout.mjs";
 
 // --- /next/ smart next paper redirect --------------------------------------
@@ -299,6 +304,8 @@ export function build404(notes) {
 
 // --- about page -------------------------------------------------------------
 export function buildAbout(notes = []) {
+  const governance = buildGovernanceReferences({ route: url });
+  const registeredGeneratedAssetCount = countRegisteredGeneratedAssets();
   // Compute dist size by category
   function dirCatSize(dir) {
     let html = 0, image = 0, code = 0, data = 0, other = 0;
@@ -377,8 +384,10 @@ export function buildAbout(notes = []) {
       </ul>
 
       <h2>Open data</h2>
-      <p>站点数据全部以 JSON 公开，CC BY 4.0 协议。如果你想做二次分析、可视化或 LLM 训练数据：</p>
+      <p>站点元数据以 JSON 公开；许可按资产类别区分，Data API 不会把项目声明扩展到第三方论文或 figure。如果你想做二次分析、可视化或 LLM 训练数据：</p>
       <ul style="font-family:var(--font-mono);font-size:0.9rem">
+        <li><a href="${url("/data/v2/index.json")}">/data/v2/index.json</a> — v2 入口、兼容与治理发现</li>
+        <li><a href="${url("/data/v2/provenance.json")}">/data/v2/provenance.json</a> — canonical provenance（仅元数据与 hash）</li>
         <li><a href="${url("/data/index.json")}">/data/index.json</a> — manifest（计数 + endpoint URL）</li>
         <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — ${PAPER_COUNT} 篇全部元数据 + tldr</li>
         <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — tag 频次 + 共现矩阵</li>
@@ -389,7 +398,7 @@ export function buildAbout(notes = []) {
       <ol>
         <li><code>lr pdf bundle paper.pdf</code> — 把授权 PDF 转成带图 markdown</li>
         <li><code>notes/&lt;slug&gt;.md</code> — 用统一模板整理长篇结构化笔记</li>
-        <li><code>npm run provenance:generate</code> — 固定本地解析文本的 SHA-256</li>
+        <li><code>npm run provenance:generate</code> — 生成或核对 156 条 canonical provenance 元数据与 hash</li>
         <li><code>node site/scripts/build.mjs</code> — 期刊风 HTML 渲染</li>
         <li>GitHub Actions → GitHub Pages — 部署</li>
       </ol>
@@ -430,12 +439,15 @@ export function buildAbout(notes = []) {
       ${sizeBars}
 
       <h2>License</h2>
+      <p>稳定策略标识：<code>${LICENSE_POLICY_ID}</code> / <code>${PROVENANCE_POLICY_ID}</code>。</p>
       <ul>
-        <li><strong>笔记内容</strong>: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — 引用请保留作者名</li>
-        <li><strong>站点代码</strong>: <a href="https://opensource.org/licenses/MIT">MIT</a></li>
-        <li><strong>原论文 PDF + 论文 figure 图</strong>: 版权归原作者，本站只作学习摘要</li>
-        <li><strong>codex 生成图片</strong>: CC BY 4.0（同笔记）</li>
+        <li><strong><code>project-code</code></strong>: <code>MIT</code></li>
+        <li><strong><code>project-notes</code></strong>: <code>CC-BY-4.0</code> — 引用并标注修改</li>
+        <li><strong><code>project-generated-images</code></strong>: 仅另有证据证明项目可许可的图片声明 <code>CC-BY-4.0</code>；当前 v2 字段不会自动归类</li>
+        <li><strong><code>third-party-paper-materials</code></strong>: <code>NOASSERTION</code> — 不是许可授予；论文、figure 与无独立权利证据的生成资产均默认归入此类</li>
       </ul>
+      <p><a href="${governance.license.document}">MIT license</a> · <a href="${governance.license.notice}">rights notice</a> · <a href="${governance.provenance.policy}">provenance policy</a></p>
+      <p>当前 canonical manifest 的 <code>generated_assets</code> 记录数为 <strong>${registeredGeneratedAssetCount ?? "unknown"}</strong>；记录与 hash 也不能单独证明可许可权利。</p>
 
       <h2>Contact / 反馈</h2>
       <p>有几种方式联系：</p>
@@ -467,4 +479,16 @@ function countInlineImages() {
   const dir = path.join(SITE, "src", "images", "inline");
   if (!fs.existsSync(dir)) return 0;
   return fs.readdirSync(dir).filter(f => f.endsWith(".webp") && !f.includes("-800")).length;
+}
+
+function countRegisteredGeneratedAssets() {
+  try {
+    const document = JSON.parse(fs.readFileSync(path.join(ROOT, "papers", "provenance.json"), "utf8"));
+    if (!Array.isArray(document.notes)) return null;
+    return document.notes.reduce((total, note) => (
+      total + (Array.isArray(note.generated_assets) ? note.generated_assets.length : 0)
+    ), 0);
+  } catch {
+    return null;
+  }
 }

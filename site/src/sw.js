@@ -17,7 +17,7 @@ const IMAGES_CACHE = `${CACHE_PREFIX}images-${BUILD_ID}`;
 const DATA_CACHE = `${CACHE_PREFIX}data-${BUILD_ID}-v${DATA_SCHEMA_MAJOR}-${CONTENT_COMMIT}`;
 const CURRENT_CACHES = new Set([SHELL_CACHE, PAGES_CACHE, IMAGES_CACHE, DATA_CACHE]);
 const LEGACY_CACHE_PREFIXES = ["eai-shell-", "eai-pages-", "eai-images-", "eai-data-"];
-const CACHE_LIMITS = Object.freeze({ pages: 48, images: 96, data: 2 });
+const CACHE_LIMITS = Object.freeze({ pages: 48, images: 96, data: 3 });
 
 // 这些资源是站点可用的最小集合。任一项缺失都必须让新 worker 安装失败。
 const SHELL_URLS = [
@@ -50,6 +50,7 @@ const SHELL_PATHS = new Set(SHELL_URLS.map(relative => new URL(relative, SCOPE_U
 const DATA_PATHS = new Set([
   new URL("./data/v2/index.json", SCOPE_URL).pathname,
   new URL("./data/v2/papers.json", SCOPE_URL).pathname,
+  new URL("./data/v2/provenance.json", SCOPE_URL).pathname,
 ]);
 
 function isWithinScope(url) {
@@ -114,7 +115,7 @@ async function cacheSafely(task) {
 }
 
 function dataCacheKey(url) {
-  // query 参数不能制造额外 data cache 条目；v2 目前只有两个固定 endpoint。
+  // query 参数不能制造额外 data cache 条目；v2 只接受三个固定 endpoint。
   return `${url.origin}${url.pathname}`;
 }
 

@@ -5,9 +5,20 @@ import os from "node:os";
 import path from "node:path";
 import { buildPaperJsonLd } from "./papers.mjs";
 import { buildFeed, contentDatesForNote, writeDataFiles } from "./seo.mjs";
+import {
+  GOVERNANCE_CONTRACT,
+  LICENSE_POLICY_ID,
+  PROVENANCE_POLICY_ID,
+} from "../governance.mjs";
 import { DATA_API_CONTRACT } from "../provenance-schema.mjs";
 
 const CONTENT_COMMIT = "0123456789abcdef0123456789abcdef01234567";
+
+test("security.txt keeps Canonical as an unindented RFC field", () => {
+  const source = fs.readFileSync(new URL("./seo.mjs", import.meta.url), "utf8");
+  assert.match(source, /Preferred-Languages: zh-CN, en\nCanonical:/);
+  assert.doesNotMatch(source, /\n[ \t]+Canonical:/);
+});
 
 test("content dates prefer explicit note lifecycle metadata", () => {
   assert.deepEqual(contentDatesForNote({
@@ -110,6 +121,7 @@ test("data files keep the legacy array and publish byte-stable v2 projections", 
   const legacyIndex = JSON.parse(fs.readFileSync(path.join(dist, "data", "index.json"), "utf8"));
   const papersV2 = JSON.parse(fs.readFileSync(path.join(dist, "data", "v2", "papers.json"), "utf8"));
   const indexV2 = JSON.parse(fs.readFileSync(path.join(dist, "data", "v2", "index.json"), "utf8"));
+  const provenanceV2 = fs.readFileSync(path.join(dist, "data", "v2", "provenance.json"));
 
   assert.ok(Array.isArray(legacy));
   assert.deepEqual(papersV2.data, legacy);
@@ -125,9 +137,28 @@ test("data files keep the legacy array and publish byte-stable v2 projections", 
   assert.equal(legacyIndex.generated, "2025-07-02T23:46:40.000Z");
   assert.equal(legacyIndex.endpoints.index_v2, "https://estelledc.github.io/embodied-ai-reading-station/data/v2/index.json");
   assert.equal(legacyIndex.endpoints.papers_v2, "https://estelledc.github.io/embodied-ai-reading-station/data/v2/papers.json");
+  assert.equal(legacyIndex.endpoints.provenance_v2, "https://estelledc.github.io/embodied-ai-reading-station/data/v2/provenance.json");
+  assert.equal(legacyIndex.license, "CC BY 4.0 — Attribution required");
+  assert.deepEqual(provenanceV2, fs.readFileSync(manifestPath));
   assert.deepEqual(indexV2.data, {
     papers_endpoint: "/repo/data/v2/papers.json",
     legacy_endpoint: "/repo/data/papers.json",
     deprecation: { status: "supported", removal_version: null },
+    license: {
+      policy_id: LICENSE_POLICY_ID,
+      asset_classes: GOVERNANCE_CONTRACT.asset_classes,
+      document: "/repo/governance/LICENSE",
+      notice: "/repo/governance/NOTICE.md",
+    },
+    provenance: {
+      policy_id: PROVENANCE_POLICY_ID,
+      schema_version: "2.0.0",
+      endpoint: "/repo/data/v2/provenance.json",
+      policy: "/repo/governance/PROVENANCE.md",
+    },
+  });
+  assert.deepEqual(legacyIndex.governance, {
+    license: indexV2.data.license,
+    provenance: indexV2.data.provenance,
   });
 });

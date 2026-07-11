@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { GENERATED_AT, PAPERS_DIR, url } from "./config.mjs";
+import { buildGovernanceReferences } from "./governance.mjs";
 import { DATA_API_CONTRACT } from "./provenance-schema.mjs";
 
 const CONTENT_COMMIT_RE = /^[0-9a-f]{40}$/;
@@ -47,6 +48,7 @@ export function buildDataApiEnvelopes(papers, {
     content_commit: contentCommit,
     generated_at: generatedAt,
   };
+  const governance = buildGovernanceReferences({ route });
   const papersEnvelope = {
     ...metadata,
     data: papers,
@@ -60,6 +62,8 @@ export function buildDataApiEnvelopes(papers, {
         status: DATA_API_CONTRACT.deprecation_default.status,
         removal_version: DATA_API_CONTRACT.deprecation_default.removal_version,
       },
+      license: governance.license,
+      provenance: governance.provenance,
     },
   };
 

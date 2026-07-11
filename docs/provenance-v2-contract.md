@@ -1,6 +1,6 @@
 # Provenance v2 contract
 
-Status: frozen for `EAI13-T001`. This document defines shape and semantics only. It does not migrate `papers/provenance.json`, publish `/data/v2/`, or change a browser consumer.
+Status: canonical provenance shape frozen by `EAI13-T001`; Data API discovery completed by `EAI13-T004` and the planned pre-v1.3 governance revision `EAI13-T009`. The revision does not change note records, the four-field papers/index envelope, or the exact `2.0.0` producer version.
 
 The executable source of truth is [`site/scripts/lib/provenance-schema.mjs`](../site/scripts/lib/provenance-schema.mjs). Its exported provenance and data-API field dictionaries record every field's type, nullability, default, source, consumers, and migration rule. Fixtures live in [`site/scripts/fixtures/`](../site/scripts/fixtures/).
 
@@ -68,14 +68,19 @@ Paths are bound to both kind and note identity: cards live at `site/src/images/c
 
 Incomplete or untracked assets are omitted; the migration must not invent a fingerprint. The document records metadata only and never embeds a paper, PDF, image, credential, or local absolute path.
 
+Generated-asset `kind` is an evidence role, not a license, and registration alone cannot prove ownership. The current v2 fields therefore bind all `notes[].generated_assets` to the fail-closed `third-party-paper-materials` / `NOASSERTION` class. `project-generated-images` remains a policy class with no automatic field binding until a separately reviewed rights discriminator exists.
+
 ## Public data compatibility
 
 - Keep legacy `/data/papers.json` as a bare array for the complete v1.3 compatibility window.
-- Publish future `/data/v2/papers.json` and `/data/v2/index.json` endpoints. Both envelopes contain exactly `schema_version`, `content_commit`, `generated_at`, and `data`; `generated_at` is deterministic build metadata, never content identity.
-- `papers.json.data` is the legacy-compatible record array. `index.json.data` contains exactly `papers_endpoint`, `legacy_endpoint`, and `deprecation`; deprecation starts as `{ "status": "supported", "removal_version": null }`.
+- `/data/v2/papers.json` and `/data/v2/index.json` both use exactly `schema_version`, `content_commit`, `generated_at`, and `data`; `generated_at` is deterministic build metadata, never content identity.
+- `papers.json.data` is the legacy-compatible record array. Before the first v1.3 publication, T009 completes the exact `index.json.data` shape as `papers_endpoint`, `legacy_endpoint`, `deprecation`, `license`, and `provenance`; deprecation remains `{ "status": "supported", "removal_version": null }`.
+- `license` binds the exact four asset classes to stable `MIT`, `CC-BY-4.0`, or `NOASSERTION` expressions and existing provenance field names. `NOASSERTION` is not a project license grant.
+- `provenance` discovers `EAI-PROVENANCE-2.0.0`, its public process policy, and `/data/v2/provenance.json`. That endpoint is a byte-identical publication of canonical `papers/provenance.json`, so it intentionally keeps the three-field provenance manifest shape rather than the Data API envelope.
+- Legacy `/data/index.json.license` retains its original string value; its additive `governance` object mirrors the v2 license/provenance mapping.
 - The paper record remains the current 18-field projection: `slug`, `num`, `title`, `topic`, `topicLabel`, `era`, `year`, `venue`, `difficulty`, `tldr`, `wordCount`, `readingMinutes`, `tags`, `url`, `sourcePath`, `status`, `generated_at`, and `content_modified`. Their types, null/default rules, sources, consumers, and migration semantics are frozen in `DATA_API_FIELD_DICTIONARY`.
 - Use `slug` as the stable key; `num` remains display-only.
-- T001 does not publish either endpoint. T004 owns producer and consumer changes.
+- T001 did not publish either endpoint. T004 owns the producer/consumer migration; T009 only completes the unreleased discovery shape and does not change browser paper consumers.
 
 ## Validation split
 

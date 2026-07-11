@@ -7,6 +7,11 @@ import {
   buildDataApiEnvelopes,
   loadCanonicalContentCommit,
 } from "./data-api.mjs";
+import {
+  GOVERNANCE_CONTRACT,
+  LICENSE_POLICY_ID,
+  PROVENANCE_POLICY_ID,
+} from "./governance.mjs";
 import { DATA_API_CONTRACT } from "./provenance-schema.mjs";
 
 const CONTENT_COMMIT = "0123456789abcdef0123456789abcdef01234567";
@@ -35,6 +40,18 @@ test("v2 papers/index envelopes share exact metadata and contract field order", 
     deprecation: {
       status: "supported",
       removal_version: null,
+    },
+    license: {
+      policy_id: LICENSE_POLICY_ID,
+      asset_classes: GOVERNANCE_CONTRACT.asset_classes,
+      document: "/repo/governance/LICENSE",
+      notice: "/repo/governance/NOTICE.md",
+    },
+    provenance: {
+      policy_id: PROVENANCE_POLICY_ID,
+      schema_version: "2.0.0",
+      endpoint: "/repo/data/v2/provenance.json",
+      policy: "/repo/governance/PROVENANCE.md",
     },
   });
   assert.deepEqual(Object.keys(indexEnvelope.data), DATA_API_CONTRACT.index_data_fields);
@@ -126,5 +143,9 @@ test("default build metadata and endpoints honor SOURCE_DATE_EPOCH and SITE_BASE
     assert.equal(result.generated_at, "2025-07-02T23:46:40.000Z");
     assert.equal(result.data.papers_endpoint, `${prefix}/data/v2/papers.json`);
     assert.equal(result.data.legacy_endpoint, `${prefix}/data/papers.json`);
+    assert.equal(result.data.license.document, `${prefix}/governance/LICENSE`);
+    assert.equal(result.data.license.notice, `${prefix}/governance/NOTICE.md`);
+    assert.equal(result.data.provenance.endpoint, `${prefix}/data/v2/provenance.json`);
+    assert.equal(result.data.provenance.policy, `${prefix}/governance/PROVENANCE.md`);
   }
 });

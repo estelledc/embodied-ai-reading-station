@@ -264,7 +264,8 @@ test("source freezes build/schema/commit placeholders, cache limits, and the com
   assert.match(SOURCE, /const CACHE_PREFIX = `eai-\$\{encodeURIComponent\(SCOPE_PATH\)\}-`;/);
   assert.match(SOURCE, /pages:\s*48/);
   assert.match(SOURCE, /images:\s*96/);
-  assert.match(SOURCE, /data:\s*2/);
+  assert.match(SOURCE, /data:\s*3/);
+  assert.match(SOURCE, /\.\/data\/v2\/provenance\.json/);
   for (const relativeUrl of REQUIRED_SHELL_URLS) {
     assert.ok(SOURCE.includes(JSON.stringify(relativeUrl)), `missing core shell URL: ${relativeUrl}`);
   }
@@ -334,6 +335,25 @@ test("v2 data is network-first, cached only on exact schema/commit, and used on 
   assert.deepEqual((await httpFailure.json()).data, [{ slug: "clip" }]);
 });
 
+test("canonical provenance manifest uses the same versioned network-first cache without an envelope", async () => {
+  const endpoint = "https://example.test/data/v2/provenance.json";
+  const manifest = {
+    schema_version: SCHEMA_VERSION,
+    content_commit: CONTENT_COMMIT,
+    notes: [{ slug: "clip" }],
+  };
+  const harness = createHarness({
+    fetchImpl: async () => new Response(JSON.stringify(manifest), {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    }),
+  });
+
+  assert.deepEqual(await (await harness.fetch(endpoint).response()).json(), manifest);
+  harness.state.fetchImpl = async () => { throw new Error("offline"); };
+  assert.deepEqual(await (await harness.fetch(endpoint).response()).json(), manifest);
+});
+
 test("200 data with a wrong major, minor, or commit is returned for diagnostics but never cached", async t => {
   const cases = [
     ["wrong major", { schemaVersion: "3.0.0" }],
@@ -367,17 +387,19 @@ test("data fallback rejects corrupt current entries and never reads an old names
   assert.ok(await (await harness.caches.open(oldCacheName)).match(endpoint), "old namespace remains unread");
 });
 
-test("data cache trims to two canonical endpoints and moves updated entries to the newest position", async () => {
+test("data cache trims to three canonical endpoints and moves updated entries to the newest position", async () => {
   const scope = "https://example.test/repo/";
   const harness = createHarness({ scope, fetchImpl: async () => jsonResponse() });
   const cache = await harness.caches.open(cacheNames(scope).data);
   await cache.put(`${scope}data/v2/obsolete.json`, jsonResponse());
   await cache.put(`${scope}data/v2/papers.json`, jsonResponse());
+  await cache.put(`${scope}data/v2/provenance.json`, jsonResponse());
 
   await harness.fetch(`${scope}data/v2/index.json`).response();
   const keys = (await cache.keys()).map(key => key.url);
   assert.deepEqual(keys, [
     `${scope}data/v2/papers.json`,
+    `${scope}data/v2/provenance.json`,
     `${scope}data/v2/index.json`,
   ]);
 });
@@ -493,6 +515,7 @@ test("root and repo scopes intercept only in-scope GET data, assets, images, ven
 
     for (const relative of [
       "/data/v2/index.json",
+      "/data/v2/provenance.json",
       "/images/card.webp",
       "/assets/paper/figure.png",
       "/vendor/d3.min.js",
