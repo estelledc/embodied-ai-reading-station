@@ -42,6 +42,7 @@
 - 修复 320px 窄屏下关闭的 More 面板与导航 max-content 宽度造成的全页横向溢出。
 
 ### Security
+- `EAI13-T007`：移除全站 inline event handler、可执行 inline script 与 inline `<style>`，将 theme、KaTeX、Next/Random/Discover/404 和 deck 行为外移为同源资源；生成 canonical Report-Only CSP、真实响应头本地预览与零未批准违规门禁。论文模板样式迁移使生成 `style=` 从 30,972 降到 4,715，并以精确数量、唯一值和 digest 冻结剩余例外。当前 GitHub Pages 部署无响应头注入层，生产状态明确为 `NOT_APPLIED`，不把静态 meta 或 `_headers` 冒充已生效策略。
 - `EAI-T005`：搜索历史与 link preview 改用 DOM API / `textContent`，查询长度与控制字符受限，用户输入不再进入 HTML sink。
 - `EAI-T021`：Markdown 链接和图片启用协议 allowlist，统一转义 URL、title、alt 和 caption，并锁定唯一获准的原始 iframe。
 

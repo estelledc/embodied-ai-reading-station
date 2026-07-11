@@ -15,6 +15,18 @@ import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
 import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
 import {
+  CSP_PRODUCTION_STATUS,
+  CSP_REPORT_ONLY_HEADER_NAME,
+  CSP_STYLE_ATTRIBUTE_BUDGET,
+  assertHtmlSecurity,
+  createCspReportOnlyManifest,
+  digestStyleValues,
+  scanCssResourcePolicy,
+  scanHtmlResourcePolicy,
+  scanHtmlSecurity,
+  scanRuntimeStyleSinks,
+} from "./lib/csp.mjs";
+import {
   evaluateRouteImageBudget,
   measureRouteImageBudget,
   normalizeRouteHtmlForBase,
@@ -43,6 +55,10 @@ const REQUIRED_CORE_SHELL_URLS = Object.freeze([
   "./quick-filter.js",
   "./keyboard.js",
   "./theme-toggle.js",
+  "./page-behaviors.js",
+  "./math-render.js",
+  "./deck/deck.css",
+  "./deck/deck.js",
   "./link-preview.js",
   "./sw-register.js",
   "./svg-export.js",
@@ -164,6 +180,7 @@ const requiredPages = [
   "data/tags.json",
   "data/topics.json",
   "data/index.json",
+  "csp-report-only.json",
 ];
 for (const p of requiredPages) {
   check(p, () => fs.existsSync(path.join(DIST, p)) || `missing: ${p}`);
@@ -568,6 +585,120 @@ for (const file of htmlFiles) {
 check(`${htmlFiles.length} 个构建 HTML 不含旧 identity`, () => (
   legacyIdentity.length === 0 || legacyIdentity.slice(0, 20).join("; ")
 ));
+
+console.log("\n=== CSP report-only readiness ===");
+{
+  const notReady = [];
+  let styleAttributeCount = 0;
+  const styleValues = new Set();
+  const unexpectedResources = [];
+  const iframeOrigins = new Set();
+
+  for (const file of htmlFiles) {
+    const relative = path.relative(DIST, file);
+    const html = fs.readFileSync(file, "utf8");
+    const inventory = scanHtmlSecurity(html, { source: relative });
+    if (!inventory.ready) notReady.push(inventory);
+    styleAttributeCount += inventory.styleAttributes.count;
+    for (const value of inventory.styleAttributes.uniqueValues) styleValues.add(value);
+    const resources = scanHtmlResourcePolicy(inventory);
+    unexpectedResources.push(...resources.unexpectedResources);
+    for (const origin of resources.iframeOrigins) iframeOrigins.add(origin);
+  }
+
+  check("全部生成 HTML 无 inline handler/script/style、active URL、srcdoc 或 forbidden element", () => {
+    if (notReady.length === 0) return true;
+    const first = notReady[0];
+    try { assertHtmlSecurity(first); } catch (error) { return error.message; }
+    return `${notReady.length} HTML file(s) are not CSP-ready`;
+  });
+  check(`批准 style attribute 预算精确为 ${CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount}`, () => (
+    styleAttributeCount === CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount
+      || `${styleAttributeCount} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount}`
+  ));
+  check(`批准 style attribute 唯一值精确为 ${CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount}`, () => (
+    styleValues.size === CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount
+      || `${styleValues.size} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount}`
+  ));
+  check("批准 style attribute 唯一值 digest 未漂移", () => {
+    const actual = digestStyleValues([...styleValues]);
+    return actual === CSP_STYLE_ATTRIBUTE_BUDGET.uniqueValueSha256
+      || `${actual} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.uniqueValueSha256}`;
+  });
+  check("动态 style sink 逐文件匹配批准属性与精确数量", () => {
+    const drift = [];
+    const approvedSources = new Set(CSP_STYLE_ATTRIBUTE_BUDGET.runtimeSinks.map(item => item.source));
+    const candidates = [
+      ...fs.readdirSync(path.join(SITE, "src"))
+        .filter(file => file.endsWith(".js"))
+        .map(file => ({ source: `src/${file}`, target: path.join(SITE, "src", file) })),
+      ...fs.readdirSync(path.join(ROOT, "deck"))
+        .filter(file => file.endsWith(".js"))
+        .map(file => ({ source: `deck/${file}`, target: path.join(ROOT, "deck", file) })),
+    ];
+    for (const candidate of candidates) {
+      const inventory = scanRuntimeStyleSinks(fs.readFileSync(candidate.target, "utf8"), {
+        sourceName: candidate.source,
+      });
+      if (inventory.count > 0 && !approvedSources.has(candidate.source)) {
+        drift.push(`${candidate.source}: ${inventory.count} unapproved sink(s)`);
+      }
+      if (inventory.unrecognized.length > 0) {
+        drift.push(`${candidate.source}: ${inventory.unrecognized.length} unrecognized style API(s)`);
+      }
+    }
+    for (const approved of CSP_STYLE_ATTRIBUTE_BUDGET.runtimeSinks) {
+      const target = approved.source.startsWith("deck/")
+        ? path.join(ROOT, approved.source)
+        : path.join(SITE, approved.source);
+      const inventory = scanRuntimeStyleSinks(fs.readFileSync(target, "utf8"), {
+        sourceName: approved.source,
+      });
+      if (
+        inventory.count !== approved.expectedMatches
+        || JSON.stringify(inventory.properties) !== JSON.stringify(approved.properties)
+        || inventory.unrecognized.length !== 0
+      ) {
+        drift.push(
+          `${approved.source}: count ${inventory.count}/${approved.expectedMatches}, `
+          + `properties ${inventory.properties.join(",")}/${approved.properties.join(",")}`,
+        );
+      }
+    }
+    return drift.length === 0 || drift.slice(0, 3).join("; ");
+  });
+  check("script/style/font/image/manifest 资源同源且 iframe 只有批准 origin", () => (
+    unexpectedResources.length === 0
+      && JSON.stringify([...iframeOrigins].sort()) === JSON.stringify(["https://playground.tensorflow.org"])
+  ) || `${unexpectedResources.slice(0, 3).join("; ") || `iframe origins: ${[...iframeOrigins].join(", ")}`}`);
+
+  const cssUrls = [];
+  function walkCss(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const target = path.join(dir, entry.name);
+      if (entry.isDirectory()) walkCss(target);
+      else if (entry.name.endsWith(".css")) {
+        const css = fs.readFileSync(target, "utf8");
+        const inventory = scanCssResourcePolicy(css, { source: path.relative(DIST, target) });
+        cssUrls.push(...inventory.unexpectedResources);
+      }
+    }
+  }
+  walkCss(DIST);
+  check("生成 CSS 的 url() 只使用同源或 data:", () => cssUrls.length === 0 || cssUrls.slice(0, 3).join("; "));
+
+  const manifestPath = path.join(DIST, "csp-report-only.json");
+  const expectedManifest = createCspReportOnlyManifest({
+    styleBudget: CSP_STYLE_ATTRIBUTE_BUDGET,
+    base: builtBase,
+  });
+  const actualManifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  check("CSP artifact 与 canonical header/budget 一致且 production 明示 NOT_APPLIED", () => (
+    actualManifest.production_status === CSP_PRODUCTION_STATUS
+    && actualManifest.header.name === CSP_REPORT_ONLY_HEADER_NAME
+    && JSON.stringify(actualManifest) === JSON.stringify(expectedManifest)
+  ) || "csp-report-only.json drift");
+}
 
 const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];

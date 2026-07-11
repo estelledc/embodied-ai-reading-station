@@ -397,7 +397,7 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
       <div class="eai-proof-story">
         <div class="eai-proof-kicker"><span class="jx-chip" data-state="maintained">Maintained</span><span>Project proof / 项目证明</span></div>
         <h2 id="project-proof-title">不是论文仓库，而是一套把阅读变成路径的学习产品。</h2>
-        <p class="jx-proof__summary">新手面对的不是“少一篇摘要”，而是论文、术语、工具和研究任务彼此断开。本站把教程主线、论文证据、学习路径、关系视图与本地进度放进同一套静态系统。</p>
+        <p class="jx-proof__summary">新手面对的不是"少一篇摘要"，而是论文、术语、工具和研究任务彼此断开。本站把教程主线、论文证据、学习路径、关系视图与本地进度放进同一套静态系统。</p>
         <p class="jx-proof__summary-en" lang="en">A solo-built, evidence-aware learning product that connects tutorials, paper notes, research views and browser-local progress.</p>
         <div class="jx-proof__metrics" aria-label="项目规模">
           <div class="jx-proof__metric"><strong>${GUIDE_CHAPTER_COUNT}</strong><span>章零基础系统教程</span></div>
@@ -412,7 +412,7 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
         </div>
       </div>
       <dl class="jx-proof__meta">
-        <div><dt>问题 / Problem</dt><dd>碎片化论文无法回答“零基础下一步读什么、如何连到研究任务”。</dd></div>
+        <div><dt>问题 / Problem</dt><dd>碎片化论文无法回答"零基础下一步读什么、如何连到研究任务"。</dd></div>
         <div><dt>个人角色 / Role</dt><dd>独立完成产品定义、内容架构、静态站工程、交互设计与发布门禁。</dd></div>
         <div><dt>系统 / System</dt><dd>Node 静态生成 + Pagefind + D3 + KaTeX；路径、主题、时间线、关系图和本地进度共享同一份内容数据。</dd></div>
         <div><dt>证据 / Evidence</dt><dd>构建时检查来源路径、内容结构、图像覆盖、内部链接、公开数据和 PWA 资产。</dd></div>
@@ -484,10 +484,10 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
       <button class="streak-export" id="eai-streak-export" type="button" title="导出已读清单为 markdown">↓ 导出</button>
     </aside>
 
-    <details class="state-tools" style="margin:1rem 0 2rem;padding:0.9rem 1rem;border:1px solid var(--paper-dark);background:var(--paper-warm)">
-      <summary style="cursor:pointer;font-family:var(--font-mono);font-size:0.82rem;color:var(--ink-soft)">本地进度备份 / 导入 / 重置</summary>
-      <p style="margin:0.7rem 0;font-size:0.88rem;color:var(--ink-mute)">进度只保存在当前浏览器。升级或清缓存前先导出 JSON 备份；可导入 v1.1 旧状态并自动迁移。</p>
-      <div style="display:flex;flex-wrap:wrap;gap:0.55rem">
+    <details class="state-tools">
+      <summary>本地进度备份 / 导入 / 重置</summary>
+      <p class="state-tools-copy">进度只保存在当前浏览器。升级或清缓存前先导出 JSON 备份；可导入 v1.1 旧状态并自动迁移。</p>
+      <div class="state-tools-actions">
         <button class="streak-export" id="eai-state-export" type="button">↓ 备份进度</button>
         <button class="streak-export" id="eai-state-import" type="button">↑ 导入进度</button>
         <button class="streak-export" id="eai-state-restore-import" type="button" hidden>撤销最近导入</button>
@@ -517,20 +517,20 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
     <hr/>`;
 
   // --- 路径分流（"你是谁 → 走哪条路"）---
-  body += `<section class="learning-paths" style="margin:2.5rem 0">
-    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">选一条路径开始 ↘</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem">
-      <a href="${url("/guide/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
-        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">系统学习（推荐）</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">${GUIDE_CHAPTER_COUNT} 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
+  body += `<section class="learning-paths">
+    <h2 class="home-section-heading">选一条路径开始 ↘</h2>
+    <div class="learning-path-grid">
+      <a class="learning-path-card" href="${url("/guide/")}">
+        <strong class="learning-path-title">系统学习（推荐）</strong>
+        <p class="learning-path-copy">${GUIDE_CHAPTER_COUNT} 章 Guide 从 Ch01 顺序读，4 周完成。每章含代码示例 + 自测题。</p>
       </a>
-      <a href="${url("/learn/path/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
-        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">30+5 学习路径</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">30 天核心含 25 篇论文 + 5 个复习/输出日；任务驱动读者再选做 Day 31–35。</p>
+      <a class="learning-path-card" href="${url("/learn/path/")}">
+        <strong class="learning-path-title">30+5 学习路径</strong>
+        <p class="learning-path-copy">30 天核心含 25 篇论文 + 5 个复习/输出日；任务驱动读者再选做 Day 31–35。</p>
       </a>
-      <a href="${url("/topics/")}" style="padding:1.2rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
-        <strong style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">按主题跳读</strong>
-        <p style="font-size:0.9rem;color:var(--ink-soft);margin-top:0.5rem">对特定方向感兴趣？${TOPIC_COUNT} 个主题各有 3 篇 primer 带你入门。</p>
+      <a class="learning-path-card" href="${url("/topics/")}">
+        <strong class="learning-path-title">按主题跳读</strong>
+        <p class="learning-path-copy">对特定方向感兴趣？${TOPIC_COUNT} 个主题各有 3 篇 primer 带你入门。</p>
       </a>
     </div>
   </section>`;
@@ -544,16 +544,16 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
     { label: "Part 5: 感知扩展", range: "Ch18–20", desc: "多模态、射频感知、听觉智能" },
     { label: "Part 6: 实战", range: "Ch21–22", desc: "数据集全景 + Task 实战指南" },
   ];
-  body += `<section style="margin:2rem 0 2.5rem">
-    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:1rem">${GUIDE_CHAPTER_COUNT} 章教程总览 ↘</h2>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.8rem">
-      ${guideParts.map(p => `<a href="${url("/guide/")}" style="padding:1rem;border:1px solid var(--paper-dark);border-radius:8px;text-decoration:none;color:inherit;transition:border-color 0.15s">
-        <span style="font-family:var(--font-mono);font-size:0.75rem;color:var(--ink-faint)">${p.range}</span>
-        <strong style="display:block;font-size:0.85rem;margin-top:0.3rem">${p.label}</strong>
-        <span style="font-size:0.82rem;color:var(--ink-soft)">${p.desc}</span>
+  body += `<section class="guide-overview">
+    <h2 class="home-section-heading">${GUIDE_CHAPTER_COUNT} 章教程总览 ↘</h2>
+    <div class="guide-part-grid">
+      ${guideParts.map(p => `<a class="guide-part-card" href="${url("/guide/")}">
+        <span class="guide-part-range">${p.range}</span>
+        <strong class="guide-part-title">${p.label}</strong>
+        <span class="guide-part-copy">${p.desc}</span>
       </a>`).join("")}
     </div>
-    <a href="${url("/guide/")}" style="display:inline-block;margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--coral);text-decoration:none">查看完整目录 →</a>
+    <a class="guide-overview-link" href="${url("/guide/")}">查看完整目录 →</a>
   </section>
   <hr/>`;
 
@@ -590,7 +590,7 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
       <button type="button" class="qf-chip" data-filter-type="status" data-value="deep-read">深度精读</button>
       <button type="button" class="qf-chip" data-filter-type="status" data-value="auto-summary">auto 摘要</button>
       <button type="button" class="qf-chip" data-filter-type="status" data-value="auto-summary-light">短摘要</button>
-      <span class="qf-count" id="eai-qf-count" style="margin-left:auto"></span>
+      <span class="qf-count" id="eai-qf-count"></span>
     </div>
   </aside>`;
 
@@ -602,7 +602,7 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
     body += `<section data-topic-section="${t.id}">
       <div class="topic-row">
         <span class="topic-roman">${t.roman}</span>
-        <h2>${t.label} <span style="color:var(--ink-faint);font-weight:400;font-size:0.7em;margin-left:0.5rem">${t.subtitle}</span></h2>
+        <h2>${t.label} <span class="topic-subtitle">${t.subtitle}</span></h2>
         <span class="count">${inTopic.length} paper${inTopic.length > 1 ? "s" : ""}</span>
       </div>
       ${hasTopicHero ? `<figure class="topic-hero">
@@ -626,9 +626,9 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
         <span class="status ${n.status === "stub" ? "stub" : ""}">${n.status === "stub" ? "stub" : n.status === "deep-read" ? "deep" : "auto"}</span>
         <span class="topic">${t.label}</span>
         <h3><a href="${url(`/papers/${n.slug}/`)}">${n.title}</a></h3>
-        <div style="display:flex;gap:0.4rem;align-items:center;flex-wrap:wrap">
+        <div class="paper-card-meta">
           <span class="badge ${badge.class}">${badge.label}</span>
-          <span style="font-family:var(--font-mono);font-size:0.7rem;color:var(--ink-faint);letter-spacing:0.06em">${n.readingTime}min · ${n.wordCount}字</span>
+          <span class="paper-card-reading-time">${n.readingTime}min · ${n.wordCount}字</span>
         </div>
         <p>${n.tldr || ""}</p>
       </article>`;
@@ -700,7 +700,7 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
 
   const navItems = PAPERS.map(p => {
     const isCurrent = p.slug === note.slug;
-    return `<li${isCurrent ? ' style="color:var(--coral)"' : ""}><a href="${url(`/papers/${p.slug}/`)}" style="text-decoration:none;color:${isCurrent ? "var(--coral)" : "var(--ink-soft)"}">${p.num}. ${p.title}</a></li>`;
+    return `<li class="paper-index-item${isCurrent ? " is-current" : ""}"><a class="paper-index-link" href="${url(`/papers/${p.slug}/`)}"${isCurrent ? ' aria-current="page"' : ""}>${p.num}. ${p.title}</a></li>`;
   }).join("");
 
   const outline = extractOutline(note.body);
@@ -735,7 +735,7 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
     </div>
     ${(note.tags && note.tags.length) ? `<div class="note-tags">${note.tags.map(t => `<a class="note-tag" href="${url(`/tags/${t}/`)}">#${t}</a>`).join("")}</div>` : ""}
     ${issuesMentioning.length ? `<div class="issue-badges">${issuesMentioning.map(i => `<a class="issue-badge" href="${url(`/issues/${i.slug}/`)}" title="${i.title}">Featured in Issue Nº ${i.number}</a>`).join("")}</div>` : ""}
-    ${guideChaptersMentioning.length ? `<div class="guide-badges" style="margin-top:0.75rem;display:flex;flex-wrap:wrap;gap:0.5rem">${guideChaptersMentioning.map(ch => `<a class="guide-badge" href="${url(`/guide/${ch.slug}/`)}" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.3rem 0.75rem;background:var(--paper-warm);border:1px solid var(--paper-dark);border-radius:4px;font-size:0.8rem;font-family:var(--font-mono);color:var(--ink-soft);text-decoration:none;transition:border-color 0.2s" title="${ch.title}"><span style="color:var(--coral);font-weight:600">Guide</span> Ch${String(ch.num).padStart(2, "0")} 中讲解</a>`).join("")}</div>` : ""}
+    ${guideChaptersMentioning.length ? `<div class="guide-badges">${guideChaptersMentioning.map(ch => `<a class="guide-badge" href="${url(`/guide/${ch.slug}/`)}" title="${ch.title}"><span class="guide-badge-label">Guide</span> Ch${String(ch.num).padStart(2, "0")} 中讲解</a>`).join("")}</div>` : ""}
 
     <div class="note-content" data-pagefind-body>
       ${html}
@@ -764,10 +764,10 @@ export function buildNotePage(note, backlinks = [], prev = null, next = null, is
 
     ${backlinksHtml}
 
-    <hr class="ornament" style="margin-top:4rem"/>
-    <details style="margin-top:1rem;font-family:var(--font-mono);font-size:0.85rem;color:var(--ink-mute)">
-      <summary style="cursor:pointer">All ${PAPERS.length} papers (full index)</summary>
-      <ol style="margin-top:1rem;font-family:var(--font-sans);font-size:0.95rem">${navItems}</ol>
+    <hr class="ornament note-index-separator"/>
+    <details class="paper-full-index">
+      <summary>All ${PAPERS.length} papers (full index)</summary>
+      <ol class="paper-full-index-list">${navItems}</ol>
     </details>
     </div>
     ${outlineHtml}

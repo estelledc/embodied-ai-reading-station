@@ -1284,15 +1284,14 @@
       if (!badge) {
         badge = document.createElement("span");
         badge.className = "guide-done-badge";
-        badge.style.cssText = "position:absolute;top:0.5rem;right:0.5rem;font-size:0.85rem;color:var(--coral);opacity:0;transition:opacity 0.2s";
         badge.textContent = "✓";
-        card.style.position = "relative";
+        card.classList.add("guide-progress-card");
         card.appendChild(badge);
       }
       function render() {
         const done = window.EAI_GUIDE.has(slug);
-        badge.style.opacity = done ? "1" : "0";
-        card.style.borderLeft = done ? "3px solid var(--coral)" : "";
+        badge.classList.toggle("is-visible", done);
+        card.classList.toggle("is-complete", done);
       }
       render();
       window.addEventListener("eai:guide-changed", render);

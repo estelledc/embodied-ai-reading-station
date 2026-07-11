@@ -6,10 +6,13 @@
 ## 怎么看 / 怎么演
 
 ```bash
-# 在 embodied-ai/ 项目根目录起 server
-python3 -m http.server -d . 8765
+# 从 embodied-ai/ 项目根目录构建站点
+cd site
+npm install
+npm run build
 
-# 浏览器访问
+# 用真实的 report-only CSP 响应头预览构建产物
+npm run serve:csp -- --port 8765
 open http://127.0.0.1:8765/deck/
 ```
 
@@ -56,9 +59,10 @@ open http://127.0.0.1:8765/deck/
 
 ## 编辑要点（如果你要改内容）
 
-- 所有内容都在 `index.html` 一个文件里，从 `<!-- 1. COVER -->` 到 `<!-- 14. END -->`，每个 `<section class="slide">` 是一页。
+- 内容在 `index.html`，从 `<!-- 1. COVER -->` 到 `<!-- 14. END -->`，每个 `<section class="slide">` 是一页。
 - 中英双语切换：`.bilingual` grid 两栏（中文左、English 右）。直接在 `<ul>` 里改文字。
-- 配色：改 `:root` 里 `--coral`（珊瑚红）`--paper`（暖纸）即可全局换色。
+- 样式与配色在 `deck.css`；改 `:root` 里的 `--coral`（珊瑚红）和 `--paper`（暖纸）即可全局换色。
+- 翻页、缩放和 overview 交互在 `deck.js`。
 - 加图：放在 `deck/` 目录下，`<img src="filename.jpg">` 引用。
 
 ## 风格来源

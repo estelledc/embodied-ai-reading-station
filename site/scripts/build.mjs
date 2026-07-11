@@ -278,7 +278,6 @@ function build() {
 <title>Redirecting to /glossary/</title>
 <link rel="canonical" href="${url("/glossary/")}">
 <meta http-equiv="refresh" content="0; url=${url("/glossary/")}">
-<script>location.replace(${JSON.stringify(url("/glossary/"))});</script>
 </head><body>Redirecting to <a href="${url("/glossary/")}">/glossary/</a>…</body></html>
 `;
     write(path.join(DIST, "learn", "glossary", "index.html"), glossaryRedirect);

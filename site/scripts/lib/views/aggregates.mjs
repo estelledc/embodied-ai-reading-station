@@ -5,7 +5,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { SITE, NOTES_DIR, url } from "../config.mjs";
 import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT, eraComparator } from "../content.mjs";
-import { page, pageHeroHtml } from "../layout.mjs";
+import { page, pageHeroHtml, safeJsonForScript } from "../layout.mjs";
 
 // --- topics page ------------------------------------------------------------
 export function buildTopics(notes) {
@@ -609,7 +609,7 @@ export function buildDiscover(notes) {
     year: n.year || null,
   }));
 
-  const body = `<main class="shell">
+  const body = `<main class="shell" data-eai-page-behavior="discover">
     <span class="eyebrow">Discover · 漫游模式</span>
     <h1>不知道读什么？让<em>站点替你挑</em>。</h1>
     <p style="color:var(--ink-soft);font-size:1.1rem;line-height:1.55;max-width:46ch">
@@ -641,69 +641,15 @@ export function buildDiscover(notes) {
       <div class="ds-card" data-discover-mode="newtopic"></div>
     </section>
 
-    <script id="eai-discover-data" type="application/json">${JSON.stringify(dataPapers)}</script>
-    <script>
-    (function(){
-      var papers = JSON.parse(document.getElementById('eai-discover-data').textContent);
-      var read = new Set();
-      try { read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]')); } catch(e) {}
-
-      function cardHtml(p) {
-        return '<a class="ds-link" href="' + p.url + '">' +
-          '<span class="ds-meta">№ ' + String(p.num).padStart(2,'0') + ' · ' + p.topic + ' · ' + (p.year||'') + '</span>' +
-          '<h3 class="ds-title">' + p.title.split(':')[0] + '</h3>' +
-          (p.tldr ? '<p class="ds-tldr">' + p.tldr + '…</p>' : '') +
-          '</a>';
-      }
-
-      // ① today
-      var today = new Date();
-      var ymd = today.getFullYear() * 10000 + (today.getMonth()+1) * 100 + today.getDate();
-      var h = ((ymd * 9301) + 49297) % 233280;
-      var pToday = papers[h % papers.length];
-      var todayEl = document.querySelector('[data-discover-mode="today"]');
-      if (todayEl) todayEl.innerHTML = cardHtml(pToday);
-
-      // ② shuffle 5
-      var pool = papers.slice();
-      pool.sort(function(){ return Math.random() - 0.5; });
-      var shuf = pool.slice(0, 5);
-      var shufEl = document.querySelector('[data-discover-mode="shuffle"]');
-      if (shufEl) shufEl.innerHTML = shuf.map(cardHtml).join('');
-
-      // ③ unread era：找用户读得最少的 era
-      var eraCount = { founder: 0, classic: 0, frontier: 0 };
-      for (var i = 0; i < papers.length; i++) {
-        if (read.has(papers[i].slug)) eraCount[papers[i].era]++;
-      }
-      var leastEra = Object.keys(eraCount).sort(function(a,b){ return eraCount[a] - eraCount[b]; })[0];
-      var unreadInEra = papers.filter(function(p){ return p.era === leastEra && !read.has(p.slug); });
-      if (unreadInEra.length) {
-        var pEra = unreadInEra[Math.floor(Math.random() * unreadInEra.length)];
-        var eraEl = document.querySelector('[data-discover-mode="newera"]');
-        if (eraEl) eraEl.innerHTML = cardHtml(pEra);
-      }
-
-      // ④ unread topic：找用户没读过的主题
-      var topicSeen = {};
-      for (var i = 0; i < papers.length; i++) {
-        if (read.has(papers[i].slug)) topicSeen[papers[i].topic] = true;
-      }
-      var allTopics = {};
-      papers.forEach(function(p){ allTopics[p.topic] = true; });
-      var unseenTopics = Object.keys(allTopics).filter(function(t){ return !topicSeen[t]; });
-      var pickTopic = unseenTopics.length ? unseenTopics[Math.floor(Math.random() * unseenTopics.length)] : Object.keys(allTopics)[0];
-      var inTopic = papers.filter(function(p){ return p.topic === pickTopic && p.era === 'founder'; });
-      if (!inTopic.length) inTopic = papers.filter(function(p){ return p.topic === pickTopic; });
-      if (inTopic.length) {
-        var pTopic = inTopic[0];
-        var topEl = document.querySelector('[data-discover-mode="newtopic"]');
-        if (topEl) topEl.innerHTML = cardHtml(pTopic);
-      }
-    })();
-    </script>
+    <script id="eai-discover-data" type="application/json">${safeJsonForScript(dataPapers)}</script>
   </main>`;
-  return page({ title: "Discover — Embodied AI: Zero to One", body, active: "discover", canonicalPath: "/discover/" });
+  return page({
+    title: "Discover — Embodied AI: Zero to One",
+    body,
+    active: "discover",
+    canonicalPath: "/discover/",
+    extraScripts: ["/page-behaviors.js"],
+  });
 }
 
 // --- quality dashboard (作者用，不放主导航) ---------------------------------
@@ -1188,7 +1134,7 @@ export function buildGraph(notes) {
       </aside>
     </div>
   </main>
-  <script id="graph-data" type="application/json">${JSON.stringify(data)}</script>`;
+  <script id="graph-data" type="application/json">${safeJsonForScript(data)}</script>`;
   return page({
     title: "Graph — Embodied AI: Zero to One",
     body,

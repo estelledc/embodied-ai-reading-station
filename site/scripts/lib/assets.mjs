@@ -7,6 +7,10 @@ import { SITE, DIST, BASE, BUILD_DATE, PAPERS_DIR } from "./config.mjs";
 import { ROOT } from "./config.mjs";
 import { loadCanonicalContentCommit } from "./data-api.mjs";
 import { DATA_API_CONTRACT } from "./provenance-schema.mjs";
+import {
+  CSP_STYLE_ATTRIBUTE_BUDGET,
+  createCspReportOnlyManifest,
+} from "./csp.mjs";
 
 const SERVICE_WORKER_SENTINELS = Object.freeze({
   BUILD_ID: "__EAI_BUILD_ID__",
@@ -189,9 +193,18 @@ export function copyStatic() {
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
   copy(path.join(SITE, "src", "keyboard.js"), path.join(DIST, "keyboard.js"));
   copy(path.join(SITE, "src", "theme-toggle.js"), path.join(DIST, "theme-toggle.js"));
+  copy(path.join(SITE, "src", "page-behaviors.js"), path.join(DIST, "page-behaviors.js"));
+  copy(path.join(SITE, "src", "math-render.js"), path.join(DIST, "math-render.js"));
   copy(path.join(SITE, "src", "favicon.svg"), path.join(DIST, "favicon.svg"));
   copy(path.join(SITE, "src", "link-preview.js"), path.join(DIST, "link-preview.js"));
   copy(path.join(SITE, "src", "svg-export.js"), path.join(DIST, "svg-export.js"));
+  write(
+    path.join(DIST, "csp-report-only.json"),
+    `${JSON.stringify(createCspReportOnlyManifest({
+      styleBudget: CSP_STYLE_ATTRIBUTE_BUDGET,
+      base: BASE,
+    }), null, 2)}\n`,
+  );
   // site.webmanifest: 按部署 BASE 注入 start_url 等路径
   {
     const manifest = fs.readFileSync(path.join(SITE, "src", "site.webmanifest"), "utf8")

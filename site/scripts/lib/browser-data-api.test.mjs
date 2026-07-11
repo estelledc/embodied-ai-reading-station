@@ -167,55 +167,23 @@ test("reportError exposes a stable event and console diagnostic to consumers", (
   assert.match(String(errors[0][0]), /link-preview.*DATA_API_DATA/);
 });
 
-test("404 suggestions wait for and reuse the shared v2 adapter", async () => {
+test("404 suggestions load external behavior after the shared v2 adapter", () => {
   const html = build404([]);
+  const behaviorSource = fs.readFileSync(path.join(path.dirname(SOURCE_PATH), "page-behaviors.js"), "utf8");
 
-  assert.match(html, /DOMContentLoaded/);
-  assert.match(html, /api\.loadPapers\(\{ base: base \}\)/);
-  assert.match(html, /reportError\(error, \{ consumer: '404-suggestions' \}\)/);
+  assert.match(html, /data-eai-page-behavior="not-found"/);
+  assert.match(html, /<script src="[^"]*\/page-behaviors\.js" defer><\/script>/);
+  assert.match(behaviorSource, /api\.loadPapers\(\{ base \}\)/);
+  assert.match(behaviorSource, /api\.reportError\(error, \{ consumer: "404-suggestions" \}\)/);
   assert.doesNotMatch(html, /fetch\([^)]*\/data\/papers\.json/);
-  assert.doesNotMatch(html, /list\.innerHTML/);
-  assert.match(html, /link\.textContent/);
+  assert.doesNotMatch(behaviorSource, /list\.innerHTML/);
+  assert.match(behaviorSource, /link\.textContent/);
 
   const adapter = html.indexOf("data-api.js");
+  const behavior = html.indexOf("page-behaviors.js");
   assert.ok(adapter >= 0);
+  assert.ok(behavior >= 0);
+  assert.ok(adapter < behavior);
   assert.ok(adapter < html.indexOf("reading-progress.js"));
   assert.ok(adapter < html.indexOf("link-preview.js"));
-
-  const inline = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)]
-    .map(match => match[1])
-    .find(source => source.includes("init404Suggestions"));
-  assert.ok(inline);
-  let onReady = null;
-  const bases = [];
-  const document = {
-    readyState: "loading",
-    addEventListener(type, handler) {
-      if (type === "DOMContentLoaded") onReady = handler;
-    },
-    querySelector() {
-      return { getAttribute: () => "/embodied-ai-reading-station/styles.css" };
-    },
-  };
-  vm.runInNewContext(inline, {
-    document,
-    location: { pathname: "/embodied-ai-reading-station/missing-paper/" },
-    window: {
-      EAI_DATA_API: {
-        loadPapers({ base }) { bases.push(base); return Promise.resolve([]); },
-        reportError() { throw new Error("valid response must not report an error"); },
-      },
-    },
-    console,
-    CustomEvent: class {},
-    Error,
-    Number,
-    Object,
-    Promise,
-  });
-  assert.deepEqual(bases, []);
-  assert.equal(typeof onReady, "function");
-  onReady();
-  await new Promise(resolve => setImmediate(resolve));
-  assert.deepEqual(bases, ["/embodied-ai-reading-station"]);
 });
