@@ -18,6 +18,10 @@ import {
   writeJsonAtomically,
 } from "./provenance.mjs";
 import { validateProvenanceDocument } from "./provenance-schema.mjs";
+import {
+  formatProvenanceRepositoryErrors,
+  validateProvenanceRepositoryFile,
+} from "./provenance-validator.mjs";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = path.resolve(HERE, "../../..");
@@ -323,4 +327,16 @@ test("production CLI --check exercises the tracked entry point without writing",
   });
   assert.match(output, /papers\/provenance\.json is current \(156 notes\)/);
   assert.deepEqual(fs.readFileSync(target), before);
+});
+
+test("tracked generator output passes the independent repository gate", () => {
+  const result = validateProvenanceRepositoryFile({ root: REPO_ROOT, expectedNoteCount: 156 });
+  assert.equal(result.ok, true, formatProvenanceRepositoryErrors(result.errors));
+  assert.deepEqual(result.stats, {
+    notes: 156,
+    local_sources: 46,
+    remote_sources: 110,
+    generated_assets: 0,
+    checked_paths: 202,
+  });
 });

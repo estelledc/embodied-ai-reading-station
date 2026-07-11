@@ -7,9 +7,10 @@ import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
 import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
-import { validateProvenanceDocument } from "./lib/provenance-schema.mjs";
-import { validateSourceReference } from "./lib/source-reference.mjs";
-import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
+import {
+  formatProvenanceRepositoryErrors,
+  validateProvenanceRepositoryFile,
+} from "./lib/provenance-validator.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
@@ -33,6 +34,27 @@ function check(name, fn) {
     fail++;
   }
 }
+
+// Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
+// import 时发现并读取全部笔记，不能让 symlink/坏路径绕过独立门禁。
+console.log("\n=== Source path integrity ===");
+const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 156 });
+if (!provenance.ok) {
+  const rendered = formatProvenanceRepositoryErrors(provenance.errors);
+  console.log(rendered.split("\n").map((line) => `  ✗ ${line}`).join("\n"));
+}
+const phaseResult = (phase) => provenance.phases[phase].ok
+  || `${provenance.phases[phase].errors.length} provenance validation error(s)`;
+check("papers/provenance.json exact schema v2", () => phaseResult("schema"));
+check("当前 note/source/asset 与 manifest 一致", () => phaseResult("current"));
+check("content_commit snapshot 三方字节一致", () => phaseResult("snapshot"));
+if (!provenance.ok) {
+  console.log("\n=== Summary ===");
+  console.log(`  ${pass} passed, ${fail} failed`);
+  process.exit(1);
+}
+
+const { SYLLABUS_WEEKS } = await import("./lib/views/aggregates.mjs");
 
 console.log("\n=== Static pages ===");
 const requiredPages = [
@@ -600,56 +622,6 @@ console.log("\n=== Status field validity ===");
     }
   }
   check("status 字段值全部合法", () => invalidStatus === 0 || `${invalidStatus} 篇 status 值非法`);
-}
-
-console.log("\n=== Source path integrity ===");
-{
-  const provenancePath = path.join(ROOT, "papers", "provenance.json");
-  const provenance = fs.existsSync(provenancePath)
-    ? JSON.parse(fs.readFileSync(provenancePath, "utf8"))
-    : null;
-  const provenanceShape = provenance === null
-    ? { ok: false, errors: [{ path: "$", message: "manifest is missing" }] }
-    : validateProvenanceDocument(provenance);
-  const entries = provenanceShape.ok
-    ? provenance.notes
-        .filter((note) => note.source.kind === "local")
-        .map((note) => ({
-          slug: note.slug,
-          path: note.source.path,
-          sha256: note.source.sha256,
-          artifact_type: note.source.artifact_type,
-        }))
-    : null;
-  const localSources = new Set();
-  let sourceBroken = 0;
-  check("papers/provenance.json schema v2", () => provenanceShape.ok || provenanceShape.errors
-    .map((error) => `${error.path}: ${error.message}`)
-    .join("; "));
-  for (const f of noteFiles) {
-    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
-    const { data } = matter(raw);
-    const src = String(data["来源"] || data.source || "");
-    const slug = f.replace(/\.md$/, "");
-    const result = validateSourceReference({
-      root: ROOT,
-      noteSlug: slug,
-      source: src,
-      manifest: src.startsWith("papers/") && Array.isArray(entries) ? entries : null,
-    });
-    if (src.startsWith("papers/")) localSources.add(src);
-    if (!result.ok) {
-      sourceBroken++;
-      console.log(`  ✗ ${f}: 来源 ${src || "<empty>"} — ${result.reason}`);
-    }
-  }
-  const manifestSources = new Set(Array.isArray(entries) ? entries.map((entry) => entry.path) : []);
-  const manifestDrift = [
-    ...[...localSources].filter((source) => !manifestSources.has(source)).map((source) => `manifest missing ${source}`),
-    ...[...manifestSources].filter((source) => !localSources.has(source)).map((source) => `manifest orphan ${source}`),
-  ];
-  check("全部来源使用安全 HTTPS 或精确本地文件+SHA-256", () => sourceBroken === 0 || `${sourceBroken} 篇来源无效`);
-  check("本地来源与 provenance manifest 双向一致", () => manifestDrift.length === 0 || manifestDrift.join("; "));
 }
 
 console.log("\n=== Figure coverage (deep-read) ===");
