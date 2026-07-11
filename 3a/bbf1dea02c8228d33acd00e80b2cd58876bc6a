@@ -1,0 +1,29 @@
+CHANGELOG.md
+  s_ea5acf87c295a8::t_9df75e444652f4 13-15
+PLAN-1.3.md
+  s_ea5acf87c295a8::t_c74a9861d756e0 1,3,5,8,15-27,32-35,39,41,53,64,66,68-72,74,76,78-109,113-114,142,144,151
+ROADMAP.md
+  s_ea5acf87c295a8::t_b5935a066915fc 3,26,31-39,48,50-52,60-61,75,94-95,117
+docs/batch-0-v1.2-release.md
+  s_ea5acf87c295a8::t_a78e3b28f263f3 6-7,221,223,228,230,240-241,249
+docs/v1.2-healthcheck-roadmap.md
+  s_ea5acf87c295a8::t_b2f5cdefe1015e 1,9,22,24,26,49,51,60,62,79,81,83,85-90,94,115,117,119-125,127
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "3abbf1dea02c8228d33acd00e80b2cd58876bc6a",
+  "prompts": {},
+  "sessions": {
+    "s_ea5acf87c295a8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_ea5acf87c295a8",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
