@@ -1,0 +1,29 @@
+CHANGELOG.md
+  s_83e2f56a09657a::t_ee17bcdaac6a10 10
+site/scripts/check.mjs
+  s_83e2f56a09657a::t_0835941220e27c 9-12,37-57
+site/scripts/lib/provenance-validator.mjs
+  s_83e2f56a09657a::t_9da79c2affabe1 1-962
+site/scripts/lib/provenance-validator.test.mjs
+  s_83e2f56a09657a::t_975e9a294ec79f 1-561
+site/scripts/lib/provenance.test.mjs
+  s_83e2f56a09657a::t_e8d4d4c5576536 21-24,331-342
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "ce8b282fb5ea8992bdad66c75fc913964a9c8b84",
+  "prompts": {},
+  "sessions": {
+    "s_83e2f56a09657a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_83e2f56a09657a",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
