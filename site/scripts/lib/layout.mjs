@@ -23,7 +23,7 @@ export function masthead(active) {
   // 主导航：5 项关键入口（Guide 首位 = 教学站主轴）
   const primaryItems = [
     { href: url("/guide/"), label: "Guide", id: "guide" },
-    { href: url("/"), label: "Papers", id: "index" },
+    { href: url("/papers/"), label: "Papers", id: "papers" },
     { href: url("/topics/"), label: "Topics", id: "topics" },
     { href: url("/learn/"), label: "Learn", id: "learn" },
     { href: url("/issues/"), label: "Issues", id: "issues" },
@@ -108,7 +108,8 @@ export function masthead(active) {
 
 // active page id → 3 个相关视图（不含自身）
 const RELATED_VIEWS_MAP = {
-  index: ["topics", "timeline", "issues"],
+  index: ["guide", "compare", "issues"],
+  papers: ["topics", "timeline", "compare"],
   topics: ["compare", "graph", "heatmap"],
   guide: ["learn", "topics", "issues"],
   timeline: ["compare", "stats", "venues"],
@@ -125,7 +126,8 @@ const RELATED_VIEWS_MAP = {
   deck: ["learn", "issues", "topics"],
 };
 export const VIEW_DESC = {
-  index: { label: "Papers 论文库", desc: `${PAPER_COUNT} 篇论文笔记卡片，按主题分组` },
+  index: { label: "Home 学习首页", desc: "选路径、做对比、形成研究简报" },
+  papers: { label: "Papers 论文库", desc: `${PAPER_COUNT} 篇论文笔记，按主题与状态筛选` },
   topics: { label: "Topics 主题", desc: `${TOPIC_COUNT} 个主题深度页 + primer 入门 3 篇` },
   guide: { label: "Guide 导读", desc: `${GUIDE_CHAPTER_COUNT} 章零基础具身智能系统导读` },
   timeline: { label: "Timeline", desc: "2011 → 2025 演化时间线" },
@@ -172,6 +174,7 @@ export function footerHtml(active) {
       </div>
       <div class="footer-col">
         <h4>视图</h4>
+        <a href="${url("/papers/")}">Papers</a>
         <a href="${url("/topics/")}">Topics</a>
         <a href="${url("/timeline/")}">Timeline</a>
         <a href="${url("/compare/")}">Compare</a>
@@ -259,7 +262,7 @@ export function page({
     "description": _ogDesc,
     "inLanguage": "zh-CN",
     "isPartOf": { "@id": `${SITE_URL}/#website` },
-    "author": { "@id": `${SITE_ORIGIN}/#jason` },
+    "author": { "@id": `${SITE_ORIGIN}/#person` },
   };
   const jsonLdHtml = _jsonLd ? JSON.stringify(_jsonLd).replace(/</g, "\\u003c") : "";
   const escAttr = s => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

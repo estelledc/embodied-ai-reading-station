@@ -63,6 +63,6 @@ open http://127.0.0.1:8765/deck/
 
 ## 风格来源
 
-- 设计系统：[atelier-zero](../../open-design/design-systems/atelier-zero/DESIGN.md)
-- 工艺规则：[craft/typography-hierarchy-editorial](../../open-design/craft/typography-hierarchy-editorial.md)
-- 模板参考：[design-templates/kami-deck](../../open-design/design-templates/kami-deck/) — 借鉴了 nav 模型（←/→ · wheel · swipe · ESC）和 chrome 条
+- 设计系统：[atelier-zero](https://github.com/open-design/open-design/tree/main/design-systems/atelier-zero)
+- 工艺规则：[typography-hierarchy-editorial](https://github.com/open-design/open-design/tree/main/craft/typography-hierarchy-editorial)
+- 模板参考：[kami-deck](https://github.com/open-design/open-design/tree/main/design-templates/kami-deck) — 借鉴了 nav 模型（←/→ · wheel · swipe · ESC）和 chrome 条

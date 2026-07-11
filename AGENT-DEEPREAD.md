@@ -10,7 +10,7 @@
 ## 项目路径
 
 ```
-/Users/jason/intern-journal/explorations/research/embodied-ai
+cd /path/to/embodied-ai-reading-station
 ```
 
 ## 单篇流程

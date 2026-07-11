@@ -90,7 +90,8 @@ export function buildSiteMap(notes, issuePages, learnPages) {
     {
       title: "入口",
       items: [
-        { url: "/", label: "Index", desc: `${PAPER_COUNT} 张论文卡 + 主题分组 + 快筛` },
+        { url: "/", label: "Home", desc: "选路径、做对比、形成研究简报" },
+        { url: "/papers/", label: "Papers", desc: `${PAPER_COUNT} 篇论文笔记 + 主题分组 + 快筛` },
         { url: "/learn/path/", label: "30+5 学习路径", desc: "30 天核心 + 5 天可选任务扩展" },
         { url: "/learn/faq/", label: "FAQ", desc: "新人 12 题" },
         { url: "/lists/", label: "Reading lists", desc: "5 套主题精选包" },
@@ -526,7 +527,7 @@ export function buildAbout(notes = []) {
       <p>整站作为参考资料引用：</p>
       <pre style="background:var(--bone);border:1px solid var(--paper-dark);padding:0.8rem 1rem;font-family:var(--font-mono);font-size:0.78rem;overflow-x:auto">@online{embodied_ai_reading_station_2026,
   title       = {Embodied AI: Zero to One},
-  author      = {Zhou, Jason},
+  author      = {Xun, Jason},
   year        = {2026},
   howpublished = {\\url{${SITE_URL}/}},
   note        = {${PAPER_COUNT} readable Chinese notes on embodied AI papers}

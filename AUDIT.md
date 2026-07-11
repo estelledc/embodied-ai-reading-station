@@ -84,7 +84,7 @@
 
 | 文件 | 行号 | 问题 | 修复 |
 |------|------|------|------|
-| `DEPLOY.md` | L25, L58 | `~/intern-journal/explorations/embodied-ai-research` → 实际路径 `~/intern-journal/explorations/research/embodied-ai` | 替换路径 |
+| `DEPLOY.md` | L25, L58 | 文档写死本机工作区 → 改为 `/path/to/embodied-ai-reading-station` 占位路径 | 替换路径 |
 | `deck/README.md` | L9 | `# 在 embodied-ai-research/ 目录起 server` → 旧目录名 | 替换路径 |
 | `README.md` | L157 | 写 "49 项" 检查，实际 check.mjs 运行 63 项 | 更新数字 |
 

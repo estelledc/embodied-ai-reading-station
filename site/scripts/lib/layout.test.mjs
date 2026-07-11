@@ -22,6 +22,8 @@ test("page emits route-specific canonical, social metadata and WebPage JSON-LD",
   assert.match(html, /<meta name="twitter:image:alt" content="VLA topic map illustration">/);
   assert.match(html, new RegExp(`"@id":"${canonical}"`));
   assert.match(html, /"@type":"WebPage"/);
+  assert.match(html, /"author":\{"@id":"https:\/\/estelledc\.github\.io\/#person"\}/);
+  assert.doesNotMatch(html, /#jason/);
 });
 
 test("custom social images do not claim the default hero dimensions", () => {

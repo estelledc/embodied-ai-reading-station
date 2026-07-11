@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=1280,initial-scale=1">
 <title>LLaVA: Visual Instruction Tuning — 论文精读汇报</title>
+<meta name="author" content="Jason Xun">
+<meta name="description" content="LLaVA Visual Instruction Tuning 论文精读演示：从视觉 token 接入到多模态指令微调。">
+<link rel="canonical" href="https://estelledc.github.io/embodied-ai-reading-station/deck/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","@id":"https://estelledc.github.io/#person","name":"Jason Xun","url":"https://estelledc.github.io/","sameAs":["https://github.com/estelledc"]}
+</script>
 <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -176,6 +182,18 @@ h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 5
   position: fixed; bottom: 18px; right: 24px; font-family: var(--font-mono);
   font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; z-index: 50;
 }
+.portfolio-exit {
+  position: fixed; top: 12px; right: 16px; z-index: 100;
+  display: flex; gap: 4px; padding: 4px;
+  background: rgba(21, 20, 15, 0.92); border: 1px solid rgba(239, 231, 210, 0.32);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+}
+.portfolio-exit a {
+  min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px;
+  color: var(--paper); text-decoration: none;
+}
+.portfolio-exit a:hover,
+.portfolio-exit a:focus-visible { color: var(--ink); background: var(--mustard); outline: none; }
 
 /* overview grid */
 .deck.overview .deck-track { display: grid; grid-template-columns: repeat(4, 1fr); transform: none !important; gap: 20px; padding: 40px; width: 100%; height: 100vh; }
@@ -191,11 +209,18 @@ h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 5
   body { display: block; }
   .deck, .deck-track { width: auto !important; height: auto !important; transform: none !important; display: block !important; }
   .slide { page-break-after: always; transform: none !important; box-shadow: none; }
-  .nav-dots, .help { display: none; }
+  .nav-dots, .help, .portfolio-exit { display: none; }
 }
 </style>
 </head>
 <body>
+
+<nav class="portfolio-exit" aria-label="Jason 作品集导航">
+  <a href="https://estelledc.github.io/">Hub</a>
+  <a href="https://estelledc.github.io/about/">About</a>
+  <a href="https://estelledc.github.io/resume/">Résumé</a>
+  <a href="https://github.com/estelledc/embodied-ai-reading-station">GitHub</a>
+</nav>
 
 <div class="deck" id="deck">
 <div class="deck-track" id="track">
@@ -490,7 +515,7 @@ h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 5
     <div class="end-mega">fin.</div>
     <p style="font-family: var(--font-serif); font-style: italic; font-weight: 500; font-size: 32px; color: var(--paper); margin-top: 30px;">Questions, doubts, redirections — welcome.</p>
     <p style="font-size: 18px; color: var(--paper-dark); margin-top: 8px;">欢迎追问、纠错、改方向。</p>
-    <div class="end-colophon">Embodied AI Reading Station · 2026 · Jason Zhang<br>presentation deck typeset in Inter Tight + Playfair Display + JetBrains Mono</div>
+    <div class="end-colophon">Embodied AI Reading Station · 2026 · Jason Xun<br>presentation deck typeset in Inter Tight + Playfair Display + JetBrains Mono</div>
   </div>
   <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · fin.</span><span class="pg">14 / 14</span></div>
 </section>

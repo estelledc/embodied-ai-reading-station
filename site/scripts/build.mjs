@@ -8,7 +8,7 @@ import { SITE, ROOT, DIST, url } from "./lib/config.mjs";
 import { ensure, copyDir, read, write, copyStatic, copyAssets } from "./lib/assets.mjs";
 import { stripFirstH1 } from "./lib/markdown.mjs";
 import { TOPIC_ORDER, PAPERS, inferTags, discoverGuide, loadNotes, eraComparator } from "./lib/content.mjs";
-import { buildIndex, buildNotePage } from "./lib/views/papers.mjs";
+import { buildIndex, buildNotePage, buildPapersIndex } from "./lib/views/papers.mjs";
 import { buildGuideIndex, buildGuidePage } from "./lib/views/guide.mjs";
 import {
   buildTopics, buildTopicLanding, buildGlossary, buildTagsIndex, buildTagPage,
@@ -84,6 +84,7 @@ function build() {
 
   // index — 先用 null（最新 issue 还没加载），稍后加载完 issue 再覆盖
   write(path.join(DIST, "index.html"), buildIndex(notes));
+  write(path.join(DIST, "papers", "index.html"), buildPapersIndex(notes));
 
   // topics
   write(path.join(DIST, "topics", "index.html"), buildTopics(notes));

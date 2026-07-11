@@ -36,6 +36,7 @@ function check(name, fn) {
 console.log("\n=== Static pages ===");
 const requiredPages = [
   "index.html",
+  "papers/index.html",
   "topics/index.html",
   "compare/index.html",
   "timeline/index.html",
@@ -189,33 +190,61 @@ check(`5 sample pages 全有 OG/Twitter/canonical meta`, () => (metaMissing === 
 console.log("\n=== Public showcase contract ===");
 {
   const home = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  const papers = fs.readFileSync(path.join(DIST, "papers", "index.html"), "utf8");
+  const glossary = fs.readFileSync(path.join(DIST, "glossary", "index.html"), "utf8");
+  const deck = fs.readFileSync(path.join(DIST, "deck", "index.html"), "utf8");
+  const feed = fs.readFileSync(path.join(DIST, "feed.xml"), "utf8");
   const notFound = fs.readFileSync(path.join(DIST, "404.html"), "utf8");
   const hubOrigin = new URL(SITE_URL).origin;
 
-  check("首页包含问题/角色/系统/证据/局限五段项目证明", () => (
-    ["问题 / Problem", "个人角色 / Role", "系统 / System", "证据 / Evidence", "局限 / Limitations"]
-      .every((label) => home.includes(label))
-  ) || "project proof narrative incomplete");
-  check("首页含英文摘要与可审计质量边界", () => (
-    home.includes("An editorial learning system")
+  check("首页包含三步学习旅程与三件代表成果", () => (
+    ["选路径", "做对比", "形成简报"].every((label) => home.includes(label))
+    && (home.match(/jx-proof-rail__label/g) || []).length === 3
+    && home.includes("/papers/")
+  ) || "learning journey or representative outcomes incomplete");
+  check("首页含 owner-led 英文摘要与可审计质量边界", () => (
+    home.includes("An owner-led, independently maintained learning product")
     && home.includes("结构门禁不等于逐页人工复核")
     && home.includes("46 篇保留本地解析文本与 SHA-256 清单")
     && home.includes("110 篇引用 HTTPS 原文")
   ) || "English summary or limitations missing");
+  check("首页不渲染全量论文墙，独立 Papers 页保留完整筛选库", () => (
+    !home.includes('<article class="paper-card"')
+    && !home.includes('id="eai-quick-filter"')
+    && (papers.match(/<article class="paper-card"/g) || []).length === noteFiles.length
+    && papers.includes('id="eai-quick-filter"')
+    && papers.includes('id="paper-library"')
+  ) || "home/library separation incomplete");
   check("全站 chrome 暴露 Hub/About/Résumé/GitHub", () => (
     home.includes(`href="${hubOrigin}/"`)
     && home.includes(`href="${hubOrigin}/about/"`)
     && home.includes(`href="${hubOrigin}/resume/"`)
     && home.includes("https://github.com/estelledc/embodied-ai-reading-station")
   ) || "portfolio navigation incomplete");
+  const portfolioDestinations = [
+    `${hubOrigin}/`,
+    `${hubOrigin}/about/`,
+    `${hubOrigin}/resume/`,
+    "https://github.com/estelledc/embodied-ai-reading-station",
+  ];
+  for (const [label, html] of [["Glossary", glossary], ["Deck", deck]]) {
+    check(`${label} 暴露一致的 Hub/About/Résumé/GitHub 出口`, () => (
+      portfolioDestinations.every((destination) => html.includes(`href="${destination}"`))
+    ) || `${label} portfolio navigation incomplete`);
+  }
   check("首页 JSON-LD 标识 Person/WebSite/LearningResource", () => (
     home.includes('"@type":"Person"')
     && home.includes('"@type":"WebSite"')
     && home.includes('"@type":"LearningResource"')
   ) || "homepage structured data incomplete");
+  check("Atom feed 使用规范作者名", () => (
+    feed.includes("<author><name>Jason Xun</name></author>")
+    && !feed.includes("<author><name>Jason</name></author>")
+  ) || "Atom author identity is stale");
 
   const canonicalSamples = [
     ["index.html", "/"],
+    ["papers/index.html", "/papers/"],
     ["topics/index.html", "/topics/"],
     ["topics/vlm-foundation/index.html", "/topics/vlm-foundation/"],
     ["guide/index.html", "/guide/"],
@@ -277,6 +306,18 @@ function walkHtml(dir) {
   }
 }
 walkHtml(DIST);
+
+const legacyIdentity = [];
+for (const file of htmlFiles) {
+  const html = fs.readFileSync(file, "utf8");
+  const legacyMarker = html.match(/#jason\b|Jason (?:Zhou|Zhang)|"name"\s*:\s*"Jason"(?=\s*[,}])/);
+  if (legacyMarker) {
+    legacyIdentity.push(`${path.relative(DIST, file)}: ${legacyMarker[0]}`);
+  }
+}
+check(`${htmlFiles.length} 个构建 HTML 不含旧 identity`, () => (
+  legacyIdentity.length === 0 || legacyIdentity.slice(0, 20).join("; ")
+));
 
 const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];
@@ -375,13 +416,15 @@ for (const f of top5) {
   console.log(`    ${kb}KB  ${rel}`);
 }
 
-// HTML 单页超过 350KB 警告（index 因 156 卡片必然较重）
+// HTML 单页超过 350KB 警告（全量 Papers 页也应留在合理范围内）
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
-// 性能预算（1.0.0 固化当前健康值，防劣化）
+// 学习首页只保留路径与代表成果；全量库有独立预算。
 const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
-check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 100KB`, () => indexSize < 100 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
+check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 250KB`, () => papersIndexSize < 250 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
 
 const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
 check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);

@@ -20,7 +20,7 @@
 - **Evidence**：22 章教程、156 篇笔记、11 个主题；公开 [质量页](https://estelledc.github.io/embodied-ai-reading-station/quality/)、[数据接口](https://estelledc.github.io/embodied-ai-reading-station/data/index.json) 和 [Actions 构建记录](https://github.com/estelledc/embodied-ai-reading-station/actions)。
 - **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明。
 
-> An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief. It is a solo-built, evidence-aware product—not a claim that every note has received line-by-line human review.
+> An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief. It is an owner-led, independently maintained, evidence-aware product—not a claim that every note has received line-by-line human review.
 
 ---
 
@@ -109,7 +109,7 @@ curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    
 ```bibtex
 @misc{eai_rt_1_2022,
   title  = {RT-1: Robotics Transformer for Real-World Control at Scale},
-  author = {Jason},
+  author = {Jason Xun},
   year   = {2022},
   note   = {Embodied AI: Zero to One — readable note},
   url    = {https://estelledc.github.io/embodied-ai-reading-station/papers/rt-1/}
