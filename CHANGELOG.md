@@ -16,6 +16,7 @@
 - `EAI13-T006`：Service Worker 缓存命名绑定部署 scope、构建 commit、Data API schema major 与内容快照，页面/图片/data 分别限制为 48/96/2 条并维护最近使用顺序；核心壳以 `cache: reload` 原子预缓存，缺项时保留旧 worker。运行时 Cache Storage 故障不再吞掉在线响应；新版本只进入 waiting，用户点击“立即更新”后才接管。root/repo 浏览器矩阵已验证首次安装、A→B 受控升级、缺核心资源回退、已访问论文与图片离线恢复，以及未访问页的 scope 内 503 fallback。
 - `EAI13-T008`：More 导航从 hover/focus CSS 隐式展开改为原生 button disclosure；`aria-expanded`、`hidden` 与视觉状态同步，支持 Escape 关闭并恢复焦点、焦点离开自动收起，窄屏面板限制在 masthead gutter 内并可纵向滚动；当前态改用 class 与非颜色提示，再移除 40 个 inline style。
 - `EAI13-T009`：新增 MIT `LICENSE`、四类资产 `NOTICE` 与 provenance v2 流程文档；v2 index 用稳定策略 ID 发布许可/来源映射，并提供 canonical provenance 的逐字节公开副本。legacy manifest 保留原许可字段，构建门禁新增治理文档、公开副本、字段绑定与基线后二进制增量校验；版权与既有第三方素材法律状态继续标为未独立核验。
+- `EAI13-T010`：四条资产生成脚本统一为先计划、再 preflight 的零隐式写入流程，移除开发者目录解析与 shell 字符串命令，新增结构化生成器结果、输入/输出分离 fingerprint、full/800 批次回滚和 portable receipt。生成资产与 provenance 登记改为两阶段：先原子安装并提交资产快照，再验证 receipt、Git blob、真实解码、manifest CAS 后登记；既有未登记图片保持 legacy skip，本批不回填或改写生产图片与清单。
 
 ## [1.2.0] - 2026-07-10
 
