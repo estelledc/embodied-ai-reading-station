@@ -1,7 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { buildPaperJsonLd } from "./papers.mjs";
-import { buildFeed, contentDatesForNote } from "./seo.mjs";
+import { buildFeed, contentDatesForNote, writeDataFiles } from "./seo.mjs";
+import { DATA_API_CONTRACT } from "../provenance-schema.mjs";
+
+const CONTENT_COMMIT = "0123456789abcdef0123456789abcdef01234567";
 
 test("content dates prefer explicit note lifecycle metadata", () => {
   assert.deepEqual(contentDatesForNote({
@@ -73,4 +79,55 @@ test("Atom entry updated time comes from content metadata", () => {
   assert.match(feed, /<updated>2026-07-02T00:00:00\.000Z<\/updated>/);
   assert.match(feed, /<author><name>Jason Xun<\/name><\/author>/);
   assert.doesNotMatch(feed, /<author><name>Jason<\/name><\/author>/);
+});
+
+test("data files keep the legacy array and publish byte-stable v2 projections", t => {
+  const dist = fs.mkdtempSync(path.join(os.tmpdir(), "embodied-ai-data-api-"));
+  t.after(() => fs.rmSync(dist, { recursive: true, force: true }));
+  const manifestPath = path.join(dist, "provenance.json");
+  fs.writeFileSync(manifestPath, JSON.stringify({
+    schema_version: "2.0.0",
+    content_commit: CONTENT_COMMIT,
+    notes: [],
+  }));
+
+  writeDataFiles([{
+    slug: "example",
+    num: 7,
+    title: "Example Paper",
+    topic: "vlm-foundation",
+    topicLabel: "VLM Foundations",
+    generated_at: "2026-06-25",
+    content_modified: "2026-07-02",
+  }], {
+    dist,
+    manifestPath,
+    generatedAt: "2025-07-02T23:46:40.000Z",
+    route: value => `/repo${value}`,
+  });
+
+  const legacy = JSON.parse(fs.readFileSync(path.join(dist, "data", "papers.json"), "utf8"));
+  const legacyIndex = JSON.parse(fs.readFileSync(path.join(dist, "data", "index.json"), "utf8"));
+  const papersV2 = JSON.parse(fs.readFileSync(path.join(dist, "data", "v2", "papers.json"), "utf8"));
+  const indexV2 = JSON.parse(fs.readFileSync(path.join(dist, "data", "v2", "index.json"), "utf8"));
+
+  assert.ok(Array.isArray(legacy));
+  assert.deepEqual(papersV2.data, legacy);
+  assert.deepEqual(Object.keys(legacy[0]), DATA_API_CONTRACT.paper_record_fields);
+  assert.deepEqual(Object.keys(papersV2), DATA_API_CONTRACT.envelope_fields);
+  assert.deepEqual(Object.keys(indexV2), DATA_API_CONTRACT.envelope_fields);
+  assert.equal(papersV2.schema_version, "2.0.0");
+  assert.equal(papersV2.content_commit, CONTENT_COMMIT);
+  assert.equal(indexV2.content_commit, CONTENT_COMMIT);
+  assert.equal(papersV2.generated_at, "2025-07-02T23:46:40.000Z");
+  assert.equal(legacyIndex.content_commit, CONTENT_COMMIT);
+  assert.equal(legacyIndex.generated_at, "2025-07-02T23:46:40.000Z");
+  assert.equal(legacyIndex.generated, "2025-07-02T23:46:40.000Z");
+  assert.equal(legacyIndex.endpoints.index_v2, "https://estelledc.github.io/embodied-ai-reading-station/data/v2/index.json");
+  assert.equal(legacyIndex.endpoints.papers_v2, "https://estelledc.github.io/embodied-ai-reading-station/data/v2/papers.json");
+  assert.deepEqual(indexV2.data, {
+    papers_endpoint: "/repo/data/v2/papers.json",
+    legacy_endpoint: "/repo/data/papers.json",
+    deprecation: { status: "supported", removal_version: null },
+  });
 });

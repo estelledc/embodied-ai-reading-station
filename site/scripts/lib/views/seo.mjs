@@ -4,10 +4,11 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import {
-  DIST, NOTES_DIR, SITE_URL, BUILD_DATE, GENERATED_AT, normalizeContentDate,
+  DIST, NOTES_DIR, SITE_URL, BUILD_DATE, GENERATED_AT, normalizeContentDate, url,
 } from "../config.mjs";
 import { write } from "../assets.mjs";
 import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT } from "../content.mjs";
+import { buildDataApiEnvelopes, loadCanonicalContentCommit } from "../data-api.mjs";
 import { READING_LISTS } from "./aggregates.mjs";
 
 const noteDateCache = new Map();
@@ -109,7 +110,12 @@ ${entries.join("\n")}
 }
 
 // --- data endpoints ---------------------------------------------------------
-export function writeDataFiles(notes) {
+export function writeDataFiles(notes, {
+  dist = DIST,
+  manifestPath,
+  generatedAt = GENERATED_AT,
+  route = url,
+} = {}) {
   // data endpoints (public JSON for research / external use)
   const papersJson = notes.map(n => {
     const dates = contentDatesForNote(n);
@@ -134,7 +140,16 @@ export function writeDataFiles(notes) {
       content_modified: dates.contentModified,
     };
   });
-  write(path.join(DIST, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
+  write(path.join(dist, "data", "papers.json"), JSON.stringify(papersJson, null, 2));
+
+  const contentCommit = loadCanonicalContentCommit({ manifestPath });
+  const { papersEnvelope, indexEnvelope } = buildDataApiEnvelopes(papersJson, {
+    contentCommit,
+    generatedAt,
+    route,
+  });
+  write(path.join(dist, "data", "v2", "papers.json"), JSON.stringify(papersEnvelope, null, 2));
+  write(path.join(dist, "data", "v2", "index.json"), JSON.stringify(indexEnvelope, null, 2));
 
   // CSV (R/Pandas 友好)
   const csvCols = ["slug", "num", "title", "topic", "topicLabel", "era", "year", "venue", "difficulty", "tldr", "wordCount", "readingMinutes", "tags", "url", "sourcePath", "status", "generated_at", "content_modified"];
@@ -148,7 +163,7 @@ export function writeDataFiles(notes) {
   for (const p of papersJson) {
     csvRows.push(csvCols.map(c => csvEscape(c === "tags" ? (p[c] || []).join("|") : p[c])).join(","));
   }
-  write(path.join(DIST, "data", "papers.csv"), csvRows.join("\n"));
+  write(path.join(dist, "data", "papers.csv"), csvRows.join("\n"));
 
   // tag co-occurrence
   const coMatrix = {};
@@ -164,7 +179,7 @@ export function writeDataFiles(notes) {
       }
     }
   }
-  write(path.join(DIST, "data", "tags.json"), JSON.stringify({ frequency: tagFreq, cooccurrence: coMatrix }, null, 2));
+  write(path.join(dist, "data", "tags.json"), JSON.stringify({ frequency: tagFreq, cooccurrence: coMatrix }, null, 2));
 
   // topics summary
   const topicsJson = TOPIC_ORDER.map(t => ({
@@ -176,14 +191,15 @@ export function writeDataFiles(notes) {
     primer: t.primer || [],
     url: `${SITE_URL}/topics/${t.id}/`,
   }));
-  write(path.join(DIST, "data", "topics.json"), JSON.stringify(topicsJson, null, 2));
+  write(path.join(dist, "data", "topics.json"), JSON.stringify(topicsJson, null, 2));
 
   // index manifest
   const manifest = {
     site: SITE_URL,
-    generated_at: GENERATED_AT,
+    content_commit: contentCommit,
+    generated_at: generatedAt,
     // Legacy alias retained for existing API consumers.
-    generated: GENERATED_AT,
+    generated: generatedAt,
     counts: {
       papers: notes.length,
       topics: TOPIC_ORDER.length,
@@ -191,6 +207,8 @@ export function writeDataFiles(notes) {
       total_words: notes.reduce((s, n) => s + (n.wordCount || 0), 0),
     },
     endpoints: {
+      index_v2: `${SITE_URL}/data/v2/index.json`,
+      papers_v2: `${SITE_URL}/data/v2/papers.json`,
       papers: `${SITE_URL}/data/papers.json`,
       papers_csv: `${SITE_URL}/data/papers.csv`,
       tags: `${SITE_URL}/data/tags.json`,
@@ -198,7 +216,7 @@ export function writeDataFiles(notes) {
     },
     license: "CC BY 4.0 — Attribution required",
   };
-  write(path.join(DIST, "data", "index.json"), JSON.stringify(manifest, null, 2));
+  write(path.join(dist, "data", "index.json"), JSON.stringify(manifest, null, 2));
 }
 
 // --- 全站级 SEO 产物 --------------------------------------------------------
@@ -287,12 +305,16 @@ Automated gates verify minimum length, required sections, links, and source refe
 - [Learning homepage](${SITE_URL}/) — Choose a path, compare methods, and inspect a representative editorial outcome
 - [Paper library](${SITE_URL}/papers/) — ${PAPER_COUNT} paper cards grouped by topic with filters
 - [Cheatsheet](${SITE_URL}/cheatsheet/) — Single page with all ${PAPER_COUNT} tldrs (best for quick scan)
-- [/data/papers.json](${SITE_URL}/data/papers.json) — Structured metadata for all ${PAPER_COUNT} papers (slug/title/topic/era/year/venue/tldr/wordCount/tags/url)
+- [/data/v2/index.json](${SITE_URL}/data/v2/index.json) — Versioned Data API discovery document and legacy compatibility policy
+- [/data/v2/papers.json](${SITE_URL}/data/v2/papers.json) — Preferred structured metadata endpoint for all ${PAPER_COUNT} papers
+- [/data/papers.json](${SITE_URL}/data/papers.json) — Legacy bare-array endpoint, supported throughout the v1.3 compatibility window
 - [/data/papers.csv](${SITE_URL}/data/papers.csv) — Same data as CSV
 - [/data/tags.json](${SITE_URL}/data/tags.json) — tag frequency + co-occurrence matrix
 - [/data/topics.json](${SITE_URL}/data/topics.json) — ${TOPIC_COUNT} topic metadata + primer slugs
 - [/sitemap.xml](${SITE_URL}/sitemap.xml) — Full URL list
 - [/feed.xml](${SITE_URL}/feed.xml) — Atom feed
+
+The v2 JSON endpoints use the envelope fields schema_version, content_commit, generated_at, and data. content_commit identifies the tracked content-input snapshot; generated_at is deterministic build metadata and never substitutes for content identity.
 
 ## Content structure
 

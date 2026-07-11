@@ -5,8 +5,10 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
+import { loadCanonicalContentCommit } from "./lib/data-api.mjs";
 import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
+import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
 import {
   formatProvenanceRepositoryErrors,
   validateProvenanceRepositoryFile,
@@ -76,9 +78,13 @@ const requiredPages = [
   "sitemap.xml",
   "robots.txt",
   "feed.xml",
+  "llms.txt",
   "favicon.svg",
   "site.webmanifest",
+  "data-api.js",
   "data/papers.json",
+  "data/v2/papers.json",
+  "data/v2/index.json",
   "data/tags.json",
   "data/topics.json",
   "data/index.json",
@@ -86,6 +92,9 @@ const requiredPages = [
 for (const p of requiredPages) {
   check(p, () => fs.existsSync(path.join(DIST, p)) || `missing: ${p}`);
 }
+const builtIndexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+const builtBaseMatch = builtIndexHtml.match(/href="([^"]*)\/styles\.css"/);
+const builtBase = builtBaseMatch ? builtBaseMatch[1] : "";
 
 console.log("\n=== Topics ===");
 const topicsJson = JSON.parse(fs.readFileSync(path.join(NOTES, "topics.json"), "utf8")).topics;
@@ -128,10 +137,81 @@ check(`${noteFiles.length} 篇都有 paper page`, () => paperMissing === 0 || `$
 
 console.log("\n=== Data API ===");
 const papersJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "papers.json"), "utf8"));
+const legacyIndex = JSON.parse(fs.readFileSync(path.join(DIST, "data", "index.json"), "utf8"));
+const papersV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "papers.json"), "utf8"));
+const indexV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "index.json"), "utf8"));
+const canonicalContentCommit = loadCanonicalContentCommit();
+const exactKeys = (value, expected) => (
+  value !== null
+  && typeof value === "object"
+  && !Array.isArray(value)
+  && JSON.stringify(Object.keys(value)) === JSON.stringify(expected)
+);
+
 check("papers.json 数量等于 notes 数量", () => papersJson.length === noteFiles.length || `${papersJson.length} vs ${noteFiles.length}`);
 check("papers.json 每条有 slug+title+url", () => {
   const bad = papersJson.find(p => !p.slug || !p.title || !p.url);
   return !bad || `bad entry: ${JSON.stringify(bad).slice(0, 60)}`;
+});
+check("v2 papers/index 使用精确 2.0.0 envelope", () => {
+  if (!exactKeys(papersV2, DATA_API_CONTRACT.envelope_fields)) return "papers envelope fields drift";
+  if (!exactKeys(indexV2, DATA_API_CONTRACT.envelope_fields)) return "index envelope fields drift";
+  if (papersV2.schema_version !== DATA_API_CONTRACT.schema_version) return "papers schema drift";
+  if (indexV2.schema_version !== DATA_API_CONTRACT.schema_version) return "index schema drift";
+  return true;
+});
+check("v2 papers/index content_commit 与 canonical provenance 一致", () => {
+  if (!/^[0-9a-f]{40}$/.test(papersV2.content_commit ?? "")) return "papers content_commit invalid";
+  if (papersV2.content_commit !== indexV2.content_commit) return "v2 content_commit mismatch";
+  if (papersV2.content_commit !== canonicalContentCommit) return "canonical content_commit mismatch";
+  return true;
+});
+check("v2 papers/index generated_at 是同一确定性构建时间", () => {
+  if (papersV2.generated_at !== indexV2.generated_at) return "generated_at mismatch";
+  const parsed = new Date(papersV2.generated_at);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString() !== papersV2.generated_at) return "generated_at invalid";
+  return true;
+});
+check("legacy 数组与 v2 data 的 18 字段逐条一致", () => {
+  if (!Array.isArray(papersV2.data)) return "v2 data is not an array";
+  if (papersV2.data.length !== noteFiles.length) return `${papersV2.data.length} vs ${noteFiles.length}`;
+  const fields = JSON.stringify(DATA_API_CONTRACT.paper_record_fields);
+  const driftedFields = papersV2.data.find(record => JSON.stringify(Object.keys(record)) !== fields);
+  if (driftedFields) return `paper field drift: ${driftedFields.slug ?? "unknown"}`;
+  return JSON.stringify(papersV2.data) === JSON.stringify(papersJson) || "legacy/v2 paper projection drift";
+});
+check("v2 index endpoint 与兼容窗口精确匹配", () => {
+  if (!exactKeys(indexV2.data, DATA_API_CONTRACT.index_data_fields)) return "index data fields drift";
+  if (!exactKeys(indexV2.data.deprecation, DATA_API_CONTRACT.deprecation_fields)) return "deprecation fields drift";
+  if (indexV2.data.papers_endpoint !== builtBase + DATA_API_CONTRACT.versioned_papers_endpoint) return "papers endpoint base drift";
+  if (indexV2.data.legacy_endpoint !== builtBase + DATA_API_CONTRACT.legacy_endpoint) return "legacy endpoint base drift";
+  if (indexV2.data.deprecation.status !== "supported" || indexV2.data.deprecation.removal_version !== null) {
+    return "legacy compatibility policy drift";
+  }
+  return true;
+});
+check("legacy data manifest 保留旧形状并发现 v2", () => {
+  if (legacyIndex.content_commit !== canonicalContentCommit) return "legacy manifest content_commit drift";
+  if (!legacyIndex.endpoints?.index_v2?.endsWith("/data/v2/index.json")) return "missing v2 index discovery";
+  if (!legacyIndex.endpoints?.papers_v2?.endsWith("/data/v2/papers.json")) return "missing v2 papers discovery";
+  if (!legacyIndex.endpoints?.papers?.endsWith("/data/papers.json")) return "missing legacy papers endpoint";
+  return true;
+});
+check("三个站内消费者均不再直连 legacy papers endpoint", () => {
+  for (const consumer of ["reading-progress.js", "link-preview.js", "404.html"]) {
+    const source = fs.readFileSync(path.join(DIST, consumer), "utf8");
+    if (/fetch\s*\([^)]*\/data\/papers\.json/s.test(source)) return `${consumer} still fetches legacy data`;
+  }
+  return true;
+});
+check("README 与 llms.txt 区分内容快照和构建时间", () => {
+  const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
+  const llms = fs.readFileSync(path.join(DIST, "llms.txt"), "utf8");
+  for (const document of [readme, llms]) {
+    if (!document.includes("/data/v2/index.json") || !document.includes("/data/v2/papers.json")) return "missing v2 discovery docs";
+    if (!document.includes("content_commit") || !document.includes("generated_at")) return "missing metadata semantics";
+  }
+  return true;
 });
 
 const tagsJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "tags.json"), "utf8"));
@@ -175,6 +255,13 @@ for (const f of pwaFiles) {
   const sw = fs.readFileSync(path.join(DIST, "sw.js"), "utf8");
   check("sw.js VERSION 已注入构建时间戳", () => /const VERSION = "\d{12}"/.test(sw) || `VERSION 未替换`);
   const idx = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  check("data-api.js 在两个 v2 消费者之前加载", () => {
+    const scriptPosition = name => idx.indexOf(`src="${builtBase}/${name}"`);
+    const adapter = scriptPosition("data-api.js");
+    const reading = scriptPosition("reading-progress.js");
+    const preview = scriptPosition("link-preview.js");
+    return adapter >= 0 && adapter < reading && adapter < preview || "script order invalid";
+  });
   check("index.html 引用 sw-register.js", () => idx.includes("sw-register.js") || `无 sw-register`);
   check("index.html 含 theme-color", () => idx.includes('name="theme-color"') || `无 theme-color`);
   check("index.html 引用 manifest", () => idx.includes("site.webmanifest") || `无 manifest link`);
@@ -347,11 +434,8 @@ const broken = [];
 let totalLinks = 0;
 const seenLinks = new Set();
 
-// 探测 prefix（GitHub Pages 的 SITE_BASE）
-let prefix = "";
-const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
-const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
-if (m) prefix = m[1];
+// prefix 来自构建产物，不依赖 check 进程是否继承了 build 时的 SITE_BASE。
+const prefix = builtBase;
 
 // 全量扫描：dist 下所有 HTML 的站内链接（以 BASE 或 / 开头）逐一验证目标存在
 console.log(`  scanning ${htmlFiles.length} html files (full scan) for link check`);

@@ -318,6 +318,7 @@ export function page({
   <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
   <script src="${url("/search.js")}" defer></script>
   <script src="${url("/outline.js")}" defer></script>
+  <script src="${url("/data-api.js")}" defer></script>
   <script src="${url("/reading-progress.js")}" defer></script>
   <script src="${url("/quick-filter.js")}" defer></script>
   <script src="${url("/keyboard.js")}" defer></script>

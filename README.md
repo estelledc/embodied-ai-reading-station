@@ -96,11 +96,15 @@
 ### 数据 API（CC BY 4.0）
 
 ```bash
-curl https://estelledc.github.io/embodied-ai-reading-station/data/papers.json   # 156 全元数据
-curl https://estelledc.github.io/embodied-ai-reading-station/data/tags.json     # 21 tag 频次 + 共现
-curl https://estelledc.github.io/embodied-ai-reading-station/data/topics.json   # 11 主题元数据
-curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    # manifest
+curl https://estelledc.github.io/embodied-ai-reading-station/data/v2/index.json   # v2 入口与兼容策略
+curl https://estelledc.github.io/embodied-ai-reading-station/data/v2/papers.json  # 156 篇版本化全元数据
+curl https://estelledc.github.io/embodied-ai-reading-station/data/tags.json       # 21 tag 频次 + 共现
+curl https://estelledc.github.io/embodied-ai-reading-station/data/topics.json     # 11 主题元数据
 ```
+
+v2 JSON 统一使用 `schema_version`、`content_commit`、`generated_at`、`data` 四字段 envelope。`content_commit` 标识可复核的内容输入快照；`generated_at` 只是由 `SOURCE_DATE_EPOCH` 固定的构建时间，不能替代内容身份。
+
+兼容说明：`/data/papers.json` 在整个 v1.3 窗口继续提供原有裸数组；`/data/index.json` 也保留旧字段，并新增 v2 入口与 `content_commit`。
 
 ### 引用
 
@@ -196,7 +200,8 @@ content/*.md ┤                              │
              ▼                              ▼
        Pagefind index ◀──────── dist/
                                   │
-                                  ├─ data/papers.json + .csv
+                                  ├─ data/v2/{index,papers}.json
+                                  ├─ data/papers.json + .csv（legacy）
                                   ├─ feed.xml + sitemap.xml
                                   ├─ sw.js (PWA)
                                   └─ 256 个 HTML 页面 + 静态资产

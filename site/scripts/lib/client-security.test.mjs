@@ -7,7 +7,9 @@ import { fileURLToPath } from "node:url";
 
 const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const SEARCH_SOURCE = fs.readFileSync(path.join(SITE, "src", "search.js"), "utf8");
+const DATA_API_SOURCE = fs.readFileSync(path.join(SITE, "src", "data-api.js"), "utf8");
 const PREVIEW_SOURCE = fs.readFileSync(path.join(SITE, "src", "link-preview.js"), "utf8");
+const VALID_COMMIT = "a".repeat(40);
 
 class FakeTarget {
   constructor() { this.listeners = new Map(); }
@@ -163,16 +165,44 @@ test("link preview renders repository metadata without an HTML sink", async () =
     title: `<script>globalThis.pwned=3</script>`,
     tldr: `<b onmouseover="globalThis.pwned=4">summary</b>`,
   };
-  const window = { innerWidth: 1280, innerHeight: 800 };
-  vm.runInNewContext(PREVIEW_SOURCE, {
+  const requests = [];
+  const events = [];
+  document.nodes.set('link[href*="/styles.css"]', {
+    getAttribute(name) {
+      return name === "href" ? "/embodied-ai-reading-station/styles.css" : null;
+    },
+  });
+  const window = {
+    innerWidth: 1280,
+    innerHeight: 800,
+    dispatchEvent(event) { events.push(event); },
+  };
+  const context = vm.createContext({
     document,
     window,
-    fetch: async () => ({ json: async () => [paper] }),
+    fetch: async (url) => {
+      requests.push(url);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          schema_version: "2.0.0",
+          content_commit: VALID_COMMIT,
+          generated_at: "2026-07-11T00:00:00.000Z",
+          data: [paper],
+        }),
+      };
+    },
     setTimeout: callback => { callback(); return 1; },
     clearTimeout() {},
     requestAnimationFrame: callback => callback(),
+    CustomEvent: class CustomEvent {
+      constructor(type, options = {}) { this.type = type; this.detail = options.detail; }
+    },
     console,
   });
+  vm.runInContext(DATA_API_SOURCE, context);
+  vm.runInContext(PREVIEW_SOURCE, context);
 
   const anchor = {
     closest(selector) { return selector === "a[href]" ? this : null; },
@@ -189,4 +219,99 @@ test("link preview renders repository metadata without an HTML sink", async () =
   assert.equal(byClass("lp-title").textContent, paper.title);
   assert.equal(byClass("lp-tldr").textContent, `${paper.tldr}…`);
   assert.match(byClass("lp-meta").textContent, /<img src=x/);
+  assert.deepEqual(requests, ["/embodied-ai-reading-station/data/v2/papers.json"]);
+  assert.deepEqual(events, []);
+});
+
+test("link preview exposes an invalid v2 envelope as a diagnostic tooltip and event", async () => {
+  const unsafeWrites = [];
+  const document = new FakeDocument(unsafeWrites);
+  const events = [];
+  const errors = [];
+  const window = {
+    innerWidth: 1280,
+    innerHeight: 800,
+    dispatchEvent(event) { events.push(event); },
+  };
+  const context = vm.createContext({
+    document,
+    window,
+    fetch: async () => ({
+      ok: true,
+      status: 200,
+      json: async () => ({
+        schema_version: "2.0.0",
+        content_commit: VALID_COMMIT,
+        data: {},
+      }),
+    }),
+    setTimeout: callback => { callback(); return 1; },
+    clearTimeout() {},
+    requestAnimationFrame: callback => callback(),
+    CustomEvent: class CustomEvent {
+      constructor(type, options = {}) { this.type = type; this.detail = options.detail; }
+    },
+    console: { error(...args) { errors.push(args); } },
+  });
+  vm.runInContext(DATA_API_SOURCE, context);
+  vm.runInContext(PREVIEW_SOURCE, context);
+
+  const anchor = {
+    closest(selector) { return selector === "a[href]" ? this : null; },
+    getAttribute(name) { return name === "href" ? "/papers/clip/" : null; },
+  };
+  document.dispatchEvent({ type: "mouseover", target: anchor, clientX: 20, clientY: 20 });
+  await new Promise(resolve => setImmediate(resolve));
+  await new Promise(resolve => setImmediate(resolve));
+
+  assert.equal(unsafeWrites.length, 0);
+  const tooltip = document.body.children.find(node => node.className.includes("link-preview"));
+  assert.ok(tooltip);
+  const byClass = name => tooltip.children.find(node => node.className === name);
+  assert.equal(byClass("lp-title").textContent, "论文预览暂不可用");
+  assert.match(byClass("lp-meta").textContent, /DATA_API_DATA/);
+  assert.equal(events.length, 1);
+  assert.equal(events[0].type, "eai:data-error");
+  assert.equal(events[0].detail.consumer, "link-preview");
+  assert.equal(errors.length, 1);
+});
+
+test("link preview reports a missing shared adapter instead of silently disappearing", async () => {
+  const unsafeWrites = [];
+  const document = new FakeDocument(unsafeWrites);
+  const events = [];
+  const errors = [];
+  const window = {
+    innerWidth: 1280,
+    innerHeight: 800,
+    dispatchEvent(event) { events.push(event); },
+  };
+  const context = vm.createContext({
+    document,
+    window,
+    fetch: async () => { throw new Error("legacy fetch must not run"); },
+    setTimeout: callback => { callback(); return 1; },
+    clearTimeout() {},
+    requestAnimationFrame: callback => callback(),
+    CustomEvent: class CustomEvent {
+      constructor(type, options = {}) { this.type = type; this.detail = options.detail; }
+    },
+    console: { error(...args) { errors.push(args); } },
+  });
+  vm.runInContext(PREVIEW_SOURCE, context);
+
+  const anchor = {
+    closest(selector) { return selector === "a[href]" ? this : null; },
+    getAttribute(name) { return name === "href" ? "/papers/clip/" : null; },
+  };
+  document.dispatchEvent({ type: "mouseover", target: anchor, clientX: 20, clientY: 20 });
+  await new Promise(resolve => setImmediate(resolve));
+
+  const tooltip = document.body.children.find(node => node.className.includes("link-preview"));
+  assert.ok(tooltip);
+  const meta = tooltip.children.find(node => node.className === "lp-meta");
+  assert.match(meta.textContent, /DATA_API_ADAPTER_MISSING/);
+  assert.equal(events[0].detail.consumer, "link-preview");
+  assert.equal(events[0].detail.code, "DATA_API_ADAPTER_MISSING");
+  assert.equal(errors.length, 1);
 });

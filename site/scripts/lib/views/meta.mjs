@@ -326,6 +326,7 @@ export function build404(notes) {
 
     <script>
     (function(){
+      function init404Suggestions(){
       var stylesLink = document.querySelector('link[href*="/styles.css"]');
       var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
       // 提取 URL 末段当 query
@@ -333,8 +334,15 @@ export function build404(notes) {
       var seg = path.split('/').filter(Boolean).pop() || '';
       if (!seg || seg === '404') return;
       var q = seg.replace(/[-_]/g, ' ').toLowerCase();
-      fetch(base + '/data/papers.json')
-        .then(function(r){ return r.json(); })
+      var endpoint = base + '/data/v2/papers.json';
+      var api = window.EAI_DATA_API;
+      var request = api && typeof api.loadPapers === 'function'
+        ? api.loadPapers({ base: base })
+        : Promise.reject(Object.assign(new Error('共享浏览器 Data API 适配器未加载。'), {
+            code: 'DATA_API_ADAPTER_MISSING',
+            endpoint: endpoint
+          }));
+      request
         .then(function(papers){
           var scored = papers.map(function(p){
             var hay = (p.title + ' ' + p.slug).toLowerCase();
@@ -353,14 +361,43 @@ export function build404(notes) {
           if (!top.length) return;
           var aside = document.getElementById('eai-404-suggest');
           var list = document.getElementById('eai-404-list');
-          list.innerHTML = top.map(function(x){
-            return '<li style="padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)">' +
-              '<a href="' + x.p.url.replace('${SITE_URL}', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
-              '<span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem">' + x.p.topic + ' · ' + (x.p.year || '') + '</span></li>';
-          }).join('');
+          list.replaceChildren();
+          top.forEach(function(x){
+            var item = document.createElement('li');
+            item.style.cssText = 'padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)';
+            var link = document.createElement('a');
+            link.href = x.p.url.replace('${SITE_URL}', base);
+            link.style.cssText = 'text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700';
+            link.textContent = String(x.p.title || '');
+            var meta = document.createElement('span');
+            meta.style.cssText = 'display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem';
+            meta.textContent = String(x.p.topic || '') + ' · ' + String(x.p.year || '');
+            item.append(link, meta);
+            list.appendChild(item);
+          });
           aside.hidden = false;
         })
-        .catch(function(){});
+        .catch(function(error){
+          if (api && typeof api.reportError === 'function') {
+            api.reportError(error, { consumer: '404-suggestions' });
+            return;
+          }
+          var detail = {
+            consumer: '404-suggestions',
+            code: error && error.code || 'DATA_API_UNKNOWN',
+            message: error && error.message || '404 推荐数据加载失败。',
+            endpoint: error && error.endpoint || endpoint,
+            status: Number.isInteger(error && error.status) ? error.status : null
+          };
+          console.error('[EAI data API] 404-suggestions ' + detail.code + ': ' + detail.message);
+          window.dispatchEvent(new CustomEvent('eai:data-error', { detail: detail }));
+        });
+      }
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init404Suggestions, { once: true });
+      } else {
+        init404Suggestions();
+      }
     })();
     </script>
   </main>`;

@@ -8,6 +8,7 @@
 - `EAI13-T001`：冻结 provenance v2 与 `/data/v2/` 共用合同，新增纯 schema validator、字段字典和 local/remote/人工核验/生成资产正反 fixtures；明确 `content_commit` 指向可复核的既有内容输入快照，可早于 manifest commit，从而避免 Git SHA 自引用。生产 `papers/provenance.json` 与 legacy `/data/papers.json` 本批保持不变。
 - `EAI13-T002`：将 `papers/provenance.json` 确定性迁移为覆盖 156 篇笔记的 v2 清单（46 local / 110 remote），无损保留 v1 本地来源哈希，统一 canonical note 元数据、显式 null 与 `UNVERIFIED` 初态；生成器改为内存校验后同目录临时文件 `fsync` + 原子 `rename`，新增零写入 `--check` 与 v2 healthcheck 兼容桥。
 - `EAI13-T003`：新增独立于 generator 的 fail-closed repository validator，并在任何笔记加载前接入 `npm run check`；同时校验 exact schema、156 条 inventory、frontmatter/source 一致性、逐段 symlink/普通文件/跟踪状态、worktree/index/HEAD/manifest/`content_commit` snapshot 字节，以及脱敏的稳定错误码。
+- `EAI13-T004`：发布 `/data/v2/index.json` 与 `/data/v2/papers.json` 四字段 envelope，逐字复制 canonical provenance 的 `content_commit`，并让 156 条 v2 paper data 与 legacy 裸数组共用同一 18 字段投影；新增共享浏览器适配器，将 reading-progress、link-preview 和 404 推荐迁移到 base-aware v2 endpoint，未知主版本、坏 commit、缺 data、HTTP/JSON/网络错误均走可观察诊断与显式降级。`/data/papers.json` 在完整 v1.3 窗口继续支持；producer/consumer/check 测试、root/repo 双 base healthcheck 与固定时间的全 data SHA-256 对比均通过。
 
 ### Changed
 - `EAI13-T011`：统一现行文档为“v1.2.0 已发布、O1/T014 外部待办未关闭”，把 RC 条件保留为历史证据；新增 EAI-T008–T020 共 13 项 carry-over crosswalk，并规定 Lab 与新公共数据消费者必须晚于 `EAI13-T001 → T002 → T003 → T004` 和本次状态治理。

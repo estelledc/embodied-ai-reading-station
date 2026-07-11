@@ -63,6 +63,7 @@ export function copyStatic() {
   copy(path.join(SITE, "src", "theme.css"), path.join(DIST, "styles.css"));
   copy(path.join(SITE, "src", "search.js"), path.join(DIST, "search.js"));
   copy(path.join(SITE, "src", "outline.js"), path.join(DIST, "outline.js"));
+  copy(path.join(SITE, "src", "data-api.js"), path.join(DIST, "data-api.js"));
   copy(path.join(SITE, "src", "reading-progress.js"), path.join(DIST, "reading-progress.js"));
   copy(path.join(SITE, "src", "quick-filter.js"), path.join(DIST, "quick-filter.js"));
   copy(path.join(SITE, "src", "graph.js"), path.join(DIST, "graph.js"));
