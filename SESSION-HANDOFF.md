@@ -1,54 +1,87 @@
 ---
-status: waiting_for_explicit_run
-scope: progression-method-only
+status: active_campaign
+campaign_name: eai13-t001-t011-integration
 activated_by: user-request-2026-07-12
-review_after: next-agent-launch
-budget: no-active-run
-external_outcome: local-review-ready-progression-contract
-stop_conditions: method-contract-verified-no-product-integration
-superseded_by: none
+activated_at: "2026-07-12T09:15:00+08:00"
+scope: eai13-t001-t011-integration-to-main
 start_ref: 9d62a5bcff39d4a73abffce74be8d507b71ae461
+source_ref: c57a281395948afbba9346845825a37cc5b0347f
+source_branch: codex/eai13-t010-asset-generation
+integration_branch: campaign/eai13-t001-t011-integration
+total_budget: 12 runs or 24 hours (whichever first)
+runs_completed: 0
+runs_since_last_external_delta: 0
+review_after: every 3 runs or when origin/main changes
+external_outcome: draft-pr-ci-green-reviewable
+superseded_by: none
 ---
 
-# 当前接班
+# 当前接班：EAI13 T001-T011 集成 Campaign（ACTIVE）
 
-当前没有活动产品 run。推进方式重构完成后，等待用户单独创建 agent，并由新 agent 显式声明有限 run contract；本文件不是自动续跑或产品修改授权。
+## Campaign 合同
+
+**objective**：把保存在 `codex/eai13-t010-asset-generation@c57a281` 的 EAI13 T001–T011 实现，安全集成到实时最新的 `origin/main`，形成一个测试全绿、可审查的 Draft PR；之后持续监控并修复 CI 与 actionable review feedback，直到该 PR 达到 ready-for-review 状态。
+
+**scope**：现有 EAI13 实现栈的集成、冲突处理、回归修复、测试、文档收口和 Draft PR。明确排除：Batch 8 Lab、Batch 9 llava 核验、批量精读、季度论文收录、既有笔记正文改写、MuJoCo/SmolVLA 实验伪造、EAI13-T012 owner-only 设置。
+
+**acceptance_checks**：
+1. 保留 c57a281 原分支与全部原始提交，不在该分支 rebase 或改写历史。
+2. 从 fetch 后的最新 origin/main 建立隔离 integration 分支（worktree：`explorations/embodied-ai-integration`）。
+3. 逐依赖集成 T001–T011 的 13 个提交，每个冲突都解释取舍。
+4. `npm run test:unit` 全过。
+5. 固定 `SOURCE_DATE_EPOCH=1720579200` 后，根路径 `npm run build && npm run check` 全过。
+6. `SITE_BASE=/embodied-ai-reading-station npm run build && npm run check` 全过。
+7. `npm audit --audit-level=high` 与 `git diff --check` 通过。
+8. Draft PR CI 全绿；所有 actionable review feedback 已处理或有证据说明不采纳。
+
+**run budget（单 run）**：最多 3 个切片、120 分钟、1 个写者；只读调查可并行。
+
+**total_budget**：最多 12 个 run 或 24 小时，以先到者为准。
+
+**review_after**：每完成 3 个 run 或远端 main 发生变化时复核。
+
+**stop_conditions**：
+1. campaign objective 已完成（Draft PR ready-for-review）；
+2. 总预算耗尽；
+3. 连续 3 个 run 没有 external delta；
+4. 需要 force push、改写受保护历史、merge、deploy 或 owner 设置；
+5. 出现无法解释的工作树重叠、凭证问题或无法复现的门禁失败。
+
+**权限边界**：允许创建集成分支、修改文件、运行测试、创建原子本地提交、push 非 main 分支、创建和更新 Draft PR。禁止 force push、直接写 main、merge PR、deploy、修改 branch protection、required checks 或 Pages owner 设置。
+
+## 状态线
+
+- 远端已接受基线：`origin/main` = `9d62a5bcff39d4a73abffce74be8d507b71ae461`（Merge PR #14）。
+- 源实现锚点：`codex/eai13-t010-asset-generation` @ `c57a281395948afbba9346845825a37cc5b0347f`（13 个提交，T001–T011）。
+- 集成分支：`campaign/eai13-t001-t011-integration`（worktree：`explorations/embodied-ai-integration`）。
+- 合并基线（merge base）：`5b02c23`（Merge PR #12）；分叉后 origin/main 新增 5 个提交（PR #13 showcase-v2 + PR #14 ci-finalization），源分支新增 13 个提交。
+
+## 当前 run（Run 1）
+
+**Run 1 contract**：
+- objective：逐提交 cherry-pick dabde09..c57a281 的 13 个 EAI13 提交到集成分支，解决重叠文件冲突。
+- scope：cherry-pick 集成与冲突解决，不做额外重构或功能扩展。
+- slices：
+  1. cherry-pick 前 4 个提交（dabde09, 9192593, ce8b282, 3abbf1d：provenance v2 合同/迁移/门禁 + v1.3 文档收口）
+  2. cherry-pick 中 5 个提交（19a64ca, 988500d, 328114c, 98cbdf3, b495c11：Data API + 响应式图片 + SW 缓存 + CSP + More 导航）
+  3. cherry-pick 后 4 个提交（1e61f00, 343cfe7, c56ae32, c57a281：许可治理 + 资产生成 + 审查夹具 + T011 收口）
+- acceptance：cherry-pick 完成，无未解决冲突，工作树可解释。
 
 ## 先读什么
 
 1. `AGENTS.md`：绑定的推进、权限和停止规则。
 2. `docs/operations-index.md`：唯一活动操作入口与测试阶梯。
-3. 本文件：当前接班锚点。
-4. `CHANGELOG.md`、`PLAN-1.3.md` 与专项文档：只在本轮 scope 需要时读取。
-
-## 两条状态线
-
-- 远端已接受基线：本轮刷新时 `origin/main` 为 `9d62a5bcff39d4a73abffce74be8d507b71ae461`。每次接班仍须先 fetch 并实时复核。
-- 本地实现候选：`codex/eai13-t010-asset-generation` 的不可变锚点为 `c57a281395948afbba9346845825a37cc5b0347f`。它基于旧基线，承载 EAI13 T001–T011 的本地实现，尚未成为远端已接受状态；远端后续提交与其存在重叠路径。
-
-本地 commit 和测试证据只说明实现候选存在，external outcome 仍是 local review-ready，D 轴没有提升到 reviewer accepted、merged 或 deployed。
-
-## 本轮完成切片
-
-- 把路线图驱动改为有限 run contract：六字段合同、默认预算、单写者、单切片循环和三批无 external delta 停止门。
-- 增加有限 campaign：用户显式激活后可在同一目标、scope、总预算和权限内自动续 run，不逐片或逐 run 等待确认。
-- 建立单一操作索引和当前 handoff，明确 roadmap/plan/progress/deep-read 文档都不是自动队列。
-- 把现有产品栈与本次流程分支分离；未执行 rebase、merge、cherry-pick、产品修复或远端发布。
+3. 本文件：当前 campaign 与 run 状态。
+4. `CHANGELOG.md`、`PLAN-1.3.md`、`docs/v1.2-healthcheck-roadmap.md`：已读过，按需回查。
 
 ## 验证结果
 
-- 基线：父仓 `make harness-check` 为 0 error、0 warning。
-- 子仓 `node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs`：9/9 通过。
-- 子仓 `npm run test:unit`：88/88 通过；本轮未改产品实现，因此没有扩大到 build、浏览器或部署验证。
-- 父仓 `make lint`：542 files 通过；改动后的 `make harness-check` 仍为 0 error、0 warning。
-- 父仓 `make check`：offline eval 7/7、pytest 231/231 及其余索引/渲染门禁全部通过。
-- 父仓与子仓 `git diff --check`：通过。
+- 治理框架（27858b4）已 cherry-pick 到集成分支，8 files changed, 280 insertions。
+- 基线尚未在集成 worktree 运行完整门禁；cherry-pick 完成后统一跑。
 
 ## Blocker 与下一步
 
-- Blocker：后续产品推进必须先决定如何把本地 EAI13 实现栈与最新远端基线集成；本文件不替用户选择历史改写或合并策略。
-- 当前没有 active campaign；未来提示词必须给出有终点的 objective、`total_budget`、`review_after` 和逐项外部权限后才能自动续 run。
-- 禁止自动进入：PLAN Batch 8 Lab、Batch 9 llava 核验、批量精读、季度收录或仓库外实验。
-- 下一条命令：`git status --short --branch && git fetch origin main && git rev-list --left-right --count origin/main...HEAD`。
+- 重叠文件（PR #13/#14 与 EAI13 同时修改）：layout.mjs, mobile-nav.test.mjs, aggregates.mjs, meta.mjs, papers.mjs, papers.test.mjs, seo.mjs, seo.test.mjs, theme.css；需要逐个冲突取舍。
+- 下一条命令：`cd ../embodied-ai-integration && git cherry-pick dabde09^..c57a281`（逐提交或按 slice 分组）。
 
 不要在 handoff 中复制易过期数量或 ETA；需要数量时使用实时命令。
