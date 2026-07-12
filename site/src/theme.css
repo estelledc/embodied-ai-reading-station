@@ -305,11 +305,7 @@ figcaption .plate {
 
 .paper-card:hover {
   background: var(--paper-warm);
-  transform: translateY(-2px);
   box-shadow: 0 4px 0 -1px var(--ink);
-}
-@media (prefers-reduced-motion: reduce) {
-  .paper-card:hover { transform: none; box-shadow: none; }
 }
 
 .paper-card .num {
@@ -1708,7 +1704,10 @@ html.dark-theme body::after {
   padding: 0.3em 0.7em;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .qf-chip:hover {
   border-color: var(--ink);
@@ -2124,7 +2123,7 @@ html.dark-theme body::after {
   font-size: 0.78rem;
   color: var(--ink-mute);
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: border-color 0.12s, color 0.12s;
   margin-left: 0.4rem;
 }
 .kb-trigger:hover {
@@ -2151,13 +2150,15 @@ html.dark-theme body::after {
   border: 1px solid var(--paper-dark);
   text-decoration: none;
   color: inherit;
-  transition: all 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
   min-height: 5rem;
 }
 .pn-card:not(.pn-empty):hover {
   border-color: var(--coral);
   background: var(--paper-warm);
-  transform: translateY(-2px);
 }
 .pn-empty { background: transparent; border: 1px dashed var(--paper-dark); opacity: 0.3; }
 .pn-next { text-align: right; }
@@ -2224,7 +2225,7 @@ html.dark-theme body::after {
   color: var(--ink-mute);
   text-decoration: none;
   border-bottom: 1px dotted transparent;
-  transition: all 0.12s;
+  transition: border-bottom-color 0.12s, color 0.12s;
 }
 .breadcrumbs a:hover {
   color: var(--coral);
@@ -2248,7 +2249,7 @@ html.dark-theme body::after {
   line-height: 1;
   color: var(--ink-mute);
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: border-color 0.12s, color 0.12s;
   margin-left: 0.4rem;
   min-width: 2.2rem;
 }
@@ -2276,7 +2277,7 @@ html.dark-theme body::after {
   text-decoration: none;
   padding: 0.2em 0.6em;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: background-color 0.12s, color 0.12s;
 }
 .note-tag:hover { background: var(--coral); color: var(--paper); }
 .tag-cloud {
@@ -2294,12 +2295,14 @@ html.dark-theme body::after {
   border: 1px solid var(--paper-dark);
   text-decoration: none;
   color: inherit;
-  transition: all 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    transform 0.15s;
 }
 .tag-cloud-item:hover {
   border-color: var(--coral);
   background: var(--paper-warm);
-  transform: translateY(-2px);
 }
 .tag-name {
   font-family: var(--font-mono);
@@ -2370,7 +2373,7 @@ html.dark-theme body::after {
   padding: 0.4em 0.8em;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: background-color 0.12s, color 0.12s;
 }
 .streak-export:hover {
   background: var(--coral);
@@ -2710,7 +2713,10 @@ html.dark-theme body::after {
   padding: 0.4em 0.9em;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .cite-copy:hover { background: var(--coral); color: var(--paper); }
 .cite-copy.copied { background: var(--olive); border-color: var(--olive); color: var(--paper); }
@@ -2842,7 +2848,7 @@ html.dark-theme body::after {
   line-height: 1;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.15s;
+  transition: background-color 0.15s, border-color 0.15s;
 }
 .lb-close:hover { background: var(--coral); border-color: var(--coral); }
 .lb-caption {
@@ -2873,7 +2879,7 @@ html.dark-theme body::after {
   text-decoration: none;
   padding: 0.3em 0.8em;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: background-color 0.12s, color 0.12s;
 }
 .issue-badge:hover {
   background: var(--coral);
@@ -2897,8 +2903,10 @@ html.dark-theme body::after {
 .rl-progress-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
-  width: 0;
-  transition: width 0.3s;
+  width: 100%;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: 0 50%;
+  transition: transform 0.3s var(--jx-ease-out);
 }
 .rl-progress-text {
   font-family: var(--font-mono);
@@ -2936,7 +2944,10 @@ html.dark-theme body::after {
   padding: 0.3em 0.7em;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .gc-btn:hover {
   border-color: var(--coral);
@@ -2960,7 +2971,10 @@ html.dark-theme body::after {
   cursor: pointer;
   border-radius: 2px;
   margin-left: 0.4rem;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .copy-md-btn:hover {
   border-color: var(--coral);
@@ -3118,8 +3132,10 @@ html.dark-theme body::after {
 .tp-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
-  width: 0;
-  transition: width 0.3s;
+  width: 100%;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: 0 50%;
+  transition: transform 0.3s var(--jx-ease-out);
 }
 
 /* === link preview popup === */
@@ -3192,7 +3208,10 @@ html.dark-theme body::after {
   cursor: pointer;
   border-radius: 2px;
   margin-left: 0.4rem;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .share-btn:hover { border-color: var(--coral); color: var(--coral); }
 .share-btn.copied { background: var(--olive); color: var(--paper); border-color: var(--olive); }
@@ -3330,7 +3349,7 @@ html.dark-theme body::after {
   padding: 0.3em 0.6em;
   cursor: pointer;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition: border-color 0.12s, color 0.12s;
 }
 .svg-export-btn:hover {
   border-color: var(--coral);
@@ -3353,7 +3372,11 @@ html.dark-theme body::after {
   cursor: pointer;
   border-radius: 2px;
   opacity: 0;
-  transition: opacity 0.15s, all 0.12s;
+  transition:
+    opacity 0.15s,
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .note-content pre:hover .code-copy-btn { opacity: 1; }
 .code-copy-btn:hover { border-color: var(--coral); color: var(--coral); }
@@ -3379,7 +3402,6 @@ html.dark-theme body::after {
 }
 .back-top-btn:hover {
   background: var(--coral);
-  transform: translateY(-3px);
 }
 @media (max-width: 700px) {
   .back-top-btn { bottom: 1rem; right: 1rem; }
@@ -3556,7 +3578,10 @@ html.dark-theme body::after {
   text-decoration: none;
   color: var(--ink);
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
   text-align: center;
 }
 .ss-grid a:hover {
@@ -3758,7 +3783,10 @@ html.dark-theme .issue-hero-card:hover {
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  transition: all 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    opacity 0.15s;
 }
 .ms-earned {
   background: var(--paper-warm);
@@ -3806,21 +3834,6 @@ html.dark-theme .issue-hero-card:hover {
 }
 .auto-mark-toast .amt-next:hover { border-bottom-color: var(--mustard); color: var(--mustard); }
 
-/* === reduced motion === */
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-  /* 保留必要的 transform（避免 broken state） */
-  .skip-link:focus { transform: none; }
-}
-
 /* === discover page === */
 .discover-section { margin: 2rem 0; }
 .discover-section h2 {
@@ -3845,7 +3858,7 @@ html.dark-theme .issue-hero-card:hover {
   text-decoration: none;
   color: inherit;
   margin-bottom: 0.6rem;
-  transition: all 0.15s;
+  transition: background-color 0.15s, border-color 0.15s;
 }
 .ds-link:hover { border-color: var(--coral); background: var(--paper-warm); }
 .ds-meta {
@@ -3939,7 +3952,10 @@ html.dark-theme .issue-hero-card:hover {
   cursor: pointer;
   color: var(--ink);
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .search-history button::before {
   content: "↺ ";
@@ -3977,13 +3993,16 @@ html.dark-theme .issue-hero-card:hover {
   text-decoration: none;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
   z-index: 40;
-  transition: all 0.15s;
+  transition:
+    background-color 0.15s,
+    border-color 0.15s,
+    color 0.15s,
+    transform 0.15s;
 }
 .feedback-fab:hover {
   background: var(--coral);
   color: var(--paper);
   border-color: var(--coral);
-  transform: translateY(-2px);
 }
 /* 当 back-top-btn 也在时往下移 */
 .back-top-btn ~ .feedback-fab,
@@ -4056,7 +4075,7 @@ html.dark-theme .issue-hero-card:hover {
   border-radius: 50%;
   font-size: 1.6rem;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color 0.15s, border-color 0.15s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4186,7 +4205,10 @@ html.dark-theme .issue-hero-card:hover {
   color: var(--ink);
   text-decoration: none;
   border-radius: 2px;
-  transition: all 0.12s;
+  transition:
+    background-color 0.12s,
+    border-color 0.12s,
+    color 0.12s;
 }
 .year-nav a:hover {
   background: var(--coral);
@@ -4214,8 +4236,10 @@ html.dark-theme .issue-hero-card:hover {
 .syl-fill {
   height: 100%;
   background: linear-gradient(90deg, var(--olive) 0%, var(--coral) 100%);
-  width: 0;
-  transition: width 0.3s;
+  width: 100%;
+  transform: scaleX(var(--progress, 0));
+  transform-origin: 0 50%;
+  transition: transform 0.3s var(--jx-ease-out);
 }
 .syl-num {
   font-family: var(--font-display);
@@ -4309,7 +4333,7 @@ html.dark-theme .issue-hero-card:hover {
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.04em;
-  transition: all 0.15s;
+  transition: background-color 0.15s, color 0.15s;
 }
 .star-cta:hover {
   background: var(--coral);
@@ -5243,4 +5267,46 @@ footer.jx-footer {
   .eai-proof .jx-proof__links { display: grid; }
   .eai-proof .jx-pill,
   .eai-proof-route { width: 100%; justify-content: center; }
+}
+
+/* Hover travel is pointer-specific; touch retains color/border/shadow feedback. */
+@media (hover: hover) and (pointer: fine) {
+  .paper-card:hover,
+  .pn-card:not(.pn-empty):hover,
+  .tag-cloud-item:hover,
+  .feedback-fab:hover {
+    transform: translateY(-2px);
+  }
+
+  .back-top-btn:hover { transform: translateY(-3px); }
+}
+
+/* === reduced motion: preserve state color/opacity, remove travel === */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .scroll-progress,
+  .read-timer-badge::before,
+  .rl-progress-fill,
+  .tp-fill,
+  .syl-fill,
+  .cite-block summary::before {
+    transition: none;
+  }
+
+  .auto-mark-toast,
+  .auto-mark-toast.show {
+    transform: translateX(-50%);
+    transition: opacity 0.2s var(--jx-ease-out);
+  }
+
+  .paper-card:hover,
+  .pn-card:not(.pn-empty):hover,
+  .tag-cloud-item:hover,
+  .feedback-fab:hover,
+  .back-top-btn:hover {
+    transform: none;
+  }
+
+  .skip-link:focus { transform: none; }
 }
