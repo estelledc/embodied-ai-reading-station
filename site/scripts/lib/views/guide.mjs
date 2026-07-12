@@ -155,7 +155,7 @@ export function buildGuidePage(ch, allChapters) {
 
   // "标记已完成" button for guide progress tracking
   const completeBtn = `<div style="text-align:center;margin-top:2.5rem">
-    <button class="guide-done-btn" data-guide-slug="${ch.slug}" type="button" aria-pressed="false" style="font-family:var(--font-mono);font-size:0.95rem;padding:0.7rem 2rem;border:2px solid var(--coral);border-radius:6px;background:transparent;color:var(--coral);cursor:pointer;transition:all 0.2s">标记本章已完成</button>
+    <button class="guide-done-btn" data-guide-slug="${ch.slug}" type="button" aria-pressed="false" style="font-family:var(--font-mono);font-size:0.95rem;padding:0.7rem 2rem;border:2px solid var(--coral);border-radius:6px;background:transparent;color:var(--coral);cursor:pointer;transition:background-color 0.2s,color 0.2s">标记本章已完成</button>
   </div>`;
 
   const pageBody = `<main class="note-shell">

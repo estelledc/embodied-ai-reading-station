@@ -840,7 +840,7 @@
           wrap.hidden = false;
           const fill = wrap.querySelector(".rl-progress-fill");
           const text = wrap.querySelector(".rl-progress-text");
-          fill.style.width = (done / total * 100) + "%";
+          fill.style.setProperty("--progress", String(done / total));
           text.textContent = `${done} / ${total} 已读`;
         } else {
           wrap.hidden = true;
@@ -1135,7 +1135,7 @@
       if (done > 0) {
         el.hidden = false;
         el.querySelector("[data-tp-done]").textContent = done;
-        el.querySelector(".tp-fill").style.width = (total ? (done / total * 100) : 0) + "%";
+        el.querySelector(".tp-fill").style.setProperty("--progress", String(total ? done / total : 0));
       } else {
         el.hidden = true;
       }
@@ -1157,7 +1157,7 @@
         checkbox.checked = done.has(day);
         checkbox.closest(".syl-day")?.classList.toggle("syl-done", checkbox.checked);
       }
-      if (fill) fill.style.width = (done.size / PATH_DAY_COUNT * 100) + "%";
+      if (fill) fill.style.setProperty("--progress", String(done.size / PATH_DAY_COUNT));
       if (count) count.textContent = done.size;
     }
 

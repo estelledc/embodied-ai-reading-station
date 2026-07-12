@@ -160,6 +160,50 @@ for (const f of pwaFiles) {
   check("index.html 加载 Jason DS v2 base/tokens/components", () => (
     idx.includes("/jx/tokens.css") && idx.includes("/jx/base.css") && idx.includes("/jx/components.css")
   ) || "Jason DS stylesheets incomplete");
+  const dsVersion = fs.readFileSync(path.join(SITE, "src", "jx", "VERSION"), "utf8").trim();
+  check("Jason DS vendor 版本为 2.2.0", () => dsVersion === "2.2.0" || `got ${dsVersion}`);
+}
+
+console.log("\n=== Motion contract ===");
+{
+  const themeSource = fs.readFileSync(path.join(SITE, "src", "theme.css"), "utf8");
+  const progressSource = fs.readFileSync(path.join(SITE, "src", "reading-progress.js"), "utf8");
+  const guideSource = fs.readFileSync(path.join(SITE, "scripts", "lib", "views", "guide.mjs"), "utf8");
+  check("站点动效源码不使用 transition: all", () => (
+    !/transition\s*:[^;]*\ball\b/.test(`${themeSource}\n${guideSource}`)
+  ) || "transition: all remains");
+  check("进度条使用 scaleX 而不是 width 动画", () => (
+    !/transition\s*:\s*width\b/.test(themeSource)
+    && !/\.style\.width\s*=/.test(progressSource)
+    && [".rl-progress-fill", ".tp-fill", ".syl-fill"].every((selector) => (
+      themeSource.includes(selector) && themeSource.includes("transform: scaleX(var(--progress, 0))")
+    ))
+  ) || "layout-bound progress animation remains");
+  check("reduced-motion 不依赖 0.01ms 全局压平", () => (
+    !themeSource.includes("0.01ms") && themeSource.includes(".auto-mark-toast.show")
+  ) || "legacy reduced-motion override remains");
+  check("hover 位移只存在于 fine pointer media", () => {
+    const selectors = [
+      ".paper-card:hover",
+      ".pn-card:not(.pn-empty):hover",
+      ".tag-cloud-item:hover",
+      ".feedback-fab:hover",
+      ".back-top-btn:hover",
+    ];
+    const baseRulesAreStatic = selectors.every((selector) => {
+      const match = themeSource.match(new RegExp(`${selector.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\{([^}]*)\\}`));
+      return match && !match[1].includes("transform:");
+    });
+    const fineStart = themeSource.lastIndexOf("@media (hover: hover) and (pointer: fine)");
+    const reduceStart = themeSource.lastIndexOf("@media (prefers-reduced-motion: reduce)");
+    const fineRules = themeSource.slice(fineStart, reduceStart);
+    return (
+      baseRulesAreStatic
+      && fineStart >= 0
+      && reduceStart > fineStart
+      && selectors.every((selector) => fineRules.includes(selector))
+    ) || "hover travel escaped the fine-pointer boundary";
+  });
 }
 
 console.log("\n=== OG / Twitter meta ===");
