@@ -1,6 +1,6 @@
 # 1.3 推进计划 — v1.2 发布收口 → 工程 P1 队列 → Lab 板块启动
 
-> **For agentic workers:** 按批次顺序执行,每批次一个分支一个 PR,批次内每任务一个 commit。
+> **执行路由：** 本文是里程碑、依赖与验收候选档案，不是自动执行队列。独立 agent 必须先读取 [AGENTS.md](AGENTS.md)、[操作索引](docs/operations-index.md) 和 [当前 handoff](SESSION-HANDOFF.md)，声明有限 `run contract` 后才能执行被纳入 scope 的批次。Batch 8/9 与任何内容生产必须显式激活。
 > 本计划是 [ROADMAP.md](ROADMAP.md) 的执行层:出口 = v1.3.0。
 > 各工程任务(EAI-T0xx)的目标与最小验收以 [docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md) 第 5 节为准,本文只做编排,不重复设计。
 > 里程碑只定义出口条件与依赖顺序,不做日历时间承诺。
@@ -110,7 +110,7 @@ P2 的 `EAI-T020`(资产生成可复现)不排入本计划,发布 v1.3.0 前视�
 
 ## PR 与门禁约定
 
-1. 分支命名 `cursor/<batch-name>-<suffix>`,每批次一个 PR,PR 描述引用本文对应批次与 v1.2 路线图对应 Task 行。
+1. 一份有限 run contract 使用一个交付分支，默认最多 3 个可独立验收切片；需要独立 PR 的任务从已接受基线开启新的 run，不从另一条未接受的 PR 栈继续分叉。分支名描述本次交付目标，PR 描述引用本文对应批次与 v1.2 路线图对应 Task 行。
 2. 每个 PR 合并前:`npm test`(unit → build → check)全过;涉及构建产物的批次补跑 `SITE_BASE=/embodied-ai-reading-station` 场景与 dist 确定性对比。
 3. 每批完成后更新本文对应复选框 + CHANGELOG Unreleased 记录,状态漂移以 CHANGELOG 为准。
 4. 发现超出批次范围的问题:记录进本文末尾「执行中记录的坏味道」,不顺手修(沿用 PLAN-1.1 纪律)。
