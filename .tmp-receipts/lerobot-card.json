@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "lerobot",
+  "generator": "ffmpeg-fallback/fill-missing-cards/v2",
+  "inputs": {
+    "converter": {
+      "id": "ffmpeg",
+      "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback/fill-missing-cards/v2",
+      "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "input_content_commit": "5b54de7dbe82b77b773f4dfdc427e492369775c4",
+    "outputs": [
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/lerobot-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/lerobot.webp",
+        "parameters": {}
+      }
+    ],
+    "parameters": {
+      "codec": "libwebp",
+      "pair_atomic": true,
+      "source_priority": [
+        "paper-img-000",
+        "inline-scene",
+        "topic"
+      ]
+    },
+    "slug": "lerobot",
+    "sources": [
+      {
+        "path": "site/src/images/topics/dataset-eval.webp",
+        "sha256": "0b0e68bdbb7afea6aa92755515be2d46391d81e31943fdf465e2af11db83cf81"
+      }
+    ],
+    "template": {
+      "id": "fill-missing-cards",
+      "version": "fill-missing-cards-v2"
+    },
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
+  "asset_fingerprint": "24965e8e496c4930c4d67fb2e4e9b01dff9fd154638be0e2bbce34046c965c45",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/lerobot-800.webp",
+      "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/lerobot.webp",
+      "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
