@@ -1,5 +1,5 @@
 ---
-status: active_campaign
+status: completed
 campaign_name: eai13-t001-t011-integration
 activated_by: user-request-2026-07-12
 activated_at: "2026-07-12T09:15:00+08:00"
@@ -12,15 +12,17 @@ total_budget: 12 runs or 24 hours (whichever first)
 runs_completed: 2
 runs_since_last_external_delta: 0
 review_after: every 3 runs or when origin/main changes
-external_outcome: draft-pr-ci-green-reviewable
+external_outcome: pr-16-ready-for-review-ci-green
 superseded_by: none
 ---
 
-# 当前接班：EAI13 T001-T011 集成 Campaign（ACTIVE）
+# 当前接班：EAI13 T001-T011 集成 Campaign（COMPLETED）
 
 ## Campaign 合同
 
 **objective**：把保存在 `codex/eai13-t010-asset-generation@c57a281` 的 EAI13 T001–T011 实现，安全集成到实时最新的 `origin/main`，形成一个测试全绿、可审查的 Draft PR；之后持续监控并修复 CI 与 actionable review feedback，直到该 PR 达到 ready-for-review 状态。
+
+**completion**：Campaign objective 已完成。PR #16 已基于最新 `origin/main`，本地门禁全绿，GitHub `Validate pull request / build` 成功，且已从 Draft 标记为 ready for review。
 
 **scope**：现有 EAI13 实现栈的集成、冲突处理、回归修复、测试、文档收口和 Draft PR。明确排除：Batch 8 Lab、Batch 9 llava 核验、批量精读、季度论文收录、既有笔记正文改写、MuJoCo/SmolVLA 实验伪造、EAI13-T012 owner-only 设置。
 
@@ -93,10 +95,11 @@ superseded_by: none
 - `git diff --check`：通过。
 - Run 2：远端 main 更新到 `6f88a65`（PR #15）后，使用普通 merge 合入，不改写历史；保留 EAI13 deck 外部 CSS/JS，同时移植 #15 的键盘/指针动效逻辑；CSP sink 白名单加入 `--progress`。
 - Run 2 验证：`npm run test:unit` 342/342 通过；根路径和 `SITE_BASE=/embodied-ai-reading-station` 的 build/check 均为 160/160；`npm audit --audit-level=high` 和 `git diff --check` 通过。
+- GitHub PR #16：`Validate pull request / build` 成功；无 comments/reviews；`isDraft=false`；`mergeable=MERGEABLE`。
 
 ## Blocker 与下一步
 
-- 当前 blocker：无本地门禁 blocker。
-- 下一条命令：`git push`，随后继续监控 Draft PR #16 的 CI 与 actionable review feedback。
+- 当前 blocker：无。
+- 下一条命令：owner/reviewer 审查 PR #16；agent 不 merge、不 deploy、不修改 owner 设置。
 
 不要在 handoff 中复制易过期数量或 ETA；需要数量时使用实时命令。

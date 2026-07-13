@@ -54,7 +54,7 @@ test("handoff records lifecycle fields for an explicit bounded campaign", () => 
     assert.match(handoff, new RegExp(`^${field}:`, "m"));
   }
   assert.match(handoff, /start_ref: [0-9a-f]{40}/);
-  assert.match(handoff, /^status: active_campaign/m);
+  assert.match(handoff, /^status: (active_campaign|completed)/m);
   assert.match(handoff, /run budget/);
   assert.match(handoff, /stop_conditions/);
   assert.match(handoff, /源实现锚点/);
