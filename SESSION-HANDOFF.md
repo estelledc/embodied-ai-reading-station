@@ -1,16 +1,16 @@
 ---
 status: active_campaign
-program_status: WAIT_HUMAN
-cycle_state: PARKED_HUMAN
+program_status: WAIT_REVIEW
+cycle_state: EVIDENCE_READY
 cycle_id: EAIRS-CYCLE-20260713-SMOLVLA-LEROBOT-DRIFT
 activated_by: user-permanent-research-program
 scope: smolvla-lerobot-guide-drift
 branch: codex/smolvla-lerobot-guide-drift
 start_ref: c5365a1b0c8fea62f8d48149eeb580f38cca8308
 baseline_ref: origin/main
-review_after: when Draft PR exists or origin/main changes
+review_after: when PR #17 CI/review completes or origin/main changes
 total_budget: 3 slices / 1 writer / current cycle only
-external_outcome: remote-branch-pushed-pr-not-created
+external_outcome: draft-pr-created
 superseded_by: none
 ---
 
@@ -40,24 +40,23 @@ superseded_by: none
 - `PATH="/opt/homebrew/bin:$PATH" node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs` 通过。
 - 同范围旧事实模式扫描无 actionable residual drift；旧命令/旧路径只允许出现在“不要按旧版本默认入口使用”的证据边界中。
 
-**run budget**：本 cycle 最多 3 个切片、1 个 writer；当前已用完写入切片，应等待 PR 创建。
+**run budget**：本 cycle 最多 3 个切片、1 个 writer；当前已用完写入切片，应等待 PR #17 的 CI / review / merge 结果。
 
 **权限边界**：允许维护当前 fact-drift 分支并创建 Draft PR；禁止 force push、直接写 `main`、merge、deploy 或修改 owner 设置。
 
 **stop_conditions**：
-- 需要 GitHub 登录、token、`gh`/`hub` 或浏览器认证才能创建 Draft PR。
-- 当前 PR/分支未被 owner 接受前，不启动第二个写入型 PR。
+- PR #17 需要 CI、review 或 merge 决策。
+- 当前 PR/分支未被接受、合并或关闭前，不启动第二个写入型 PR。
 - 不放宽证据等级，不把计划或估算写成 E4 实验结果。
 
 ## 当前状态
 
 - 本地分支：`codex/smolvla-lerobot-guide-drift`。
 - 源实现锚点：`origin/main` at cycle start，当前值需用 `git rev-parse origin/main` 重新读取。
-- 远端：`origin/codex/smolvla-lerobot-guide-drift` 已存在并与本地内容同步；重新检查时以 `git ls-remote origin refs/heads/codex/smolvla-lerobot-guide-drift` 为准。
+- 远端：`origin/codex/smolvla-lerobot-guide-drift` 已存在；重新检查时以 `git ls-remote origin refs/heads/codex/smolvla-lerobot-guide-drift` 为准。
+- Pull Request：[#17](https://github.com/estelledc/embodied-ai-reading-station/pull/17) 已创建为 Draft PR。
 - 相对 `origin/main` 的主题：SmolVLA 年份/参数量/动作头事实修正、LeRobot v0.6.0 训练入口和 Python 版本要求修正、当前 handoff 收口。
-- GitHub API：unauthenticated rate limit；`GITHUB_TOKEN` / `GH_TOKEN` 缺失。
-- CLI：本机未发现 `gh` 或 `hub`。
-- HTML 只读检查：pulls 搜索 `is:pr head:codex/smolvla-lerobot-guide-drift` 显示无匹配；compare 页面可打开并显示 `Open a pull request`，但当前环境未登录 GitHub。
+- GitHub CLI：`/opt/homebrew/bin/gh` 可用，账号 `estelledc` 已登录。
 
 ## 已完成切片
 
@@ -72,8 +71,8 @@ superseded_by: none
 
 ## 下一条命令
 
-使用已登录 GitHub 的浏览器创建 Draft PR：
+检查 PR #17 的 CI / review 状态：
 
-`https://github.com/estelledc/embodied-ai-reading-station/compare/main...codex/smolvla-lerobot-guide-drift?quick_pull=1`
+`/opt/homebrew/bin/gh pr view 17 --json state,isDraft,mergeStateStatus,reviewDecision,statusCheckRollup,url`
 
-PR 创建后，下一轮 agent 先读取 `AGENTS.md`、`docs/operations-index.md` 和本 handoff，再检查 PR CI/review。若 PR 已合并或明确关闭，才考虑启动 LeRobot 独立笔记 cycle。
+若 CI 通过且 review/merge 条件满足，再按用户授权推进 ready for review / merge。若 PR 已合并或明确关闭，才考虑启动 LeRobot 独立笔记 cycle。
