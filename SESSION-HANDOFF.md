@@ -1,20 +1,20 @@
 ---
-status: active_campaign
+status: completed
 program_status: ACTIVE
-cycle_state: INTEGRATING
+cycle_state: INTEGRATED
 cycle_id: EAIRS-CYCLE-20260713-LEROBOT-TUTORIAL-V060
 activated_by: user-continue-research
 scope: lerobot-tutorial-v060-evidence-tightening
-branch: codex/lerobot-tutorial-v060-evidence
+branch: main
 start_ref: 8e85fa93279cc1a7fa50d92a69ad98df0c773e36
 baseline_ref: origin/main
-review_after: PR merge or next user wake
-total_budget: 1 PR / 1 writer / 120 minutes
-external_outcome: local-review-ready-change-set
+review_after: next user wake or new bounded research cycle
+total_budget: PR #20 + 1 writer / completed cycle
+external_outcome: pr-20-merged
 superseded_by: none
 ---
 
-# 当前接班：LeRobot v0.6.0 入门教程口径修正
+# 当前接班：LeRobot v0.6.0 入门教程口径修正已合并
 
 ## Cycle 合同
 
@@ -24,7 +24,7 @@ superseded_by: none
 
 **falsifier**：若 LeRobot `v0.6.0` release、固定 tag README / `pyproject.toml` 仍支持这些旧入口和环境口径，则不应修改正文。
 
-**objective**：在不触碰 156 篇论文 inventory 的前提下，把现有实践教程校正到 LeRobot `v0.6.0` 可复查入口，并明确本站未保存本地微调 / 真机执行 E4 artifact。
+**objective**：在不触碰 156 篇论文 inventory 的前提下，把现有实践教程校正到 LeRobot `v0.6.0` 可复查入口，并明确本站未保存本地微调 / 真机执行 E4 artifact。该目标已通过 PR #20 合并完成。
 
 **scope**：
 - `site/content/tutorials.md`
@@ -49,10 +49,12 @@ superseded_by: none
 **acceptance_checks**：
 - `PATH="/opt/homebrew/bin:$PATH" npm run build`
 - `PATH="/opt/homebrew/bin:$PATH" npm run check`
+- `PATH="/opt/homebrew/bin:$PATH" npm run test:unit`
+- `PATH="/opt/homebrew/bin:$PATH" node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs`
 - `git diff --check`
-- GitHub PR CI `Validate pull request / build` 成功后再 merge。
+- PR #20 CI `Validate pull request / build` 成功并合并。
 
-**run budget**：最多 1 个写入 PR、1 个 writer、120 分钟；本轮只做 tutorials 口径修正。
+**run budget**：本 cycle 使用 1 个内容修正 PR、1 个 writer；已完成，不继续在该 scope 上叠加 `notes/lerobot.md`、Lab 或实验声明。
 
 **权限边界**：用户已授权 `gh`、review 和 merge；仍禁止 force push、直接写 `main`、deploy、owner 设置或伪造 E4。
 
@@ -63,10 +65,12 @@ superseded_by: none
 
 ## 当前状态
 
-- 当前分支：`codex/lerobot-tutorial-v060-evidence`。
 - 源实现锚点：`8e85fa93279cc1a7fa50d92a69ad98df0c773e36`（PR #19 merge 后 main）。
 - 实时 PR：开始本轮时 open PR 为空。
 - 基线检查：编辑前 `PATH="/opt/homebrew/bin:$PATH" npm run check` 有 159 passed / 1 failed；唯一失败为 `sw.js BUILD_ID drift`，判断是现有 `dist/` 未按当前 commit 重建，后续以先 `npm run build` 再 `npm run check` 为准。
+- main 合并结果：
+  - [PR #20](https://github.com/estelledc/embodied-ai-reading-station/pull/20)：`be59afe265505167a8b2686195229aae2dc6dc23`
+- GitHub CLI：`/opt/homebrew/bin/gh` 可用，账号 `estelledc` 已登录。
 
 ## 已完成切片
 
@@ -78,17 +82,17 @@ superseded_by: none
    - 增加 Python `>=3.12` 与 `lerobot[training]` extras 提醒。
    - 去掉未核验硬件价格与“本站已跑通”暗示。
 4. 更新 `CHANGELOG.md` 记录本轮修正。
+5. PR #20：CI `Validate pull request / build` 通过并合并到 `origin/main`。
 
 ## 下一条命令
 
-继续从当前分支验证：
+从最新 main 开始新的有限 cycle：
 
 ```bash
-cd /Users/bytedance/intern-journal/explorations/embodied-ai/site
-PATH="/opt/homebrew/bin:$PATH" npm run build
-PATH="/opt/homebrew/bin:$PATH" npm run check
-cd ..
-git diff --check
+git fetch origin main
+git switch main
+git pull --ff-only origin main
+git status --short --branch
 ```
 
-验证通过后逐文件 commit、push、创建 Draft PR，等待 CI 成功后标记 ready 并 merge。
+下一轮如果要推进 `notes/lerobot.md`，先声明包含 provenance/API 计数、card/inline 资产和公开文案更新的独立 run contract；如果只做只读研究，必须产出明确可复查的 Knowledge Delta，不要为维持活跃制造无意义 diff。
