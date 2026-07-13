@@ -187,14 +187,16 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 | 平台 | HuggingFace Blog + LeRobot GitHub |
 | 链接 | https://huggingface.co/blog/smolvla |
 | 语言 | 英文 |
-| 时长 | 3-5 小时（含微调约 20 分钟） |
+| 时长 | 先预留 3-5 小时做官方教程和短跑验证；真实微调时间取决于数据量、显卡和 batch |
 | 需要英文阅读吗 | 需要，配翻译 |
-| 是否要 GPU | 需要，但单张消费级显卡或 MacBook M 系列就够 |
-| 好玩瞬间 | 你的小笔记本（不是服务器）真的训出了一个能"看图听指令、给出机械臂动作"的小模型 |
+| 是否要 GPU | 推理和小规模训练优先按官方配置短跑；显存需求随策略、batch 和图像分辨率变化 |
+| 好玩瞬间 | 按官方教程短跑成功后，你能第一次看到"图像 + 指令 → 动作"这条链路在本机形成闭环 |
 
 > **VLA（Vision-Language-Action 模型）**：眼睛看图（V）+ 耳朵听指令（L）+ 手做动作（A）三合一的模型，给机器人当大脑。
 
-- **作用**：450M 参数的小型 VLA，用 Macbook 也能跑
+> **证据边界（2026-07-13）**：SmolVLA 的 450M、公开社区数据和 LeRobot 集成来自 `arxiv-2506.01844` 与 Hugging Face 官方博客；下面 LeRobot 入口按 GitHub release `v0.6.0`（commit `30da8e687a6dfc617fcd94afc367ac7071c376ce`）和该 tag 下 `pyproject.toml` / README 写。本站尚未保存本地微调或真机执行的 E4 artifact，所以这里是入门路径建议，不是“本站已跑通”的实验报告。
+
+- **作用**：约 450M 参数的小型 VLA，目标是把训练和推理门槛降到消费级硬件；是否能在你的机器上跑通，要以本机短跑日志为准
 - **配套笔记**：[OpenVLA 笔记](../notes/openvla.md) + [VLA 大盘](../tracks/vla-mcp-overview.md)
 
 ### 9. HuggingFace LeRobot 官方教程
@@ -206,11 +208,20 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 | 语言 | 英文 |
 | 时长 | 4-6 小时 |
 | 需要英文阅读吗 | 需要 |
-| 是否要 GPU | Colab T4 / 本地 8GB+ 显卡 |
+| 是否要 GPU | 数据查看、遥操和格式理解可以先轻量跑；训练 / 评估按具体策略决定 |
 | 好玩瞬间 | 用键盘"遥操"一个仿真机械臂去抓木块，自己录数据，再训一个模型让它自己抓 |
 
-- **作用**：HuggingFace 官方机器人学习课程，覆盖数据格式、遥操、训策略
-- 可作为「跑通 SmolVLA」之后的进阶
+- **作用**：HuggingFace 官方机器人学习课程，覆盖 LeRobotDataset、遥操/采集、训练和评估的基本链路
+- **v0.6.0 环境提醒**：`pyproject.toml` 写明 `requires-python = ">=3.12"`；`pip install lerobot` 是轻量默认安装，不再自动带齐 dataset / training 依赖，训练前按需装 extras，例如：
+
+```bash
+conda create -n lerobot-v06 python=3.12 -y
+conda activate lerobot-v06
+pip install "lerobot[training]"
+lerobot-info
+```
+
+- **当前稳定入口**：先用 `lerobot-info` 看本机暴露了哪些 CLI；采集/回放优先查 `lerobot-record`、`lerobot-replay`，训练/评估优先查 `lerobot-train`、`lerobot-eval`。不要把旧文章里的 `examples/2_evaluate_pretrained_policy.py`、`examples/3_train_policy.py` 当成 v0.6.0 的稳定公共入口。
 
 ### 10. LeRobot 中文教程（飞书文档）
 
@@ -314,7 +325,7 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 
 ## 能跑得起来的开源项目（按"能不能上手"排序）
 
-> 下面这些是 2026-05 当时还活跃维护、有清楚 README、能在合理硬件上跑通的开源项目。从最适合第一次跑的开始。
+> 下面这些是 2026-07 重新核过入口的一批活跃开源项目：优先选官方文档清楚、学习路径明确、硬件门槛可控的项目。从最适合第一次尝试的开始；“能否跑通”必须以你自己的命令和日志为准。
 
 ## 术语速查（首次出现给类比，不重复解释）
 
@@ -334,14 +345,16 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 
 - **链接**：<https://github.com/huggingface/lerobot>
 - **一句话定位**：具身智能界的"HuggingFace Transformers"——下载预训练策略 / 数据集 / 跑微调，全套工具链
-- **状态**：24.5k stars / v0.5.1（2026-04-07）/ 极活跃
-- **门槛**：⭐⭐ 纯软件部分能在 Colab T4 跑；硬件可选（最低 ¥230 一对 SO-101 臂就能玩）
-- **支持硬件**：SO-100 / SO-101 / Koch / Aloha / Unitree G1 / 手机 / 键盘等
+- **状态**：GitHub release `v0.6.0`（2026-07-06）/ Apache-2.0 / 极活跃；`main` 可能继续向前滚动，学习时先固定 release
+- **门槛**：⭐⭐ 纯软件部分可以先从官方教程和数据格式跑起；真实硬件是可选项，具体 BOM 与支持清单以 LeRobot 硬件文档为准
+- **支持硬件**：README 列出 SO100、LeKiwi、Koch、HopeJR、OMX、EarthRover、Reachy2、Gamepads、Keyboards、Phones、OpenARM、Unitree G1、reBot B601 等；新增或改名硬件要回到当前 release 文档核对
 - **入门路径**：
-  - Hugging Face Spaces 上的免费 [Robot Learning Tutorial](https://huggingface.co/learn) 课（中英文）
-  - 官方 [examples/](https://github.com/huggingface/lerobot/tree/main/examples) 编号 1-3 教程：加载数据集 → 评估预训练策略 → 训练自己的策略
-  - 中文社区教程：搜"lerobot SO-100 教程"
-- **推荐时机**：**第一站**。先跑通 examples/2_evaluate_pretrained_policy.py，能看到机器人在仿真里动起来——比啃论文有正反馈得多
+  - Hugging Face Spaces 上的免费 [Robot Learning Tutorial](https://huggingface.co/spaces/lerobot/robot-learning-tutorial)
+  - 官方 README 的最小链路：`pip install lerobot` → `lerobot-info`
+  - 需要训练时安装 `lerobot[training]`，再用 `lerobot-train --policy.type=... --dataset.repo_id=...`
+  - 需要评估时从 `lerobot-eval` 开始，并按策略和环境补对应 extra
+  - 中文社区教程可作为辅助，但命令行入口仍以当前 release 文档为准
+- **推荐时机**：**第一站**。先确认 LeRobotDataset 和 CLI 能跑，再进入 SmolVLA / ACT / Diffusion 策略训练；这样比直接啃 VLA 大模型代码更容易获得正反馈
 
 ### 2. MuJoCo Menagerie
 
@@ -453,14 +466,14 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 
 ### 周 1-2：零成本起步
 1. 跑通 [MuJoCo Colab tutorial](https://github.com/google-deepmind/mujoco)（看到机器人动起来）
-2. 跑通 LeRobot examples/2_evaluate_pretrained_policy.py（看预训练策略表现）
+2. 跑通 LeRobot `lerobot-info` 和官方 Robot Learning Tutorial 的数据查看 / 最小训练路径
 
 ### 周 3-4：加点深度
-3. LeRobot examples/3_train_policy.py（训练自己第一个 ACT/Diffusion 策略）
+3. 用 `lerobot-train --policy.type=act` 或 `--policy.type=diffusion` 训练自己第一个小策略
 4. ManiSkill quickstart Colab（感受 GPU 并行仿真）
 
 ### 月 2+：可选硬件
-5. 攒 ¥230 买 SO-101 双臂套件（如果真的喜欢）
+5. 如果真的喜欢，再按 LeRobot 硬件文档选 SO 系列或其他低成本平台；价格、套件和兼容性以购买时官方/厂商页面为准
 6. 用真机录 50 条数据 → 上传 HuggingFace Hub → 训练 → 部署
 
 ### 月 3+：大模型实战
@@ -474,7 +487,7 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 | 项目 | Colab T4 (16GB) | RTX 3060 (12GB) | RTX 4090 (24GB) | A100 (80GB) |
 |------|---|---|---|---|
 | MuJoCo Menagerie | OK | OK | OK | OK |
-| LeRobot 推理/训练（小） | OK | OK | OK | OK |
+| LeRobot 推理/训练（小） | 看策略和 extra | OK | OK | OK |
 | ManiSkill 仿真 | OK | OK | OK | OK |
 | Robosuite | OK | OK | OK | OK |
 | Habitat-Lab | 需配置 | OK | OK | OK |
@@ -488,8 +501,8 @@ intro: '从「不用配电脑、看视频就行」到「装 Python 跑模型」�
 
 ## 总结一句话
 
-- **明天就能开跑**：MuJoCo Menagerie + LeRobot examples
+- **明天就能开跑**：MuJoCo Menagerie + LeRobot 官方教程 / CLI 最小链路
 - **有点 GPU 想做研究**：ManiSkill / Robosuite / RLBench 三选一
 - **真要搞 VLA 大模型**：OpenPI（π0 已开源是 2025 年最大利好）
-- **想买真机**：SO-101 ¥230 入门 → 攒钱看 ALOHA $30k+
+- **想买真机**：先查 LeRobot 当前硬件文档和 BOM，再决定是否从 SO 系列入门；ALOHA 级平台属于实验室预算
 - **企业级仿真**：Isaac Lab（但有学习曲线，不是入门首选）
