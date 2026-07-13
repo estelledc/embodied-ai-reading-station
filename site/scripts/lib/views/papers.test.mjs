@@ -66,7 +66,7 @@ test("paper library remains a separate, progressively enhanced browse page", () 
   assert.match(html, /id="paper-library"/);
   assert.match(html, /id="eai-quick-filter"/);
   assert.match(html, /按主题、难度、era 与内容状态筛选/);
-  assert.match(cardHtml, /class="thumb"><img[^>]+loading="lazy"[^>]+decoding="async"/);
+  assert.match(cardHtml, /class="thumb"[^>]*>[\s\S]*<img[^>]+loading="lazy"[^>]+decoding="async"/);
   assert.doesNotMatch(cardHtml, /class="thumb" style="background-image/);
   assert.match(html, /<link rel="canonical" href="https:\/\/estelledc\.github\.io\/embodied-ai-reading-station\/papers\/">/);
 });

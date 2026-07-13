@@ -60,9 +60,9 @@ test("site chrome exposes the portfolio escape route and public profile links", 
 
   assert.match(html, /Jason \/ Works/);
   assert.match(html, /aria-label="Jason 作品集导航"/);
-  assert.match(html, /<details class="more-nav">/);
-  assert.match(html, /<summary class="more-nav-trigger"/);
-  assert.doesNotMatch(html, /class="more-nav-trigger"[^>]*aria-expanded/);
+  assert.match(html, /<div class="more-nav" data-more-nav>/);
+  assert.match(html, /<button type="button" class="more-nav-trigger"[^>]*aria-expanded="false"/);
+  assert.match(html, /aria-controls="more-nav-panel"/);
   assert.match(html, /href="https:\/\/estelledc\.github\.io\/about\/">About<\/a>/);
   assert.match(html, /href="https:\/\/estelledc\.github\.io\/resume\/">Résumé<\/a>/);
   assert.match(html, /href="https:\/\/github\.com\/estelledc\/embodied-ai-reading-station">GitHub<\/a>/);

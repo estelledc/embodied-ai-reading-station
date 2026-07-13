@@ -4,7 +4,7 @@ import test from "node:test";
 
 import { loadNotes } from "./content.mjs";
 import {
-  buildIndex,
+  buildPapersIndex,
   readJpegIntrinsicWidth,
   renderPaperCardThumbnail,
 } from "./views/papers.mjs";
@@ -93,8 +93,8 @@ test("missing cards render a zero-request 16:9 placeholder", () => {
   assert.doesNotMatch(html, /<(?:picture|img|source)\b|\bsrc(?:set)?=|background-image|url\(/);
 });
 
-test("all current homepage cards use decorative responsive images and keep title link names", () => {
-  const html = buildIndex(loadNotes());
+test("all paper library cards use decorative responsive images and keep title link names", () => {
+  const html = buildPapersIndex(loadNotes());
   const cards = [...html.matchAll(/<article class="paper-card"[\s\S]*?<\/article>/g)]
     .map(match => match[0]);
 

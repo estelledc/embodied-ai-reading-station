@@ -38,7 +38,7 @@ test("the operations index does not turn the roadmap into an autonomous queue", 
   assert.match(plan, /run contract/);
 });
 
-test("handoff records lifecycle fields without granting a new product run", () => {
+test("handoff records lifecycle fields for an explicit bounded campaign", () => {
   const handoff = read("SESSION-HANDOFF.md");
 
   for (const field of [
@@ -46,19 +46,20 @@ test("handoff records lifecycle fields without granting a new product run", () =
     "scope",
     "activated_by",
     "review_after",
-    "budget",
+    "total_budget",
     "external_outcome",
-    "stop_conditions",
     "superseded_by",
     "start_ref",
   ]) {
     assert.match(handoff, new RegExp(`^${field}:`, "m"));
   }
   assert.match(handoff, /start_ref: [0-9a-f]{40}/);
-  assert.match(handoff, /当前没有活动产品 run/);
-  assert.match(handoff, /本地实现候选/);
+  assert.match(handoff, /^status: active_campaign/m);
+  assert.match(handoff, /run budget/);
+  assert.match(handoff, /stop_conditions/);
+  assert.match(handoff, /源实现锚点/);
   assert.match(handoff, /下一条命令/);
-  assert.match(handoff, /不替用户选择/);
+  assert.match(handoff, /禁止 force push/);
 });
 
 test("deep-read remains an explicit opt-in workflow with portable paths", () => {
