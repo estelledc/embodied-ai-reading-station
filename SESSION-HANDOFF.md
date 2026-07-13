@@ -1,105 +1,79 @@
 ---
-status: completed
-campaign_name: eai13-t001-t011-integration
-activated_by: user-request-2026-07-12
-activated_at: "2026-07-12T09:15:00+08:00"
-scope: eai13-t001-t011-integration-to-main
-start_ref: 9d62a5bcff39d4a73abffce74be8d507b71ae461
-source_ref: c57a281395948afbba9346845825a37cc5b0347f
-source_branch: codex/eai13-t010-asset-generation
-integration_branch: campaign/eai13-t001-t011-integration
-total_budget: 12 runs or 24 hours (whichever first)
-runs_completed: 2
-runs_since_last_external_delta: 0
-review_after: every 3 runs or when origin/main changes
-external_outcome: pr-16-ready-for-review-ci-green
+status: active_campaign
+program_status: WAIT_HUMAN
+cycle_state: PARKED_HUMAN
+cycle_id: EAIRS-CYCLE-20260713-SMOLVLA-LEROBOT-DRIFT
+activated_by: user-permanent-research-program
+scope: smolvla-lerobot-guide-drift
+branch: codex/smolvla-lerobot-guide-drift
+start_ref: c5365a1b0c8fea62f8d48149eeb580f38cca8308
+baseline_ref: origin/main
+review_after: when Draft PR exists or origin/main changes
+total_budget: 3 slices / 1 writer / current cycle only
+external_outcome: remote-branch-pushed-pr-not-created
 superseded_by: none
 ---
 
-# 当前接班：EAI13 T001-T011 集成 Campaign（COMPLETED）
+# 当前接班：SmolVLA / LeRobot 事实漂移修复
 
-## Campaign 合同
+## Cycle 合同
 
-**objective**：把保存在 `codex/eai13-t010-asset-generation@c57a281` 的 EAI13 T001–T011 实现，安全集成到实时最新的 `origin/main`，形成一个测试全绿、可审查的 Draft PR；之后持续监控并修复 CI 与 actionable review feedback，直到该 PR 达到 ready-for-review 状态。
+**research_question**：`guide/` 中 Task 2 与 Ch12 的 SmolVLA / LeRobot 说法，是否和一手来源中的 SmolVLA 2025 事实、LeRobot v0.6.0 入口和 Python 要求一致？
 
-**completion**：Campaign objective 已完成。PR #16 已基于最新 `origin/main`，本地门禁全绿，GitHub `Validate pull request / build` 成功，且已从 Draft 标记为 ready for review。
+**objective**：修正当前指南中可定位的 SmolVLA / LeRobot 事实漂移，并形成一个可审查的单分支变更。
 
-**scope**：现有 EAI13 实现栈的集成、冲突处理、回归修复、测试、文档收口和 Draft PR。明确排除：Batch 8 Lab、Batch 9 llava 核验、批量精读、季度论文收录、既有笔记正文改写、MuJoCo/SmolVLA 实验伪造、EAI13-T012 owner-only 设置。
+**scope**：
+- 内容源真相：`guide/ch22-task-guide.md`、`guide/ch12-openvla-vlas-mla.md`。
+- 运行交接：`SESSION-HANDOFF.md`。
+- 明确排除：新建 `notes/lerobot.md`、开启 Lab、声明任何 MuJoCo/SmolVLA/VLA 实验已跑通、修改 `main`、merge/deploy/owner 设置。
+
+**primary_sources**：
+- `arxiv-2506.01844`：SmolVLA arXiv abs，Submitted on 2 Jun 2025。
+- `hf-smolvla-blog`：Hugging Face SmolVLA blog，SmolVLA-450M、消费级硬件与异步推理定位。
+- `hf-smolvla-base-readme`：`lerobot/smolvla_base` README，flow matching 和 public import path。
+- `lerobot-v0.6.0`：LeRobot GitHub release / `pyproject.toml` / `src/lerobot/policies/smolvla/`，`lerobot-train` 与 Python `>=3.12`。
 
 **acceptance_checks**：
-1. 保留 c57a281 原分支与全部原始提交，不在该分支 rebase 或改写历史。
-2. 从 fetch 后的最新 origin/main 建立隔离 integration 分支（worktree：`explorations/embodied-ai-integration`）。
-3. 逐依赖集成 T001–T011 的 13 个提交，每个冲突都解释取舍。
-4. `npm run test:unit` 全过。
-5. 固定 `SOURCE_DATE_EPOCH=1720579200` 后，根路径 `npm run build && npm run check` 全过。
-6. `SITE_BASE=/embodied-ai-reading-station npm run build && npm run check` 全过。
-7. `npm audit --audit-level=high` 与 `git diff --check` 通过。
-8. Draft PR CI 全绿；所有 actionable review feedback 已处理或有证据说明不采纳。
+- `git status --short --branch` 显示 embodied-ai 子仓工作树可解释。
+- `git rev-list --left-right --count origin/main...HEAD` 只显示当前分支相对 main 的提交。
+- `git diff --check` 通过。
+- `PATH="/opt/homebrew/bin:$PATH" node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs` 通过。
+- 同范围旧事实模式扫描无 actionable residual drift；旧命令/旧路径只允许出现在“不要按旧版本默认入口使用”的证据边界中。
 
-**run budget（单 run）**：最多 3 个切片、120 分钟、1 个写者；只读调查可并行。
+**run budget**：本 cycle 最多 3 个切片、1 个 writer；当前已用完写入切片，应等待 PR 创建。
 
-**total_budget**：最多 12 个 run 或 24 小时，以先到者为准。
-
-**review_after**：每完成 3 个 run 或远端 main 发生变化时复核。
+**权限边界**：允许维护当前 fact-drift 分支并创建 Draft PR；禁止 force push、直接写 `main`、merge、deploy 或修改 owner 设置。
 
 **stop_conditions**：
-1. campaign objective 已完成（Draft PR ready-for-review）；
-2. 总预算耗尽；
-3. 连续 3 个 run 没有 external delta；
-4. 需要 force push、改写受保护历史、merge、deploy 或 owner 设置；
-5. 出现无法解释的工作树重叠、凭证问题或无法复现的门禁失败。
+- 需要 GitHub 登录、token、`gh`/`hub` 或浏览器认证才能创建 Draft PR。
+- 当前 PR/分支未被 owner 接受前，不启动第二个写入型 PR。
+- 不放宽证据等级，不把计划或估算写成 E4 实验结果。
 
-**权限边界**：允许创建集成分支、修改文件、运行测试、创建原子本地提交、push 非 main 分支、创建和更新 Draft PR。禁止 force push、直接写 main、merge PR、deploy、修改 branch protection、required checks 或 Pages owner 设置。
+## 当前状态
 
-## 状态线
+- 本地分支：`codex/smolvla-lerobot-guide-drift`。
+- 源实现锚点：`origin/main` at cycle start，当前值需用 `git rev-parse origin/main` 重新读取。
+- 远端：`origin/codex/smolvla-lerobot-guide-drift` 已存在并与本地内容同步；重新检查时以 `git ls-remote origin refs/heads/codex/smolvla-lerobot-guide-drift` 为准。
+- 相对 `origin/main` 的主题：SmolVLA 年份/参数量/动作头事实修正、LeRobot v0.6.0 训练入口和 Python 版本要求修正、当前 handoff 收口。
+- GitHub API：unauthenticated rate limit；`GITHUB_TOKEN` / `GH_TOKEN` 缺失。
+- CLI：本机未发现 `gh` 或 `hub`。
+- HTML 只读检查：pulls 搜索 `is:pr head:codex/smolvla-lerobot-guide-drift` 显示无匹配；compare 页面可打开并显示 `Open a pull request`，但当前环境未登录 GitHub。
 
-- 远端已接受基线：`origin/main` = `9d62a5bcff39d4a73abffce74be8d507b71ae461`（Merge PR #14）。
-- 源实现锚点：`codex/eai13-t010-asset-generation` @ `c57a281395948afbba9346845825a37cc5b0347f`（13 个提交，T001–T011）。
-- 集成分支：`campaign/eai13-t001-t011-integration`（worktree：`explorations/embodied-ai-integration`）。
-- 合并基线（merge base）：`5b02c23`（Merge PR #12）；分叉后 origin/main 新增 5 个提交（PR #13 showcase-v2 + PR #14 ci-finalization），源分支新增 13 个提交。
+## 已完成切片
 
-## 当前 run（Run 1）
+1. `guide/ch22-task-guide.md`：补充证据边界；把 SmolVLA 从旧的 diffusion/head 路径叙述改为 flow-matching action expert；将训练入口改为 LeRobot v0.6.0 的 `lerobot-train`；拆分 MuJoCo / robosuite Python 3.10 与 LeRobot v0.6.x Python 3.12+ 环境。
+2. `guide/ch12-openvla-vlas-mla.md`：将 SmolVLA 时间线校正为 2025.06，参数量校正为约 450M，避免“2024.11 / ~3B / 6 个月内”旧说法。
+3. `SESSION-HANDOFF.md`：替换旧 EAI13 完成态 handoff，记录当前分支和 PR blocker。
 
-**Run 1 contract**：
-- objective：逐提交 cherry-pick dabde09..c57a281 的 13 个 EAI13 提交到集成分支，解决重叠文件冲突。
-- scope：cherry-pick 集成与冲突解决，不做额外重构或功能扩展。
-- slices：
-  1. cherry-pick 前 4 个提交（dabde09, 9192593, ce8b282, 3abbf1d：provenance v2 合同/迁移/门禁 + v1.3 文档收口）
-  2. cherry-pick 中 5 个提交（19a64ca, 988500d, 328114c, 98cbdf3, b495c11：Data API + 响应式图片 + SW 缓存 + CSP + More 导航）
-  3. cherry-pick 后 4 个提交（1e61f00, 343cfe7, c56ae32, c57a281：许可治理 + 资产生成 + 审查夹具 + T011 收口）
-- acceptance：cherry-pick 完成，无未解决冲突，工作树可解释。
+## 发现但未写入的新候选
 
-**Run 1 checkpoint**：
-- 完成：治理框架、campaign 激活、EAI13 的 13 个源提交和 3 个集成修复提交均已落在 `campaign/eai13-t001-t011-integration`。
-- 冲突取舍：
-  - `layout.mjs` / layout tests：保留 EAI13 的 button-based More 导航、`aria-expanded` 同步与 `aria-controls`，更新旧的 `<details>` 测试假设。
-  - `papers.mjs` / `theme.css`：保留最新 main 的独立 Papers 页和语义化 class 结构，同时保留 EAI13 的 `picture.thumb` 响应式图片。
-  - responsive image tests：从旧首页全量 paper wall 改为验证最新 main 的独立 Papers 页。
-  - CSP budget：最新 main 已移除首页 paper wall，style attribute 总数从 4675 收紧到 4582；唯一值数量和 digest 未漂移。
-- external delta：集成分支本地验收全绿，准备 push 并创建 Draft PR。
+- `notes/lerobot.md` 与 `papers/lerobot/` 仍缺失；OpenReview `CiZMMAFQR3` 可作为 LeRobot 独立研究候选的一手来源。
+- 该候选暂不写入：当前 fact-drift 分支还没有 Draft PR 或 reviewer/owner 接受结果，按单活动写入 PR 规则先等待。
 
-## 先读什么
+## 下一条命令
 
-1. `AGENTS.md`：绑定的推进、权限和停止规则。
-2. `docs/operations-index.md`：唯一活动操作入口与测试阶梯。
-3. 本文件：当前 campaign 与 run 状态。
-4. `CHANGELOG.md`、`PLAN-1.3.md`、`docs/v1.2-healthcheck-roadmap.md`：已读过，按需回查。
+使用已登录 GitHub 的浏览器创建 Draft PR：
 
-## 验证结果
+`https://github.com/estelledc/embodied-ai-reading-station/compare/main...codex/smolvla-lerobot-guide-drift?quick_pull=1`
 
-- 治理框架（27858b4）已 cherry-pick 到集成分支，8 files changed, 280 insertions。
-- `npm run test:unit`：338/338 通过。
-- `SOURCE_DATE_EPOCH=1720579200 npm run build && SOURCE_DATE_EPOCH=1720579200 npm run check`：根路径通过，155/155 checks。
-- `SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run build && SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run check`：仓库子路径通过，155/155 checks。
-- `npm audit --audit-level=high`：通过；仅余 1 个 moderate `js-yaml` advisory。
-- `git diff --check`：通过。
-- Run 2：远端 main 更新到 `6f88a65`（PR #15）后，使用普通 merge 合入，不改写历史；保留 EAI13 deck 外部 CSS/JS，同时移植 #15 的键盘/指针动效逻辑；CSP sink 白名单加入 `--progress`。
-- Run 2 验证：`npm run test:unit` 342/342 通过；根路径和 `SITE_BASE=/embodied-ai-reading-station` 的 build/check 均为 160/160；`npm audit --audit-level=high` 和 `git diff --check` 通过。
-- GitHub PR #16：`Validate pull request / build` 成功；无 comments/reviews；`isDraft=false`；`mergeable=MERGEABLE`。
-
-## Blocker 与下一步
-
-- 当前 blocker：无。
-- 下一条命令：owner/reviewer 审查 PR #16；agent 不 merge、不 deploy、不修改 owner 设置。
-
-不要在 handoff 中复制易过期数量或 ETA；需要数量时使用实时命令。
+PR 创建后，下一轮 agent 先读取 `AGENTS.md`、`docs/operations-index.md` 和本 handoff，再检查 PR CI/review。若 PR 已合并或明确关闭，才考虑启动 LeRobot 独立笔记 cycle。
