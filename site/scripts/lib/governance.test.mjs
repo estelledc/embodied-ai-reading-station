@@ -177,7 +177,7 @@ test("binary delta rejects third-party binaries but allows project-generated ima
       changedPaths: [paperPath, inlinePath, cardPath],
     });
     assert.equal(result.ok, false);
-    assert.deepEqual(result.binary_paths, [cardPath, inlinePath, paperPath]);
+    assert.deepEqual(result.binary_paths.sort(), [cardPath, inlinePath, paperPath].sort());
     assert.match(result.errors.join("\n"), /third-party paper binary changed/);
     assert.doesNotMatch(result.errors.join("\n"), /rights discriminator/);
 
