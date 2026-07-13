@@ -1069,38 +1069,45 @@ Y 轴 = 成功率（0-100%）
 | CUDA 版本不匹配 | `RuntimeError: CUDA error: no kernel image is available` | PyTorch 编译时的 CUDA 版本和你显卡驱动不一致 | 运行 `nvidia-smi` 看驱动支持的最高 CUDA 版本，去 pytorch.org 选对应版本安装 |
 | 无头服务器渲染失败 | `GLFW error: No display` 或 `GLFWError` | 服务器没有显示器，MuJoCo 默认用 GLFW 需要 display | 在脚本开头加 `export MUJOCO_GL=egl`（推荐）或 `export MUJOCO_GL=osmesa` |
 | Apple Silicon 训练问题 | MuJoCo 能跑仿真但 PyTorch GPU 训练极慢或不工作 | MPS 后端对很多操作不完整，不适合大规模训练 | 本地只做推理和调试（MuJoCo 在 ARM 上很快），训练用 Linux 远程服务器 |
-| conda 环境污染 | 各种 `ImportError`、版本冲突 | 装了太多包，依赖关系打架 | 用干净的 `conda create -n embodied python=3.10` 重新来，按顺序装：PyTorch → mujoco → robosuite → lerobot |
+| conda 环境污染 | 各种 `ImportError`、版本冲突 | 装了太多包，依赖关系打架 | 拆成两个干净环境：MuJoCo / robosuite 用 Python 3.10；LeRobot v0.6.x 用 Python 3.12+ |
 | robosuite 版本不兼容 | LIBERO 跑不起来 | LIBERO 依赖 robosuite 特定版本 | 查看 LIBERO 的 `requirements.txt`，用它指定的 robosuite 版本 |
 
 **一个实用建议：** 在环境搭建阶段，把每一步的安装命令和输出记录到一个 `setup-log.md` 里。下次换机器或者环境崩了，你能在 10 分钟内重建一切。
 
 **推荐的安装顺序（避免依赖冲突）：**
 
-```bash
-# 1. 创建干净环境
-conda create -n embodied python=3.10 -y
-conda activate embodied
+LeRobot v0.6.0 的 `pyproject.toml` 明确要求 `requires-python = ">=3.12"`；VLM_Grasp_Interactive / robosuite 生态仍常见 Python 3.10。不要把两条链路硬塞进同一个环境。
 
-# 2. 先装 PyTorch（根据你的 CUDA 版本选择）
+```bash
+# A. 基础仿真 / VLM_Grasp_Interactive 环境
+conda create -n embodied-basic python=3.10 -y
+conda activate embodied-basic
+
+# 1. 先装 PyTorch（根据你的 CUDA 版本选择）
 pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
 
-# 3. 装 MuJoCo
+# 2. 装 MuJoCo
 pip install mujoco
 
-# 4. 装 robosuite（LIBERO 依赖）
+# 3. 装 robosuite（LIBERO 依赖）
 pip install robosuite
 
-# 5. 装训练框架
-pip install lerobot  # 或者 clone LeRobot 仓库
-
-# 6. 装辅助工具
+# 4. 装辅助工具
 pip install wandb imageio[ffmpeg] h5py matplotlib
 
-# 7. 验证
+# 5. 验证基础仿真环境
 python -c "import mujoco; import robosuite; print('OK')"
 ```
 
-按这个顺序装，依赖冲突的概率最低。如果哪一步报错，先解决这一步再往下走——不要跳过。
+```bash
+# B. LeRobot v0.6.x 环境
+conda create -n lerobot-v06 python=3.12 -y
+conda activate lerobot-v06
+pip install lerobot
+lerobot-info
+```
+
+按这个思路拆环境，依赖冲突的概率最低。如果哪一步报错，先解决这一步再往下走——不要跳过。
 
 ---
 
