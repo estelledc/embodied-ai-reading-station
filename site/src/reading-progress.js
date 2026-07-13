@@ -537,27 +537,51 @@
     reset: resetState,
   };
 
-  // 共享 papers.json 加载器：优先用 inline JSON（向后兼容），否则 fetch /data/papers.json
+  // 共享 v2 papers 加载器：合同校验由 data-api.js 统一负责。
   let _papersCache = null;
   let _papersPromise = null;
+  function reportPapersFailure(error) {
+    const fallback = {
+      consumer: "reading-progress",
+      code: error?.code || "DATA_API_UNKNOWN",
+      message: error?.message || "论文数据加载失败。",
+      endpoint: error?.endpoint || "/data/v2/papers.json",
+      status: Number.isInteger(error?.status) ? error.status : null,
+    };
+    let detail = fallback;
+    if (window.EAI_DATA_API?.reportError) {
+      detail = window.EAI_DATA_API.reportError(error, { consumer: "reading-progress" });
+    } else {
+      console.error(`[EAI data API] reading-progress ${detail.code}: ${detail.message}`);
+      window.dispatchEvent(new CustomEvent("eai:data-error", { detail }));
+    }
+    showStateMessage(
+      `论文数据暂不可用（${detail.code}）；阅读进度仍保存在本机，可刷新页面重试。`,
+      { error: true },
+    );
+    return [];
+  }
+
   function loadPapers() {
     if (_papersCache) return Promise.resolve(_papersCache);
     if (_papersPromise) return _papersPromise;
-    // 尝试读 inline data island
-    const inline = document.getElementById("eai-papers-data");
-    if (inline) {
-      try {
-        _papersCache = JSON.parse(inline.textContent);
-        return Promise.resolve(_papersCache);
-      } catch {}
-    }
-    // fallback：fetch /data/papers.json (相对 base path)
     const stylesLink = document.querySelector('link[href*="/styles.css"]');
     const base = stylesLink ? stylesLink.getAttribute("href").replace(/\/styles\.css$/, "") : "";
-    _papersPromise = fetch(base + "/data/papers.json")
-      .then(r => r.json())
+    const api = window.EAI_DATA_API;
+    if (!api?.loadPapers) {
+      const error = Object.assign(new Error("共享浏览器 Data API 适配器未加载。"), {
+        code: "DATA_API_ADAPTER_MISSING",
+        endpoint: `${base}/data/v2/papers.json`,
+      });
+      _papersCache = reportPapersFailure(error);
+      return Promise.resolve(_papersCache);
+    }
+    _papersPromise = api.loadPapers({ base })
       .then(d => { _papersCache = d; return d; })
-      .catch(() => { _papersCache = []; return []; });
+      .catch(error => {
+        _papersCache = reportPapersFailure(error);
+        return _papersCache;
+      });
     return _papersPromise;
   }
   // 在 idle 时预加载（不阻塞首屏）
@@ -1260,15 +1284,14 @@
       if (!badge) {
         badge = document.createElement("span");
         badge.className = "guide-done-badge";
-        badge.style.cssText = "position:absolute;top:0.5rem;right:0.5rem;font-size:0.85rem;color:var(--coral);opacity:0;transition:opacity 0.2s";
         badge.textContent = "✓";
-        card.style.position = "relative";
+        card.classList.add("guide-progress-card");
         card.appendChild(badge);
       }
       function render() {
         const done = window.EAI_GUIDE.has(slug);
-        badge.style.opacity = done ? "1" : "0";
-        card.style.borderLeft = done ? "3px solid var(--coral)" : "";
+        badge.classList.toggle("is-visible", done);
+        card.classList.toggle("is-complete", done);
       }
       render();
       window.addEventListener("eai:guide-changed", render);

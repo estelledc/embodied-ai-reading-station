@@ -93,14 +93,19 @@
 
 ## 给研究者
 
-### 数据 API（CC BY 4.0）
+### 数据 API与治理
 
 ```bash
-curl https://estelledc.github.io/embodied-ai-reading-station/data/papers.json   # 156 全元数据
-curl https://estelledc.github.io/embodied-ai-reading-station/data/tags.json     # 21 tag 频次 + 共现
-curl https://estelledc.github.io/embodied-ai-reading-station/data/topics.json   # 11 主题元数据
-curl https://estelledc.github.io/embodied-ai-reading-station/data/index.json    # manifest
+curl https://estelledc.github.io/embodied-ai-reading-station/data/v2/index.json   # v2 入口与兼容策略
+curl https://estelledc.github.io/embodied-ai-reading-station/data/v2/papers.json  # 156 篇版本化全元数据
+curl https://estelledc.github.io/embodied-ai-reading-station/data/v2/provenance.json # canonical provenance（元数据 + hash）
+curl https://estelledc.github.io/embodied-ai-reading-station/data/tags.json       # 21 tag 频次 + 共现
+curl https://estelledc.github.io/embodied-ai-reading-station/data/topics.json     # 11 主题元数据
 ```
+
+v2 papers/index 使用 `schema_version`、`content_commit`、`generated_at`、`data` 四字段 envelope；canonical provenance endpoint 保留 `schema_version`、`content_commit`、`notes` 的精确 manifest 形状。`content_commit` 标识可复核的内容输入快照；`generated_at` 只是由 `SOURCE_DATE_EPOCH` 固定的构建时间，不能替代内容身份。v2 index 的 `license` / `provenance` 字段分别绑定 `EAI-LICENSE-MAP-1.0.0` 与 `EAI-PROVENANCE-2.0.0`。
+
+兼容说明：`/data/papers.json` 在整个 v1.3 窗口继续提供原有裸数组；`/data/index.json` 也保留旧字段，并新增 v2 入口与 `content_commit`。
 
 ### 引用
 
@@ -196,7 +201,8 @@ content/*.md ┤                              │
              ▼                              ▼
        Pagefind index ◀──────── dist/
                                   │
-                                  ├─ data/papers.json + .csv
+                                  ├─ data/v2/{index,papers,provenance}.json
+                                  ├─ data/papers.json + .csv（legacy）
                                   ├─ feed.xml + sitemap.xml
                                   ├─ sw.js (PWA)
                                   └─ 256 个 HTML 页面 + 静态资产
@@ -211,9 +217,12 @@ content/*.md ┤                              │
 
 ## 许可
 
-- **笔记内容**：CC BY 4.0 — 引用请保留作者
-- **代码**：MIT
-- **原论文 PDF**：版权归原作者，本站只做学习摘要
+- **`project-code`**：`MIT`，完整文本见 [LICENSE](LICENSE)
+- **`project-notes`**：`CC-BY-4.0`，引用并标注修改
+- **`project-generated-images`**：仅另有证据证明项目可许可的图片声明 `CC-BY-4.0`；当前 v2 字段不会自动把资产归入此类
+- **`third-party-paper-materials`**：`NOASSERTION`，不是项目许可授予；论文、解析材料、figure 与尚无独立权利证据的生成资产均默认归入此类
+
+四类边界、依赖声明与法律证据状态见 [NOTICE.md](NOTICE.md)；字段、hash 与两阶段更新流程见 [PROVENANCE.md](PROVENANCE.md)。T009 实施时 canonical manifest 的 `generated_assets` 记录数为 0；这是历史基线，不能把现有图片概括为已完成权属核验。
 
 ## 反馈
 

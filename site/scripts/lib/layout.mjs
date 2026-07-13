@@ -18,6 +18,15 @@ export function pageHeroHtml(slug, alt) {
   </figure>`;
 }
 
+// JSON embedded in a non-executable <script> data block must not be able to
+// terminate that element. Escaping `<` also covers `<!--` and `</script>`.
+export function safeJsonForScript(value) {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(/\u2028/g, "\\u2028")
+    .replace(/\u2029/g, "\\u2029");
+}
+
 // --- layout templates -------------------------------------------------------
 export function masthead(active) {
   // 主导航：5 项关键入口（Guide 首位 = 教学站主轴）
@@ -63,12 +72,12 @@ export function masthead(active) {
       <a class="masthead-brand" href="${url("/")}"><span class="star" aria-hidden="true">★</span><span>Embodied AI</span><small>Zero to One</small></a>
     </div>
     <nav class="primary-nav" aria-label="站内主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
-      <details class="more-nav">
-        <summary class="more-nav-trigger"${moreActive ? ' aria-current="page"' : ''} aria-label="更多站内导航">More ▾</summary>
-        <div class="more-nav-panel">
+      <div class="more-nav" data-more-nav>
+        <button type="button" class="more-nav-trigger${moreActive ? " is-current" : ""}" aria-controls="more-nav-panel" aria-expanded="false" aria-label="More，更多导航">More <span aria-hidden="true">▾</span></button>
+        <div class="more-nav-panel" id="more-nav-panel" hidden>
           ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
         </div>
-      </details>
+      </div>
     </nav>
     <nav class="portfolio-nav" aria-label="Jason 作品集导航">
       ${portfolioLinks.slice(1).map(i => `<a href="${i.href}">${i.label}</a>`).join("")}
@@ -82,7 +91,7 @@ export function masthead(active) {
     <button class="search-trigger" type="button" aria-label="搜索 (按 / 唤起)">
       <span class="search-icon">⌕</span><span class="search-hint">/</span>
     </button>
-    <button class="kb-trigger" type="button" aria-label="键盘快捷键帮助 (按 ? 唤起)" aria-haspopup="dialog" onclick="document.dispatchEvent(new KeyboardEvent('keydown', {key: '?'}))">
+    <button class="kb-trigger" type="button" aria-label="键盘快捷键帮助 (按 ? 唤起)" aria-haspopup="dialog">
       <span class="search-hint" aria-hidden="true">?</span>
     </button>
   </header>
@@ -229,6 +238,7 @@ export function page({
   body,
   active,
   extraHead = "",
+  extraScripts = [],
   ogTitle = null,
   ogDescription = null,
   ogImage = null,
@@ -290,6 +300,7 @@ export function page({
   <meta name="twitter:description" content="${escAttr(_ogDesc)}">
   <meta name="twitter:image" content="${escAttr(_ogImg)}">
   <meta name="twitter:image:alt" content="${escAttr(_ogImageAlt)}">
+  <script src="${url("/theme-toggle.js")}"></script>
   <link rel="stylesheet" href="${url("/vendor/fonts/fonts.css")}">
   <link rel="stylesheet" href="${url("/jx/tokens.css")}">
   <link rel="stylesheet" href="${url("/jx/base.css")}">
@@ -306,8 +317,7 @@ export function page({
   <link rel="manifest" href="${url("/site.webmanifest")}">
   <link rel="search" type="application/opensearchdescription+xml" title="Embodied AI: Zero to One" href="${url("/opensearch.xml")}">
   <meta name="theme-color" content="#ed6f5c">
-  ${jsonLdHtml ? `<script type="application/ld+json">${jsonLdHtml}</script>` : ""}
-  <script>(function(){var m=localStorage.getItem("eaireading.theme");if(m==="dark")document.documentElement.classList.add("dark-theme");else if(m==="light")document.documentElement.classList.add("light-theme");})();</script>
+  ${_jsonLd ? `<script type="application/ld+json">${safeJsonForScript(_jsonLd)}</script>` : ""}
   ${extraHead}
 </head>
 <body>
@@ -318,15 +328,18 @@ export function page({
   <script src="${url("/pagefind/pagefind-ui.js")}" defer></script>
   <script src="${url("/search.js")}" defer></script>
   <script src="${url("/outline.js")}" defer></script>
+  <script src="${url("/data-api.js")}" defer></script>
   <script src="${url("/reading-progress.js")}" defer></script>
   <script src="${url("/quick-filter.js")}" defer></script>
   <script src="${url("/keyboard.js")}" defer></script>
-  <script src="${url("/theme-toggle.js")}" defer></script>
+  <script src="${url("/more-nav.js")}" defer></script>
   <script src="${url("/link-preview.js")}" defer></script>
   <script src="${url("/sw-register.js")}" defer></script>
   <script src="${url("/svg-export.js")}" defer></script>
+  ${extraScripts.map(src => `<script src="${escAttr(url(src))}" defer></script>`).join("\n  ")}
   ${hasMath ? `<script src="${url("/vendor/katex/katex.min.js")}" defer></script>` : ""}
-  ${hasMath ? `<script src="${url("/vendor/katex/contrib/auto-render.min.js")}" defer onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>` : ""}
+  ${hasMath ? `<script src="${url("/vendor/katex/contrib/auto-render.min.js")}" defer></script>` : ""}
+  ${hasMath ? `<script src="${url("/math-render.js")}" defer></script>` : ""}
 </body>
 </html>`;
 }

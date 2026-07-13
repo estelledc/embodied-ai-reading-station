@@ -1,0 +1,193 @@
+{
+  "base_fixture": "provenance-v2-valid.json",
+  "cases": [
+    {
+      "name": "unknown major version",
+      "operation": "set",
+      "path": ["schema_version"],
+      "value": "3.0.0",
+      "expected_code": "UNSUPPORTED_SCHEMA_VERSION"
+    },
+    {
+      "name": "unknown minor version",
+      "operation": "set",
+      "path": ["schema_version"],
+      "value": "2.1.0",
+      "expected_code": "UNSUPPORTED_SCHEMA_VERSION"
+    },
+    {
+      "name": "missing content commit",
+      "operation": "delete",
+      "path": ["content_commit"],
+      "expected_code": "MISSING_FIELD"
+    },
+    {
+      "name": "duplicate slug",
+      "operation": "duplicate-note",
+      "source_index": 0,
+      "expected_code": "DUPLICATE_SLUG"
+    },
+    {
+      "name": "empty note collection",
+      "operation": "set",
+      "path": ["notes"],
+      "value": [],
+      "expected_code": "EMPTY_NOTES"
+    },
+    {
+      "name": "invalid note hash",
+      "operation": "set",
+      "path": ["notes", 0, "note_sha256"],
+      "value": "not-a-sha256",
+      "expected_code": "INVALID_NOTE_SHA256"
+    },
+    {
+      "name": "unsafe note path",
+      "operation": "set",
+      "path": ["notes", 0, "note_path"],
+      "value": "../notes/demo-local.md",
+      "expected_code": "INVALID_NOTE_PATH"
+    },
+    {
+      "name": "remote source carries local path",
+      "operation": "set",
+      "path": ["notes", 1, "source", "path"],
+      "value": "papers/demo-remote-verified/paper.md",
+      "expected_code": "REMOTE_SOURCE_NULL_MATRIX"
+    },
+    {
+      "name": "local source carries remote url",
+      "operation": "set",
+      "path": ["notes", 0, "source", "url"],
+      "value": "https://example.com/paper",
+      "expected_code": "LOCAL_SOURCE_NULL_MATRIX"
+    },
+    {
+      "name": "local source hash has invalid shape",
+      "operation": "set",
+      "path": ["notes", 0, "source", "sha256"],
+      "value": "not-a-sha256",
+      "expected_code": "INVALID_SOURCE_SHA256"
+    },
+    {
+      "name": "local artifact type disagrees with extension",
+      "operation": "set",
+      "path": ["notes", 0, "source", "artifact_type"],
+      "value": "original-pdf",
+      "expected_code": "ARTIFACT_TYPE_MISMATCH"
+    },
+    {
+      "name": "credentialed remote url",
+      "operation": "set",
+      "path": ["notes", 1, "source", "url"],
+      "value": "https://user:secret@example.com/paper",
+      "expected_code": "INVALID_REMOTE_URL"
+    },
+    {
+      "name": "verified record lacks reviewer",
+      "operation": "set",
+      "path": ["notes", 1, "human_verification", "by"],
+      "value": null,
+      "expected_code": "VERIFIED_REQUIRES_BY"
+    },
+    {
+      "name": "verified reviewer alias is not kebab case",
+      "operation": "set",
+      "path": ["notes", 1, "human_verification", "by"],
+      "value": "content--reviewer-",
+      "expected_code": "VERIFIED_REQUIRES_BY"
+    },
+    {
+      "name": "verified record has invalid date",
+      "operation": "set",
+      "path": ["notes", 1, "human_verification", "date"],
+      "value": "2026-02-30",
+      "expected_code": "VERIFIED_REQUIRES_DATE"
+    },
+    {
+      "name": "verified record has unknown scope",
+      "operation": "set",
+      "path": ["notes", 1, "human_verification", "scope"],
+      "value": "everything",
+      "expected_code": "VERIFIED_REQUIRES_SCOPE"
+    },
+    {
+      "name": "blocked record lacks reason",
+      "operation": "set",
+      "path": ["notes", 2, "human_verification", "blocked_reason"],
+      "value": "",
+      "expected_code": "BLOCKED_REQUIRES_REASON"
+    },
+    {
+      "name": "unverified record carries reviewer",
+      "operation": "set",
+      "path": ["notes", 0, "human_verification", "by"],
+      "value": "content-reviewer",
+      "expected_code": "UNVERIFIED_NULL_MATRIX"
+    },
+    {
+      "name": "blocked reason appears outside verification object",
+      "operation": "set",
+      "path": ["notes", 2, "blocked_reason"],
+      "value": "wrong layer",
+      "expected_code": "UNKNOWN_FIELD"
+    },
+    {
+      "name": "tracked asset lacks hash",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "sha256"],
+      "value": null,
+      "expected_code": "TRACKED_ASSET_REQUIRES_SHA256"
+    },
+    {
+      "name": "untracked asset is not provenance evidence",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "tracked"],
+      "value": false,
+      "expected_code": "ASSET_MUST_BE_TRACKED"
+    },
+    {
+      "name": "tracked asset points at another commit",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "content_commit"],
+      "value": "fedcba9876543210fedcba9876543210fedcba98",
+      "expected_code": "ASSET_COMMIT_MISMATCH"
+    },
+    {
+      "name": "generated asset lacks input fingerprint",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "input_fingerprint"],
+      "value": "unknown",
+      "expected_code": "INVALID_INPUT_FINGERPRINT"
+    },
+    {
+      "name": "unsafe generated asset path",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "path"],
+      "value": "/tmp/demo-local.webp",
+      "expected_code": "INVALID_ASSET_PATH"
+    },
+    {
+      "name": "card path is not bound to its note",
+      "operation": "set",
+      "path": ["notes", 0, "generated_assets", 0, "path"],
+      "value": "site/src/images/cards/another-note.webp",
+      "expected_code": "ASSET_PATH_KIND_MISMATCH"
+    },
+    {
+      "name": "asset path is reused by another note",
+      "operation": "copy-asset-to-note",
+      "source_note_index": 0,
+      "source_asset_index": 0,
+      "target_note_index": 1,
+      "expected_code": "DUPLICATE_ASSET_PATH"
+    },
+    {
+      "name": "unknown record field",
+      "operation": "set",
+      "path": ["notes", 0, "num"],
+      "value": 1,
+      "expected_code": "UNKNOWN_FIELD"
+    }
+  ]
+}

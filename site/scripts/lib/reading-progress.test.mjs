@@ -7,7 +7,10 @@ import { fileURLToPath } from "node:url";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const READING_PROGRESS = path.resolve(HERE, "..", "..", "src", "reading-progress.js");
+const DATA_API = path.resolve(HERE, "..", "..", "src", "data-api.js");
 const SOURCE = fs.readFileSync(READING_PROGRESS, "utf8");
+const DATA_API_SOURCE = fs.readFileSync(DATA_API, "utf8");
+const VALID_COMMIT = "a".repeat(40);
 
 class FakeStorage {
   constructor(initial = {}) {
@@ -41,7 +44,14 @@ function plain(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function boot(initial = {}, { papers = [] } = {}) {
+function boot(initial = {}, {
+  papers = [],
+  base = "",
+  envelopeOverrides = {},
+  responseOk = true,
+  responseStatus = 200,
+  includeDataApi = true,
+} = {}) {
   const localStorage = new FakeStorage(initial);
   const windowListeners = new Map();
   const documentListeners = new Map();
@@ -50,6 +60,8 @@ function boot(initial = {}, { papers = [] } = {}) {
   const createdLinks = [];
   const appendedNodes = [];
   const revokedUrls = [];
+  const fetchRequests = [];
+  const consoleErrors = [];
   let confirmResponse = true;
   const confirmPrompts = [];
 
@@ -80,7 +92,12 @@ function boot(initial = {}, { papers = [] } = {}) {
       },
     },
     addEventListener(type, fn) { documentListeners.set(type, fn); },
-    querySelector() { return null; },
+    querySelector(selector) {
+      if (selector === 'link[href*="/styles.css"]' && base) {
+        return { getAttribute: name => name === "href" ? `${base}/styles.css` : null };
+      }
+      return null;
+    },
     querySelectorAll() { return []; },
     getElementById(id) {
       if (id === "eai-streak-export") return exportButton;
@@ -92,7 +109,7 @@ function boot(initial = {}, { papers = [] } = {}) {
         className: "",
         hidden: false,
         classList: { add() {}, remove() {} },
-        setAttribute() {},
+        setAttribute(name, value) { this[name] = String(value); },
         click() { this.clicked = (this.clicked || 0) + 1; },
         remove() { this.removed = true; },
       };
@@ -115,7 +132,9 @@ function boot(initial = {}, { papers = [] } = {}) {
     window,
     document,
     localStorage,
-    console,
+    console: {
+      error(...args) { consoleErrors.push(args); },
+    },
     Date,
     JSON,
     Set,
@@ -131,10 +150,24 @@ function boot(initial = {}, { papers = [] } = {}) {
       createObjectURL(blob) { exportedBlob = blob; return "blob:test"; },
       revokeObjectURL(value) { revokedUrls.push(value); },
     },
-    fetch: async () => ({ ok: true, json: async () => papers }),
+    fetch: async (url) => {
+      fetchRequests.push(url);
+      return {
+        ok: responseOk,
+        status: responseStatus,
+        json: async () => ({
+          schema_version: "2.0.0",
+          content_commit: VALID_COMMIT,
+          generated_at: "2026-07-11T00:00:00.000Z",
+          data: papers,
+          ...envelopeOverrides,
+        }),
+      };
+    },
     setTimeout(fn) { fn(); return 0; },
     clearTimeout() {},
   });
+  if (includeDataApi) vm.runInContext(DATA_API_SOURCE, context, { filename: DATA_API });
   vm.runInContext(SOURCE, context, { filename: READING_PROGRESS });
 
   return {
@@ -150,6 +183,8 @@ function boot(initial = {}, { papers = [] } = {}) {
     createdLinks,
     appendedNodes,
     revokedUrls,
+    fetchRequests,
+    consoleErrors,
     fireWindowEvent(type, event) {
       for (const fn of windowListeners.get(type) || []) fn(event);
     },
@@ -247,6 +282,52 @@ test("exported reading list uses the absolute API URL exactly once", async () =>
   assert.match(markdown, new RegExp(`\\(${paperUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`));
   assert.doesNotMatch(markdown, /reading-stationhttps?:\/\//);
   assert.equal(markdown.split(paperUrl).length - 1, 1);
+});
+
+test("paper consumers use the versioned endpoint through the existing base-path rule", async () => {
+  const app = boot({}, {
+    base: "/embodied-ai-reading-station",
+    papers: [{ slug: "clip" }],
+  });
+
+  await new Promise(resolve => setImmediate(resolve));
+
+  assert.deepEqual(app.fetchRequests, [
+    "/embodied-ai-reading-station/data/v2/papers.json",
+  ]);
+  assert.deepEqual(app.dispatched.filter(event => event.type === "eai:data-error"), []);
+});
+
+test("invalid v2 paper data emits a diagnostic event and visible fallback", async () => {
+  const app = boot({}, {
+    envelopeOverrides: { content_commit: "NOT-A-COMMIT" },
+  });
+
+  await new Promise(resolve => setImmediate(resolve));
+  await new Promise(resolve => setImmediate(resolve));
+
+  const [event] = app.dispatched.filter(item => item.type === "eai:data-error");
+  assert.ok(event);
+  assert.equal(event.detail.consumer, "reading-progress");
+  assert.equal(event.detail.code, "DATA_API_CONTENT_COMMIT");
+  assert.equal(app.consoleErrors.length, 1);
+  const alert = app.appendedNodes.find(node => node.role === "alert");
+  assert.ok(alert);
+  assert.match(alert.textContent, /DATA_API_CONTENT_COMMIT/);
+});
+
+test("missing browser adapter follows the same observable fallback path", async () => {
+  const app = boot({}, { includeDataApi: false });
+
+  await new Promise(resolve => setImmediate(resolve));
+
+  const [event] = app.dispatched.filter(item => item.type === "eai:data-error");
+  assert.ok(event);
+  assert.equal(event.detail.consumer, "reading-progress");
+  assert.equal(event.detail.code, "DATA_API_ADAPTER_MISSING");
+  assert.equal(app.consoleErrors.length, 1);
+  const alert = app.appendedNodes.find(node => node.role === "alert");
+  assert.match(alert.textContent, /DATA_API_ADAPTER_MISSING/);
 });
 
 test("state backup downloads a versioned JSON blob through a temporary anchor", async () => {

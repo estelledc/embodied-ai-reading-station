@@ -1,17 +1,36 @@
 #!/usr/bin/env node
-// 给每篇论文用 codex 生成定制缩略图（基于 TL;DR + topic）
+// 给每篇论文用结构化生成器生成定制缩略图（基于 TL;DR + topic）
+import crypto from "node:crypto";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
-import { execSync, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { parseArgs } from "node:util";
 import matter from "gray-matter";
+import {
+  assetFingerprint,
+  createAssetReceipt,
+  formatAssetError,
+  inspectImage,
+  parseAssetReceipt,
+  parseGeneratorResult,
+  preflightTools,
+  recordGeneratedAsset,
+  writeAssetAtomically,
+  writeAssetReceiptAtomically,
+} from "./lib/asset-generation.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..", "..");
 const NOTES = path.join(ROOT, "notes");
 const PAPERS = path.join(ROOT, "papers");
-const OUT = path.join(ROOT, "site", "src", "images", "cards");
-fs.mkdirSync(OUT, { recursive: true });
+const DEFAULT_OUT = path.join(ROOT, "site", "src", "images", "cards");
+const MANIFEST = path.join(PAPERS, "provenance.json");
+const GENERATOR_ID = "gen-paper-cards/v2";
+const TEMPLATE_ID = "paper-card-editorial";
+const PROMPT_VERSION = "paper-card-editorial-v1";
+const GIT_SHA_RE = /^[a-f0-9]{40}$/;
 
 const HOOKS = {
   "clip": "image and text vectors aligning in a shared embedding space",
@@ -169,7 +188,7 @@ function makePrompt(note) {
 
 function loadAllNotes() {
   const result = [];
-  for (const f of fs.readdirSync(NOTES)) {
+  for (const f of fs.readdirSync(NOTES).sort()) {
     if (!f.endsWith(".md")) continue;
     const slug = f.replace(/\.md$/, "");
     const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
@@ -177,62 +196,493 @@ function loadAllNotes() {
     if (!data.num || !data.topic) continue;
     const tldrMatch = content.match(/##\s*(?:一句话讲什么|TL;DR|tl;dr)[^\n]*\n+([^\n]+)/);
     const tldr = tldrMatch ? tldrMatch[1].trim() : "";
-    result.push({ slug, num: data.num, topic: data.topic, title: data.title || slug, tldr });
+    result.push({
+      slug,
+      num: data.num,
+      topic: data.topic,
+      title: data.title || slug,
+      tldr,
+      notePath: `notes/${f}`,
+      noteSha256: sha256(raw),
+    });
   }
   return result;
 }
 
-const notes = loadAllNotes();
-console.log(`scanned ${notes.length} notes`);
-
-const todo = notes.filter(n => {
-  const real = path.join(PAPERS, n.slug, "images", "img_000.jpg");
-  if (fs.existsSync(real)) return false;
-  const out = path.join(OUT, `${n.slug}.webp`);
-  if (fs.existsSync(out)) return false;
-  return true;
-});
-console.log(`待生成: ${todo.length}`);
-
-let done = 0, failed = 0;
-const start = Date.now();
-for (const n of todo) {
-  done++;
-  const elapsed = Math.round((Date.now() - start) / 60000);
-  const eta = done > 1 ? Math.round((Date.now() - start) / (done - 1) * (todo.length - done + 1) / 60000) : "?";
-  console.log(`\n[${done}/${todo.length}] ${n.slug} (${n.topic}) — elapsed ${elapsed}min, ETA ${eta}min`);
-  const prompt = makePrompt(n);
-  console.log(`  prompt: ...${prompt.slice(60, 200)}...`);
-
-  const r = spawnSync("codex", ["exec", "--skip-git-repo-check", prompt], {
-    stdio: ["ignore", "pipe", "pipe"],
-    timeout: 180_000,
-    encoding: "utf8",
+function parseCli(argv = process.argv.slice(2)) {
+  const { values } = parseArgs({
+    args: argv,
+    strict: true,
+    allowPositionals: false,
+    options: {
+      "dry-run": { type: "boolean", default: false },
+      preflight: { type: "boolean", default: false },
+      slug: { type: "string", multiple: true, default: [] },
+      "output-dir": { type: "string" },
+      "receipt-file": { type: "string" },
+      record: { type: "boolean", default: false },
+      "content-commit": { type: "string" },
+      "generator-bin": { type: "string" },
+      "converter-bin": { type: "string" },
+    },
   });
-  const stdout = r.stdout || "";
-  const m = stdout.match(/\/[^\s]+\/generated_images\/[^\s]+\.png/);
-  if (!m) {
-    console.error(`  FAIL no PNG path`);
-    failed++;
-    continue;
+  if (values.record && (!values["receipt-file"] || !values["content-commit"])) {
+    throw new Error("--record requires --receipt-file and --content-commit");
   }
-  const png = m[0];
-  if (!fs.existsSync(png)) {
-    console.error(`  FAIL PNG missing`);
-    failed++;
-    continue;
+  if (values["content-commit"] && !GIT_SHA_RE.test(values["content-commit"])) {
+    throw new Error("--content-commit must be 40 lowercase hexadecimal characters");
   }
+  return {
+    dryRun: values["dry-run"],
+    preflightOnly: values.preflight,
+    slugs: new Set(values.slug),
+    outputDir: path.resolve(values["output-dir"] || DEFAULT_OUT),
+    receiptFile: values["receipt-file"] ? path.resolve(values["receipt-file"]) : null,
+    record: values.record,
+    contentCommit: values["content-commit"] || null,
+    generatorBin: values["generator-bin"] || process.env.CODEX_BIN || "codex",
+    converterBin: values["converter-bin"] || process.env.CWEBP_BIN || "cwebp",
+  };
+}
 
-  const out = path.join(OUT, `${n.slug}.webp`);
-  try {
-    execSync(`cwebp -q 85 -m 6 "${png}" -o "${out}"`, { stdio: "pipe" });
-    const out800 = path.join(OUT, `${n.slug}-800.webp`);
-    execSync(`cwebp -q 80 -m 6 -resize 800 0 "${png}" -o "${out800}"`, { stdio: "pipe" });
-    const sz = Math.round(fs.statSync(out).size / 1024);
-    console.log(`  OK ${sz}KB`);
-  } catch (e) {
-    console.error(`  cwebp FAIL: ${e.message}`);
-    failed++;
+function readManifest() {
+  const manifest = JSON.parse(fs.readFileSync(MANIFEST, "utf8"));
+  if (manifest?.schema_version !== "2.0.0" || !Array.isArray(manifest.notes)) {
+    throw new Error("papers/provenance.json must use schema 2.0.0");
+  }
+  return manifest;
+}
+
+function snapshotPreflight(contentCommit, notes) {
+  for (const args of [["cat-file", "-e", `${contentCommit}^{commit}`], ["merge-base", "--is-ancestor", contentCommit, "HEAD"]]) {
+    const result = spawnSync("git", args, {
+      cwd: ROOT,
+      encoding: "utf8",
+      shell: false,
+      stdio: ["ignore", "pipe", "pipe"],
+      env: { ...process.env, GIT_TRACE2: "0", GIT_TRACE2_EVENT: "0", GIT_TRACE2_PERF: "0" },
+    });
+    if (result.error || result.signal || result.status !== 0) return false;
+  }
+  for (const note of new Map(notes.map((item) => [item.notePath, item])).values()) {
+    const result = spawnSync("git", ["cat-file", "blob", `${contentCommit}:${note.notePath}`], {
+      cwd: ROOT,
+      shell: false,
+      maxBuffer: 16 * 1024 * 1024,
+      stdio: ["ignore", "pipe", "pipe"],
+      env: { ...process.env, GIT_TRACE2: "0", GIT_TRACE2_EVENT: "0", GIT_TRACE2_PERF: "0" },
+    });
+    if (result.error || result.signal || result.status !== 0 || sha256(result.stdout) !== note.noteSha256) return false;
+  }
+  return true;
+}
+
+function sha256(value) {
+  return crypto.createHash("sha256").update(value).digest("hex");
+}
+
+function repoPath(filePath) {
+  const relative = path.relative(ROOT, path.resolve(filePath));
+  if (!relative || relative === ".." || relative.startsWith(`..${path.sep}`) || path.isAbsolute(relative)) return null;
+  return relative.split(path.sep).join("/");
+}
+
+function receiptBoundary(receiptFile) {
+  if (repoPath(receiptFile)) return ROOT;
+  let cursor = path.dirname(receiptFile);
+  while (!fs.existsSync(cursor)) {
+    const parent = path.dirname(cursor);
+    if (parent === cursor) break;
+    cursor = parent;
+  }
+  const stat = fs.lstatSync(cursor);
+  if (stat.isSymbolicLink() || !stat.isDirectory()) throw new Error("receipt requires a trusted existing parent directory");
+  return cursor;
+}
+
+function recordsByPath(record) {
+  return new Map((record?.generated_assets || []).map((asset) => [asset.path, asset]));
+}
+
+function buildPlan({ notes, manifest, outputDir, slugs }) {
+  const knownSlugs = new Set(notes.map((note) => note.slug));
+  for (const slug of slugs) {
+    if (!knownSlugs.has(slug)) throw new Error(`unknown --slug: ${slug}`);
+  }
+  const manifestBySlug = new Map(manifest.notes.map((record) => [record.slug, record]));
+  return notes.filter((note) => slugs.size === 0 || slugs.has(note.slug)).map((note) => {
+    const prompt = makePrompt(note);
+    const full = path.join(outputDir, `${note.slug}.webp`);
+    const compact = path.join(outputDir, `${note.slug}-800.webp`);
+    const manifestRecord = manifestBySlug.get(note.slug);
+    const recordMap = recordsByPath(manifestRecord);
+    const outputs = [
+      { role: "full", path: full, repoPath: repoPath(full), args: ["-q", "85", "-m", "6"] },
+      { role: "compact", path: compact, repoPath: repoPath(compact), args: ["-q", "80", "-m", "6", "-resize", "800", "0"] },
+    ].map((output) => ({
+      ...output,
+      exists: fs.existsSync(output.path),
+      record: output.repoPath ? recordMap.get(output.repoPath) : null,
+    }));
+    const paperImage = path.join(PAPERS, note.slug, "images", "img_000.jpg");
+    let state = "candidate";
+    let reason = "missing output pair";
+    if (!manifestRecord) {
+      state = "error-manifest";
+      reason = "note is absent from papers/provenance.json";
+    } else if (fs.existsSync(paperImage)) {
+      state = "skip-paper-image";
+      reason = "paper img_000.jpg remains the preferred card source";
+    } else if (outputs.some((output) => output.exists) && outputs.every((output) => !output.record)) {
+      state = "skip-legacy";
+      reason = outputs.every((output) => output.exists)
+        ? "existing unregistered legacy pair"
+        : "existing unregistered partial legacy pair";
+    } else if (outputs.some((output) => output.exists || output.record)) {
+      if (outputs.every((output) => output.exists && output.record)) {
+        state = "candidate-check";
+        reason = "registered pair requires an idempotence check";
+      } else {
+        state = "error-drift";
+        reason = "registered output pair is partial or missing";
+      }
+    }
+    if (state.startsWith("candidate") && outputs.some((output) => (
+      !output.repoPath
+      || !new RegExp(`^site/src/images/cards/${note.slug}(?:-800)?\\.webp$`).test(output.repoPath)
+    ))) {
+      state = "error-path";
+      reason = "receipt-backed cards require the canonical repository output directory";
+    }
+    return { note, prompt, outputs, state, reason };
+  });
+}
+
+function generationInputs({ jobs, contentCommit, generatorVersion, converterVersion, outputMetadata }) {
+  const promptHashes = jobs.map((job) => ({ kind: "card", sha256: sha256(job.prompt) }));
+  return {
+    slug: jobs[0].note.slug,
+    input_content_commit: contentCommit,
+    sources: [...new Map(jobs.map((job) => [job.note.notePath, {
+      path: job.note.notePath,
+      sha256: job.note.noteSha256,
+    }])).values()].sort((a, b) => a.path.localeCompare(b.path, "en")),
+    prompt_sha256: promptHashes.length === 1 ? promptHashes[0].sha256 : sha256(JSON.stringify(promptHashes)),
+    template: { id: TEMPLATE_ID, version: PROMPT_VERSION },
+    generator: { id: GENERATOR_ID, version: generatorVersion },
+    converter: { id: "cwebp", version: converterVersion },
+    parameters: { adapter: "codex-exec-json-v1", output_format: "webp" },
+    outputs: [...outputMetadata].sort((a, b) => a.path.localeCompare(b.path, "en")),
+  };
+}
+
+function finalizeRegisteredJobs(plan, versions, contentCommit, options) {
+  const checks = plan.filter((job) => job.state === "candidate-check");
+  let receipt = null;
+  if (checks.length > 0 && options.slugs.size === 1 && options.receiptFile && fs.existsSync(options.receiptFile)) {
+    receipt = parseAssetReceipt(fs.readFileSync(options.receiptFile));
+  }
+  return plan.map((job) => {
+    if (job.state !== "candidate-check") return job;
+    if (!receipt || receipt.slug !== job.note.slug || receipt.generator !== GENERATOR_ID) {
+      return { ...job, state: "error-receipt-required", reason: "registered assets require their portable receipt" };
+    }
+    const expectedPaths = new Set(job.outputs.map((output) => output.repoPath));
+    if (receipt.outputs.length !== 2 || receipt.outputs.some((output) => output.kind !== "card" || !expectedPaths.has(output.path))) {
+      return { ...job, state: "error-receipt", reason: "receipt does not contain the canonical card pair" };
+    }
+    const metadata = [];
+    const receiptOutputs = new Map(receipt.outputs.map((output) => [output.path, output]));
+    for (const output of job.outputs) {
+      const inspected = inspectImage(output.path);
+      const receiptOutput = receiptOutputs.get(output.repoPath);
+      if (
+        inspected.format !== "webp"
+        || inspected.sha256 !== output.record.sha256
+        || receiptOutput?.kind !== "card"
+        || receiptOutput.sha256 !== inspected.sha256
+        || receiptOutput.width !== inspected.width
+        || receiptOutput.height !== inspected.height
+      ) {
+        return { ...job, state: "error-drift", reason: `registered bytes drifted: ${output.repoPath}` };
+      }
+      metadata.push({
+        kind: "card",
+        path: output.repoPath,
+        parameters: { argv: output.args },
+      });
+    }
+    const inputs = generationInputs({
+      jobs: [job],
+      contentCommit: receipt.inputs.input_content_commit,
+      generatorVersion: versions.generator.version,
+      converterVersion: versions.converter.version,
+      outputMetadata: metadata,
+    });
+    const fingerprint = assetFingerprint(inputs);
+    if (job.outputs.every((output) => (
+      output.record.generator === GENERATOR_ID
+      && output.record.input_fingerprint === fingerprint
+      && receipt.input_fingerprint === fingerprint
+      && output.record.content_commit === contentCommit
+    ))) {
+      return { ...job, state: "skip-current", reason: "fingerprint and output hashes match provenance" };
+    }
+    return { ...job, state: "error-stale", reason: "registered pair conflicts with the current generator inputs" };
+  });
+}
+
+function runGenerator(job, stagingDir, generatorBin) {
+  const schemaPath = path.join(stagingDir, "output-schema.json");
+  const resultPath = path.join(stagingDir, "result.json");
+  fs.writeFileSync(schemaPath, `${JSON.stringify({
+    type: "object",
+    additionalProperties: false,
+    required: ["output_path"],
+    properties: { output_path: { type: "string" } },
+  }, null, 2)}\n`);
+  const adapterPrompt = `${job.prompt}\nSave exactly one PNG below the current working directory. Return only JSON matching {"output_path":"relative/path.png"}.`;
+  const result = spawnSync(generatorBin, [
+    "exec",
+    "--sandbox", "workspace-write",
+    "--skip-git-repo-check",
+    "--ephemeral",
+    "--json",
+    "--output-schema", schemaPath,
+    "-o", resultPath,
+    "-C", stagingDir,
+    adapterPrompt,
+  ], {
+    encoding: "utf8",
+    shell: false,
+    timeout: 180_000,
+    maxBuffer: 4 * 1024 * 1024,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (result.error || result.signal || result.status !== 0) {
+    const failure = result.error
+      ? `launch failed (${result.error.code || "UNKNOWN"})`
+      : `failed (${result.signal || result.status})`;
+    throw new Error(`generator ${failure}`);
+  }
+  if (!fs.existsSync(resultPath)) throw new Error("generator did not write its structured result file");
+  return parseGeneratorResult(fs.readFileSync(resultPath), { stagingDir });
+}
+
+function runConverter(converterBin, pngPath, destination, args) {
+  const result = spawnSync(converterBin, [...args, pngPath, "-o", destination], {
+    encoding: "utf8",
+    shell: false,
+    timeout: 120_000,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (result.error || result.signal || result.status !== 0) {
+    const failure = result.error
+      ? `launch failed (${result.error.code || "UNKNOWN"})`
+      : `failed (${result.signal || result.status})`;
+    throw new Error(`cwebp ${failure}`);
   }
 }
-console.log(`\n=== done: ${done}, failed: ${failed} ===`);
+
+function assertReceiptAbsent(receiptFile) {
+  if (!fs.existsSync(receiptFile)) return null;
+  const stat = fs.lstatSync(receiptFile);
+  if (stat.isSymbolicLink() || !stat.isFile()) throw new Error("existing receipt must be a regular non-symlink file");
+  throw new Error("receipt file already exists; refusing to overwrite pending evidence");
+}
+
+function printPlan(plan, versions, mode) {
+  const counts = {};
+  for (const job of plan) counts[job.state] = (counts[job.state] || 0) + 1;
+  console.log(JSON.stringify({
+    script: "gen-paper-cards",
+    mode,
+    generator: versions.generator?.version || "not-needed",
+    converter: versions.converter?.version || "not-needed",
+    counts,
+  }));
+  for (const job of plan) {
+    if (job.state === "skip-legacy") console.warn(`SKIP legacy ${job.note.slug}: ${job.reason}`);
+    else if (!job.state.startsWith("skip-")) console.log(JSON.stringify({
+      slug: job.note.slug,
+      state: job.state,
+      outputs: job.outputs.map((output) => output.repoPath),
+    }));
+  }
+}
+
+function runRecord(options) {
+  const receipt = parseAssetReceipt(fs.readFileSync(options.receiptFile));
+  if (receipt.generator !== GENERATOR_ID || receipt.outputs.some((output) => output.kind !== "card")) {
+    throw new Error(`receipt does not belong to ${GENERATOR_ID}`);
+  }
+  const expected = new Set([
+    `site/src/images/cards/${receipt.slug}.webp`,
+    `site/src/images/cards/${receipt.slug}-800.webp`,
+  ]);
+  if (receipt.outputs.length !== 2 || receipt.outputs.some((output) => !expected.has(output.path))) {
+    throw new Error("card receipt must contain the canonical full/800 pair");
+  }
+  if (options.slugs.size > 0 && (!options.slugs.has(receipt.slug) || options.slugs.size !== 1)) {
+    throw new Error("--slug must select exactly the receipt slug in --record mode");
+  }
+  const checks = preflightTools({
+    tools: [
+      { name: "git", command: "git", versionArgs: ["--version"] },
+      { name: "image-probe", command: "ffprobe", versionArgs: ["-version"] },
+    ],
+    outputPaths: [{ path: path.dirname(MANIFEST), boundary: ROOT }],
+  });
+  if (!checks.ok) {
+    for (const error of checks.errors) console.error(`PREFLIGHT ${error.code}: ${formatAssetError(error.message)}`);
+    process.exitCode = 2;
+    return;
+  }
+  const result = recordGeneratedAsset({
+    root: ROOT,
+    receipt,
+    contentCommit: options.contentCommit,
+    checkOnly: options.dryRun || options.preflightOnly,
+  });
+  console.log(JSON.stringify({
+    script: "gen-paper-cards",
+    mode: "record",
+    slug: receipt.slug,
+    changed: result.changed,
+    check_only: result.check_only,
+    manifest_sha256: result.manifest_sha256,
+  }));
+}
+
+function runGeneration(options) {
+  const manifest = readManifest();
+  const contentCommit = options.contentCommit || manifest.content_commit;
+  if (!GIT_SHA_RE.test(contentCommit || "")) throw new Error("a valid content commit is required");
+  let plan = buildPlan({ notes: loadAllNotes(), manifest, ...options });
+  const needsTools = plan.some((job) => job.state.startsWith("candidate"));
+  const checks = preflightTools({
+    tools: needsTools ? [
+      { name: "generator", command: options.generatorBin, versionArgs: ["--version"] },
+      { name: "converter", command: options.converterBin, versionArgs: ["-version"] },
+    ] : [],
+    outputPaths: needsTools ? [
+      { path: options.outputDir, boundary: ROOT },
+      ...(options.receiptFile ? [{ path: path.dirname(options.receiptFile), boundary: receiptBoundary(options.receiptFile) }] : []),
+    ] : [],
+  });
+  if (!checks.ok) {
+    for (const error of checks.errors) console.error(`PREFLIGHT ${error.code}: ${formatAssetError(error.message)}`);
+    process.exitCode = 2;
+    return;
+  }
+  if (needsTools && !snapshotPreflight(contentCommit, plan.filter((job) => job.state.startsWith("candidate")).map((job) => job.note))) {
+    console.error("PREFLIGHT content commit must contain the exact note inputs and be an ancestor of HEAD");
+    process.exitCode = 2;
+    return;
+  }
+  plan = finalizeRegisteredJobs(plan, checks.tools, contentCommit, options);
+  printPlan(plan, checks.tools, options.preflightOnly ? "preflight" : options.dryRun ? "dry-run" : "generate");
+  const unsafe = plan.filter((job) => job.state.startsWith("error-"));
+  if (unsafe.length > 0) {
+    for (const job of unsafe) console.error(`FAIL ${job.note.slug}: ${job.reason}`);
+    process.exitCode = 1;
+    return;
+  }
+  const jobs = plan.filter((job) => job.state === "candidate");
+  if (jobs.length > 0 && (options.slugs.size !== 1 || !options.receiptFile)) {
+    console.error("PREFLIGHT a non-empty generation plan requires exactly one --slug and --receipt-file");
+    process.exitCode = 2;
+    return;
+  }
+  if (options.receiptFile && jobs.some((job) => job.outputs.some((output) => path.resolve(output.path) === options.receiptFile))) {
+    console.error("PREFLIGHT --receipt-file must not collide with an asset output");
+    process.exitCode = 2;
+    return;
+  }
+  if (jobs.length > 0) assertReceiptAbsent(options.receiptFile);
+  if (jobs.length === 0 || options.dryRun || options.preflightOnly) return;
+
+  fs.mkdirSync(options.outputDir, { recursive: true });
+  fs.mkdirSync(path.dirname(options.receiptFile), { recursive: true });
+  const stagingRoot = fs.mkdtempSync(path.join(os.tmpdir(), "eai-paper-card-"));
+  try {
+    const generated = jobs.map((job, index) => {
+      const stagingDir = path.join(stagingRoot, String(index));
+      fs.mkdirSync(stagingDir);
+      return { job, image: runGenerator(job, stagingDir, options.generatorBin) };
+    });
+    const dimensions = new Map();
+    let writtenReceipt = null;
+    const flatOutputs = generated.flatMap(({ job, image }) => job.outputs.map((output) => ({ job, image, output })));
+    const outputSpecs = flatOutputs.map(({ image, output }) => ({
+      targetPath: output.path,
+      boundary: ROOT,
+      expectAbsent: true,
+      writeTemp: (tempPath) => runConverter(options.converterBin, image.path, tempPath, output.args),
+      validateTemp: ({ tempPath, sha256: outputSha }) => {
+        const inspected = inspectImage(tempPath);
+        if (inspected.format !== "webp" || inspected.sha256 !== outputSha) throw new Error("cwebp output validation failed");
+        if (output.role === "compact" && inspected.width > 800) throw new Error("compact card exceeds 800 pixels");
+        dimensions.set(path.resolve(output.path), inspected);
+      },
+    }));
+    const installed = writeAssetAtomically({
+      outputs: outputSpecs,
+      commitMetadata: (results) => {
+        const outputFacts = results.map((result, index) => {
+          const { output } = flatOutputs[index];
+          const inspected = dimensions.get(path.resolve(output.path));
+          return {
+            output,
+            receipt: { kind: "card", path: output.repoPath, sha256: result.sha256, width: inspected.width, height: inspected.height },
+            input: {
+              kind: "card",
+              path: output.repoPath,
+              parameters: { argv: output.args },
+            },
+          };
+        });
+        const inputs = generationInputs({
+          jobs,
+          contentCommit,
+          generatorVersion: checks.tools.generator.version,
+          converterVersion: checks.tools.converter.version,
+          outputMetadata: outputFacts.map((fact) => fact.input),
+        });
+        writtenReceipt = createAssetReceipt({
+          slug: jobs[0].note.slug,
+          generator: GENERATOR_ID,
+          inputs,
+          outputs: outputFacts.map((fact) => fact.receipt),
+        });
+        assertReceiptAbsent(options.receiptFile);
+        writeAssetReceiptAtomically(options.receiptFile, writtenReceipt, {
+          boundary: receiptBoundary(options.receiptFile),
+        });
+        return () => {
+          try { fs.unlinkSync(options.receiptFile); } catch (error) { if (error?.code !== "ENOENT") throw error; }
+        };
+      },
+    });
+    console.log(`OK ${jobs[0].note.slug}: wrote ${installed.length} card assets and receipt ${path.basename(options.receiptFile)}`);
+  } finally {
+    fs.rmSync(stagingRoot, { recursive: true, force: true });
+  }
+}
+
+let options;
+try {
+  options = parseCli();
+} catch (error) {
+  console.error(`USAGE ${formatAssetError(error)}`);
+  process.exitCode = 2;
+}
+if (options) {
+  try {
+    if (options.record) runRecord(options);
+    else runGeneration(options);
+  } catch (error) {
+    console.error(`FAIL ${formatAssetError(error)}`);
+    process.exitCode = process.exitCode || 1;
+  }
+}

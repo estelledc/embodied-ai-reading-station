@@ -1,0 +1,103 @@
+{
+  "schema_version": "2.0.0",
+  "content_commit": "0123456789abcdef0123456789abcdef01234567",
+  "notes": [
+    {
+      "slug": "demo-local",
+      "note_path": "notes/demo-local.md",
+      "note_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "source": {
+        "kind": "local",
+        "url": null,
+        "path": "papers/demo-local/paper.md",
+        "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/demo-local.webp",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "generator": "gen-paper-cards/v1",
+          "input_fingerprint": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+          "content_commit": "0123456789abcdef0123456789abcdef01234567"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/demo-local-scene.webp",
+          "sha256": "2222222222222222222222222222222222222222222222222222222222222222",
+          "generator": "gen-inline-figures/v1",
+          "input_fingerprint": "3333333333333333333333333333333333333333333333333333333333333333",
+          "content_commit": "0123456789abcdef0123456789abcdef01234567"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/demo-local-method.webp",
+          "sha256": "4444444444444444444444444444444444444444444444444444444444444444",
+          "generator": "gen-inline-figures/v1",
+          "input_fingerprint": "5555555555555555555555555555555555555555555555555555555555555555",
+          "content_commit": "0123456789abcdef0123456789abcdef01234567"
+        },
+        {
+          "kind": "extracted-figure",
+          "tracked": true,
+          "path": "papers/demo-local/images/figure-01.png",
+          "sha256": "6666666666666666666666666666666666666666666666666666666666666666",
+          "generator": "extract-paper-figures/v1",
+          "input_fingerprint": "7777777777777777777777777777777777777777777777777777777777777777",
+          "content_commit": "0123456789abcdef0123456789abcdef01234567"
+        }
+      ]
+    },
+    {
+      "slug": "demo-remote-verified",
+      "note_path": "notes/demo-remote-verified.md",
+      "note_sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/1234.5678",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "VERIFIED",
+        "by": "content-reviewer",
+        "date": "2026-07-11",
+        "scope": "note-and-source",
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "demo-remote-blocked",
+      "note_path": "notes/demo-remote-blocked.md",
+      "note_sha256": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "source": {
+        "kind": "remote",
+        "url": "https://example.com/paper",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "BLOCKED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": "source landing page requires manual access"
+      },
+      "generated_assets": []
+    }
+  ]
+}

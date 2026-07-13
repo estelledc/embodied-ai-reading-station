@@ -1,7 +1,7 @@
 // content.mjs 纯函数单元测试：inferTags。
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { inferTags } from "./content.mjs";
+import { PAPERS, comparePaperDisplayOrder, inferTags, loadNotes } from "./content.mjs";
 
 test("inferTags: 命中标题与正文关键词", () => {
   const note = {
@@ -31,4 +31,22 @@ test("inferTags: 最多 6 个 tag", () => {
     body: "diffusion denoising, flow matching, transformer self-attention, mamba SSM, point cloud voxel, LLM language model, visual RGB camera",
   };
   assert.equal(inferTags(note).length, 6);
+});
+
+test("PAPERS uses slug as the deterministic tie-break for duplicate display numbers", () => {
+  const reversedTie = [{ num: 7, slug: "zeta" }, { num: 7, slug: "alpha" }];
+  assert.deepEqual(reversedTie.sort(comparePaperDisplayOrder).map((paper) => paper.slug), ["alpha", "zeta"]);
+  const sorted = [...PAPERS].sort(comparePaperDisplayOrder);
+  assert.deepEqual(PAPERS.map((paper) => paper.slug), sorted.map((paper) => paper.slug));
+});
+
+test("loadNotes exposes canonical path, hash, source, and lifecycle fields without changing view shape", () => {
+  const notes = loadNotes();
+  assert.equal(notes.length, 156);
+  assert.ok(notes.every((note) => note.notePath === `notes/${note.slug}.md`));
+  assert.ok(notes.every((note) => /^[a-f0-9]{64}$/.test(note.noteSha256)));
+  assert.ok(notes.every((note) => typeof note.sourcePath === "string" && note.sourcePath.length > 0));
+  assert.ok(notes.every((note) => note.generated_at === null || /^\d{4}-\d{2}-\d{2}$/.test(note.generated_at)));
+  assert.ok(notes.every((note) => note.content_modified === null || /^\d{4}-\d{2}-\d{2}$/.test(note.content_modified)));
+  assert.equal(notes.find((note) => note.slug === "audiolm").generated_at, "2026-07-01");
 });

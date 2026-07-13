@@ -5,83 +5,49 @@ import path from "node:path";
 import { execSync as _execSync } from "node:child_process";
 import { SITE, ROOT, DIST, url, SITE_URL } from "../config.mjs";
 import { TOPIC_ORDER, PAPER_COUNT, TOPIC_COUNT } from "../content.mjs";
-import { page, pageHeroHtml } from "../layout.mjs";
+import {
+  buildGovernanceReferences,
+  LICENSE_POLICY_ID,
+  PROVENANCE_POLICY_ID,
+} from "../governance.mjs";
+import { page, pageHeroHtml, safeJsonForScript } from "../layout.mjs";
 
 // --- /next/ smart next paper redirect --------------------------------------
 export function buildNext(notes) {
-  const slugs = JSON.stringify(notes.map(n => ({ slug: n.slug, topic: n.topicLabel, era: n.era || "classic" })));
-  const body = `<main class="shell" style="text-align:center;padding-top:6rem">
+  const papers = notes.map(n => ({ slug: n.slug, topic: n.topicLabel, era: n.era || "classic" }));
+  const body = `<main class="shell" style="text-align:center;padding-top:6rem" data-eai-page-behavior="next">
     <span class="eyebrow">Next · 帮你挑下一篇</span>
     <h1>正在<em>选下一篇</em>...</h1>
     <p style="color:var(--ink-soft);font-size:1.05rem;margin-top:1rem">基于你已读的主题分布。</p>
     <p style="margin-top:2rem"><a id="eai-next-fallback" href="${url("/")}" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">没自动跳转？回首页 →</a></p>
-    <script>
-    (function(){
-      var stylesLink = document.querySelector('link[href*="/styles.css"]');
-      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
-      var papers = ${slugs};
-      try {
-        var read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]'));
-        var unread = papers.filter(function(p){ return !read.has(p.slug); });
-        if (!unread.length) {
-          location.replace(base + '/lists/');
-          return;
-        }
-        var pick = null;
-        if (read.size === 0) {
-          // 0 已读：CLIP 优先
-          pick = unread.find(function(p){ return p.slug === 'clip'; }) || unread[0];
-        } else {
-          // 已读最多某主题 → 推同主题下一篇
-          var byTopic = {};
-          papers.forEach(function(p){ if (read.has(p.slug)) byTopic[p.topic] = (byTopic[p.topic] || 0) + 1; });
-          var sorted = Object.keys(byTopic).sort(function(a,b){ return byTopic[b] - byTopic[a]; });
-          for (var i = 0; i < sorted.length; i++) {
-            var cands = unread.filter(function(p){ return p.topic === sorted[i]; });
-            if (cands.length) {
-              var eraOrder = { founder: 0, classic: 1, frontier: 2 };
-              cands.sort(function(a,b){ return (eraOrder[a.era] || 1) - (eraOrder[b.era] || 1); });
-              pick = cands[0];
-              break;
-            }
-          }
-          if (!pick) pick = unread[0];
-        }
-        location.replace(base + '/papers/' + pick.slug + '/');
-      } catch(e) {
-        location.replace(base + '/');
-      }
-    })();
-    </script>
+    <script id="eai-next-data" type="application/json">${safeJsonForScript(papers)}</script>
   </main>`;
-  return page({ title: "Next — Embodied AI: Zero to One", body, active: "", canonicalPath: "/next/" });
+  return page({
+    title: "Next — Embodied AI: Zero to One",
+    body,
+    active: "",
+    canonicalPath: "/next/",
+    extraScripts: ["/page-behaviors.js"],
+  });
 }
 
 // --- random paper redirect --------------------------------------------------
 export function buildRandom(notes) {
-  const slugs = JSON.stringify(notes.map(n => n.slug));
-  const body = `<main class="shell" style="text-align:center;padding-top:6rem">
+  const slugs = notes.map(n => n.slug);
+  const body = `<main class="shell" style="text-align:center;padding-top:6rem" data-eai-page-behavior="random">
     <span class="eyebrow">Random · 随机一篇</span>
     <h1>正在<em>抽签</em>...</h1>
     <p style="color:var(--ink-soft);font-size:1.05rem;margin-top:1rem">从 ${notes.length} 篇里随机挑一篇给你。</p>
     <p style="margin-top:2rem"><a id="eai-random-fallback" href="${url("/")}" style="font-family:var(--font-mono);font-size:0.85rem;color:var(--coral)">没自动跳转？点这里手动选 →</a></p>
-    <script>
-    (function(){
-      var stylesLink = document.querySelector('link[href*="/styles.css"]');
-      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
-      var slugs = ${slugs};
-      // 优先未读
-      try {
-        var read = new Set(JSON.parse(localStorage.getItem('eaireading.read') || '[]'));
-        var unread = slugs.filter(function(s){ return !read.has(s); });
-        if (unread.length > 0) slugs = unread;
-      } catch(e) {}
-      var pick = slugs[Math.floor(Math.random() * slugs.length)];
-      location.replace(base + '/papers/' + pick + '/');
-    })();
-    </script>
+    <script id="eai-random-data" type="application/json">${safeJsonForScript(slugs)}</script>
   </main>`;
-  return page({ title: "Random — Embodied AI: Zero to One", body, active: "", canonicalPath: "/random/" });
+  return page({
+    title: "Random — Embodied AI: Zero to One",
+    body,
+    active: "",
+    canonicalPath: "/random/",
+    extraScripts: ["/page-behaviors.js"],
+  });
 }
 
 // --- human-readable site map -----------------------------------------------
@@ -297,7 +263,7 @@ export function build404(notes) {
   const random6 = [...notes]
     .filter(n => n.status !== "missing" && n.status !== "stub")
     .slice(0, 6); // 用前 6 篇当 fallback 推荐
-  const body = `<main class="shell" style="text-align:center;padding-top:5rem;padding-bottom:5rem">
+  const body = `<main class="shell" style="text-align:center;padding-top:5rem;padding-bottom:5rem" data-eai-page-behavior="not-found">
     <div style="font-family:var(--font-display);font-style:italic;font-weight:800;font-size:9rem;line-height:1;color:var(--coral);margin-bottom:1rem">404</div>
     <h1 style="margin-top:0">这页<em>没找到</em>。</h1>
     <p style="font-size:1.15rem;line-height:1.55;color:var(--ink-soft);max-width:42ch;margin:1rem auto 2rem">
@@ -324,45 +290,6 @@ export function build404(notes) {
       </article>`).join("")}
     </div>
 
-    <script>
-    (function(){
-      var stylesLink = document.querySelector('link[href*="/styles.css"]');
-      var base = stylesLink ? stylesLink.getAttribute('href').replace(/\\/styles\\.css$/, '') : '';
-      // 提取 URL 末段当 query
-      var path = location.pathname.replace(base, '').replace(/\\/$/, '');
-      var seg = path.split('/').filter(Boolean).pop() || '';
-      if (!seg || seg === '404') return;
-      var q = seg.replace(/[-_]/g, ' ').toLowerCase();
-      fetch(base + '/data/papers.json')
-        .then(function(r){ return r.json(); })
-        .then(function(papers){
-          var scored = papers.map(function(p){
-            var hay = (p.title + ' ' + p.slug).toLowerCase();
-            var s = 0;
-            q.split(/\\s+/).forEach(function(w){
-              if (!w) return;
-              if (hay.indexOf(w) >= 0) s += w.length;
-            });
-            // slug 完全/部分匹配加权
-            if (p.slug === seg) s += 100;
-            else if (p.slug.indexOf(seg) >= 0 || seg.indexOf(p.slug) >= 0) s += 50;
-            return { p: p, s: s };
-          }).filter(function(x){ return x.s > 0; });
-          scored.sort(function(a,b){ return b.s - a.s; });
-          var top = scored.slice(0, 5);
-          if (!top.length) return;
-          var aside = document.getElementById('eai-404-suggest');
-          var list = document.getElementById('eai-404-list');
-          list.innerHTML = top.map(function(x){
-            return '<li style="padding:0.4rem 0;border-bottom:1px dashed var(--paper-dark)">' +
-              '<a href="' + x.p.url.replace('${SITE_URL}', base) + '" style="text-decoration:none;color:var(--ink);font-family:var(--font-display);font-weight:700">' + x.p.title + '</a>' +
-              '<span style="display:block;font-family:var(--font-mono);font-size:0.74rem;color:var(--ink-faint);margin-top:0.2rem">' + x.p.topic + ' · ' + (x.p.year || '') + '</span></li>';
-          }).join('');
-          aside.hidden = false;
-        })
-        .catch(function(){});
-    })();
-    </script>
   </main>`;
   return page({
     title: "404 — 这页没找到 — Embodied AI: Zero to One",
@@ -371,11 +298,14 @@ export function build404(notes) {
     canonicalPath: "/404.html",
     robots: "noindex, nofollow",
     jsonLd: false,
+    extraScripts: ["/page-behaviors.js"],
   });
 }
 
 // --- about page -------------------------------------------------------------
 export function buildAbout(notes = []) {
+  const governance = buildGovernanceReferences({ route: url });
+  const registeredGeneratedAssetCount = countRegisteredGeneratedAssets();
   // Compute dist size by category
   function dirCatSize(dir) {
     let html = 0, image = 0, code = 0, data = 0, other = 0;
@@ -454,8 +384,10 @@ export function buildAbout(notes = []) {
       </ul>
 
       <h2>Open data</h2>
-      <p>站点数据全部以 JSON 公开，CC BY 4.0 协议。如果你想做二次分析、可视化或 LLM 训练数据：</p>
+      <p>站点元数据以 JSON 公开；许可按资产类别区分，Data API 不会把项目声明扩展到第三方论文或 figure。如果你想做二次分析、可视化或 LLM 训练数据：</p>
       <ul style="font-family:var(--font-mono);font-size:0.9rem">
+        <li><a href="${url("/data/v2/index.json")}">/data/v2/index.json</a> — v2 入口、兼容与治理发现</li>
+        <li><a href="${url("/data/v2/provenance.json")}">/data/v2/provenance.json</a> — canonical provenance（仅元数据与 hash）</li>
         <li><a href="${url("/data/index.json")}">/data/index.json</a> — manifest（计数 + endpoint URL）</li>
         <li><a href="${url("/data/papers.json")}">/data/papers.json</a> — ${PAPER_COUNT} 篇全部元数据 + tldr</li>
         <li><a href="${url("/data/tags.json")}">/data/tags.json</a> — tag 频次 + 共现矩阵</li>
@@ -466,7 +398,7 @@ export function buildAbout(notes = []) {
       <ol>
         <li><code>lr pdf bundle paper.pdf</code> — 把授权 PDF 转成带图 markdown</li>
         <li><code>notes/&lt;slug&gt;.md</code> — 用统一模板整理长篇结构化笔记</li>
-        <li><code>npm run provenance:generate</code> — 固定本地解析文本的 SHA-256</li>
+        <li><code>npm run provenance:generate</code> — 生成或核对 156 条 canonical provenance 元数据与 hash</li>
         <li><code>node site/scripts/build.mjs</code> — 期刊风 HTML 渲染</li>
         <li>GitHub Actions → GitHub Pages — 部署</li>
       </ol>
@@ -507,12 +439,15 @@ export function buildAbout(notes = []) {
       ${sizeBars}
 
       <h2>License</h2>
+      <p>稳定策略标识：<code>${LICENSE_POLICY_ID}</code> / <code>${PROVENANCE_POLICY_ID}</code>。</p>
       <ul>
-        <li><strong>笔记内容</strong>: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a> — 引用请保留作者名</li>
-        <li><strong>站点代码</strong>: <a href="https://opensource.org/licenses/MIT">MIT</a></li>
-        <li><strong>原论文 PDF + 论文 figure 图</strong>: 版权归原作者，本站只作学习摘要</li>
-        <li><strong>codex 生成图片</strong>: CC BY 4.0（同笔记）</li>
+        <li><strong><code>project-code</code></strong>: <code>MIT</code></li>
+        <li><strong><code>project-notes</code></strong>: <code>CC-BY-4.0</code> — 引用并标注修改</li>
+        <li><strong><code>project-generated-images</code></strong>: 仅另有证据证明项目可许可的图片声明 <code>CC-BY-4.0</code>；当前 v2 字段不会自动归类</li>
+        <li><strong><code>third-party-paper-materials</code></strong>: <code>NOASSERTION</code> — 不是许可授予；论文、figure 与无独立权利证据的生成资产均默认归入此类</li>
       </ul>
+      <p><a href="${governance.license.document}">MIT license</a> · <a href="${governance.license.notice}">rights notice</a> · <a href="${governance.provenance.policy}">provenance policy</a></p>
+      <p>当前 canonical manifest 的 <code>generated_assets</code> 记录数为 <strong>${registeredGeneratedAssetCount ?? "unknown"}</strong>；记录与 hash 也不能单独证明可许可权利。</p>
 
       <h2>Contact / 反馈</h2>
       <p>有几种方式联系：</p>
@@ -544,4 +479,16 @@ function countInlineImages() {
   const dir = path.join(SITE, "src", "images", "inline");
   if (!fs.existsSync(dir)) return 0;
   return fs.readdirSync(dir).filter(f => f.endsWith(".webp") && !f.includes("-800")).length;
+}
+
+function countRegisteredGeneratedAssets() {
+  try {
+    const document = JSON.parse(fs.readFileSync(path.join(ROOT, "papers", "provenance.json"), "utf8"));
+    if (!Array.isArray(document.notes)) return null;
+    return document.notes.reduce((total, note) => (
+      total + (Array.isArray(note.generated_assets) ? note.generated_assets.length : 0)
+    ), 0);
+  } catch {
+    return null;
+  }
 }

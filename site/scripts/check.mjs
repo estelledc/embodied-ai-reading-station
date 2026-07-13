@@ -5,16 +5,75 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import matter from "gray-matter";
 import { TASK_SLUGS } from "./constants.mjs";
+import { loadCanonicalContentCommit } from "./lib/data-api.mjs";
+import {
+  formatServiceWorkerBuildId,
+  loadSiteCommit,
+} from "./lib/assets.mjs";
+import { BUILD_DATE, GENERATED_AT } from "./lib/config.mjs";
 import { countWords } from "./lib/markdown.mjs";
 import { SITE_URL } from "./lib/config.mjs";
-import { validateSourceReference } from "./lib/source-reference.mjs";
-import { SYLLABUS_WEEKS } from "./lib/views/aggregates.mjs";
+import { DATA_API_CONTRACT } from "./lib/provenance-schema.mjs";
+import {
+  GOVERNANCE_CONTRACT,
+  buildGovernanceReferences,
+  validateGovernanceBinaryDelta,
+  validateGovernanceDocuments,
+  validateGovernanceFieldBindings,
+  validateGovernanceSurfaceMappings,
+} from "./lib/governance.mjs";
+import {
+  CSP_PRODUCTION_STATUS,
+  CSP_REPORT_ONLY_HEADER_NAME,
+  CSP_STYLE_ATTRIBUTE_BUDGET,
+  assertHtmlSecurity,
+  createCspReportOnlyManifest,
+  digestStyleValues,
+  scanCssResourcePolicy,
+  scanHtmlResourcePolicy,
+  scanHtmlSecurity,
+  scanRuntimeStyleSinks,
+} from "./lib/csp.mjs";
+import {
+  evaluateRouteImageBudget,
+  measureRouteImageBudget,
+  normalizeRouteHtmlForBase,
+} from "./lib/route-budget.mjs";
+import {
+  formatProvenanceRepositoryErrors,
+  validateProvenanceRepositoryFile,
+} from "./lib/provenance-validator.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SITE = path.resolve(__dirname, "..");
 const ROOT = path.resolve(SITE, "..");
 const DIST = path.join(SITE, "dist");
 const NOTES = path.join(ROOT, "notes");
+const REQUIRED_CORE_SHELL_URLS = Object.freeze([
+  "./",
+  "./styles.css",
+  "./jx/tokens.css",
+  "./jx/components.css",
+  "./pagefind/pagefind-ui.css",
+  "./pagefind/pagefind-ui.js",
+  "./search.js",
+  "./outline.js",
+  "./data-api.js",
+  "./reading-progress.js",
+  "./quick-filter.js",
+  "./keyboard.js",
+  "./more-nav.js",
+  "./theme-toggle.js",
+  "./page-behaviors.js",
+  "./math-render.js",
+  "./deck/deck.css",
+  "./deck/deck.js",
+  "./link-preview.js",
+  "./sw-register.js",
+  "./svg-export.js",
+  "./favicon.svg",
+  "./site.webmanifest",
+]);
 
 let pass = 0, fail = 0;
 function check(name, fn) {
@@ -32,6 +91,92 @@ function check(name, fn) {
     fail++;
   }
 }
+
+function readWorkerStringConstant(source, name) {
+  const matches = [...source.matchAll(new RegExp(`^const\\s+${name}\\s*=\\s*"([^"]*)"\\s*;$`, "gm"))];
+  if (matches.length > 1) throw new Error(`${name} must have one exact declaration`);
+  return matches.length === 1 ? matches[0][1] : null;
+}
+
+function readWorkerTemplateConstant(source, name) {
+  const matches = [...source.matchAll(new RegExp(`^const\\s+${name}\\s*=\\s*\\x60([^\\x60]*)\\x60\\s*;$`, "gm"))];
+  if (matches.length > 1) throw new Error(`${name} must have one exact declaration`);
+  return matches.length === 1 ? matches[0][1] : null;
+}
+
+function parseWorkerShellUrls(source) {
+  const match = source.match(/\bconst\s+SHELL_URLS\s*=\s*\[([\s\S]*?)\]\s*;/);
+  if (!match) throw new Error("SHELL_URLS array missing");
+  const withoutComments = match[1]
+    .replace(/^\s*\/\/.*$/gm, "")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/,\s*$/, "");
+  let urls;
+  try {
+    urls = JSON.parse(`[${withoutComments}]`);
+  } catch {
+    throw new Error("SHELL_URLS must contain only static JSON string entries");
+  }
+  if (!Array.isArray(urls) || urls.length === 0 || urls.some(value => typeof value !== "string")) {
+    throw new Error("SHELL_URLS must be a non-empty string array");
+  }
+  if (new Set(urls).size !== urls.length) {
+    throw new Error("SHELL_URLS must not contain duplicate entries");
+  }
+  return urls;
+}
+
+function shellUrlToDistPath(value) {
+  if (value === "./") return "index.html";
+  if (!value.startsWith("./") || value.includes("?") || value.includes("#")) {
+    throw new Error(`invalid shell URL: ${value}`);
+  }
+  const relative = value.slice(2);
+  if (!relative || path.posix.normalize(relative) !== relative || relative.startsWith("../")) {
+    throw new Error(`unsafe shell URL: ${value}`);
+  }
+  return relative.endsWith("/") ? `${relative}index.html` : relative;
+}
+
+// Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
+// import 时发现并读取全部笔记，不能让 symlink/坏路径绕过独立门禁。
+console.log("\n=== Source path integrity ===");
+const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 156 });
+if (!provenance.ok) {
+  const rendered = formatProvenanceRepositoryErrors(provenance.errors);
+  console.log(rendered.split("\n").map((line) => `  ✗ ${line}`).join("\n"));
+}
+const phaseResult = (phase) => provenance.phases[phase].ok
+  || `${provenance.phases[phase].errors.length} provenance validation error(s)`;
+check("papers/provenance.json exact schema v2", () => phaseResult("schema"));
+check("当前 note/source/asset 与 manifest 一致", () => phaseResult("current"));
+check("content_commit snapshot 三方字节一致", () => phaseResult("snapshot"));
+if (!provenance.ok) {
+  console.log("\n=== Summary ===");
+  console.log(`  ${pass} passed, ${fail} failed`);
+  process.exit(1);
+}
+
+console.log("\n=== License governance ===");
+const provenanceDocument = JSON.parse(
+  fs.readFileSync(path.join(ROOT, "papers", "provenance.json"), "utf8"),
+);
+const governanceDocuments = validateGovernanceDocuments({ root: ROOT });
+const governanceBindings = validateGovernanceFieldBindings();
+const governanceBinaryDelta = validateGovernanceBinaryDelta({
+  root: ROOT,
+});
+check("LICENSE/NOTICE/PROVENANCE 是互链的纯文本治理文件", () => (
+  governanceDocuments.ok || governanceDocuments.errors.slice(0, 3).join("; ")
+));
+check("四类许可映射只绑定已冻结的 provenance v2 字段", () => (
+  governanceBindings.ok || governanceBindings.errors.slice(0, 3).join("; ")
+));
+check("审查基线后无新增或修改二进制", () => (
+  governanceBinaryDelta.ok || governanceBinaryDelta.errors.slice(0, 3).join("; ")
+));
+
+const { SYLLABUS_WEEKS } = await import("./lib/views/aggregates.mjs");
 
 console.log("\n=== Static pages ===");
 const requiredPages = [
@@ -53,16 +198,28 @@ const requiredPages = [
   "sitemap.xml",
   "robots.txt",
   "feed.xml",
+  "llms.txt",
   "favicon.svg",
   "site.webmanifest",
+  "data-api.js",
   "data/papers.json",
+  "data/v2/papers.json",
+  "data/v2/index.json",
+  "data/v2/provenance.json",
   "data/tags.json",
   "data/topics.json",
   "data/index.json",
+  "governance/LICENSE",
+  "governance/NOTICE.md",
+  "governance/PROVENANCE.md",
+  "csp-report-only.json",
 ];
 for (const p of requiredPages) {
   check(p, () => fs.existsSync(path.join(DIST, p)) || `missing: ${p}`);
 }
+const builtIndexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+const builtBaseMatch = builtIndexHtml.match(/href="([^"]*)\/styles\.css"/);
+const builtBase = builtBaseMatch ? builtBaseMatch[1] : "";
 
 console.log("\n=== Topics ===");
 const topicsJson = JSON.parse(fs.readFileSync(path.join(NOTES, "topics.json"), "utf8")).topics;
@@ -105,10 +262,150 @@ check(`${noteFiles.length} 篇都有 paper page`, () => paperMissing === 0 || `$
 
 console.log("\n=== Data API ===");
 const papersJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "papers.json"), "utf8"));
+const legacyIndex = JSON.parse(fs.readFileSync(path.join(DIST, "data", "index.json"), "utf8"));
+const papersV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "papers.json"), "utf8"));
+const indexV2 = JSON.parse(fs.readFileSync(path.join(DIST, "data", "v2", "index.json"), "utf8"));
+const publishedProvenanceBytes = fs.readFileSync(path.join(DIST, "data", "v2", "provenance.json"));
+const canonicalProvenanceBytes = fs.readFileSync(path.join(ROOT, "papers", "provenance.json"));
+const canonicalContentCommit = loadCanonicalContentCommit();
+const exactKeys = (value, expected) => (
+  value !== null
+  && typeof value === "object"
+  && !Array.isArray(value)
+  && JSON.stringify(Object.keys(value)) === JSON.stringify(expected)
+);
+
 check("papers.json 数量等于 notes 数量", () => papersJson.length === noteFiles.length || `${papersJson.length} vs ${noteFiles.length}`);
 check("papers.json 每条有 slug+title+url", () => {
   const bad = papersJson.find(p => !p.slug || !p.title || !p.url);
   return !bad || `bad entry: ${JSON.stringify(bad).slice(0, 60)}`;
+});
+check("v2 papers/index 使用精确 2.0.0 envelope", () => {
+  if (!exactKeys(papersV2, DATA_API_CONTRACT.envelope_fields)) return "papers envelope fields drift";
+  if (!exactKeys(indexV2, DATA_API_CONTRACT.envelope_fields)) return "index envelope fields drift";
+  if (papersV2.schema_version !== DATA_API_CONTRACT.schema_version) return "papers schema drift";
+  if (indexV2.schema_version !== DATA_API_CONTRACT.schema_version) return "index schema drift";
+  return true;
+});
+check("v2 papers/index content_commit 与 canonical provenance 一致", () => {
+  if (!/^[0-9a-f]{40}$/.test(papersV2.content_commit ?? "")) return "papers content_commit invalid";
+  if (papersV2.content_commit !== indexV2.content_commit) return "v2 content_commit mismatch";
+  if (papersV2.content_commit !== canonicalContentCommit) return "canonical content_commit mismatch";
+  return true;
+});
+check("公开 provenance v2 与 canonical manifest 逐字节一致", () => (
+  publishedProvenanceBytes.equals(canonicalProvenanceBytes)
+    || "data/v2/provenance.json bytes drift from papers/provenance.json"
+));
+check("v2 papers/index generated_at 是同一确定性构建时间", () => {
+  if (papersV2.generated_at !== indexV2.generated_at) return "generated_at mismatch";
+  const parsed = new Date(papersV2.generated_at);
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString() !== papersV2.generated_at) return "generated_at invalid";
+  if (process.env.SOURCE_DATE_EPOCH !== undefined && papersV2.generated_at !== GENERATED_AT) {
+    return `generated_at 未使用当前 SOURCE_DATE_EPOCH: ${papersV2.generated_at}`;
+  }
+  return true;
+});
+check("legacy 数组与 v2 data 的 18 字段逐条一致", () => {
+  if (!Array.isArray(papersV2.data)) return "v2 data is not an array";
+  if (papersV2.data.length !== noteFiles.length) return `${papersV2.data.length} vs ${noteFiles.length}`;
+  const fields = JSON.stringify(DATA_API_CONTRACT.paper_record_fields);
+  const driftedFields = papersV2.data.find(record => JSON.stringify(Object.keys(record)) !== fields);
+  if (driftedFields) return `paper field drift: ${driftedFields.slug ?? "unknown"}`;
+  return JSON.stringify(papersV2.data) === JSON.stringify(papersJson) || "legacy/v2 paper projection drift";
+});
+check("v2 index endpoint 与兼容窗口精确匹配", () => {
+  if (!exactKeys(indexV2.data, DATA_API_CONTRACT.index_data_fields)) return "index data fields drift";
+  if (!exactKeys(indexV2.data.deprecation, DATA_API_CONTRACT.deprecation_fields)) return "deprecation fields drift";
+  if (!exactKeys(indexV2.data.license, DATA_API_CONTRACT.license_fields)) return "license fields drift";
+  if (!Array.isArray(indexV2.data.license.asset_classes)) return "license asset classes missing";
+  if (indexV2.data.license.asset_classes.length !== GOVERNANCE_CONTRACT.asset_classes.length) {
+    return "license asset class count drift";
+  }
+  if (indexV2.data.license.asset_classes.some(assetClass => (
+    !exactKeys(assetClass, DATA_API_CONTRACT.license_asset_class_fields)
+  ))) return "license asset class fields drift";
+  if (!exactKeys(indexV2.data.provenance, DATA_API_CONTRACT.provenance_reference_fields)) {
+    return "provenance reference fields drift";
+  }
+  if (indexV2.data.papers_endpoint !== builtBase + DATA_API_CONTRACT.versioned_papers_endpoint) return "papers endpoint base drift";
+  if (indexV2.data.legacy_endpoint !== builtBase + DATA_API_CONTRACT.legacy_endpoint) return "legacy endpoint base drift";
+  if (indexV2.data.deprecation.status !== "supported" || indexV2.data.deprecation.removal_version !== null) {
+    return "legacy compatibility policy drift";
+  }
+  const expectedGovernance = buildGovernanceReferences({ route: value => builtBase + value });
+  if (JSON.stringify(indexV2.data.license) !== JSON.stringify(expectedGovernance.license)) {
+    return "license governance mapping drift";
+  }
+  if (JSON.stringify(indexV2.data.provenance) !== JSON.stringify(expectedGovernance.provenance)) {
+    return "provenance governance mapping drift";
+  }
+  return true;
+});
+check("legacy data manifest 保留旧形状并发现 v2", () => {
+  if (legacyIndex.content_commit !== canonicalContentCommit) return "legacy manifest content_commit drift";
+  if (!legacyIndex.endpoints?.index_v2?.endsWith("/data/v2/index.json")) return "missing v2 index discovery";
+  if (!legacyIndex.endpoints?.papers_v2?.endsWith("/data/v2/papers.json")) return "missing v2 papers discovery";
+  if (!legacyIndex.endpoints?.provenance_v2?.endsWith("/data/v2/provenance.json")) return "missing v2 provenance discovery";
+  if (!legacyIndex.endpoints?.papers?.endsWith("/data/papers.json")) return "missing legacy papers endpoint";
+  if (legacyIndex.license !== "CC BY 4.0 — Attribution required") return "legacy license compatibility alias drift";
+  if (JSON.stringify(legacyIndex.governance) !== JSON.stringify({
+    license: indexV2.data.license,
+    provenance: indexV2.data.provenance,
+  })) return "legacy governance discovery drift";
+  return true;
+});
+check("三个站内消费者均不再直连 legacy papers endpoint", () => {
+  for (const consumer of ["reading-progress.js", "link-preview.js", "404.html"]) {
+    const source = fs.readFileSync(path.join(DIST, consumer), "utf8");
+    if (/fetch\s*\([^)]*\/data\/papers\.json/s.test(source)) return `${consumer} still fetches legacy data`;
+  }
+  return true;
+});
+check("README 与 llms.txt 区分内容快照和构建时间", () => {
+  const readme = fs.readFileSync(path.join(ROOT, "README.md"), "utf8");
+  const llms = fs.readFileSync(path.join(DIST, "llms.txt"), "utf8");
+  for (const document of [readme, llms]) {
+    if (!document.includes("/data/v2/index.json")
+      || !document.includes("/data/v2/papers.json")
+      || !document.includes("/data/v2/provenance.json")) return "missing v2 discovery docs";
+    if (!document.includes("content_commit") || !document.includes("generated_at")) return "missing metadata semantics";
+  }
+  return true;
+});
+check("README/About/llms 使用同一许可与 provenance 策略 ID", () => {
+  const surfaces = [
+    fs.readFileSync(path.join(ROOT, "README.md"), "utf8"),
+    fs.readFileSync(path.join(DIST, "about", "index.html"), "utf8"),
+    fs.readFileSync(path.join(DIST, "llms.txt"), "utf8"),
+  ];
+  for (const surface of surfaces) {
+    const result = validateGovernanceSurfaceMappings(surface);
+    if (!result.ok) return result.errors.slice(0, 3).join("; ");
+  }
+  return true;
+});
+check("About 的 generated_assets 计数来自 canonical manifest", () => {
+  const expected = provenanceDocument.notes.reduce((total, note) => (
+    total + note.generated_assets.length
+  ), 0);
+  const about = fs.readFileSync(path.join(DIST, "about", "index.html"), "utf8");
+  return about.includes(
+    `generated_assets</code> 记录数为 <strong>${expected}</strong>`,
+  ) || `About generated_assets count is not ${expected}`;
+});
+check("公开治理文件与仓库源文档逐字节一致", () => {
+  for (const [key, sourcePath] of Object.entries(GOVERNANCE_CONTRACT.source_documents)) {
+    const publicPath = GOVERNANCE_CONTRACT.public_documents[key].replace(/^\//, "");
+    const source = fs.readFileSync(path.join(ROOT, sourcePath));
+    const published = fs.readFileSync(path.join(DIST, publicPath));
+    if (!source.equals(published)) return `${publicPath} bytes drift from ${sourcePath}`;
+  }
+  return true;
+});
+check("公开 NOTICE/PROVENANCE 相对链接在 governance 路由内可达", () => {
+  const result = validateGovernanceDocuments({ root: path.join(DIST, "governance") });
+  return result.ok || result.errors.slice(0, 3).join("; ");
 });
 
 const tagsJson = JSON.parse(fs.readFileSync(path.join(DIST, "data", "tags.json"), "utf8"));
@@ -150,8 +447,82 @@ for (const f of pwaFiles) {
 }
 {
   const sw = fs.readFileSync(path.join(DIST, "sw.js"), "utf8");
-  check("sw.js VERSION 已注入构建时间戳", () => /const VERSION = "\d{12}"/.test(sw) || `VERSION 未替换`);
+  let expectedBuildId = null;
+  try {
+    expectedBuildId = formatServiceWorkerBuildId(
+      process.env.SOURCE_DATE_EPOCH === undefined
+        ? new Date(String(papersV2.generated_at ?? ""))
+        : BUILD_DATE,
+      loadSiteCommit(),
+    );
+  } catch {
+    // The checks below report the invalid/missing build identity without aborting
+    // the remainder of the healthcheck.
+  }
+  const workerBuildId = readWorkerStringConstant(sw, "BUILD_ID");
+  const workerSchemaVersion = readWorkerStringConstant(sw, "DATA_SCHEMA_VERSION");
+  const workerContentCommit = readWorkerStringConstant(sw, "CONTENT_COMMIT");
+
+  check("sw.js 注入精确 build/schema/content 常量", () => {
+    if (!expectedBuildId) return "v2 generated_at 无法生成 build id";
+    if (workerBuildId !== expectedBuildId) return `BUILD_ID drift: ${workerBuildId ?? "missing"}`;
+    if (workerSchemaVersion !== DATA_API_CONTRACT.schema_version) {
+      return `DATA_SCHEMA_VERSION drift: ${workerSchemaVersion ?? "missing"}`;
+    }
+    if (workerContentCommit !== canonicalContentCommit) {
+      return `CONTENT_COMMIT drift: ${workerContentCommit ?? "missing"}`;
+    }
+    return true;
+  });
+  check("sw.js 不含未替换 build sentinel", () => {
+    const unresolved = [...new Set(sw.match(/__EAI_[A-Z0-9_]+__/g) ?? [])];
+    return unresolved.length === 0 || `unresolved: ${unresolved.join(", ")}`;
+  });
+  check("data cache namespace 绑定 scope + build + schema major + content commit", () => {
+    if (!expectedBuildId) return "v2 generated_at 无法生成 build id";
+    if (!/\bconst\s+DATA_SCHEMA_MAJOR\s*=\s*DATA_SCHEMA_VERSION\.split\(["']\.["']\)\[0\]\s*;/.test(sw)) {
+      return "DATA_SCHEMA_MAJOR 未从 DATA_SCHEMA_VERSION 派生";
+    }
+    const prefixTemplate = readWorkerTemplateConstant(sw, "CACHE_PREFIX");
+    if (prefixTemplate !== "eai-${encodeURIComponent(SCOPE_PATH)}-") {
+      return `CACHE_PREFIX drift: ${prefixTemplate ?? "missing"}`;
+    }
+    const template = readWorkerTemplateConstant(sw, "DATA_CACHE");
+    if (template === null) return "DATA_CACHE template missing";
+    const expected = "${CACHE_PREFIX}data-${BUILD_ID}-v${DATA_SCHEMA_MAJOR}-${CONTENT_COMMIT}";
+    return template === expected || `DATA_CACHE drift: ${template}`;
+  });
+  check("data cache 覆盖三个 v2 endpoint 且容量精确为 3", () => {
+    for (const endpoint of ["index.json", "papers.json", "provenance.json"]) {
+      if (!sw.includes(`./data/v2/${endpoint}`)) return `missing data endpoint: ${endpoint}`;
+    }
+    return /\bdata\s*:\s*3\b/.test(sw) || "data cache limit must be 3";
+  });
+  check("SHELL_URLS 保留固定核心预缓存集合", () => {
+    const urls = new Set(parseWorkerShellUrls(sw));
+    const missing = REQUIRED_CORE_SHELL_URLS.filter(value => !urls.has(value));
+    return missing.length === 0 || `missing core entries: ${missing.join(", ")}`;
+  });
+  check("SHELL_URLS 核心预缓存文件全部存在", () => {
+    const urls = parseWorkerShellUrls(sw);
+    const missing = [];
+    for (const value of urls) {
+      const relative = shellUrlToDistPath(value);
+      const target = path.resolve(DIST, relative);
+      if (!target.startsWith(`${DIST}${path.sep}`) || !fs.statSync(target, { throwIfNoEntry: false })?.isFile()) {
+        missing.push(`${value} -> ${relative}`);
+      }
+    }
+    return missing.length === 0 || `missing: ${missing.join(", ")}`;
+  });
   const idx = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
+  check("data-api.js 在两个 v2 消费者之前加载", () => {
+    const scriptPosition = name => idx.indexOf(`src="${builtBase}/${name}"`);
+    const adapter = scriptPosition("data-api.js");
+    const reading = scriptPosition("reading-progress.js");
+    const preview = scriptPosition("link-preview.js");
+    return adapter >= 0 && adapter < reading && adapter < preview || "script order invalid";
+  });
   check("index.html 引用 sw-register.js", () => idx.includes("sw-register.js") || `无 sw-register`);
   check("index.html 含 theme-color", () => idx.includes('name="theme-color"') || `无 theme-color`);
   check("index.html 引用 manifest", () => idx.includes("site.webmanifest") || `无 manifest link`);
@@ -363,16 +734,127 @@ check(`${htmlFiles.length} 个构建 HTML 不含旧 identity`, () => (
   legacyIdentity.length === 0 || legacyIdentity.slice(0, 20).join("; ")
 ));
 
+console.log("\n=== CSP report-only readiness ===");
+{
+  const notReady = [];
+  let styleAttributeCount = 0;
+  const styleValues = new Set();
+  const unexpectedResources = [];
+  const iframeOrigins = new Set();
+
+  for (const file of htmlFiles) {
+    const relative = path.relative(DIST, file);
+    const html = fs.readFileSync(file, "utf8");
+    const inventory = scanHtmlSecurity(html, { source: relative });
+    if (!inventory.ready) notReady.push(inventory);
+    styleAttributeCount += inventory.styleAttributes.count;
+    for (const value of inventory.styleAttributes.uniqueValues) styleValues.add(value);
+    const resources = scanHtmlResourcePolicy(inventory);
+    unexpectedResources.push(...resources.unexpectedResources);
+    for (const origin of resources.iframeOrigins) iframeOrigins.add(origin);
+  }
+
+  check("全部生成 HTML 无 inline handler/script/style、active URL、srcdoc 或 forbidden element", () => {
+    if (notReady.length === 0) return true;
+    const first = notReady[0];
+    try { assertHtmlSecurity(first); } catch (error) { return error.message; }
+    return `${notReady.length} HTML file(s) are not CSP-ready`;
+  });
+  check(`批准 style attribute 预算精确为 ${CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount}`, () => (
+    styleAttributeCount === CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount
+      || `${styleAttributeCount} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount}`
+  ));
+  check(`批准 style attribute 唯一值精确为 ${CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount}`, () => (
+    styleValues.size === CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount
+      || `${styleValues.size} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount}`
+  ));
+  check("批准 style attribute 唯一值 digest 未漂移", () => {
+    const actual = digestStyleValues([...styleValues]);
+    return actual === CSP_STYLE_ATTRIBUTE_BUDGET.uniqueValueSha256
+      || `${actual} vs ${CSP_STYLE_ATTRIBUTE_BUDGET.uniqueValueSha256}`;
+  });
+  check("动态 style sink 逐文件匹配批准属性与精确数量", () => {
+    const drift = [];
+    const approvedSources = new Set(CSP_STYLE_ATTRIBUTE_BUDGET.runtimeSinks.map(item => item.source));
+    const candidates = [
+      ...fs.readdirSync(path.join(SITE, "src"))
+        .filter(file => file.endsWith(".js"))
+        .map(file => ({ source: `src/${file}`, target: path.join(SITE, "src", file) })),
+      ...fs.readdirSync(path.join(ROOT, "deck"))
+        .filter(file => file.endsWith(".js"))
+        .map(file => ({ source: `deck/${file}`, target: path.join(ROOT, "deck", file) })),
+    ];
+    for (const candidate of candidates) {
+      const inventory = scanRuntimeStyleSinks(fs.readFileSync(candidate.target, "utf8"), {
+        sourceName: candidate.source,
+      });
+      if (inventory.count > 0 && !approvedSources.has(candidate.source)) {
+        drift.push(`${candidate.source}: ${inventory.count} unapproved sink(s)`);
+      }
+      if (inventory.unrecognized.length > 0) {
+        drift.push(`${candidate.source}: ${inventory.unrecognized.length} unrecognized style API(s)`);
+      }
+    }
+    for (const approved of CSP_STYLE_ATTRIBUTE_BUDGET.runtimeSinks) {
+      const target = approved.source.startsWith("deck/")
+        ? path.join(ROOT, approved.source)
+        : path.join(SITE, approved.source);
+      const inventory = scanRuntimeStyleSinks(fs.readFileSync(target, "utf8"), {
+        sourceName: approved.source,
+      });
+      if (
+        inventory.count !== approved.expectedMatches
+        || JSON.stringify(inventory.properties) !== JSON.stringify(approved.properties)
+        || inventory.unrecognized.length !== 0
+      ) {
+        drift.push(
+          `${approved.source}: count ${inventory.count}/${approved.expectedMatches}, `
+          + `properties ${inventory.properties.join(",")}/${approved.properties.join(",")}`,
+        );
+      }
+    }
+    return drift.length === 0 || drift.slice(0, 3).join("; ");
+  });
+  check("script/style/font/image/manifest 资源同源且 iframe 只有批准 origin", () => (
+    unexpectedResources.length === 0
+      && JSON.stringify([...iframeOrigins].sort()) === JSON.stringify(["https://playground.tensorflow.org"])
+  ) || `${unexpectedResources.slice(0, 3).join("; ") || `iframe origins: ${[...iframeOrigins].join(", ")}`}`);
+
+  const cssUrls = [];
+  function walkCss(dir) {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const target = path.join(dir, entry.name);
+      if (entry.isDirectory()) walkCss(target);
+      else if (entry.name.endsWith(".css")) {
+        const css = fs.readFileSync(target, "utf8");
+        const inventory = scanCssResourcePolicy(css, { source: path.relative(DIST, target) });
+        cssUrls.push(...inventory.unexpectedResources);
+      }
+    }
+  }
+  walkCss(DIST);
+  check("生成 CSS 的 url() 只使用同源或 data:", () => cssUrls.length === 0 || cssUrls.slice(0, 3).join("; "));
+
+  const manifestPath = path.join(DIST, "csp-report-only.json");
+  const expectedManifest = createCspReportOnlyManifest({
+    styleBudget: CSP_STYLE_ATTRIBUTE_BUDGET,
+    base: builtBase,
+  });
+  const actualManifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  check("CSP artifact 与 canonical header/budget 一致且 production 明示 NOT_APPLIED", () => (
+    actualManifest.production_status === CSP_PRODUCTION_STATUS
+    && actualManifest.header.name === CSP_REPORT_ONLY_HEADER_NAME
+    && JSON.stringify(actualManifest) === JSON.stringify(expectedManifest)
+  ) || "csp-report-only.json drift");
+}
+
 const linkRe = /href="([^"#?]+)[^"]*"/g;
 const broken = [];
 let totalLinks = 0;
 const seenLinks = new Set();
 
-// 探测 prefix（GitHub Pages 的 SITE_BASE）
-let prefix = "";
-const indexHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
-const m = indexHtml.match(/href="([^"]*)\/styles\.css"/);
-if (m) prefix = m[1];
+// prefix 来自构建产物，不依赖 check 进程是否继承了 build 时的 SITE_BASE。
+const prefix = builtBase;
 
 // 全量扫描：dist 下所有 HTML 的站内链接（以 BASE 或 / 开头）逐一验证目标存在
 console.log(`  scanning ${htmlFiles.length} html files (full scan) for link check`);
@@ -464,11 +946,58 @@ for (const f of top5) {
 const heavyHtml = allFiles.filter(f => f.path.endsWith(".html") && f.size > 350 * 1024);
 check(`HTML 页面均 < 350KB`, () => heavyHtml.length === 0 || `${heavyHtml.length} 页超 350KB: ${heavyHtml.map(f => path.relative(DIST, f.path)).join(", ")}`);
 
-// 学习首页只保留路径与代表成果；全量库有独立预算。
-const indexSize = fs.statSync(path.join(DIST, "index.html")).size;
-check(`首页 index.html ${(indexSize / 1024).toFixed(0)}KB < 100KB`, () => indexSize < 100 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`);
+// 性能预算（1.0.0 固化当前健康值，防劣化）
+// SITE_BASE 会机械重复在每个内部 URL 上；先去掉此前缀，确保 root/repo build
+// 衡量同一份页面内容，而不是把部署路径长度当成内容回归。
+const budgetedIndexHtml = normalizeRouteHtmlForBase(builtIndexHtml, { base: builtBase });
+const indexSize = Buffer.byteLength(budgetedIndexHtml);
+check(`首页 index.html（SITE_BASE 归一化）${(indexSize / 1024).toFixed(0)}KB < 250KB`, () => (
+  indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`
+));
 const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
 check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 250KB`, () => papersIndexSize < 250 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
+
+// 首页图片路由预算是确定性的静态代理，不冒充浏览器 Network 结果：
+// - default: img/src、image preload、inline CSS url 去重后的默认请求/字节；
+// - candidates: default 加全部 srcset 声明，用于防止响应式候选库存膨胀。
+// 真实 viewport/DPR 下的 transferred bytes 仍由浏览器矩阵记录。
+const HOME_ROUTE_IMAGE_BUDGET = Object.freeze({
+  maxRequests: 170,
+  maxBytes: 9 * 1024 * 1024,
+  maxCandidates: 285,
+  maxCandidateBytes: 20 * 1024 * 1024,
+});
+const homeImageMetrics = measureRouteImageBudget(builtIndexHtml, {
+  base: builtBase,
+  readAssetSize(relativePath) {
+    const target = path.resolve(DIST, relativePath);
+    if (target !== DIST && !target.startsWith(`${DIST}${path.sep}`)) return null;
+    const stat = fs.lstatSync(target);
+    return stat.isFile() ? stat.size : null;
+  },
+});
+const homeImageBudget = evaluateRouteImageBudget(homeImageMetrics, HOME_ROUTE_IMAGE_BUDGET);
+const routeBudgetError = code => homeImageBudget.errors.find(error => error.code === code);
+const defaultMiB = (homeImageMetrics.totalBytes / 1024 / 1024).toFixed(2);
+const candidateMiB = (homeImageMetrics.candidateBytes / 1024 / 1024).toFixed(2);
+check("首页图片静态引用均可本地度量、匹配 SITE_BASE 且文件存在", () => {
+  const errors = homeImageBudget.errors.filter(error => (
+    error.code === "INVALID_LOCAL_IMAGE_URL" || error.code === "MISSING_IMAGE_ASSET"
+  ));
+  return errors.length === 0 || errors.map(error => error.message).join("; ");
+});
+check(`首页默认图片静态代理 ${homeImageMetrics.requestCount} requests <= ${HOME_ROUTE_IMAGE_BUDGET.maxRequests}`, () => (
+  routeBudgetError("IMAGE_REQUEST_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页默认图片静态代理 ${defaultMiB}MiB <= 9MiB`, () => (
+  routeBudgetError("IMAGE_BYTE_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页声明图片候选 ${homeImageMetrics.candidateCount} <= ${HOME_ROUTE_IMAGE_BUDGET.maxCandidates}`, () => (
+  routeBudgetError("IMAGE_CANDIDATE_BUDGET_EXCEEDED")?.message ?? true
+));
+check(`首页声明图片候选 ${candidateMiB}MiB <= 20MiB`, () => (
+  routeBudgetError("IMAGE_CANDIDATE_BYTE_BUDGET_EXCEEDED")?.message ?? true
+));
 
 const cssSize = fs.statSync(path.join(DIST, "styles.css")).size;
 check(`styles.css ${(cssSize / 1024).toFixed(0)}KB < 135KB`, () => cssSize < 135 * 1024 || `超预算: ${(cssSize / 1024).toFixed(0)}KB`);
@@ -643,46 +1172,6 @@ console.log("\n=== Status field validity ===");
     }
   }
   check("status 字段值全部合法", () => invalidStatus === 0 || `${invalidStatus} 篇 status 值非法`);
-}
-
-console.log("\n=== Source path integrity ===");
-{
-  const provenancePath = path.join(ROOT, "papers", "provenance.json");
-  const provenance = fs.existsSync(provenancePath)
-    ? JSON.parse(fs.readFileSync(provenancePath, "utf8"))
-    : null;
-  const entries = provenance?.entries;
-  const localSources = new Set();
-  let sourceBroken = 0;
-  check("papers/provenance.json schema v1", () => (
-    provenance?.schema_version === "1.0.0"
-    && provenance?.algorithm === "sha256"
-    && Array.isArray(entries)
-  ) || "missing or invalid provenance manifest");
-  for (const f of noteFiles) {
-    const raw = fs.readFileSync(path.join(NOTES, f), "utf8");
-    const { data } = matter(raw);
-    const src = String(data["来源"] || data.source || "");
-    const slug = f.replace(/\.md$/, "");
-    const result = validateSourceReference({
-      root: ROOT,
-      noteSlug: slug,
-      source: src,
-      manifest: src.startsWith("papers/") && Array.isArray(entries) ? entries : null,
-    });
-    if (src.startsWith("papers/")) localSources.add(src);
-    if (!result.ok) {
-      sourceBroken++;
-      console.log(`  ✗ ${f}: 来源 ${src || "<empty>"} — ${result.reason}`);
-    }
-  }
-  const manifestSources = new Set(Array.isArray(entries) ? entries.map((entry) => entry.path) : []);
-  const manifestDrift = [
-    ...[...localSources].filter((source) => !manifestSources.has(source)).map((source) => `manifest missing ${source}`),
-    ...[...manifestSources].filter((source) => !localSources.has(source)).map((source) => `manifest orphan ${source}`),
-  ];
-  check("全部来源使用安全 HTTPS 或精确本地文件+SHA-256", () => sourceBroken === 0 || `${sourceBroken} 篇来源无效`);
-  check("本地来源与 provenance manifest 双向一致", () => manifestDrift.length === 0 || manifestDrift.join("; "));
 }
 
 console.log("\n=== Figure coverage (deep-read) ===");

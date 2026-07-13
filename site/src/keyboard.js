@@ -51,6 +51,9 @@
     if (helpDlg.open) helpDlg.close(); else helpDlg.showModal();
   }
 
+  const helpTrigger = document.querySelector(".kb-trigger");
+  if (helpTrigger) helpTrigger.addEventListener("click", showHelp);
+
   function isTyping() {
     const a = document.activeElement;
     if (!a) return false;

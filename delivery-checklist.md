@@ -2,7 +2,7 @@
 
 > ⚠️ **历史文档**：本文反映 2026-06-24 时点的状态，其中多数问题已在后续迭代中解决
 > （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
-> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+> 现状以 [CHANGELOG.md](CHANGELOG.md) 为准；方向与依赖见 [PLAN-1.3.md](PLAN-1.3.md)，实际接班只走 [操作索引](docs/operations-index.md) 与 [当前 handoff](SESSION-HANDOFF.md)。本文不授权自动领取任务。
 
 > 截止：2026 年 6 月 30 日（research-task.md 原文写"6 月 31 日"，6 月只有 30 天，已按 6/30 理解）
 > 最后更新：2026-06-24

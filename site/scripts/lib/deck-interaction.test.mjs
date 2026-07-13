@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const SITE = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "..");
 const DECK_HTML = fs.readFileSync(path.join(SITE, "..", "deck", "index.html"), "utf8");
+const DECK_CSS = fs.readFileSync(path.join(SITE, "..", "deck", "deck.css"), "utf8");
+const DECK_JS = fs.readFileSync(path.join(SITE, "..", "deck", "deck.js"), "utf8");
 
 class FakeClassList {
   values = new Set();
@@ -115,8 +117,8 @@ function createDeckHarness() {
     innerHeight: 720,
     innerWidth: 1280,
   };
-  const scripts = [...DECK_HTML.matchAll(/<script>([\s\S]*?)<\/script>/g)];
-  vm.runInNewContext(scripts.at(-1)[1], {
+  assert.match(DECK_HTML, /<script src="\.\/deck\.js" defer><\/script>/);
+  vm.runInNewContext(DECK_JS, {
     document,
     requestAnimationFrame,
     setTimeout() {},
@@ -131,7 +133,7 @@ function createDeckHarness() {
 }
 
 test("deck keeps keyboard dot activation instant for two frames and pointer clicks animated", () => {
-  assert.match(DECK_HTML, /\.deck-track \{[^}]*transition: transform 0\.25s/s);
+  assert.match(DECK_CSS, /\.deck-track \{[^}]*transition: transform 0\.25s/s);
   const { dots, flushFrame, track } = createDeckHarness();
 
   dots.children[1].dispatch("click", { detail: 0 });

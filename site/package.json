@@ -10,7 +10,8 @@
     "provenance:generate": "node scripts/generate-provenance.mjs",
     "test:unit": "node --test 'scripts/**/*.test.mjs'",
     "test": "npm run test:unit && npm run build && npm run check",
-    "serve": "python3 -m http.server -d dist 8080"
+    "serve": "python3 -m http.server -d dist 8080",
+    "serve:csp": "node scripts/serve-csp.mjs"
   },
   "devDependencies": {
     "gray-matter": "^4.0.3",
