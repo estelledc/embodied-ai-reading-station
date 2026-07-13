@@ -9,7 +9,7 @@ source_ref: c57a281395948afbba9346845825a37cc5b0347f
 source_branch: codex/eai13-t010-asset-generation
 integration_branch: campaign/eai13-t001-t011-integration
 total_budget: 12 runs or 24 hours (whichever first)
-runs_completed: 1
+runs_completed: 2
 runs_since_last_external_delta: 0
 review_after: every 3 runs or when origin/main changes
 external_outcome: draft-pr-ci-green-reviewable
@@ -91,10 +91,12 @@ superseded_by: none
 - `SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run build && SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run check`：仓库子路径通过，155/155 checks。
 - `npm audit --audit-level=high`：通过；仅余 1 个 moderate `js-yaml` advisory。
 - `git diff --check`：通过。
+- Run 2：远端 main 更新到 `6f88a65`（PR #15）后，使用普通 merge 合入，不改写历史；保留 EAI13 deck 外部 CSS/JS，同时移植 #15 的键盘/指针动效逻辑；CSP sink 白名单加入 `--progress`。
+- Run 2 验证：`npm run test:unit` 342/342 通过；根路径和 `SITE_BASE=/embodied-ai-reading-station` 的 build/check 均为 160/160；`npm audit --audit-level=high` 和 `git diff --check` 通过。
 
 ## Blocker 与下一步
 
 - 当前 blocker：无本地门禁 blocker。
-- 下一条命令：`git push -u origin campaign/eai13-t001-t011-integration`，随后创建 Draft PR 并监控 CI。
+- 下一条命令：`git push`，随后继续监控 Draft PR #16 的 CI 与 actionable review feedback。
 
 不要在 handoff 中复制易过期数量或 ETA；需要数量时使用实时命令。
