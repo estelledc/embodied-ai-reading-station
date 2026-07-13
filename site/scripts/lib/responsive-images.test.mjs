@@ -98,7 +98,7 @@ test("all paper library cards use decorative responsive images and keep title li
   const cards = [...html.matchAll(/<article class="paper-card"[\s\S]*?<\/article>/g)]
     .map(match => match[0]);
 
-  assert.equal(cards.length, 156);
+  assert.equal(cards.length, 157);
   for (const card of cards) {
     assert.match(card, /<picture class="thumb" aria-hidden="true">/);
     assert.match(card, /<source srcset="[^"]+ \d+w(?:, [^"]+ \d+w)*" sizes="[^"]+">/);
@@ -117,7 +117,7 @@ test("all paper library cards use decorative responsive images and keep title li
   assert.doesNotMatch(real, /img_000\.jpg 800w|\/images\/cards\/clip/);
 
   assert.equal(cards.filter(card => card.includes("/assets/")).length, 54);
-  assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 102);
+  assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 103);
 });
 
 test("card CSS preserves the media crop and collapses the grid safely on narrow screens", () => {

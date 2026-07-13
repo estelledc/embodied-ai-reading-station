@@ -434,7 +434,7 @@ export function buildAbout(notes = []) {
         <li><strong>MinerU + pdftotext</strong>：PDF → markdown 解析</li>
         <li><strong>lr (LightRead)</strong>：arXiv 检索 + PDF bundle 工具</li>
       </ul>
-      <p>AI 输出经过自动结构、链接、来源和构建门禁；这不代表 156 篇都已逐页人工复核。重要事实请以原论文为准，发现错误欢迎提交 issue。</p>
+      <p>AI 输出经过自动结构、链接、来源和构建门禁；这不代表 ${PAPER_COUNT} 篇都已逐页人工复核。重要事实请以原论文为准，发现错误欢迎提交 issue。</p>
 
       ${sizeBars}
 
