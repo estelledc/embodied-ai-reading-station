@@ -1,0 +1,23 @@
+site/scripts/lib/provenance.mjs
+  s_b7421038e4d727::t_fdb97bcae6b3a8 168
+  s_b7421038e4d727::t_9bea737c6c2d7a 170
+  s_b7421038e4d727::t_310a16df6507e5 169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "997fe3254313f3c5a746298658d6e6d33bf9690b",
+  "prompts": {},
+  "sessions": {
+    "s_b7421038e4d727": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a548df37c0da26523dc656a",
+        "model": "Doubao_1_6__dev"
+      },
+      "human_author": null
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
