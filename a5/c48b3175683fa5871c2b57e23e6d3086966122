@@ -1,0 +1,25 @@
+site/scripts/lib/provenance.test.mjs
+  s_b7421038e4d727::t_5327ae5b0ad821 339-340
+site/scripts/lib/provenance.mjs
+  s_b7421038e4d727::t_d8263d96441411 169-173
+notes/lerobot.md
+  s_b7421038e4d727::t_320e8ce8b934c9 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "a5c48b3175683fa5871c2b57e23e6d3086966122",
+  "prompts": {},
+  "sessions": {
+    "s_b7421038e4d727": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a548df37c0da26523dc656a",
+        "model": "Doubao_1_6__dev"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
