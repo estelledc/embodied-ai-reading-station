@@ -1,5 +1,5 @@
 ---
-status: active
+status: active_campaign
 program_status: ACTIVE
 cycle_state: INTEGRATING
 cycle_id: EAIRS-CYCLE-20260713-LEROBOT-TUTORIAL-V060
@@ -64,7 +64,7 @@ superseded_by: none
 ## 当前状态
 
 - 当前分支：`codex/lerobot-tutorial-v060-evidence`。
-- 起点：`8e85fa93279cc1a7fa50d92a69ad98df0c773e36`（PR #19 merge 后 main）。
+- 源实现锚点：`8e85fa93279cc1a7fa50d92a69ad98df0c773e36`（PR #19 merge 后 main）。
 - 实时 PR：开始本轮时 open PR 为空。
 - 基线检查：编辑前 `PATH="/opt/homebrew/bin:$PATH" npm run check` 有 159 passed / 1 failed；唯一失败为 `sw.js BUILD_ID drift`，判断是现有 `dist/` 未按当前 commit 重建，后续以先 `npm run build` 再 `npm run check` 为准。
 
