@@ -153,8 +153,8 @@ test("manifest rejects unresolved or incoherent style budgets", () => {
 });
 
 test("frozen production style budget binds the exact migrated inventory", () => {
-  assert.equal(CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount, 4582);
-  assert.equal(CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount, 206);
+  assert.equal(CSP_STYLE_ATTRIBUTE_BUDGET.maxAttributeCount, 4596);
+  assert.equal(CSP_STYLE_ATTRIBUTE_BUDGET.maxUniqueValueCount, 205);
   assert.match(CSP_STYLE_ATTRIBUTE_BUDGET.uniqueValueSha256, /^[0-9a-f]{64}$/);
   assert.deepEqual(CSP_STYLE_ATTRIBUTE_BUDGET.runtimeSinks.map(sink => sink.source), [
     "deck/deck.js",

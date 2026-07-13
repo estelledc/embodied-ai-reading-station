@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_commit": "d64c4496ce1090a3fe81beceebeee5defdfc16f2",
+  "content_commit": "c54c7df9f00ab8c37649867d9a8f313692857ff8",
   "notes": [
     {
       "slug": "1x-world-model-2025",
@@ -1389,6 +1389,26 @@
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2511.04831",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "lerobot",
+      "note_path": "notes/lerobot.md",
+      "note_sha256": "6647481c0cc494f263f6e92ccb52382ec7fae0b3a4f869b9cbb4eaffd71c4aad",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2602.22818",
         "path": null,
         "sha256": null,
         "artifact_type": null
