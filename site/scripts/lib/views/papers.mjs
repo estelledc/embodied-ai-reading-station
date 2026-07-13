@@ -179,6 +179,8 @@ export function renderPaperCardThumbnail(note, topicRoman, {
   const realPath = path.join(PAPERS_DIR, note.slug, "images", "img_000.jpg");
   const cardPath = path.join(SITE, "src", "images", "cards", `${note.slug}.webp`);
   const card800Path = path.join(SITE, "src", "images", "cards", `${note.slug}-800.webp`);
+  const topicPath = note.topic ? path.join(SITE, "src", "images", "topics", `${note.topic}.webp`) : "";
+  const topic800Path = note.topic ? path.join(SITE, "src", "images", "topics", `${note.topic}-800.webp`) : "";
 
   let src = "";
   let srcset = "";
@@ -199,6 +201,17 @@ export function renderPaperCardThumbnail(note, topicRoman, {
     const full = url(`/images/cards/${note.slug}.webp`);
     if (fileExists(card800Path)) {
       const compact = url(`/images/cards/${note.slug}-800.webp`);
+      src = compact;
+      srcset = `${compact} 800w, ${full} 1672w`;
+    } else {
+      src = full;
+      srcset = `${full} 1672w`;
+    }
+    hasWidthDescriptors = true;
+  } else if (topicPath && fileExists(topicPath)) {
+    const full = url(`/images/topics/${note.topic}.webp`);
+    if (fileExists(topic800Path)) {
+      const compact = url(`/images/topics/${note.topic}-800.webp`);
       src = compact;
       srcset = `${compact} 800w, ${full} 1672w`;
     } else {

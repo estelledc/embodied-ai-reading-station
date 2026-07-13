@@ -3,7 +3,7 @@ title: "LeRobot: An Open-Source Library for End-to-End Robot Learning"
 slug: lerobot
 topic: dataset-eval
 difficulty: ⭐⭐⭐
-status: deep-read
+status: auto-summary
 来源: "https://arxiv.org/abs/2602.22818"
 venue: ICLR
 year: 2026

@@ -84,7 +84,7 @@ test("loadCanonicalNotes enumerates every repository note in slug order", () => 
     note.note_sha256 === sha256(fs.readFileSync(path.join(REPO_ROOT, note.note_path)))
   )));
   assert.equal(notes.filter((note) => note.source.kind === "local").length, 46);
-  assert.equal(notes.filter((note) => note.source.kind === "remote").length, 110);
+  assert.equal(notes.filter((note) => note.source.kind === "remote").length, 111);
   assert.ok(notes.filter((note) => note.source.kind === "remote").every((note) => (
     note.source.path === null
     && note.source.sha256 === null
@@ -336,7 +336,7 @@ test("tracked generator output passes the independent repository gate", () => {
     notes: 157,
     local_sources: 46,
     remote_sources: 111,
-    generated_assets: 6,
-    checked_paths: 209,
+    generated_assets: 0,
+    checked_paths: 203,
   });
 });
