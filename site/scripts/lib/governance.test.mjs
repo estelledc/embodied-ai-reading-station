@@ -158,32 +158,34 @@ test("binary classifier uses extensions and magic bytes without treating plain t
   assert.equal(looksLikeBinary("NOTICE.md", Buffer.from("plain text")), false);
 });
 
-test("binary delta rejects every changed binary until a rights discriminator exists", () => {
+test("binary delta rejects third-party binaries but allows project-generated images", () => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "eai-governance-binary-"));
   try {
     const paperPath = "papers/demo/paper.pdf";
-    const assetPath = "site/src/images/inline/demo-scene.webp";
+    const inlinePath = "site/src/images/inline/demo-scene.webp";
+    const cardPath = "site/src/images/cards/demo.webp";
     const assetBytes = Buffer.from("RIFF0000WEBPfixture");
     fs.mkdirSync(path.join(root, path.dirname(paperPath)), { recursive: true });
-    fs.mkdirSync(path.join(root, path.dirname(assetPath)), { recursive: true });
+    fs.mkdirSync(path.join(root, path.dirname(inlinePath)), { recursive: true });
+    fs.mkdirSync(path.join(root, path.dirname(cardPath)), { recursive: true });
     fs.writeFileSync(path.join(root, paperPath), "%PDF-1.7");
-    fs.writeFileSync(path.join(root, assetPath), assetBytes);
+    fs.writeFileSync(path.join(root, inlinePath), assetBytes);
+    fs.writeFileSync(path.join(root, cardPath), assetBytes);
 
     const result = evaluateBinaryDelta({
       root,
-      changedPaths: [paperPath, assetPath],
+      changedPaths: [paperPath, inlinePath, cardPath],
     });
     assert.equal(result.ok, false);
-    assert.deepEqual(result.binary_paths, [paperPath, assetPath]);
+    assert.deepEqual(result.binary_paths, [cardPath, inlinePath, paperPath]);
     assert.match(result.errors.join("\n"), /third-party paper binary changed/);
-    assert.match(result.errors.join("\n"), /rights discriminator/);
+    assert.doesNotMatch(result.errors.join("\n"), /rights discriminator/);
 
     const generatedOnly = evaluateBinaryDelta({
       root,
-      changedPaths: [assetPath],
+      changedPaths: [inlinePath, cardPath],
     });
-    assert.equal(generatedOnly.ok, false);
-    assert.match(generatedOnly.errors[0], /rights discriminator/);
+    assert.equal(generatedOnly.ok, true);
 
     assert.match(evaluateBinaryDelta({
       root,

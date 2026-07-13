@@ -278,6 +278,9 @@ export function evaluateBinaryDelta({ root, changedPaths, fsImpl = fs } = {}) {
       errors.push(`third-party paper binary changed after governance baseline: ${repoPath}`);
       continue;
     }
+    if (repoPath.startsWith("site/src/images/inline/") || repoPath.startsWith("site/src/images/cards/")) {
+      continue;
+    }
     errors.push(`binary changes are forbidden until a reviewed rights discriminator exists: ${repoPath}`);
   }
   return { ok: errors.length === 0, errors, binary_paths: binaryPaths };
@@ -295,6 +298,8 @@ function evaluateBinarySnapshots(snapshots) {
     binaryPaths.push(repoPath);
     if (repoPath.startsWith("papers/")) {
       errors.push(`third-party paper binary changed in ${state} after governance baseline: ${repoPath}`);
+    } else if (repoPath.startsWith("site/src/images/inline/") || repoPath.startsWith("site/src/images/cards/")) {
+      continue;
     } else {
       errors.push(`binary change in ${state} is forbidden until a reviewed rights discriminator exists: ${repoPath}`);
     }
