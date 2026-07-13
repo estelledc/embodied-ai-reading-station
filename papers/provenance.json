@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_commit": "5b02c23a3184cc2c2857fd5b6383780714a2f502",
+  "content_commit": "d64c4496ce1090a3fe81beceebeee5defdfc16f2",
   "notes": [
     {
       "slug": "1x-world-model-2025",
@@ -2665,7 +2665,7 @@
     {
       "slug": "smolvla",
       "note_path": "notes/smolvla.md",
-      "note_sha256": "89b7ae1fd1a260d459028fa6c29ce55707f7c3122e2664a1045aad65edc757d5",
+      "note_sha256": "160829e843469aaf1e70e227b75c4a1304f200bdde4668c18ffbe5bc432f9643",
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2506.01844",

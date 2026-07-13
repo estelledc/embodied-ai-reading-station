@@ -18,6 +18,9 @@
 - `EAI13-T009`：新增 MIT `LICENSE`、四类资产 `NOTICE` 与 provenance v2 流程文档；v2 index 用稳定策略 ID 发布许可/来源映射，并提供 canonical provenance 的逐字节公开副本。legacy manifest 保留原许可字段，构建门禁新增治理文档、公开副本、字段绑定与基线后二进制增量校验；版权与既有第三方素材法律状态继续标为未独立核验。
 - `EAI13-T010`：四条资产生成脚本统一为先计划、再 preflight 的零隐式写入流程，移除开发者目录解析与 shell 字符串命令，新增结构化生成器结果、输入/输出分离 fingerprint、full/800 批次回滚和 portable receipt。生成资产与 provenance 登记改为两阶段：先原子安装并提交资产快照，再验证 receipt、Git blob、真实解码、manifest CAS 后登记；既有未登记图片保持 legacy skip，本批不回填或改写生产图片与清单。
 
+### Fixed
+- 收窄 `notes/smolvla.md` 的社区数据来源描述：保留“公开、许可证兼容、LeRobot 社区数据”结论，并移除缺少当前一手来源支持的泛化机械臂示例；同步刷新 provenance v2 内容快照。
+
 ### Security
 - `EAI13-T007`：移除全站 inline event handler、可执行 inline script 与 inline `<style>`，将 theme、KaTeX、Next/Random/Discover/404 和 deck 行为外移为同源资源；生成 canonical Report-Only CSP、真实响应头本地预览与零未批准违规门禁。论文模板样式迁移使生成 `style=` 从 30,972 降到 4,715，并以精确数量、唯一值和 digest 冻结剩余例外。当前 GitHub Pages 部署无响应头注入层，生产状态明确为 `NOT_APPLIED`，不把静态 meta 或 `_headers` 冒充已生效策略。
 
