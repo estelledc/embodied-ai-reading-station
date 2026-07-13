@@ -1,20 +1,20 @@
 ---
-status: active_campaign
+status: completed
 program_status: ACTIVE
-cycle_state: INTEGRATING
+cycle_state: INTEGRATED
 cycle_id: EAIRS-CYCLE-20260713-OPERATIONS-BASELINE-STATE
 activated_by: user-continue-research
 scope: operations-index-current-baseline-state
-branch: codex/operations-index-current-baseline
+branch: main
 start_ref: 02ff1c251911c9d0b3e4e51024192994596ddce6
 baseline_ref: origin/main
-review_after: PR merge or next user wake
-total_budget: 1 PR / 1 writer / 120 minutes
-external_outcome: local-review-ready-change-set
+review_after: next user wake or new bounded research cycle
+total_budget: PR #22 + 1 writer / completed cycle
+external_outcome: pr-22-merged
 superseded_by: none
 ---
 
-# 当前接班：操作索引当前基线状态修正
+# 当前接班：操作索引当前基线状态修正已合并
 
 ## Cycle 合同
 
@@ -24,7 +24,7 @@ superseded_by: none
 
 **falsifier**：若实时 Git / PR 状态仍存在未接受实现栈或 open PR，则保留“集成收口”为当前优先模式。
 
-**objective**：把操作索引的当前状态改为“从已接受基线启动”，同时保留未来再次出现未接受实现栈时才切回“集成收口”优先的条件规则。
+**objective**：把操作索引的当前状态改为“从已接受基线启动”，同时保留未来再次出现未接受实现栈时才切回“集成收口”优先的条件规则。该目标已通过 PR #22 合并完成。
 
 **scope**：
 - `docs/operations-index.md`
@@ -46,9 +46,9 @@ superseded_by: none
 **acceptance_checks**：
 - `PATH="/opt/homebrew/bin:$PATH" node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs`
 - `git diff --check`
-- PR CI `Validate pull request / build` 成功后再 merge。
+- PR #22 CI `Validate pull request / build` 成功并合并。
 
-**run budget**：最多 1 个写入 PR、1 个 writer、120 分钟；本轮只做 operations-index 状态修正。
+**run budget**：本 cycle 使用 1 个文档状态修正 PR、1 个 writer；已完成，不继续在该 scope 上叠加 Lab、核验或内容生产。
 
 **权限边界**：用户已授权 `gh`、review 和 merge；仍禁止 force push、直接写 `main`、deploy、owner 设置或伪造 E4。
 
@@ -60,8 +60,9 @@ superseded_by: none
 ## 当前状态
 
 - 源实现锚点：`02ff1c251911c9d0b3e4e51024192994596ddce6`（PR #21 merge 后 main）。
-- 当前分支：`codex/operations-index-current-baseline`。
 - 实时 PR：开始本轮时 open PR 为空。
+- main 合并结果：
+  - [PR #22](https://github.com/estelledc/embodied-ai-reading-station/pull/22)：`52eb1245a7c62e4f9bb536aed835a0c0ef8b57ec`
 - GitHub CLI：`/opt/homebrew/bin/gh` 可用，账号 `estelledc` 已登录。
 
 ## 已完成切片
@@ -70,16 +71,17 @@ superseded_by: none
 2. 修改第 3 节为“当前优先模式：从已接受基线启动”。
 3. 保留“集成收口”作为未来条件规则，满足现有 agent-progression 测试契约。
 4. 更新 `CHANGELOG.md` 记录状态文档修正。
+5. PR #22：CI `Validate pull request / build` 通过并合并到 `origin/main`。
 
 ## 下一条命令
 
-继续从当前分支验证：
+从最新 main 开始新的有限 cycle：
 
 ```bash
-cd /Users/bytedance/intern-journal/explorations/embodied-ai/site
-PATH="/opt/homebrew/bin:$PATH" node --test scripts/agent-progression.test.mjs scripts/workflow.test.mjs
-cd ..
-git diff --check
+git fetch origin main
+git switch main
+git pull --ff-only origin main
+git status --short --branch
 ```
 
-验证通过后逐文件 commit、push、创建 Draft PR，等待 CI 成功后标记 ready 并 merge。
+下一轮如果要推进 `notes/lerobot.md`，先声明包含 provenance/API 计数、card/inline 资产和公开文案更新的独立 run contract；如果只做只读研究，必须产出明确可复查的 Knowledge Delta，不要为维持活跃制造无意义 diff。
