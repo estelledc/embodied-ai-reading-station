@@ -19,6 +19,7 @@
 - `EAI13-T010`：四条资产生成脚本统一为先计划、再 preflight 的零隐式写入流程，移除开发者目录解析与 shell 字符串命令，新增结构化生成器结果、输入/输出分离 fingerprint、full/800 批次回滚和 portable receipt。生成资产与 provenance 登记改为两阶段：先原子安装并提交资产快照，再验证 receipt、Git blob、真实解码、manifest CAS 后登记；既有未登记图片保持 legacy skip，本批不回填或改写生产图片与清单。
 
 ### Fixed
+- 校正 `site/content/tutorials.md` 的 LeRobot / SmolVLA 入门路径：按 LeRobot `v0.6.0` release 收窄 Python 版本、安装 extras、CLI 入口和硬件支持表述，并明确本站尚无本地微调 / 真机执行 E4 artifact。
 - 收窄 `notes/smolvla.md` 的社区数据来源描述：保留“公开、许可证兼容、LeRobot 社区数据”结论，并移除缺少当前一手来源支持的泛化机械臂示例；同步刷新 provenance v2 内容快照。
 
 ### Security

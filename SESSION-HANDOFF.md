@@ -1,92 +1,94 @@
 ---
-status: completed
+status: active
 program_status: ACTIVE
-cycle_state: INTEGRATED
-cycle_id: EAIRS-CYCLE-20260713-SMOLVLA-LEROBOT-CLOSURE
-activated_by: user-permanent-research-program
-scope: smolvla-lerobot-guide-drift-and-data-source-tightening
-branch: main
-start_ref: c5365a1b0c8fea62f8d48149eeb580f38cca8308
+cycle_state: INTEGRATING
+cycle_id: EAIRS-CYCLE-20260713-LEROBOT-TUTORIAL-V060
+activated_by: user-continue-research
+scope: lerobot-tutorial-v060-evidence-tightening
+branch: codex/lerobot-tutorial-v060-evidence
+start_ref: 8e85fa93279cc1a7fa50d92a69ad98df0c773e36
 baseline_ref: origin/main
-review_after: next user wake or new bounded research cycle
-total_budget: 2 merged PRs / 1 writer / completed cycle
-external_outcome: pr-17-and-pr-18-merged
+review_after: PR merge or next user wake
+total_budget: 1 PR / 1 writer / 120 minutes
+external_outcome: local-review-ready-change-set
 superseded_by: none
 ---
 
-# 当前接班：SmolVLA / LeRobot 事实修正已合并
+# 当前接班：LeRobot v0.6.0 入门教程口径修正
 
 ## Cycle 合同
 
-**research_question**：`guide/` 与 `notes/smolvla.md` 中关于 SmolVLA / LeRobot 的年份、动作头、训练入口、环境版本和社区数据来源，是否与一手来源和固定 release 证据一致？
+**research_question**：`site/content/tutorials.md` 中 LeRobot / SmolVLA 的版本、安装方式、CLI 入口、硬件和“能跑通”表述，是否仍符合当前一手来源与本站 E4 证据边界？
 
-**objective**：修正已定位的 SmolVLA / LeRobot 事实漂移，并通过可审查 PR 合入 main。
+**hypothesis**：现有 tutorials 页仍带有旧 `examples/2_evaluate_pretrained_policy.py`、`examples/3_train_policy.py`、`v0.5.1` 和未核验硬件价格等过期或过强口径。
+
+**falsifier**：若 LeRobot `v0.6.0` release、固定 tag README / `pyproject.toml` 仍支持这些旧入口和环境口径，则不应修改正文。
+
+**objective**：在不触碰 156 篇论文 inventory 的前提下，把现有实践教程校正到 LeRobot `v0.6.0` 可复查入口，并明确本站未保存本地微调 / 真机执行 E4 artifact。
 
 **scope**：
-- `guide/ch22-task-guide.md`
-- `guide/ch12-openvla-vlas-mla.md`
-- `notes/smolvla.md`
-- `papers/provenance.json`
+- `site/content/tutorials.md`
 - `CHANGELOG.md`
 - `SESSION-HANDOFF.md`
-- 明确排除：新建 `notes/lerobot.md`、开启 Lab、声明任何 MuJoCo/SmolVLA/VLA 实验已跑通、修改 owner 设置、部署。
+- 明确排除：新增 `notes/lerobot.md`、修改 `papers/provenance.json`、新增图片资产、开启 Lab、声明任何 MuJoCo/SmolVLA/VLA 实验已跑通、deploy 或 owner 设置。
+
+**selected_candidate**：LeRobot tutorials 事实漂移修正。
+
+**rejected_candidates**：
+- `notes/lerobot.md`：价值高，但会触发 156→157 inventory、card/inline 资产、测试合同和公开文案成套修改；本轮不做。
+- `VLM_Grasp_Interactive` Lab / 实验页：仍缺本地环境、模型权重、API 凭证和 E4 artifact；本轮不做。
 
 **primary_sources**：
-- `arxiv-2506.01844`：SmolVLA arXiv abs，Submitted on 2 Jun 2025。
-- `hf-smolvla-blog`：Hugging Face SmolVLA blog，SmolVLA-450M、消费级硬件与异步推理定位。
-- `hf-smolvla-base-readme`：`lerobot/smolvla_base` README，flow matching 和 public import path。
-- `lerobot-v0.6.0`：LeRobot GitHub release / `pyproject.toml` / `src/lerobot/policies/smolvla/`，`lerobot-train` 与 Python `>=3.12`。
-- `hf-lerobot-dataset-api`：`lerobot/svla_so100_pickplace`、`lerobot/svla_so100_stacking`、`lerobot/svla_so100_sorting` 的公开 Hub 状态。
+- `arxiv-2602.22818`：LeRobot arXiv abs，Submitted on 26 Feb 2026。
+- `openreview-CiZMMAFQR3`：ICLR 2026 Poster 页面。
+- `lerobot-v0.6.0-release`：GitHub release `v0.6.0`，commit `30da8e687a6dfc617fcd94afc367ac7071c376ce`，2026-07-06。
+- `lerobot-v0.6.0-pyproject`：固定 tag `pyproject.toml`，`requires-python = ">=3.12"`，默认安装与 extras，`lerobot-*` CLI scripts。
+- `lerobot-v0.6.0-readme`：固定 tag README，Robot Learning Tutorial、LeRobotDataset、CLI 和硬件支持概览。
+- `arxiv-2506.01844` / `hf-smolvla-blog`：SmolVLA 450M、公开社区数据与 LeRobot 集成背景。
 
 **acceptance_checks**：
-- PR #17 CI `Validate pull request / build` 成功并合并。
-- PR #18 CI `Validate pull request / build` 成功并合并。
-- `PATH="/opt/homebrew/bin:$PATH" npm run test:unit` 通过。
-- `PATH="/opt/homebrew/bin:$PATH" npm run build` 通过。
-- `PATH="/opt/homebrew/bin:$PATH" npm run check` 通过。
-- `git diff --check` 通过。
+- `PATH="/opt/homebrew/bin:$PATH" npm run build`
+- `PATH="/opt/homebrew/bin:$PATH" npm run check`
+- `git diff --check`
+- GitHub PR CI `Validate pull request / build` 成功后再 merge。
 
-**run budget**：本 cycle 使用 2 个写入 PR、1 个 writer；已完成，不继续在该 scope 上叠加新 Lab 或新 note。
+**run budget**：最多 1 个写入 PR、1 个 writer、120 分钟；本轮只做 tutorials 口径修正。
 
-**权限边界**：用户已授权 review / merge；已通过 PR 流程合并。禁止 force push、直接写 `main`、deploy 或修改 owner 设置。
+**权限边界**：用户已授权 `gh`、review 和 merge；仍禁止 force push、直接写 `main`、deploy、owner 设置或伪造 E4。
 
 **stop_conditions**：
-- 当前 scope 已合并完成。
-- 下一轮必须从最新 `origin/main` 重新声明有限 run contract。
-- 不放宽证据等级，不把计划或估算写成 E4 实验结果。
+- build/check 无法复现且只能放宽门禁。
+- 发现 tutorials 修正必须扩大到 notes/provenance inventory。
+- PR CI 或 mergeability 进入外部 blocker。
 
 ## 当前状态
 
-- 源实现锚点：cycle 起点为 `c5365a1b0c8fea62f8d48149eeb580f38cca8308`。
-- main 合并结果：
-  - [PR #17](https://github.com/estelledc/embodied-ai-reading-station/pull/17)：`1e41181c15adadb42c9c23dbc59b6acb0a7bc6c2`
-  - [PR #18](https://github.com/estelledc/embodied-ai-reading-station/pull/18)：`6bc29033060fef2a1a735b151229ce4df9a65f89`
-- GitHub CLI：`/opt/homebrew/bin/gh` 可用，账号 `estelledc` 已登录。
-- 本 handoff 更新会通过独立 PR 合入；读取时仍需用 `git fetch origin main` 复核 `origin/main`。
+- 当前分支：`codex/lerobot-tutorial-v060-evidence`。
+- 起点：`8e85fa93279cc1a7fa50d92a69ad98df0c773e36`（PR #19 merge 后 main）。
+- 实时 PR：开始本轮时 open PR 为空。
+- 基线检查：编辑前 `PATH="/opt/homebrew/bin:$PATH" npm run check` 有 159 passed / 1 failed；唯一失败为 `sw.js BUILD_ID drift`，判断是现有 `dist/` 未按当前 commit 重建，后续以先 `npm run build` 再 `npm run check` 为准。
 
 ## 已完成切片
 
-1. `guide/ch22-task-guide.md`：补充证据边界；把 SmolVLA 从旧的 diffusion/head 路径叙述改为 flow-matching action expert；将训练入口改为 LeRobot v0.6.0 的 `lerobot-train`；拆分 MuJoCo / robosuite Python 3.10 与 LeRobot v0.6.x Python 3.12+ 环境。
-2. `guide/ch12-openvla-vlas-mla.md`：将 SmolVLA 时间线校正为 2025.06，参数量校正为约 450M，避免“2024.11 / ~3B / 6 个月内”旧说法。
-3. `SESSION-HANDOFF.md`：替换旧 EAI13 完成态 handoff，记录 PR #17 创建与合并过程。
-4. `notes/smolvla.md`：收窄社区数据来源描述，保留“公开、许可证兼容、LeRobot 社区数据”结论，移除缺少当前一手来源支持的泛化机械臂示例。
-5. `papers/provenance.json` 与 `CHANGELOG.md`：登记 SmolVLA note hash 和内容快照。
-
-## 发现但未写入的新候选
-
-- `notes/lerobot.md` 与 `papers/lerobot/` 仍缺失；`arxiv-2602.22818` 可作为主论文 ID，OpenReview `CiZMMAFQR3` 可作为 ICLR 2026 接受页面，LeRobot `v0.6.0` 可作为代码 release 锚点。
-- 该候选不是“顺手补一篇 note”：当前 provenance v2 与站点门禁冻结 156 篇 inventory。新增第 157 篇 note 需要显式新 cycle，连同 provenance/API/文档计数一起设计验收。
-- `VLM_Grasp_Interactive` 实验线仍只能在真实环境、模型权重、API 凭证和许可边界明确后推进；不能编造 E4。
+1. 锁定 LeRobot 一手来源：arXiv、OpenReview、GitHub `v0.6.0` release、固定 tag README 和 `pyproject.toml`。
+2. 判定 `notes/lerobot.md` 新增不是本轮小切片：会触发 provenance/API/资产/测试计数成套变更。
+3. 更新 `site/content/tutorials.md`：
+   - 将 LeRobot 状态从 `v0.5.1` 收窄为 `v0.6.0` release。
+   - 将旧 examples 入口替换为 `lerobot-info`、`lerobot-record`、`lerobot-replay`、`lerobot-train`、`lerobot-eval`。
+   - 增加 Python `>=3.12` 与 `lerobot[training]` extras 提醒。
+   - 去掉未核验硬件价格与“本站已跑通”暗示。
+4. 更新 `CHANGELOG.md` 记录本轮修正。
 
 ## 下一条命令
 
-从最新 main 开始新的有限 cycle：
+继续从当前分支验证：
 
 ```bash
-git fetch origin main
-git switch main
-git pull --ff-only origin main
-git status --short --branch
+cd /Users/bytedance/intern-journal/explorations/embodied-ai/site
+PATH="/opt/homebrew/bin:$PATH" npm run build
+PATH="/opt/homebrew/bin:$PATH" npm run check
+cd ..
+git diff --check
 ```
 
-下一轮如果要推进 `notes/lerobot.md`，先声明包含 provenance/API 计数更新的独立 run contract；如果只做只读研究，必须产出明确可复查的 Knowledge Delta，不要为维持活跃制造无意义 diff。
+验证通过后逐文件 commit、push、创建 Draft PR，等待 CI 成功后标记 ready 并 merge。
