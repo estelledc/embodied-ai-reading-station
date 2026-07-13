@@ -220,7 +220,7 @@ export function digestStyleValues(values) {
 export const CSP_STYLE_ATTRIBUTE_BUDGET = deepFreeze({
   maxAttributeCount: 4582,
   maxUniqueValueCount: 206,
-  uniqueValueSha256: "7ace306075bc3c1ab2c67ee778a7cfb310240d8f3023cb04040ace1d58ae7798",
+  uniqueValueSha256: "fe50ecf5e4f114f9b0211f8d5ce223e8b7e291a0ae60fbe527fee7f7f9458d3d",
   sourceSymbols: [
     "deck/deck.js",
     "deck/index.html",
@@ -270,7 +270,7 @@ export const CSP_STYLE_ATTRIBUTE_BUDGET = deepFreeze({
     {
       source: "src/reading-progress.js",
       expectedMatches: 10,
-      properties: ["background", "color", "opacity", "width"],
+      properties: ["--progress", "background", "color", "opacity", "width"],
       reason: "local progress ratios and state indicators use continuous or user-specific values",
     },
     {
