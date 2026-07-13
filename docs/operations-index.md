@@ -47,11 +47,13 @@ git diff --stat origin/main...HEAD
 
 若工作区已有用户改动，先检查重叠再决定是否能继续。`git fetch` 只刷新远端引用；它不授权 rebase、merge、push 或改写历史。
 
-## 3. 当前优先模式：集成收口
+## 3. 当前优先模式：从已接受基线启动
 
-`SESSION-HANDOFF.md` 记录了一个未进入远端已接受基线的本地 EAI13 实现栈，同时远端 `main` 已有后续改动。后续 agent 的第一个产品 run 应先单独设计“集成收口”合同：冻结 source/target ref、盘点重叠路径、选择 merge/rebase/cherry-pick 策略、写独立验收，并在实际修改前确认授权。
+截至 `SESSION-HANDOFF.md` 记录的最新完成态，远端 `main` 已经是当前已接受基线，open PR 为空；后续 run 应先按第 2 节重新 fetch / 对齐 `origin/main`，再声明新的有限 run contract。
 
-在该实现栈被接受、拆分或明确废止前，不直接进入 PLAN 的 Batch 8 Lab、Batch 9 核验或新季度内容，也不在当前流程分支上搬运产品提交。本文件不替用户选择集成策略。
+如果未来再次出现“本地实现栈未进入远端已接受基线，同时 `main` 已有后续改动”的状态，才切回“集成收口”优先：单独设计合同，冻结 source/target ref，盘点重叠路径，选择 merge/cherry-pick 等非破坏性策略，写独立验收，并在实际修改前确认授权。
+
+没有明确激活的 Lab、核验或季度内容 scope 时，不直接进入 PLAN 的 Batch 8 Lab、Batch 9 核验或新季度内容，也不在临时流程分支上搬运产品提交。本文件不替用户选择集成策略。
 
 ## 4. 小范围测试阶梯
 
