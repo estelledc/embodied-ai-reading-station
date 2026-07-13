@@ -1,0 +1,64 @@
+site/scripts/lib/provenance.mjs
+  s_b7421038e4d727::t_d8263d96441411 169-173
+notes/lerobot.md
+  s_b7421038e4d727::t_320e8ce8b934c9 6 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a54960f7c0da26523dc6b8c","tool_type":"agent","tool_id":"Edit","line_ranges":[{"Single":6}]}]}
+site/scripts/lib/provenance.test.mjs
+  s_b7421038e4d727::t_5327ae5b0ad821 339-340
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "1cc19652583ba9d963c470eaf00c471706f23c20",
+  "prompts": {},
+  "sessions": {
+    "s_b7421038e4d727": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a548df37c0da26523dc656a",
+        "model": "Doubao_1_6__dev"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {
+    "notes/lerobot.md": [
+      {
+        "hash": "s_b7421038e4d727::t_320e8ce8b934c9",
+        "line_ranges": [
+          {
+            "Single": 6
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a54960f7c0da26523dc6b8c",
+            "tool_type": "agent",
+            "tool_id": "Edit",
+            "line_ranges": [
+              {
+                "Single": 6
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_b7421038e4d727": {
+      "tool": "trae",
+      "conversation_id": "6a548df37c0da26523dc656a",
+      "session_id": "6a548df37c0da26523dc656a",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_b7421038e4d727::t_320e8ce8b934c9": {
+      "tool": "trae",
+      "conversation_id": "6a548df37c0da26523dc656a",
+      "session_id": "6a548df37c0da26523dc656a",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
