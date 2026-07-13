@@ -9,7 +9,7 @@ source_ref: c57a281395948afbba9346845825a37cc5b0347f
 source_branch: codex/eai13-t010-asset-generation
 integration_branch: campaign/eai13-t001-t011-integration
 total_budget: 12 runs or 24 hours (whichever first)
-runs_completed: 0
+runs_completed: 1
 runs_since_last_external_delta: 0
 review_after: every 3 runs or when origin/main changes
 external_outcome: draft-pr-ci-green-reviewable
@@ -67,6 +67,15 @@ superseded_by: none
   3. cherry-pick 后 4 个提交（1e61f00, 343cfe7, c56ae32, c57a281：许可治理 + 资产生成 + 审查夹具 + T011 收口）
 - acceptance：cherry-pick 完成，无未解决冲突，工作树可解释。
 
+**Run 1 checkpoint**：
+- 完成：治理框架、campaign 激活、EAI13 的 13 个源提交和 3 个集成修复提交均已落在 `campaign/eai13-t001-t011-integration`。
+- 冲突取舍：
+  - `layout.mjs` / layout tests：保留 EAI13 的 button-based More 导航、`aria-expanded` 同步与 `aria-controls`，更新旧的 `<details>` 测试假设。
+  - `papers.mjs` / `theme.css`：保留最新 main 的独立 Papers 页和语义化 class 结构，同时保留 EAI13 的 `picture.thumb` 响应式图片。
+  - responsive image tests：从旧首页全量 paper wall 改为验证最新 main 的独立 Papers 页。
+  - CSP budget：最新 main 已移除首页 paper wall，style attribute 总数从 4675 收紧到 4582；唯一值数量和 digest 未漂移。
+- external delta：集成分支本地验收全绿，准备 push 并创建 Draft PR。
+
 ## 先读什么
 
 1. `AGENTS.md`：绑定的推进、权限和停止规则。
@@ -77,11 +86,15 @@ superseded_by: none
 ## 验证结果
 
 - 治理框架（27858b4）已 cherry-pick 到集成分支，8 files changed, 280 insertions。
-- 基线尚未在集成 worktree 运行完整门禁；cherry-pick 完成后统一跑。
+- `npm run test:unit`：338/338 通过。
+- `SOURCE_DATE_EPOCH=1720579200 npm run build && SOURCE_DATE_EPOCH=1720579200 npm run check`：根路径通过，155/155 checks。
+- `SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run build && SOURCE_DATE_EPOCH=1720579200 SITE_BASE=/embodied-ai-reading-station npm run check`：仓库子路径通过，155/155 checks。
+- `npm audit --audit-level=high`：通过；仅余 1 个 moderate `js-yaml` advisory。
+- `git diff --check`：通过。
 
 ## Blocker 与下一步
 
-- 重叠文件（PR #13/#14 与 EAI13 同时修改）：layout.mjs, mobile-nav.test.mjs, aggregates.mjs, meta.mjs, papers.mjs, papers.test.mjs, seo.mjs, seo.test.mjs, theme.css；需要逐个冲突取舍。
-- 下一条命令：`cd ../embodied-ai-integration && git cherry-pick dabde09^..c57a281`（逐提交或按 slice 分组）。
+- 当前 blocker：无本地门禁 blocker。
+- 下一条命令：`git push -u origin campaign/eai13-t001-t011-integration`，随后创建 Draft PR 并监控 CI。
 
 不要在 handoff 中复制易过期数量或 ETA；需要数量时使用实时命令。
