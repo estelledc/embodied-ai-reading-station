@@ -246,7 +246,7 @@ OpenVLA 不是万能的。它有几个明确的局限：
 
 ### 2.12 开源的意义：催化效应
 
-OpenVLA 发布 6 个月内，社区已经基于它发展出多种变体：TinyVLA（1.4B，边缘设备）、SmolVLA（HuggingFace，单 GPU 可训练）、SpatialVLA（加入 3D 空间推理）、TraceVLA（用轨迹画线替代视频）。这些工作都不可能在 RT-2 的闭源生态下出现。
+OpenVLA 发布后的一年内，社区已经围绕开源 VLA 范式发展出多种变体：TinyVLA（1.4B，边缘设备）、SpatialVLA（加入 3D 空间推理）、TraceVLA（用轨迹画线替代视频），以及 Hugging Face 的 SmolVLA-450M。这些工作都不可能在 RT-2 的闭源生态下出现。
 
 回到概念车和量产车的类比：RT-2 证明了方向，OpenVLA 让所有人都能上路。而一旦所有人都上了路，道路的改善速度就不再取决于一家公司的研发能力，而取决于整个社区的集体智慧。
 
@@ -748,7 +748,7 @@ MLA 时代：连独立编码器都去掉了，LLM 自己承担所有角色 = 极
 - 2023.07：RT-2 发布（Google DeepMind），55B 参数，闭源，需要 TPU 集群
 - 2024.06：OpenVLA 发布（Stanford/Berkeley/Toyota），7B 参数，完全开源，单卡可跑
 - 2024.09：TinyVLA 发布（社区），1.4B 参数，边缘设备可部署
-- 2024.11：SmolVLA 发布（HuggingFace），单 GPU 可训练，与 LeRobot 生态打通
+- 2025.06：SmolVLA 发布（Hugging Face），约 450M 参数，单 GPU 可训练，与 LeRobot 生态打通
 - 2025.01：SpatialVLA 发布，引入 3D 空间推理
 - 2025.03：TraceVLA 发布，用轨迹画线替代视频处理
 
@@ -760,9 +760,9 @@ TinyVLA 只有 1.4B 参数——不到 OpenVLA 的五分之一。它的核心思
 
 TinyVLA 的意义不在于性能超越 OpenVLA，而在于证明了 VLA 范式可以压缩到"树莓派级别"的算力需求。这对实际部署至关重要——工厂里的机械臂不可能每台都配一块 A100。
 
-### SmolVLA：HuggingFace 的社区贡献
+### SmolVLA：Hugging Face 的社区贡献
 
-SmolVLA 是 HuggingFace 团队的作品，设计目标是"单 GPU 可训练"。它与 LeRobot 数据平台深度集成——LeRobot 提供标准化的机器人数据格式和社区贡献的数据集，SmolVLA 直接消费这些数据。
+SmolVLA 是 Hugging Face 团队的作品，arXiv 元数据为 2025-06-02，官方博客称其为 SmolVLA-450M；设计目标是"单 GPU 可训练"。它与 LeRobot 数据平台深度集成——LeRobot 提供标准化的机器人数据格式和社区贡献的数据集，SmolVLA 直接消费这些数据。
 
 这形成了一个正循环：更多人用 LeRobot 采集数据 → SmolVLA 训练效果更好 → 更多人愿意贡献数据。这正是开源生态的力量。
 
@@ -1136,7 +1136,7 @@ OpenVLA-OFT 通过数据混合（data mixing）来缓解遗忘：微调时不只
 | 模型 | 年份 | 参数量 | 特点 |
 |------|------|--------|------|
 | TinyVLA | 2024.09 | 1.4B | 扩散动作头，边缘设备可部署 |
-| SmolVLA | 2024.11 | ~3B | 单GPU可训练，LeRobot生态集成 |
+| SmolVLA | 2025.06 | ~450M | 单GPU可训练，LeRobot生态集成 |
 | SpatialVLA | 2025.01 | ~7B | 自我中心3D位置编码，单目深度 |
 | TraceVLA | 2025.03 | ~7B | 轨迹画线替代视频处理 |
 
