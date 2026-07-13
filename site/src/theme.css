@@ -1230,6 +1230,7 @@ html.dark-theme body::after {
   text-decoration: none;
 }
 .paper-library-intro { margin: 1.5rem 0 0.5rem; }
+#paper-library { margin: 1.5rem 0 0.5rem; }
 .paper-library-copy {
   max-width: 52ch;
   color: var(--ink-soft);

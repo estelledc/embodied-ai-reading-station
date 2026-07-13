@@ -73,7 +73,7 @@ export function masthead(active) {
     </div>
     <nav class="primary-nav" aria-label="站内主导航">${primaryItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
       <div class="more-nav" data-more-nav>
-        <button type="button" class="more-nav-trigger${moreActive ? " is-current" : ""}" aria-controls="more-nav-panel" aria-expanded="false" aria-label="更多站内导航">More <span aria-hidden="true">▾</span></button>
+        <button type="button" class="more-nav-trigger${moreActive ? " is-current" : ""}" aria-controls="more-nav-panel" aria-expanded="false" aria-label="More，更多导航">More <span aria-hidden="true">▾</span></button>
         <div class="more-nav-panel" id="more-nav-panel" hidden>
           ${viewItems.map(i => `<a href="${i.href}"${i.id === active ? ' aria-current="page"' : ""}>${i.label}</a>`).join("")}
         </div>

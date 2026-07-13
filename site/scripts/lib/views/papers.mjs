@@ -558,9 +558,9 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
   <hr/>`;
 
   // --- 论文库分隔 ---
-  body += `<section id="paper-library" style="margin:1.5rem 0 0.5rem">
-    <h2 style="font-family:var(--font-mono);font-size:0.85rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute)">论文笔记库 · ${total} papers ↘</h2>
-    <p style="font-size:0.95rem;color:var(--ink-soft);max-width:52ch">教程之外，这里是 ${total} 篇论文的详细笔记——每篇含架构图、实验数据、踩坑提醒。可按主题、难度、era 筛选。</p>
+  body += `<section id="paper-library" class="home-section-block">
+    <h2 class="home-section-heading">论文笔记库 · ${total} papers ↘</h2>
+    <p class="paper-library-copy">教程之外，这里是 ${total} 篇论文的详细笔记——每篇含架构图、实验数据、踩坑提醒。可按主题、难度、era 筛选。</p>
   </section>`;
 
   // 快筛工具栏
