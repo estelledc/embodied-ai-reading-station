@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_commit": "c54c7df9f00ab8c37649867d9a8f313692857ff8",
+  "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802",
   "notes": [
     {
       "slug": "1x-world-model-2025",
@@ -1405,7 +1405,7 @@
     {
       "slug": "lerobot",
       "note_path": "notes/lerobot.md",
-      "note_sha256": "6647481c0cc494f263f6e92ccb52382ec7fae0b3a4f869b9cbb4eaffd71c4aad",
+      "note_sha256": "a64a430bd4b514bc4945b4bd5def56c3d601a275f956ba6f60fcde139f276e6e",
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2602.22818",
@@ -1420,7 +1420,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/lerobot-800.webp",
+          "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+          "generator": "ffmpeg-fallback/fill-missing-cards/v2",
+          "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/lerobot.webp",
+          "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+          "generator": "ffmpeg-fallback/fill-missing-cards/v2",
+          "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/lerobot-method-800.webp",
+          "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+          "generator": "ffmpeg-fallback/fill-missing-inline/v2",
+          "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/lerobot-method.webp",
+          "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+          "generator": "ffmpeg-fallback/fill-missing-inline/v2",
+          "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/lerobot-scene-800.webp",
+          "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+          "generator": "ffmpeg-fallback/fill-missing-inline/v2",
+          "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/lerobot-scene.webp",
+          "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+          "generator": "ffmpeg-fallback/fill-missing-inline/v2",
+          "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
+          "content_commit": "62a3e76465e34ba35684465999cda5b1eaf15802"
+        }
+      ]
     },
     {
       "slug": "libero",
