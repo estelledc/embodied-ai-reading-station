@@ -550,6 +550,8 @@ for step in range(10000):
 
 #### 数据量指南
 
+> 下表是 Task 2 入门规划估算，不是本站本地复现的 E4 实验结果；真正报告成功率前，需要保存环境、命令、seed、日志、指标和 rollout artifact。
+
 | 数据量 | 适用模型 | 预期效果 | 采集时间 |
 |--------|----------|----------|----------|
 | 10-30 条 | SmolVLA (微调) | 基本能动，成功率 30-50% | 1-2 小时 |
@@ -577,6 +579,8 @@ python filter_episodes.py --data_dir ./data/ --min_reward 1.0
 
 ### 22.4.2 SmolVLA 微调
 
+> **证据边界（2026-07-13）**：本节的 SmolVLA 年份依据 `source_id: arxiv-2506.01844`（arXiv abs 元数据：Submitted on 2 Jun 2025）；450M、消费级硬件与异步推理依据 `source_id: hf-smolvla-blog`；flow matching、当前 import path 与训练入口依据 `source_id: hf-smolvla-base-readme` 和 `source_id: lerobot-v0.6.0`（GitHub release `v0.6.0`、`src/lerobot/policies/smolvla/` 源码与 `policy_smolvla_README.md`）。下面命令按 LeRobot v0.6.0 写；旧博客或旧版本里的 `python lerobot/scripts/train.py`、`lerobot.common.policies...` 路径不再作为当前默认入口。
+
 #### 架构回顾
 
 SmolVLA 是一个轻量级 VLA（Vision-Language-Action）模型，特别适合首次微调实验：
@@ -584,17 +588,17 @@ SmolVLA 是一个轻量级 VLA（Vision-Language-Action）模型，特别适合�
 ```
 SmolVLA 架构（简化）:
 ┌──────────────┐    ┌──────────────┐    ┌──────────────────┐
-│ SmolVLM      │───▶│ Action Head  │───▶│ Action Chunks    │
-│ (500M params)│    │ (Diffusion)  │    │ (Tp=16, Ta=8)    │
-│ 视觉+语言理解 │    │ 动作生成      │    │ 16帧观测→8步动作  │
+│ SmolVLM2     │───▶│ Action Expert│───▶│ Action Chunks    │
+│ 视觉+语言理解 │    │ Flow Matching│    │ 连续动作块        │
+│ + 本体状态    │    │ 动作生成      │    │ 配置决定步长      │
 └──────────────┘    └──────────────┘    └──────────────────┘
 ```
 
 **关键参数解释**：
-- **SmolVLM (500M)**：视觉-语言骨干网络，理解图像和指令（比 7B 的 LLaVA 小得多，适合微调）
-- **Diffusion Action Head**：用扩散模型生成动作（回忆 [Ch13](ch13-diffusion-policy.md)），比直接回归更擅长多模态动作分布
-- **Tp=16**：观测窗口 = 过去 16 帧图像作为上下文
-- **Ta=8**：动作 chunk = 一次预测未来 8 步动作（减少推理频率）
+- **SmolVLA-450M**：官方博客把它定位为约 450M 的轻量 VLA；LeRobot v0.6.0 默认骨干是 `HuggingFaceTB/SmolVLM2-500M-Video-Instruct`，再接动作专家。
+- **Flow-matching Action Expert**：不是传统 diffusion head，而是用 flow matching objective 学“从噪声动作流向真实动作”的连续向量场；可以把它放在 [Ch13](ch13-diffusion-policy.md) 的“生成式动作头”家族里理解，但不要直接等同为 Diffusion Policy。
+- **`n_obs_steps`**：一次决策看多少步历史观测；LeRobot v0.6.0 config 默认是 1，实际实验应优先沿用 checkpoint / dataset config。
+- **`chunk_size` / `n_action_steps`**：一次生成多少步动作以及每次执行多少步；LeRobot v0.6.0 config 默认都是 50，和旧笔记里的 `Tp=16, Ta=8` 不是同一个已验证默认。
 
 #### LeRobot 框架实操
 
@@ -611,27 +615,27 @@ python -c "import lerobot; print(lerobot.__version__)"
 ```
 
 ```bash
-# 3. 数据格式转换（将你的数据转为 LeRobot 格式）
-python lerobot/scripts/push_dataset_to_hub.py \
-    --raw-dir ./my_data/episodes/ \
-    --raw-format robosuite \
-    --repo-id your-username/my-lift-task \
-    --local-dir ./data/lerobot_format/
+# 3. 数据进入 LeRobotDataset v3 前，先确认当前安装暴露了哪些 CLI
+# 如果用 LeRobot 自己采集，优先走 lerobot-record。
+# 如果已有 robosuite / MuJoCo episode，先按 LeRobotDataset v3 文档写转换脚本；
+# 不要把旧版 push_dataset_to_hub.py 路径当成 v0.6.0 的稳定入口。
+lerobot-info
 ```
 
 ```bash
-# 4. 启动训练
-python lerobot/scripts/train.py \
-    policy=smolvla \
-    dataset_repo_id=your-username/my-lift-task \
-    training.num_epochs=100 \
-    training.batch_size=32 \
-    training.lr=1e-4 \
-    policy.chunk_size=8 \
-    policy.n_obs_steps=16 \
-    policy.diffusion_steps=10 \
-    wandb.enable=true \
-    wandb.project=my-smolvla-finetune
+# 4A. 从官方 pretrained checkpoint 微调
+lerobot-train \
+    --policy.path=lerobot/smolvla_base \
+    --dataset.repo_id=your-username/my-lift-task \
+    --batch_size=32 \
+    --steps=200000
+
+# 4B. 只复用架构，从 SmolVLM2 + action expert 开始训练
+lerobot-train \
+    --policy.type=smolvla \
+    --dataset.repo_id=your-username/my-lift-task \
+    --batch_size=32 \
+    --steps=200000
 ```
 
 #### 超参数指南
@@ -640,10 +644,11 @@ python lerobot/scripts/train.py \
 |--------|--------|------|------|
 | `lr` (学习率) | 1e-4 | 5e-5 ~ 3e-4 | 太大发散，太小不收敛 |
 | `batch_size` | 32 | 8-64 | 受 GPU 内存限制，12GB 约跑 batch=16 |
-| `Tp` (观测步数) | 16 | 4-32 | 更长 = 更多上下文，但更慢 |
-| `Ta` (动作步数) | 8 | 4-16 | 更长 = 推理更少，但精度可能降 |
-| `diffusion_steps` | 10 | 5-20 | 推理时的去噪步数，更多更准但更慢 |
-| `epochs` | 50-200 | 取决于数据量 | 30条数据约200epoch，100条约50-100epoch |
+| `n_obs_steps` | 先沿用 checkpoint/config | 1-多步 | 更长 = 更多上下文，但更慢；v0.6.0 默认 1 |
+| `chunk_size` | 先沿用 checkpoint/config | 任务相关 | 一次生成的动作块长度；v0.6.0 默认 50 |
+| `n_action_steps` | 先沿用 checkpoint/config | `<= chunk_size` | 每次执行多少步动作；v0.6.0 默认 50 |
+| `num_steps` | 10 | 5-20 | flow matching 采样步数，更多通常更稳但更慢 |
+| `steps` | 视数据量而定 | 2万-20万+ | 官方示例用 20万步；小数据先短跑验证 pipeline |
 
 #### 训练监控
 
@@ -675,11 +680,11 @@ SmolVLA 不是唯一选择。以下是三个主流方案的对比：
 
 | 维度 | SmolVLA | OpenVLA | Octo |
 |------|---------|---------|------|
-| **参数量** | ~500M | ~7B | ~93M |
-| **视觉骨干** | SmolVLM | Prismatic VLM | ViT (预训练) |
-| **动作表示** | Diffusion chunks | 离散 token | Diffusion chunks |
-| **微调方式** | 全参数 / LoRA | LoRA (否则太大) | 全参数 |
-| **最低 GPU** | 12GB (全参数) | 24GB (LoRA) / 48GB (全参数) | 8GB |
+| **参数量** | ~450M | ~7B | ~93M |
+| **视觉骨干** | SmolVLM2 | Prismatic VLM | ViT (预训练) |
+| **动作表示** | Flow-matching chunks | 离散 token | Diffusion chunks |
+| **微调方式** | checkpoint 微调 / 从架构训练 | LoRA (否则太大) | 全参数 |
+| **最低 GPU** | 单卡消费级 GPU 起步（按 batch 调整） | 24GB (LoRA) / 48GB (全参数) | 8GB |
 | **数据量需求** | 30-100 条起步 | 100-500 条起步 | 50-200 条起步 |
 | **优势** | 轻量快速，适合迭代 | 语言理解最强，泛化好 | 最小最快，多 embodiment |
 | **劣势** | 语言能力弱于 OpenVLA | 资源需求大 | 语言能力有限 |
@@ -704,7 +709,8 @@ VLA 模型仿真部署 — 推理循环
 """
 import torch
 import numpy as np
-from lerobot.common.policies.smolvla.modeling_smolvla import SmolVLAPolicy
+# LeRobot v0.6.0 源码路径；跨版本时先查当前 release 的 public entry point。
+from lerobot.policies.smolvla.modeling_smolvla import SmolVLAPolicy
 
 # 加载训练好的模型
 policy = SmolVLAPolicy.from_pretrained("./outputs/smolvla-my-lift-task/")
@@ -729,7 +735,7 @@ def evaluate(env, policy, instruction="pick up the red cube", n_episodes=50):
     
     for ep in range(n_episodes):
         obs = env.reset()
-        obs_history = []  # 存储过去 Tp 帧
+        obs_history = []  # 存储观测窗口；真实长度按 policy config 对齐
         done = False
         step = 0
         
@@ -739,17 +745,17 @@ def evaluate(env, policy, instruction="pick up the red cube", n_episodes=50):
             image_tensor = preprocess_image(image)  # → (1, 3, 256, 256) normalized
             obs_history.append(image_tensor)
             
-            # 保持窗口长度 = Tp
+            # 保持一个短观测窗口；这里是示意，真实 batch 格式以 LeRobot release 为准
             if len(obs_history) > 16:
                 obs_history.pop(0)
             
-            # 2. 模型推理（每 Ta 步推理一次）
-            if step % 8 == 0:  # Ta = 8
+            # 2. 模型推理（动作队列快用完时刷新 action chunk）
+            if step % 8 == 0:  # 示例：每 8 步刷新一次，真实频率按 n_action_steps / 控制频率定
                 with torch.no_grad():
                     action_chunk = policy.predict(
-                        images=torch.stack(obs_history[-16:]),  # (Tp, 3, H, W)
+                        images=torch.stack(obs_history[-16:]),  # 伪代码：真实 batch 键名按 LeRobot policy 定
                         instruction=instruction,
-                    )  # → (Ta, action_dim) = (8, 7)
+                    )  # → action chunk
                 chunk_idx = 0
             
             # 3. 执行当前 chunk 中的动作
@@ -786,10 +792,10 @@ evaluate(env, policy, instruction="pick up the red cube", n_episodes=50)
 
 | 问题 | 症状 | 解决方案 |
 |------|------|----------|
-| **推理延迟过高** | 动作执行明显"卡顿" | 减少 diffusion_steps（10→5），或用 DDIM 加速采样 |
+| **推理延迟过高** | 动作执行明显"卡顿" | 对 SmolVLA 先减少 `num_steps` 或调短实际执行的 action chunk；不要套用 diffusion/DDIM 术语 |
 | **动作归一化错误** | 机械臂乱飞/不动 | 检查训练时的 norm stats 是否和推理时一致 |
 | **观测预处理不一致** | 模型输出无意义 | 确保推理时的 image resize、normalize 和训练时完全相同 |
-| **chunk 边界抖动** | 每 Ta 步有跳变 | 使用 temporal ensemble（对重叠 chunk 做加权平均） |
+| **chunk 边界抖动** | 每个动作块边界有跳变 | 使用 temporal ensemble（对重叠 chunk 做加权平均） |
 | **越界动作** | 报 joint limit 错误 | 在 `denormalize_action` 后加 `np.clip` |
 
 > **踩坑提醒**：最隐蔽的 bug 是"训练和推理的预处理不一致"。例如训练时图像 normalize 用了 ImageNet 均值 [0.485, 0.456, 0.406]，但推理时忘了加——模型看到的分布完全不同，自然输出垃圾。建议：把预处理代码封装成一个函数，训练和推理共用同一份。
@@ -883,7 +889,7 @@ SimplerEnv 的核心设计哲学是"对齐 > 逼真"——它不追求物理模�
 
 **安装和使用要点：**
 
-SimplerEnv 基于 SAPIEN 引擎（不是 MuJoCo），安装时注意 Python 版本（推荐 3.10）和 GPU 驱动。它原生支持 RT-1、RT-1-X、Octo、OpenVLA 四种模型的评测接口。如果你用 SmolVLA，需要自己写一个 adapter 把模型输出转成 SimplerEnv 期望的 action 格式——主要是把 diffusion head 输出的 action chunk 按照环境的控制频率拆分成单步动作。
+SimplerEnv 基于 SAPIEN 引擎（不是 MuJoCo），安装时注意 Python 版本（推荐 3.10）和 GPU 驱动。它原生支持 RT-1、RT-1-X、Octo、OpenVLA 四种模型的评测接口。如果你用 SmolVLA，需要自己写一个 adapter 把模型输出转成 SimplerEnv 期望的 action 格式——主要是把 flow-matching action expert 输出的 action chunk 按照环境控制频率拆分成单步动作。
 
 ```bash
 # SimplerEnv 安装（示意）
@@ -939,14 +945,14 @@ pip install -e .
 
 **消融 2：Action Chunk 长度**
 
-Diffusion Policy 和 SmolVLA 的关键超参数是预测步长 Tp（prediction horizon）。尝试：
+Diffusion Policy 和 SmolVLA 都依赖“动作块”思想，但参数名不同：Diffusion Policy 常写 `Tp` / prediction horizon；SmolVLA 在 LeRobot 里主要看 `chunk_size` 和 `n_action_steps`。尝试：
 
-- Tp = 4（短视，反应快但缺乏规划）
-- Tp = 8（默认值，平衡点）
-- Tp = 16（长视，规划好但如果预测错则错很久）
-- Tp = 32（过长，通常性能下降）
+- 短 chunk：反应快，但缺乏规划
+- 中等 chunk：通常是起步平衡点
+- 长 chunk：规划更长，但如果预测错会连续错更久
+- 过长 chunk：常见风险是性能下降或边界抖动变明显
 
-最优值取决于任务的时间结构。抓取类任务 Tp=8 通常够了，长序列操作（比如"打开抽屉 → 取出物体 → 放到桌上"）可能需要 Tp=16。
+最优值取决于任务的时间结构。抓取类任务通常从较短 chunk 开始，长序列操作（比如"打开抽屉 → 取出物体 → 放到桌上"）再逐步增加 chunk / observation window。
 
 **消融 3：微调策略**
 
@@ -1245,7 +1251,7 @@ Task 1（论文精读 + 汇报）和 Task 2（动手实验）的前半段可以�
 
 **风险 2：训练资源不够（没有 GPU 或 GPU 太小）**
 
-- SmolVLA（500M 参数）在 16GB 显存的 GPU 上用 mixed precision 可以跑
+- SmolVLA（约 450M 参数）面向单卡消费级 GPU；显存需求随 batch、图像分辨率、是否从 checkpoint 微调而变，先短跑验证内存
 - OpenVLA（7B 参数）LoRA 微调需要至少 24GB 显存（A100 / RTX 4090）
 - 如果只有笔记本电脑：专注于 Task 1，Task 2 用云端资源或者只做数据准备和评测分析
 
@@ -1304,8 +1310,8 @@ Task 1（论文精读 + 汇报）和 Task 2（动手实验）的前半段可以�
 | RT-1 (2022) | 第一个大规模真机训练的机器人 Transformer | VLA 的起源——证明了 Transformer 能控制机器人 | Ch11 |
 | RT-2 (2023) | 让 VLM 直接输出机器人动作 token | VLA 范式的确立——感知和动作端到端 | Ch11 |
 | OpenVLA (2024) | 开源 7B VLA + 256-bin 动作 tokenizer | 你实操的候选模型之一，LoRA 微调友好 | Ch12 |
-| SmolVLA (2024) | 500M 轻量 VLA + Diffusion 动作头 | 你实操的首选模型——小、快、效果好 | Ch13 |
-| Diffusion Policy (2023) | 用扩散模型生成 action chunk | SmolVLA 动作头的理论基础 | Ch13 |
+| SmolVLA (2025) | ~450M 轻量 VLA + flow-matching action expert | 你实操的首选模型——小、快、适合先跑通 pipeline | Ch13 |
+| Diffusion Policy (2023) | 用扩散模型生成 action chunk | 理解生成式动作头的基础；SmolVLA 属相邻的 flow-matching 路线 | Ch13 |
 | Octo (2024) | 模块化通用策略 + diffusion head | 27M-93M 参数，资源有限时的备选 | Ch12 |
 | LIBERO (2023) | 四类知识解耦的 VLA 微调评测基准 | 你评测模型时用的"标准考卷" | Ch21 |
 | Open X-Embodiment (2023) | 22 个机器人形态、160 万条轨迹聚合 | 预训练数据的来源——理解 VLA 为什么需要大数据 | Ch21 |
@@ -1324,9 +1330,9 @@ CLIP (视觉-语言对齐)
       → OpenVLA (开源 VLA，7B)
         → 你的 Task 2：LoRA 微调 OpenVLA 在 LIBERO 上
 
-Diffusion Model (去噪生成)
-  → Diffusion Policy (动作序列生成)
-    → SmolVLA (轻量 VLA + Diffusion Head)
+Generative Action Modeling (从噪声生成动作)
+  → Diffusion Policy (diffusion 动作序列生成)
+  → SmolVLA (flow-matching action expert)
       → 你的 Task 2：LeRobot 框架训练 SmolVLA
 
 模仿学习理论 (BC / 数据质量)
