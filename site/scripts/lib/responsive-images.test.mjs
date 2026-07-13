@@ -116,13 +116,13 @@ test("all paper library cards use decorative responsive images and keep title li
   assert.match(real, /srcset="\/assets\/clip\/img_000\.jpg 487w"/);
   assert.doesNotMatch(real, /img_000\.jpg 800w|\/images\/cards\/clip/);
 
-  const topicFallback = cardMarkup(html, "lerobot");
-  assert.match(topicFallback, /src="\/images\/topics\/dataset-eval-800\.webp"/);
-  assert.match(topicFallback, /dataset-eval-800\.webp 800w, \/images\/topics\/dataset-eval\.webp 1672w/);
+  const deepReadCard = cardMarkup(html, "lerobot");
+  assert.match(deepReadCard, /src="\/images\/cards\/lerobot-800\.webp"/);
+  assert.match(deepReadCard, /lerobot-800\.webp 800w, \/images\/cards\/lerobot\.webp 1672w/);
 
   assert.equal(cards.filter(card => card.includes("/assets/")).length, 54);
-  assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 102);
-  assert.equal(cards.filter(card => card.includes("/images/topics/")).length, 1);
+  assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 103);
+  assert.equal(cards.filter(card => card.includes("/images/topics/")).length, 0);
 });
 
 test("card CSS preserves the media crop and collapses the grid safely on narrow screens", () => {

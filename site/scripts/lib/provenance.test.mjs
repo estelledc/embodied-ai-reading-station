@@ -336,7 +336,7 @@ test("tracked generator output passes the independent repository gate", () => {
     notes: 157,
     local_sources: 46,
     remote_sources: 111,
-    generated_assets: 0,
-    checked_paths: 203,
+    generated_assets: 6,
+    checked_paths: 209,
   });
 });
