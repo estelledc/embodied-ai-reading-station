@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "lerobot",
+  "generator": "ffmpeg-fallback/fill-missing-inline/v2",
+  "inputs": {
+    "converter": {
+      "id": "ffmpeg",
+      "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback/fill-missing-inline/v2",
+      "version": "ffmpeg version 8.1.2 Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "input_content_commit": "5b54de7dbe82b77b773f4dfdc427e492369775c4",
+    "outputs": [
+      {
+        "kind": "inline-method",
+        "path": "site/src/images/inline/lerobot-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline-method",
+        "path": "site/src/images/inline/lerobot-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline-scene",
+        "path": "site/src/images/inline/lerobot-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline-scene",
+        "path": "site/src/images/inline/lerobot-scene.webp",
+        "parameters": {}
+      }
+    ],
+    "parameters": {
+      "codec": "libwebp",
+      "pair_atomic": true,
+      "source_priority": [
+        "paper-first-raster",
+        "topic",
+        "hero"
+      ]
+    },
+    "slug": "lerobot",
+    "sources": [
+      {
+        "path": "site/src/images/topics/dataset-eval.webp",
+        "sha256": "0b0e68bdbb7afea6aa92755515be2d46391d81e31943fdf465e2af11db83cf81"
+      }
+    ],
+    "template": {
+      "id": "fill-missing-inline",
+      "version": "fill-missing-inline-v2"
+    },
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
+  "asset_fingerprint": "ffbf5148fc889fcf48471b13cd2b15e119d5c5b0b2cda3b484db4c2b17591175",
+  "outputs": [
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/lerobot-method-800.webp",
+      "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/lerobot-method.webp",
+      "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/lerobot-scene-800.webp",
+      "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/lerobot-scene.webp",
+      "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

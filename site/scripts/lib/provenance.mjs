@@ -166,6 +166,11 @@ export function loadCanonicalNotes({ root, previousManifest, contentCommit }) {
     if (unchanged) {
       record.human_verification = structuredClone(previous.human_verification);
       if (sameCommit) record.generated_assets = structuredClone(previous.generated_assets);
+    } else if (previous && previous.generated_assets && previous.generated_assets.length > 0) {
+      record.generated_assets = previous.generated_assets.map(asset => ({
+        ...structuredClone(asset),
+        content_commit: contentCommit,
+      }));
     }
     seenSlugs.add(slug);
     return record;
