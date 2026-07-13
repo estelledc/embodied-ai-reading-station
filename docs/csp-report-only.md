@@ -20,13 +20,13 @@ Report-Only 不能通过 `<meta>` 投递，只能由 HTTP 响应头投递；因�
 
 | ID | 范围 | 边界 |
 |---|---|---|
-| `STYLE_ATTR_V1` | `style-src-attr 'unsafe-inline'` | 当前 4,675 个属性、206 个唯一值及 SHA-256 digest 精确冻结；仅归一化会随 root/repo Pagefind 体积变化的 5 条存储占比宽度，属性与颜色仍受约束 |
+| `STYLE_ATTR_V1` | `style-src-attr 'unsafe-inline'` | 当前 4,596 个属性、205 个唯一值及 SHA-256 digest 精确冻结；仅归一化会随 root/repo Pagefind 体积变化的 5 条存储占比宽度，属性与颜色仍受约束 |
 | `PAGEFIND_WASM_V1` | `script-src 'wasm-unsafe-eval'` | 仅用于自托管 Pagefind WebAssembly；不批准 `'unsafe-eval'` |
 | `SVG_EXPORT_BLOB_V1` | `img-src blob:` | 本地 SVG 导出在 canvas 前通过 Blob 加载图片 |
 | `CSS_DATA_IMAGE_V1` | `img-src data:` | 固定的自托管 CSS data-SVG 纹理 |
 | `TENSORFLOW_PLAYGROUND_V1` | `frame-src https://playground.tensorflow.org` | 唯一批准 iframe origin |
 
-T007 把论文模板的 45 个静态 style 生成点迁到 class，T008 又移除 More 当前态的 40 个 inline style；生成 HTML 的 `style=` 从 30,972 降到 4,675。剩余样式债务继续由精确预算管理，不把它描述成“已清零”。
+T007 把论文模板的 45 个静态 style 生成点迁到 class，T008 又移除 More 当前态的 40 个 inline style；生成 HTML 的 `style=` 从 30,972 降到 4,596。剩余样式债务继续由精确预算管理，不把它描述成“已清零”。
 
 ## 复现验证
 
