@@ -1,20 +1,20 @@
 ---
-status: active_campaign
+status: completed
 program_status: ACTIVE
-cycle_state: INTEGRATING
+cycle_state: INTEGRATED
 cycle_id: EAIRS-CYCLE-20260713-LEROBOT-NOTE-V157
 activated_by: user-explicit-lerobot-note-bounded-cycle
 scope: add-lerobot-note-and-expand-inventory-to-157
-branch: codex/add-lerobot-note-v157
+branch: main
 start_ref: a7812e79aa4b82d9da36e30604e65e49bc34abc2
 baseline_ref: origin/main
-review_after: PR merge or next user wake
-total_budget: 1 PR / 1 writer / 120 minutes
-external_outcome: local-review-ready-change-set
+review_after: next user wake or new bounded research cycle
+total_budget: PR #24 + 1 writer / completed cycle
+external_outcome: pr-24-merged
 superseded_by: none
 ---
 
-# 当前接班：新增 LeRobot note 并扩展 inventory 到 157
+# 当前接班：新增 LeRobot note 并扩展 inventory 到 157 已合并
 
 ## Cycle 合同
 
@@ -24,13 +24,11 @@ superseded_by: none
 
 **falsifier**：若无法获得一手来源、无法满足 deep-read 结构 / 字数 / 视觉门禁，或 156→157 需要放宽 provenance / data API / asset checks，则本 cycle 停止，不合并半成品。
 
-**objective**：新增 `notes/lerobot.md`，同步 provenance v2、Data API、当前公开计数、测试期望和必要 generated assets，使站点从 156 篇扩展到 157 篇且完整门禁通过。
+**objective**：新增 `notes/lerobot.md`，同步 provenance v2、Data API、当前公开计数、测试期望和必要展示逻辑，使站点从 156 篇扩展到 157 篇且完整门禁通过。该目标已通过 PR #24 合并完成。
 
 **scope**：
 - `notes/lerobot.md`
 - `papers/provenance.json`
-- `site/src/images/inline/lerobot-*`
-- `site/src/images/cards/lerobot*`
 - `README.md`
 - `site/content/faq.md`
 - `site/content/path.md`
@@ -42,7 +40,7 @@ superseded_by: none
 - `site/scripts/lib/views/meta.mjs`
 - `CHANGELOG.md`
 - `SESSION-HANDOFF.md`
-- 明确排除：Lab、仓库外 MuJoCo/LeRobot 实验、deploy、owner 设置、`notes/smolvla.md` 正文改写、历史 issue / v1.2 runbook 数字回写。
+- 明确排除：Lab、仓库外 MuJoCo/LeRobot 实验、deploy、owner 设置、`notes/smolvla.md` 正文改写、历史 issue / v1.2 runbook 数字回写、新增二进制图片资产。
 
 **selected_candidate**：LeRobot ICLR 2026 / v0.6.0 release。
 
@@ -63,9 +61,9 @@ superseded_by: none
 - `PATH="/opt/homebrew/bin:$PATH" npm run build`
 - `PATH="/opt/homebrew/bin:$PATH" npm run check`
 - `git diff --check`
-- PR CI `Validate pull request / build` 成功后再 merge。
+- PR #24 CI `Validate pull request / build` 成功并合并。
 
-**run budget**：最多 1 个写入 PR、1 个 writer、120 分钟；允许中间 commit 用作 provenance content snapshot，但最终 PR 必须完整通过门禁。
+**run budget**：本 cycle 使用 1 个内容 PR、1 个 writer；已完成，不继续在该 scope 上叠加 Lab 或本地实验声明。
 
 **权限边界**：用户已授权 `gh`、review 和 merge；仍禁止 force push、直接写 `main`、deploy、owner 设置或伪造 E4。
 
@@ -77,9 +75,10 @@ superseded_by: none
 ## 当前状态
 
 - 源实现锚点：`a7812e79aa4b82d9da36e30604e65e49bc34abc2`（PR #23 merge 后 main）。
-- 当前分支：`codex/add-lerobot-note-v157`。
 - 实时 PR：开始本轮时 open PR 为空。
 - 基线检查：编辑前 `PATH="/opt/homebrew/bin:$PATH" npm run check` 有 159 passed / 1 failed；唯一失败为 `sw.js BUILD_ID drift`，判断是现有 `dist/` 未按当前 commit 重建，后续以先 `npm run build` 再 `npm run check` 为准。
+- main 合并结果：
+  - [PR #24](https://github.com/estelledc/embodied-ai-reading-station/pull/24)：`9d7a6d794bd3d78f2374f3d53794915737cbb1c6`
 - GitHub CLI：`/opt/homebrew/bin/gh` 可用，账号 `estelledc` 已登录。
 
 ## 已完成切片
@@ -87,15 +86,21 @@ superseded_by: none
 1. 确认 `notes/` 与 provenance 中无 `lerobot`，当前最大 `num` 为 156。
 2. 锁定 LeRobot 一手来源：arXiv、OpenReview、GitHub `v0.6.0` release、固定 tag README / `pyproject.toml`、HF release blog。
 3. 新增 `notes/lerobot.md` deep-read 草稿，约 5,100 words，含 3 个 ASCII 图和强制章节。
-4. 将当前公开计数和测试期望从 156 调到 157；历史 issue / v1.2 runbook 数字保持不变。
+4. 因治理层禁止新增二进制资产，将 `lerobot` 保留为长篇 `auto-summary` 研究笔记，并让论文卡片复用既有 `dataset-eval` topic 图 fallback。
+5. 将当前公开计数和测试期望从 156 调到 157；历史 issue / v1.2 runbook 数字保持不变。
+6. 更新 provenance v2，新增 `lerobot` remote source，保持 generated_assets 为 0。
+7. 更新 CSP style attribute 精确预算，并通过完整门禁。
+8. PR #24：CI `Validate pull request / build` 通过并合并到 `origin/main`。
 
 ## 下一条命令
 
-继续从当前分支提交内容输入快照，再生成 provenance 和 assets：
+从最新 main 开始新的有限 cycle：
 
 ```bash
-git add notes/lerobot.md README.md site/content/faq.md site/content/path.md site/content/math-primer.md site/scripts/check.mjs site/scripts/lib/content.test.mjs site/scripts/lib/provenance.test.mjs site/scripts/lib/responsive-images.test.mjs site/scripts/lib/views/meta.mjs CHANGELOG.md SESSION-HANDOFF.md
-git commit -m "添加 LeRobot 笔记：建立第 157 篇内容快照"
+git fetch origin main
+git switch main
+git pull --ff-only origin main
+git status --short --branch
 ```
 
-然后用该 commit 生成 `papers/provenance.json`，再按 asset scripts 的 receipt / record 流程补齐 inline 和 card 资产。
+下一轮若要把 `lerobot` 升级为 `deep-read`，必须先解决 note-specific inline/card 资产的 rights discriminator 或正式资产治理流程，不能直接新增二进制图片绕过门禁。
