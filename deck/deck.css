@@ -25,7 +25,8 @@ body {
   display: flex; align-items: center; justify-content: center;
 }
 .deck { position: relative; width: var(--slide-w); height: var(--slide-h); overflow: hidden; }
-.deck-track { display: flex; width: 100%; height: 100%; transition: transform 0.5s cubic-bezier(0.23,1,0.32,1); }
+.deck-track { display: flex; width: 100%; height: 100%; transition: transform 0.25s cubic-bezier(0.23,1,0.32,1); }
+.deck-track.is-instant { transition-duration: 0s; }
 .slide {
   width: var(--slide-w); height: var(--slide-h); flex-shrink: 0;
   background: var(--paper); position: relative; overflow: hidden;
@@ -167,6 +168,18 @@ h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 5
   position: fixed; bottom: 18px; right: 24px; font-family: var(--font-mono);
   font-size: 10px; color: var(--ink-faint); letter-spacing: 0.1em; text-transform: uppercase; z-index: 50;
 }
+.portfolio-exit {
+  position: fixed; top: 12px; right: 16px; z-index: 100;
+  display: flex; gap: 4px; padding: 4px;
+  background: rgba(21, 20, 15, 0.92); border: 1px solid rgba(239, 231, 210, 0.32);
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em;
+}
+.portfolio-exit a {
+  min-height: 44px; display: inline-flex; align-items: center; padding: 0 10px;
+  color: var(--paper); text-decoration: none;
+}
+.portfolio-exit a:hover,
+.portfolio-exit a:focus-visible { color: var(--ink); background: var(--mustard); outline: none; }
 
 /* overview grid */
 .deck.overview .deck-track { display: grid; grid-template-columns: repeat(4, 1fr); transform: none !important; gap: 20px; padding: 40px; width: 100%; height: 100vh; }
@@ -177,10 +190,16 @@ h2.title em { font-family: var(--font-serif); font-style: italic; font-weight: 5
 .deck.overview .slide .chapter-num, .deck.overview .slide .end-mega { font-size: 60px !important; }
 .deck.overview .slide .cover-title { font-size: 28px !important; }
 
+@media (prefers-reduced-motion: reduce) {
+  .deck-track { transition: none; }
+  .nav-dots button { transform: none; transition: background-color 0.18s cubic-bezier(0.23,1,0.32,1); }
+  .nav-dots button[aria-current="true"] { transform: none; }
+}
+
 @media print {
   html, body { background: white; overflow: visible; }
   body { display: block; }
   .deck, .deck-track { width: auto !important; height: auto !important; transform: none !important; display: block !important; }
   .slide { page-break-after: always; transform: none !important; box-shadow: none; }
-  .nav-dots, .help { display: none; }
+  .nav-dots, .help, .portfolio-exit { display: none; }
 }
