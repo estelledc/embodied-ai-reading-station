@@ -230,7 +230,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/ac2-vla-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/ac2-vla.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/ac2-vla-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/ac2-vla-method.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/ac2-vla-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/ac2-vla-scene.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        }
+      ]
     },
     {
       "slug": "acoustic-swarms",
