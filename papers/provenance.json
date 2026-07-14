@@ -3045,7 +3045,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/realmirror-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/realmirror.webp",
+          "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/realmirror-method-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/realmirror-method.webp",
+          "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/realmirror-scene-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/realmirror-scene.webp",
+          "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        }
+      ]
     },
     {
       "slug": "rf-pose-through-wall",
