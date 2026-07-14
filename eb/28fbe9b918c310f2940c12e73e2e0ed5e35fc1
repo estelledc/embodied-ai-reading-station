@@ -1,0 +1,21 @@
+papers/provenance.json
+  s_26cca7b44d7873::t_aba6c709e4dbe3 3048-3103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "eb28fbe9b918c310f2940c12e73e2e0ed5e35fc1",
+  "prompts": {},
+  "sessions": {
+    "s_26cca7b44d7873": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_26cca7b44d7873",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
