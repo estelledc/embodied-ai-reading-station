@@ -1,0 +1,36 @@
+papers/provenance.json
+  s_a200c5f13ba439::t_a8f29005473fab 3,31,40,49,58,67,76,106,115,124,133,142,151,281,290,299,308,317,326,476,485,494,503,512,521,731,740,749,758,767,776,1046,1055,1064,1073,1082,1091,1301,1310,1319,1328,1337,1346,1396,1405,1414,1423,1432,1441,1551,1560,1569,1578,1587,1596,1778-1833,1921,1930,1939,1948,1957,1966,2216,2225,2234,2243,2252,2261,2311,2320,2329,2338,2347,2356,2506,2515,2524,2533,2542,2551,3061,3070,3079,3088,3097,3106,3316,3325,3334,3343,3352,3361,3451,3460,3469,3478,3487,3496,4226,4235,4244,4253,4262,4271,4341,4350,4359,4368,4377,4386,4516,4525,4534,4543,4552,4561
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "82cff83c69df7ff5d21a457108834e7649efb1c7",
+  "prompts": {},
+  "sessions": {
+    "s_a200c5f13ba439": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_a200c5f13ba439",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {
+    "s_14db9d7da6debc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_ec1e6356de41fc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
