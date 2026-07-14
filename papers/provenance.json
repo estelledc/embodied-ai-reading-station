@@ -1365,7 +1365,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/et-vla-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/et-vla.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/et-vla-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/et-vla-method.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/et-vla-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/et-vla-scene.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+          "content_commit": "53e2b5fcf0ef08d95a006747bf121c59295b560d"
+        }
+      ]
     },
     {
       "slug": "eva-clip",
