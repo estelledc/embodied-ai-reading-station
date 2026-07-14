@@ -288,6 +288,10 @@ MoS-VLA 的 one-shot 不是“看一眼就会所有事”，而是把适配成�
 
 *所以这一节是想说：MoS-VLA 省的是新任务适配的梯度成本，但前提是训练出的技能空间足够覆盖目标任务。*
 
+## 后续核验清单
+
+人工核验时应重点确认：16 个 basis functions、32 个 GH200 nodes、5000 steps、约 24 小时训练这些数字是否来自 Implementation Details；Table 1 的 70%、75%、100% 是否都属于 one-shot calibration 后的任务；OpenVLA 的 0% 是否限定在这些未见实验环境；“几秒级校准”是否只指求解系数而不是完整机器人部署。这样才能避免把 one-shot adaptation 误写成无需示范、无需条件的泛化。
+
 ## 原文信息
 
 - arXiv: [2510.16617](https://arxiv.org/abs/2510.16617)

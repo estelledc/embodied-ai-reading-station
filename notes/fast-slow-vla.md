@@ -289,6 +289,10 @@ DuoCore-FS 最容易被误读成“一个大模型加一个小控制器”。真
 
 *所以这一节是想说：DuoCore-FS 的贡献不是单纯更快，而是让语义推理和实时控制各自按合适频率运行。*
 
+## 后续核验清单
+
+后续人工核验时，至少要核对四类事实：Astribot S1 的 25 DoF 组成、1,780 条示范和 10.22 小时数据是否对应同一个 popcorn kiosk 数据集，1–3Hz slow / 25–30Hz fast 是否来自方法而非实验偶然，Table 1 的 90% overall 和 32.3Hz 是否只适用于 in-distribution popcorn-scooping。语言跟随 42.9% 也要保留边界，因为论文明确指出该任务在数据中只有很小比例。
+
 ## 原文信息
 
 - arXiv: [2512.20188](https://arxiv.org/abs/2512.20188)

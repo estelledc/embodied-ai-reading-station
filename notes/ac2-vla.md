@@ -289,6 +289,10 @@ AC²-VLA 的一个重要直觉是：机器人是否需要多算，不只由图�
 
 *所以这一节是想说：AC²-VLA 的关键不是简单剪枝，而是把计算预算绑定到动作阶段。*
 
+## 后续核验清单
+
+如果之后要做人工核验，应逐项回到原文：AC²-VLA 是否只训练轻量 routing modules，CogACT backbone 和 action head 是否保持冻结，1.79× speedup 与 29.4% FLOPs 是否来自 Google Robot Visual Matching，WidowX 54.5% 是否是另一个表格设置，三类 gate 的消融是否分别对应 cache、token pruning 和 layer routing。尤其要避免把 FLOPs 降低直接说成真实机器人部署速度提升，除非有同硬件 wall-clock 证据。
+
 ## 原文信息
 
 - arXiv: [2601.19634](https://arxiv.org/abs/2601.19634)
