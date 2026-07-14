@@ -141,7 +141,7 @@ function shellUrlToDistPath(value) {
 // Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
 // import 时发现并读取全部笔记，不能让 symlink/坏路径绕过独立门禁。
 console.log("\n=== Source path integrity ===");
-const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 174 });
+const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 178 });
 if (!provenance.ok) {
   const rendered = formatProvenanceRepositoryErrors(provenance.errors);
   console.log(rendered.split("\n").map((line) => `  ✗ ${line}`).join("\n"));
