@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "mos-vla",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "99a41213a1d1075a2db76f978385d6c2fdafd937",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/mos-vla-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/mos-vla.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/mos-vla-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/mos-vla-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/mos-vla-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/mos-vla-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "mos-vla",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
+  "asset_fingerprint": "b97aaeb9e9aa6d89066e81557515a5e083a52047ce430595e79b72565a50cf9d",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/mos-vla-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/mos-vla.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/mos-vla-method-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/mos-vla-method.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/mos-vla-scene-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/mos-vla-scene.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
