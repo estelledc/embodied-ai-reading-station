@@ -5,11 +5,11 @@
   "inputs": {
     "converter": {
       "id": "cwebp",
-      "version": "1.6.0\nlibsharpyuv: 0.4.2"
+      "version": "1.6.0"
     },
     "generator": {
       "id": "cwebp-fallback/topic-assets/v1",
-      "version": "1.6.0\nlibsharpyuv: 0.4.2"
+      "version": "1.6.0"
     },
     "input_content_commit": "2cc9daceb3a1a60d77d3b0cc80e95acfe2727f9c",
     "outputs": [
@@ -94,7 +94,7 @@
       "version": "topic-asset-fallback-v1"
     }
   },
-  "input_fingerprint": "7f349e18b7154608a9a74605af43de858bf64332cbc2b7b6a9cff3166a23eb70",
+  "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
   "asset_fingerprint": "a642d286b36c1c26a7fa949248e7be05acd33f26d4eb8605a74d7fccf1fccfe9",
   "outputs": [
     {
