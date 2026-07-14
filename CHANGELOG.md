@@ -5,6 +5,7 @@
 ## [Unreleased]
 
 ### Added
+- 新增 40 篇 / 10 批 embodied AI 论文推进计划 `PLAN-40-PAPERS.md`；第 1 批新增 4 篇 frontier deep-read 笔记：`qwen-vla`、`realmirror`、`llada-vla`、`discrete-diffusion-vla`；同步扩展 provenance / Data API inventory 到 166 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 新增 5 篇 frontier deep-read 笔记：`cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1`；同步扩展 provenance / Data API inventory 到 162 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 新增 `notes/lerobot.md`：收录 LeRobot ICLR 2026 论文与 `v0.6.0` release 证据，把机器人学习全栈工具链、LeRobotDataset、CLI / extras、评估与部署闭环整理为 Task 2 的工程底座；同步扩展 provenance / Data API inventory 到 157 篇。
 - `EAI13-T001`：冻结 provenance v2 与 `/data/v2/` 共用合同，新增纯 schema validator、字段字典和 local/remote/人工核验/生成资产正反 fixtures；明确 `content_commit` 指向可复核的既有内容输入快照，可早于 manifest commit，从而避免 Git SHA 自引用。生产 `papers/provenance.json` 与 legacy `/data/papers.json` 本批保持不变。

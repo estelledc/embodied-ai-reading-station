@@ -98,7 +98,7 @@ test("all paper library cards use decorative responsive images and keep title li
   const cards = [...html.matchAll(/<article class="paper-card"[\s\S]*?<\/article>/g)]
     .map(match => match[0]);
 
-  assert.equal(cards.length, 162);
+  assert.equal(cards.length, 166);
   for (const card of cards) {
     assert.match(card, /<picture class="thumb" aria-hidden="true">/);
     assert.match(card, /<source srcset="[^"]+ \d+w(?:, [^"]+ \d+w)*" sizes="[^"]+">/);

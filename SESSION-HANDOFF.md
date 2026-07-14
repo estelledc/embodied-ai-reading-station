@@ -1,4 +1,33 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: IMPLEMENTING
+cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH01
+activated_by: user-explicit-continue-embodied-ai-40-papers-full-deploy
+scope: ten-batches-forty-new-papers-batch01-four-deep-read-notes
+branch: main
+start_ref: e3baf8a
+baseline_ref: origin/main
+review_after: batch01 deploy or blocker
+external_outcome: pending-pr-and-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 1 批实施中
+
+## Cycle 合同
+
+**objective**：按 PLAN-40-PAPERS.md 分 10 批新增 40 篇 embodied AI 论文研究笔记；本轮先完成第 1 批 4 篇：qwen-vla、realmirror、llada-vla、discrete-diffusion-vla。
+
+**scope**：新增第 1 批 notes、刷新 provenance / Data API inventory 到 166 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：后 9 批正文、真机/仿真实验复现、owner 仓库保护设置、未跟踪根目录 scripts 清理。
+
+**primary_sources**：arXiv PDF / HTML / abs：2605.30280、2509.14687、2509.06932、2508.20072。公开成功率只作为论文报告，不升级为本站 E4 artifact。
+
+**acceptance_checks**：npm run test:unit、root build/check、repo-base build/check、git diff --check、PR CI、main Pages deploy、线上 provenance + 四篇论文页 + 四组 card/method/scene 800w 图片 HTTP 200。
+
+**当前状态**：正文与计划文件生成中；provenance 和资产需在内容快照 commit 后两阶段刷新。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED
