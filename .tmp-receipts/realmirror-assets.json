@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "realmirror",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "2cc9daceb3a1a60d77d3b0cc80e95acfe2727f9c",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/cards/realmirror-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/cards/realmirror.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/realmirror-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/realmirror-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/realmirror-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/realmirror-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "realmirror",
+    "sources": [
+      {
+        "path": "site/src/images/topics/dataset-eval.webp",
+        "sha256": "0b0e68bdbb7afea6aa92755515be2d46391d81e31943fdf465e2af11db83cf81"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
+  "asset_fingerprint": "c13d5a2cc04d20ed5cdc586db48e5ad377b832169ef21ad70e341b3539839b35",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/realmirror-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/realmirror.webp",
+      "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/realmirror-method-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/realmirror-method.webp",
+      "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/realmirror-scene-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/realmirror-scene.webp",
+      "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

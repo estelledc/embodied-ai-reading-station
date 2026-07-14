@@ -1,4 +1,38 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: LOCAL_VALIDATED
+cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH01
+activated_by: user-explicit-continue-embodied-ai-40-papers-full-deploy
+scope: ten-batches-forty-new-papers-batch01-four-deep-read-notes
+branch: main
+start_ref: e3baf8a
+baseline_ref: origin/main
+review_after: batch01 deploy or blocker
+external_outcome: pending-pr-ci-merge-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 1 批实施中
+
+## Cycle 合同
+
+**objective**：按 PLAN-40-PAPERS.md 分 10 批新增 40 篇 embodied AI 论文研究笔记；本轮先完成第 1 批 4 篇：qwen-vla、realmirror、llada-vla、discrete-diffusion-vla。
+
+**scope**：新增第 1 批 notes、刷新 provenance / Data API inventory 到 166 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：后 9 批正文、真机/仿真实验复现、owner 仓库保护设置、未跟踪根目录 scripts 清理。
+
+**primary_sources**：arXiv PDF / HTML / abs：2605.30280、2509.14687、2509.06932、2508.20072。公开成功率只作为论文报告，不升级为本站 E4 artifact。
+
+**acceptance_checks**：npm run test:unit、root build/check、repo-base build/check、git diff --check、PR CI、main Pages deploy、线上 provenance + 四篇论文页 + 四组 card/method/scene 800w 图片 HTTP 200。
+
+**当前状态**：
+- 已新增 `PLAN-40-PAPERS.md`，拆分 10 批 / 40 篇候选。
+- 第 1 批已完成 4 篇 deep-read：`qwen-vla`、`realmirror`、`llada-vla`、`discrete-diffusion-vla`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 166 notes / 90 generated assets，`content_commit=f6a1149d310439a168e58fdaa692fc1fdb8ea8d0`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `npm run check` 通过，repo-base check 160 passed；`git diff --check` 干净。
+- 待执行：推送分支、创建 PR、等待 PR CI、合并 main、验证 Pages deploy 与线上冒烟。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED
