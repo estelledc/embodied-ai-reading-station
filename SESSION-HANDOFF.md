@@ -1,19 +1,19 @@
 ---
-status: in_progress
+status: completed
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH03
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch03-four-deep-read-notes
 branch: main
 start_ref: f1024b7
 baseline_ref: origin/main
-review_after: batch03 deploy or blocker
-external_outcome: pending-pr-ci-merge-pages-deploy
+review_after: next bounded research batch
+external_outcome: pr-36-merged-and-pages-deployed
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 3 批实施中
+# 当前接班：40 篇新论文 / 10 批推进，第 3 批已部署
 
 ## Cycle 合同
 
@@ -22,6 +22,16 @@ superseded_by: none
 **scope**：新增第 3 批 notes、刷新 provenance / Data API inventory 到 174 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 4–10 批正文、真机/仿真实验复现、owner 仓库保护设置、未跟踪根目录 scripts 清理。
 
 **primary_sources**：arXiv PDF / abs：2602.00919、2601.19634、2510.16617、2512.20188。公开成功率只作为论文报告，不升级为本站 E4 artifact。
+
+**acceptance_checks**：`npm run test:unit`、root build/check、repo-base build/check、`git diff --check`、PR CI、main Pages deploy、线上 provenance + 四篇论文页 HTTP 200。
+
+**当前状态**：
+- 第 3 批已完成 4 篇 deep-read：`green-vla`、`ac2-vla`、`mos-vla`、`fast-slow-vla`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 174 notes / 138 generated assets，`content_commit=233796c7be2eee0a52b2fe7b51043901ce902870`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed；`git diff --check` 干净。
+- PR #36 已合并，merge commit `eb8eac1`；Pages workflow `29338143100` build + deploy 成功。
+- 线上冒烟通过：`/data/v2/provenance.json` 200，`schema_version=2.0.0`，`notes=174`，`remote_sources=128`，`generated_assets=138`；四篇新增论文页均 HTTP 200。
+- 本地 `main` 与 `origin/main` 对齐；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除。
 
 ---
 status: completed
