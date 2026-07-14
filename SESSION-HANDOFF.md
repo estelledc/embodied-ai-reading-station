@@ -79,6 +79,7 @@ superseded_by: none
 
 ## 当前状态
 
+- 源实现锚点：`54b0260d91506bff9d5df8c2598b90a5b6c400da`（PR #27 merge 后 main；本轮从该已接受基线上的本地五篇资产候选栈开始）。
 - main 合并结果：
   - [PR #28](https://github.com/estelledc/embodied-ai-reading-station/pull/28)：`423d35ddecf25c999212678ff0e8e4abb537abae`
 - Deploy 结果：
