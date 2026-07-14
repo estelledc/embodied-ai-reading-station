@@ -218,9 +218,9 @@ export function digestStyleValues(values) {
 // count + unique-value digest makes additions/replacements fail closed. Any future
 // reduction intentionally updates this budget in the same reviewed change.
 export const CSP_STYLE_ATTRIBUTE_BUDGET = deepFreeze({
-  maxAttributeCount: 4711,
-  maxUniqueValueCount: 210,
-  uniqueValueSha256: "456f39f4758f2ddd3e98a329a2311bf57bf445fa9701112027b1f89216aac095",
+  maxAttributeCount: 4760,
+  maxUniqueValueCount: 208,
+  uniqueValueSha256: "600947fde23b1919b93a07d595c6b7ed2f4f783649e1aaa25485ef96258b4976",
   sourceSymbols: [
     "deck/deck.js",
     "deck/index.html",

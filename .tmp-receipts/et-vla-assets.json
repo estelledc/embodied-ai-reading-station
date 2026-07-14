@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "et-vla",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "11b71ef8bf9bb63fecf33866538136406305dcdd",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/et-vla-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/et-vla.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/et-vla-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/et-vla-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/et-vla-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/et-vla-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "et-vla",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
+  "asset_fingerprint": "9a8b8bddcb16971b47c23ec039c9f49dac3d88501addaccd188acb8fa1a2089c",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/et-vla-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/et-vla.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/et-vla-method-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/et-vla-method.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/et-vla-scene-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/et-vla-scene.webp",
+      "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
