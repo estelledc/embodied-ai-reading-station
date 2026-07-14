@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "cogact",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/cogact-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/cogact.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/cogact-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/cogact-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/cogact-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/cogact-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "cogact",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
+  "asset_fingerprint": "c66001a94394987b4749139b0ecd11374c2a39dfdbddbd5472b5248b5f1049cc",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/cogact-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/cogact.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/cogact-method-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/cogact-method.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/cogact-scene-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/cogact-scene.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

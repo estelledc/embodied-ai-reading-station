@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "lohovla",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/cards/lohovla-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/cards/lohovla.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/lohovla-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/lohovla-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/lohovla-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/lohovla-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "lohovla",
+    "sources": [
+      {
+        "path": "site/src/images/topics/planning.webp",
+        "sha256": "3aa5189efb5c8f6599ca7aa2a8c44f1c426182a5e6fae90af15d7042f2fb8029"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
+  "asset_fingerprint": "a55d1077900cbd0b27fba5b293828087f8e0e200b8dd88eab16cb2782d30afa0",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/lohovla-800.webp",
+      "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/lohovla.webp",
+      "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/lohovla-method-800.webp",
+      "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/lohovla-method.webp",
+      "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/lohovla-scene-800.webp",
+      "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/lohovla-scene.webp",
+      "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
