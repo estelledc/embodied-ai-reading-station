@@ -121,7 +121,7 @@ test("all paper library cards use decorative responsive images and keep title li
   assert.match(deepReadCard, /lerobot-800\.webp 800w, \/images\/cards\/lerobot\.webp 1672w/);
 
   assert.equal(cards.filter(card => card.includes("/assets/")).length, 54);
-    assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 108);
+  assert.equal(cards.filter(card => card.includes("/images/cards/")).length, 112);
   assert.equal(cards.filter(card => card.includes("/images/topics/")).length, 0);
 });
 
