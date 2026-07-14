@@ -1,4 +1,29 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: IMPLEMENTING
+cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH03
+activated_by: user-explicit-continue-autonomous-embodied-ai-research
+scope: ten-batches-forty-new-papers-batch03-four-deep-read-notes
+branch: main
+start_ref: f1024b7
+baseline_ref: origin/main
+review_after: batch03 deploy or blocker
+external_outcome: pending-pr-ci-merge-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 3 批实施中
+
+## Cycle 合同
+
+**objective**：继续 PLAN-40-PAPERS.md，第 3 批新增 4 篇 VLA 部署效率和快速适配论文：green-vla、ac2-vla、mos-vla、fast-slow-vla，并完成本地验证、PR、Pages 部署与线上冒烟。
+
+**scope**：新增第 3 批 notes、刷新 provenance / Data API inventory 到 174 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 4–10 批正文、真机/仿真实验复现、owner 仓库保护设置、未跟踪根目录 scripts 清理。
+
+**primary_sources**：arXiv PDF / abs：2602.00919、2601.19634、2510.16617、2512.20188。公开成功率只作为论文报告，不升级为本站 E4 artifact。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED

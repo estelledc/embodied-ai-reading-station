@@ -19,14 +19,14 @@
 | 1 | 2 | realmirror | RealMirror: A Comprehensive, Open-Source Vision-Language-Action Platform for Embodied AI | https://arxiv.org/abs/2509.14687 | 已部署 |
 | 1 | 3 | llada-vla | LLaDA-VLA: Vision Language Diffusion Action Models | https://arxiv.org/abs/2509.06932 | 已部署 |
 | 1 | 4 | discrete-diffusion-vla | Discrete Diffusion VLA: Bringing Discrete Diffusion to Action Decoding in Vision-Language-Action Policies | https://arxiv.org/abs/2508.20072 | 已部署 |
-| 2 | 1 | vlaser | Vlaser: Vision-Language-Action Model with Synergistic Embodied Reasoning | https://arxiv.org/abs/2510.11027 | 本轮实施 |
-| 2 | 2 | x-vla | X-VLA: Soft-Prompted Transformer as Scalable Cross-Embodiment Vision-Language-Action Model | https://arxiv.org/abs/2510.10274 | 本轮实施 |
-| 2 | 3 | et-vla | Embodiment Transfer Learning for Vision-Language-Action Models | https://arxiv.org/abs/2511.01224 | 本轮实施 |
-| 2 | 4 | himoe-vla | HiMoE-VLA: Hierarchical Mixture-of-Experts for Generalist Vision-Language-Action Policies | https://arxiv.org/abs/2512.05693 | 本轮实施 |
-| 3 | 1 | green-vla | green-vla | 待检索一手来源 | 候选，执行前复核 |
-| 3 | 2 | ac2-vla | ac2-vla | 待检索一手来源 | 候选，执行前复核 |
-| 3 | 3 | mos-vla | mos-vla | 待检索一手来源 | 候选，执行前复核 |
-| 3 | 4 | fast-slow-vla | fast-slow-vla | 待检索一手来源 | 候选，执行前复核 |
+| 2 | 1 | vlaser | Vlaser: Vision-Language-Action Model with Synergistic Embodied Reasoning | https://arxiv.org/abs/2510.11027 | 已部署 |
+| 2 | 2 | x-vla | X-VLA: Soft-Prompted Transformer as Scalable Cross-Embodiment Vision-Language-Action Model | https://arxiv.org/abs/2510.10274 | 已部署 |
+| 2 | 3 | et-vla | Embodiment Transfer Learning for Vision-Language-Action Models | https://arxiv.org/abs/2511.01224 | 已部署 |
+| 2 | 4 | himoe-vla | HiMoE-VLA: Hierarchical Mixture-of-Experts for Generalist Vision-Language-Action Policies | https://arxiv.org/abs/2512.05693 | 已部署 |
+| 3 | 1 | green-vla | Green-VLA: Staged Vision-Language-Action Model for Generalist Robots | https://arxiv.org/abs/2602.00919 | 本轮实施 |
+| 3 | 2 | ac2-vla | AC^2-VLA: Action-Context-Aware Adaptive Computation in Vision-Language-Action Models for Efficient Robotic Manipulation | https://arxiv.org/abs/2601.19634 | 本轮实施 |
+| 3 | 3 | mos-vla | MoS-VLA: A Vision-Language-Action Model with One-Shot Skill Adaptation | https://arxiv.org/abs/2510.16617 | 本轮实施 |
+| 3 | 4 | fast-slow-vla | Asynchronous Fast-Slow Vision-Language-Action Policies for Whole-Body Robotic Manipulation | https://arxiv.org/abs/2512.20188 | 本轮实施 |
 | 4 | 1 | vla-forget | vla-forget | 待检索一手来源 | 候选，执行前复核 |
 | 4 | 2 | membership-inference-vla | membership-inference-vla | 待检索一手来源 | 候选，执行前复核 |
 | 4 | 3 | efficient-vla-survey | efficient-vla-survey | 待检索一手来源 | 候选，执行前复核 |
