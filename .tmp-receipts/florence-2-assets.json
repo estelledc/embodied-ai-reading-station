@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "florence-2",
+  "generator": "ffmpeg-fallback/fill-missing-batch/v2",
+  "inputs": {
+    "slug": "florence-2",
+    "input_content_commit": "manual",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vlm-foundation.webp",
+        "sha256": "ee2c8573988ef79f3108c4cf3d3fee01e1494943cd2ab135de635e30afdd3be9"
+      }
+    ],
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "template": {
+      "id": "fill-missing-batch",
+      "version": "fill-missing-batch-v2"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback",
+      "version": "fill-missing-batch-v2"
+    },
+    "converter": {
+      "id": "pillow",
+      "version": "10.0.1"
+    },
+    "parameters": {},
+    "outputs": [
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/florence-2-scene.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/florence-2-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/florence-2-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/florence-2-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/florence-2.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/florence-2-800.webp",
+        "parameters": {}
+      }
+    ]
+  },
+  "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
+  "asset_fingerprint": "a78cbcd2fa5356fa3ed12a54857e37eaf9c6a25137eebf5c2bd7b689594ee324",
+  "outputs": [
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/florence-2-scene.webp",
+      "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/florence-2-scene-800.webp",
+      "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/florence-2-method.webp",
+      "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/florence-2-method-800.webp",
+      "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/florence-2.webp",
+      "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/florence-2-800.webp",
+      "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
+      "width": 800,
+      "height": 450
+    }
+  ]
+}
