@@ -1980,7 +1980,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/llada-vla-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/llada-vla.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/llada-vla-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/llada-vla-method.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/llada-vla-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/llada-vla-scene.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        }
+      ]
     },
     {
       "slug": "llama-3-herd",
