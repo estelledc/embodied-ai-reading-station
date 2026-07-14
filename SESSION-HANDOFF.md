@@ -1,20 +1,82 @@
 ---
-status: completed
+status: active
 program_status: ACTIVE
-cycle_state: DEPLOYED
-cycle_id: EAIRS-CYCLE-20260714-FIVE-PAPER-ASSETS
-activated_by: user-explicit-five-paper-research-deploy
-scope: five-paper-generated-assets-and-provenance-deploy
+cycle_state: IMPLEMENTING
+cycle_id: EAIRS-CYCLE-20260714-FIVE-NEW-PAPERS-DEPLOY
+activated_by: user-explicit-new-five-paper-research-deploy
+scope: five-new-deep-read-notes-provenance-assets-deploy
 branch: main
-start_ref: 54b0260d91506bff9d5df8c2598b90a5b6c400da
+start_ref: cfc977130967df1620514ea46ed3e394bc1584a7
 baseline_ref: origin/main
-review_after: next user wake or new bounded research cycle
-total_budget: PR #28 + 1 writer / completed cycle
-external_outcome: pr-28-merged-and-pages-deployed
+review_after: after PR, merge, Pages deploy, and online smoke complete
+total_budget: 1 run / 5 new papers / 1 writer / full deploy
+external_outcome: target-pr-merge-and-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：五篇论文生成资产与 provenance 已部署
+# 当前接班：新增五篇论文研究与全流程部署
+
+## Cycle 合同
+
+**research_question**：能否在不放宽 deep-read、provenance v2、Data API、生成资产和 Pages 门禁的前提下，新增 5 篇全新具身智能论文笔记，并完成本地验证、PR、合并、Pages 部署与线上冒烟？
+
+**hypothesis**：从当前已接受基线 `cfc9771` 开始，新增 `cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1` 五篇 note，配套 provenance 与站点 card/inline 资产后，可以保持 `npm run test:unit`、root/repo build、`npm run check`、`git diff --check` 全绿，并通过 GitHub Pages 线上资源校验。
+
+**falsifier**：若任一新增论文缺少一手来源、实验数字无法从 arXiv/PDF 支撑、生成资产无法和 receipt / Git blob / provenance 闭合，或 Pages 部署后公开页面/API/图片不可访问，则停止，不把半成品写成已部署。
+
+**objective**：新增并部署 5 篇全新论文 deep-read：`cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1`。
+
+**scope**：
+- `notes/{cogact,universal-actions,lohovla,autort,eo-1}.md`
+- `papers/provenance.json`
+- `.tmp-receipts/{slug}-assets.json`（如生成资产需要 receipt）
+- `site/src/images/cards/{slug}.webp` 与 `{slug}-800.webp`
+- `site/src/images/inline/{slug}-scene|method.webp` 与 `-800.webp`
+- `CHANGELOG.md`、`SESSION-HANDOFF.md`
+- 明确排除：Lab、真机/MuJoCo/SmolVLA 实验、owner 设置、历史计划清理、现存未跟踪根目录 `scripts/`。
+
+**selected_candidates**：
+- `cogact`：VLM cognition + diffusion action transformer 的 componentized VLA。
+- `universal-actions`：UniAct universal action space，跨本体动作表示。
+- `lohovla`：长程任务中联合生成 sub-task 与 action token。
+- `autort`：用 VLM/LLM 编排 20+ 真实机器人采集 77k episode。
+- `eo-1`：interleaved vision-text-action pretraining，3B 模型与 EO-Data1.5M。
+
+**primary_sources**：
+- arXiv HTML / abs / PDF：`2411.19650v1`、`2501.10105v2`、`2506.00411v1`、`2401.12963v2`、`2508.21112v4`。
+- 本轮只引用公开论文内容；不声称本站完成本地训练、真机执行或 E4 复现实验。
+
+**acceptance_checks**：
+- `PATH="/opt/homebrew/bin:$PATH" npm run test:unit`
+- `PATH="/opt/homebrew/bin:$PATH" npm run build`
+- `PATH="/opt/homebrew/bin:$PATH" npm run check`
+- `PATH="/opt/homebrew/bin:$PATH" SITE_BASE=/embodied-ai-reading-station npm run build`
+- `PATH="/opt/homebrew/bin:$PATH" npm run check`
+- `git diff --check`
+- PR CI 成功。
+- main Pages workflow 成功。
+- 线上 `data/v2/provenance.json`、五篇新增论文页、五个 card-800、五个 method-800、五个 scene-800 图片资源均 HTTP 200。
+
+**run budget**：1 个内容 PR、1 个 writer；本轮不续做 Lab 或实验声明。
+
+**权限边界**：用户要求“全流程部署”，本轮可执行 branch push、PR、merge 与 Pages deploy 验证；仍禁止 force push、rebase、直接写远端 main、owner 设置或伪造本地实验结果。
+
+**stop_conditions**：
+- 需要新增付费/GPU/真机资源或下载大模型权重。
+- 需要放宽 provenance / Data API / deep-read / 资产门禁。
+- PR CI、mergeability 或 Pages deployment 进入外部 blocker。
+- 工作树出现与用户改动重叠。
+
+## 当前状态
+
+- 基线：`main` 与 `origin/main` 对齐在 `cfc977130967df1620514ea46ed3e394bc1584a7`。
+- 基线验证：
+  - `npm run test:unit`：342 passed。
+  - `npm run build`：157 note pages 构建成功。
+  - `npm run check`：160 passed。
+- 现存未跟踪项：根目录 `scripts/`（上一轮一次性批处理脚本），本轮不修改、不删除、不纳入 PR。
+
+# 上一轮接班：五篇论文生成资产与 provenance 已部署
 
 ## Cycle 合同
 
