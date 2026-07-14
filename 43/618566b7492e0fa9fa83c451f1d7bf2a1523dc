@@ -1,0 +1,27 @@
+.tmp-receipts/ac2-vla-assets.json
+  s_0974d14f26eb7e::t_835976badc3c7d 1-143
+.tmp-receipts/fast-slow-vla-assets.json
+  s_0974d14f26eb7e::t_087b458d8ee0a3 1-143
+.tmp-receipts/green-vla-assets.json
+  s_0974d14f26eb7e::t_706bbb843487d0 1-143
+.tmp-receipts/mos-vla-assets.json
+  s_0974d14f26eb7e::t_3f67201fe8f160 1-143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc",
+  "prompts": {},
+  "sessions": {
+    "s_0974d14f26eb7e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_0974d14f26eb7e",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
