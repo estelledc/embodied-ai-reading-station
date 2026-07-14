@@ -164,7 +164,15 @@ test("same inputs serialize deterministically and v2 rebuild preserves reviewed 
   assert.deepEqual(rebuiltReviewed.human_verification, reviewed.human_verification);
   assert.deepEqual(rebuiltReviewed.generated_assets, reviewed.generated_assets);
   const refreshed = buildProvenanceV2({ root, previousManifest: first, contentCommit: COMMIT_B });
-  assert.deepEqual(refreshed.notes.find((note) => note.slug === "demo-remote").generated_assets, []);
+  assert.deepEqual(refreshed.notes.find((note) => note.slug === "demo-remote").generated_assets, [{
+    kind: "card",
+    tracked: true,
+    path: "site/src/images/cards/demo-remote.webp",
+    sha256: "a".repeat(64),
+    generator: "card-generator-v1",
+    input_fingerprint: "b".repeat(64),
+    content_commit: COMMIT_B,
+  }]);
 });
 
 test("content changes cannot reuse a stale snapshot and a new snapshot resets review evidence", () => {
@@ -336,7 +344,7 @@ test("tracked generator output passes the independent repository gate", () => {
     notes: 157,
     local_sources: 46,
     remote_sources: 111,
-    generated_assets: 6,
-    checked_paths: 209,
+    generated_assets: 36,
+    checked_paths: 239,
   });
 });

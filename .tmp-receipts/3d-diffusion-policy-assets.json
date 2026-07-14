@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "3d-diffusion-policy",
+  "generator": "ffmpeg-fallback/fill-missing-batch/v2",
+  "inputs": {
+    "slug": "3d-diffusion-policy",
+    "input_content_commit": "manual",
+    "sources": [
+      {
+        "path": "site/src/images/topics/diffusion-policy.webp",
+        "sha256": "d488d7c86b0f5f1165938ee2d74e051e83dec368e6974fa7b2b361d16303efb0"
+      }
+    ],
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "template": {
+      "id": "fill-missing-batch",
+      "version": "fill-missing-batch-v2"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback",
+      "version": "fill-missing-batch-v2"
+    },
+    "converter": {
+      "id": "pillow",
+      "version": "10.0.1"
+    },
+    "parameters": {},
+    "outputs": [
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/3d-diffusion-policy-scene.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/3d-diffusion-policy-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/3d-diffusion-policy-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/3d-diffusion-policy-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/3d-diffusion-policy.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/3d-diffusion-policy-800.webp",
+        "parameters": {}
+      }
+    ]
+  },
+  "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
+  "asset_fingerprint": "00ab3162c71e283aac33832521b0b84a1b586f0011b4a4e04681cd39728a058c",
+  "outputs": [
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/3d-diffusion-policy-scene.webp",
+      "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/3d-diffusion-policy-scene-800.webp",
+      "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/3d-diffusion-policy-method.webp",
+      "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/3d-diffusion-policy-method-800.webp",
+      "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/3d-diffusion-policy.webp",
+      "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/3d-diffusion-policy-800.webp",
+      "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
+      "width": 800,
+      "height": 450
+    }
+  ]
+}

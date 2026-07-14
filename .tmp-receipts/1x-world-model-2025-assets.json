@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "1x-world-model-2025",
+  "generator": "ffmpeg-fallback/fill-missing-batch/v2",
+  "inputs": {
+    "slug": "1x-world-model-2025",
+    "input_content_commit": "manual",
+    "sources": [
+      {
+        "path": "site/src/images/topics/world-model.webp",
+        "sha256": "0485d5278e83a3784a7e48614489173868b4903b99bf7b14d52a54e28991a135"
+      }
+    ],
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "template": {
+      "id": "fill-missing-batch",
+      "version": "fill-missing-batch-v2"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback",
+      "version": "fill-missing-batch-v2"
+    },
+    "converter": {
+      "id": "pillow",
+      "version": "10.0.1"
+    },
+    "parameters": {},
+    "outputs": [
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/1x-world-model-2025-scene.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/1x-world-model-2025-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/1x-world-model-2025-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/1x-world-model-2025-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/1x-world-model-2025.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/1x-world-model-2025-800.webp",
+        "parameters": {}
+      }
+    ]
+  },
+  "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
+  "asset_fingerprint": "120e38b949dddf35b2e6c9157e8c8f84fb186c3b35d5376898227e3702fb310f",
+  "outputs": [
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/1x-world-model-2025-scene.webp",
+      "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/1x-world-model-2025-scene-800.webp",
+      "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/1x-world-model-2025-method.webp",
+      "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/1x-world-model-2025-method-800.webp",
+      "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/1x-world-model-2025.webp",
+      "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/1x-world-model-2025-800.webp",
+      "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
+      "width": 800,
+      "height": 450
+    }
+  ]
+}

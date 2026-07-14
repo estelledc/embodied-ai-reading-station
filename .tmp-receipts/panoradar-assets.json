@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "panoradar",
+  "generator": "ffmpeg-fallback/fill-missing-batch/v2",
+  "inputs": {
+    "slug": "panoradar",
+    "input_content_commit": "manual",
+    "sources": [
+      {
+        "path": "site/src/images/topics/rf.webp",
+        "sha256": "018992966a9984b45ee01d7f14078bc888830207c29b333cf1094b77da4a6130"
+      }
+    ],
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "template": {
+      "id": "fill-missing-batch",
+      "version": "fill-missing-batch-v2"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback",
+      "version": "fill-missing-batch-v2"
+    },
+    "converter": {
+      "id": "pillow",
+      "version": "10.0.1"
+    },
+    "parameters": {},
+    "outputs": [
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/panoradar-scene.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/panoradar-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/panoradar-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/panoradar-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/panoradar.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/panoradar-800.webp",
+        "parameters": {}
+      }
+    ]
+  },
+  "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
+  "asset_fingerprint": "b4cd5adfa0a835bed96a46929dcbf7fe7f8c820d49b0b0cbee64a4f9648f0797",
+  "outputs": [
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/panoradar-scene.webp",
+      "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/panoradar-scene-800.webp",
+      "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/panoradar-method.webp",
+      "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/panoradar-method-800.webp",
+      "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/panoradar.webp",
+      "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/panoradar-800.webp",
+      "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
+      "width": 800,
+      "height": 450
+    }
+  ]
+}

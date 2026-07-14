@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "act-aloha",
+  "generator": "ffmpeg-fallback/fill-missing-batch/v2",
+  "inputs": {
+    "slug": "act-aloha",
+    "input_content_commit": "manual",
+    "sources": [
+      {
+        "path": "site/src/images/topics/imitation.webp",
+        "sha256": "68cd99cf3c8a29ee06db4ec0d1b2129f928d66aef2a60fbcc85b83968a42be4f"
+      }
+    ],
+    "prompt_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "template": {
+      "id": "fill-missing-batch",
+      "version": "fill-missing-batch-v2"
+    },
+    "generator": {
+      "id": "ffmpeg-fallback",
+      "version": "fill-missing-batch-v2"
+    },
+    "converter": {
+      "id": "pillow",
+      "version": "10.0.1"
+    },
+    "parameters": {},
+    "outputs": [
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/act-aloha-scene.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/act-aloha-scene-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/act-aloha-method.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "inline",
+        "path": "site/src/images/inline/act-aloha-method-800.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/act-aloha.webp",
+        "parameters": {}
+      },
+      {
+        "kind": "card",
+        "path": "site/src/images/cards/act-aloha-800.webp",
+        "parameters": {}
+      }
+    ]
+  },
+  "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
+  "asset_fingerprint": "1627e67b39f2828b13a661cdcb96fdbd6d4bbf1d4d247a854536e05a38d02de8",
+  "outputs": [
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/act-aloha-scene.webp",
+      "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/act-aloha-scene-800.webp",
+      "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/act-aloha-method.webp",
+      "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "inline",
+      "path": "site/src/images/inline/act-aloha-method-800.webp",
+      "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
+      "width": 800,
+      "height": 450
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/act-aloha.webp",
+      "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
+      "width": 1200,
+      "height": 675
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/act-aloha-800.webp",
+      "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
+      "width": 800,
+      "height": 450
+    }
+  ]
+}
