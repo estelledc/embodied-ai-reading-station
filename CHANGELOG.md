@@ -4,9 +4,9 @@
 
 ## [Unreleased]
 
+- 第 4 批新增 4 篇 frontier deep-read 笔记：`vla-forget`、`membership-inference-vla`、`efficient-vla-survey`、`vla-manipulation-survey`；同步扩展 provenance / Data API inventory 到 178 篇，并补齐 card / inline 生成资产与 portable receipts。
 ### Added
 - 第 3 批新增 4 篇 frontier deep-read 笔记：`green-vla`、`ac2-vla`、`mos-vla`、`fast-slow-vla`；同步扩展 provenance / Data API inventory 到 174 篇，并补齐 card / inline 生成资产与 portable receipts。
-- 第 2 批新增 4 篇 frontier deep-read 笔记：`vlaser`、`x-vla`、`et-vla`、`himoe-vla`；同步扩展 provenance / Data API inventory 到 170 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 新增 40 篇 / 10 批 embodied AI 论文推进计划 `PLAN-40-PAPERS.md`；第 1 批新增 4 篇 frontier deep-read 笔记：`qwen-vla`、`realmirror`、`llada-vla`、`discrete-diffusion-vla`；同步扩展 provenance / Data API inventory 到 166 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 新增 5 篇 frontier deep-read 笔记：`cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1`；同步扩展 provenance / Data API inventory 到 162 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 新增 `notes/lerobot.md`：收录 LeRobot ICLR 2026 论文与 `v0.6.0` release 证据，把机器人学习全栈工具链、LeRobotDataset、CLI / extras、评估与部署闭环整理为 Task 2 的工程底座；同步扩展 provenance / Data API inventory 到 157 篇。
