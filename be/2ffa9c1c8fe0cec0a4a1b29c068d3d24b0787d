@@ -1,0 +1,36 @@
+papers/provenance.json
+  s_bb242c4c8be49f::t_1ea7c1efa3006a 3,31,40,49,58,67,76,106,115,124,133,142,151,241,250,259,268,277,286,336,345,354,363,372,381,531,540,549,558,567,576,786,795,804,813,822,831,1101,1110,1119,1128,1137,1146,1376,1385,1394,1403,1412,1421,1471,1480,1489,1498,1507,1516,1566,1575,1584,1593,1602,1611,1681,1690,1699,1708,1717,1726,1916,1925,1934,1943,1952,1961,2051,2060,2069,2078,2087,2096,2346,2355,2364,2373,2382,2391,2441,2450,2459,2468,2477,2486,2636,2645,2654,2663,2672,2681,2931,2940,2949,2958,2967,2976,3266,3275,3284,3293,3302,3311,3521,3530,3539,3548,3557,3566,3656,3665,3674,3683,3692,3701,4431,4440,4449,4458,4467,4476,4518-4573,4641,4650,4659,4668,4677,4686,4816,4825,4834,4843,4852,4861
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "be2ffa9c1c8fe0cec0a4a1b29c068d3d24b0787d",
+  "prompts": {},
+  "sessions": {
+    "s_bb242c4c8be49f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_bb242c4c8be49f",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {
+    "s_14db9d7da6debc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_c3e6b78aa13910": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
