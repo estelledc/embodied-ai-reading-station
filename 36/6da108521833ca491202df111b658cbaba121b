@@ -1,0 +1,42 @@
+.tmp-receipts/discrete-diffusion-vla-assets.json
+  s_06125653383f4c::t_47e646742e8475 8,12,97
+.tmp-receipts/llada-vla-assets.json
+  s_06125653383f4c::t_711a686cb29d83 8,12,97
+.tmp-receipts/qwen-vla-assets.json
+  s_06125653383f4c::t_7855e9ba836bde 8,12,97
+.tmp-receipts/realmirror-assets.json
+  s_06125653383f4c::t_ac3459cd97172f 8,12,97
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "366da108521833ca491202df111b658cbaba121b",
+  "prompts": {},
+  "sessions": {
+    "s_06125653383f4c": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_06125653383f4c",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {
+    "s_14db9d7da6debc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_ca005c776657c7": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
