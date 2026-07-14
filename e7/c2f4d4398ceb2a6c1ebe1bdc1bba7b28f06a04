@@ -1,0 +1,21 @@
+papers/provenance.json
+  s_aa834c121649b7::t_8c85d33ca1133f 3,31,40,49,58,67,76,106,115,124,133,142,151,261,270,279,288,297,306,433,456,465,474,483,492,501,688,711,720,729,738,747,756,1183,1206,1215,1224,1233,1242,1251,1361,1370,1379,1388,1397,1406,1876,1885,1894,1903,1912,1921,2068,2091,2100,2109,2118,2127,2136,2626,2635,2644,2653,2662,2671,3618,3641,3650,3659,3668,3677,3686
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "e7c2f4d4398ceb2a6c1ebe1bdc1bba7b28f06a04",
+  "prompts": {},
+  "sessions": {
+    "s_aa834c121649b7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_aa834c121649b7",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
