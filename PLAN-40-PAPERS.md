@@ -27,10 +27,10 @@
 | 3 | 2 | ac2-vla | AC^2-VLA: Action-Context-Aware Adaptive Computation in Vision-Language-Action Models for Efficient Robotic Manipulation | https://arxiv.org/abs/2601.19634 | 已部署 |
 | 3 | 3 | mos-vla | MoS-VLA: A Vision-Language-Action Model with One-Shot Skill Adaptation | https://arxiv.org/abs/2510.16617 | 已部署 |
 | 3 | 4 | fast-slow-vla | Asynchronous Fast-Slow Vision-Language-Action Policies for Whole-Body Robotic Manipulation | https://arxiv.org/abs/2512.20188 | 已部署 |
-| 4 | 1 | vla-forget | VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models | https://arxiv.org/abs/2604.03956 | 来源已锁定 |
-| 4 | 2 | membership-inference-vla | Membership Inference Attacks on Vision-Language-Action Models | https://arxiv.org/abs/2605.07088 | 来源已锁定 |
-| 4 | 3 | efficient-vla-survey | A Survey on Efficient Vision-Language-Action Models | https://arxiv.org/abs/2510.24795 | 来源已锁定 |
-| 4 | 4 | vla-manipulation-survey | Survey of Vision-Language-Action Models for Embodied Manipulation | https://arxiv.org/abs/2508.15201 | 来源已锁定 |
+| 4 | 1 | vla-forget | VLA-Forget: Vision-Language-Action Unlearning for Embodied Foundation Models | https://arxiv.org/abs/2604.03956 | 已部署 |
+| 4 | 2 | membership-inference-vla | Membership Inference Attacks on Vision-Language-Action Models | https://arxiv.org/abs/2605.07088 | 已部署 |
+| 4 | 3 | efficient-vla-survey | A Survey on Efficient Vision-Language-Action Models | https://arxiv.org/abs/2510.24795 | 已部署 |
+| 4 | 4 | vla-manipulation-survey | Survey of Vision-Language-Action Models for Embodied Manipulation | https://arxiv.org/abs/2508.15201 | 已部署 |
 | 5 | 1 | mobile-service-robot-foundation-survey | mobile-service-robot-foundation-survey | 待检索一手来源 | 候选，执行前复核 |
 | 5 | 2 | embodied-agi-road-ahead | embodied-agi-road-ahead | 待检索一手来源 | 候选，执行前复核 |
 | 5 | 3 | roboneuron | roboneuron | 待检索一手来源 | 候选，执行前复核 |

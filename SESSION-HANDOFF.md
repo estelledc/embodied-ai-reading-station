@@ -1,19 +1,19 @@
 ---
-status: in_progress
+status: completed
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH04
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch04-four-deep-read-notes
 branch: codex/forty-papers-batch04
 start_ref: 41a6d2a
 baseline_ref: origin/main
-review_after: batch04 deploy or blocker
-external_outcome: sources-locked-pending-notes-pr-ci-merge-pages-deploy
+review_after: next bounded research batch
+external_outcome: pr-38-merged-and-pages-deployed
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 4 批实施中
+# 当前接班：40 篇新论文 / 10 批推进，第 4 批已部署
 
 ## Cycle 合同
 
@@ -26,6 +26,16 @@ superseded_by: none
 **evidence_boundary**：公开成功率只作为论文报告，不升级为本站 E4 artifact；`human_verification` 保持 `UNVERIFIED`，除非后续有人类 reviewer 明确核验。
 
 **primary_sources**：arXiv PDF / abs：2604.03956、2605.07088、2510.24795、2508.15201。四个候选均未命中既有 notes/provenance，已锁定一手来源并进入正文实施。
+
+**acceptance_checks**：`npm run test:unit`、root build/check、repo-base build/check、`git diff --check`、PR CI、main Pages deploy、线上 provenance + 四篇论文页 + 四组 card/method/scene 800w 图片 HTTP 200。
+
+**当前状态**：
+- 第 4 批已完成 4 篇 deep-read：`vla-forget`、`membership-inference-vla`、`efficient-vla-survey`、`vla-manipulation-survey`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 178 notes / 162 generated assets，`content_commit=f2e6b6aef5afb8bb8ab6cc111faf22966a9acd9e`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed；`git diff --check` 干净。
+- PR #38 已合并，merge commit `d1727b1`；Pages workflow `29340661331` build + deploy 成功。
+- 线上冒烟通过：`/data/v2/papers.json` 与 `/data/v2/provenance.json` 均 200，`notes=178`，`remote_sources=132`，`generated_assets=162`；四篇新增论文页与 `card-800` / `method-800` / `scene-800` 图片资源均 HTTP 200。
+- 本地 `main` 与 `origin/main` 对齐；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除。
 
 ---
 status: completed
