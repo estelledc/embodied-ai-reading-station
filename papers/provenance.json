@@ -1535,7 +1535,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/fast-slow-vla-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/fast-slow-vla.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/fast-slow-vla-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/fast-slow-vla-method.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/fast-slow-vla-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/fast-slow-vla-scene.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
+          "content_commit": "43618566b7492e0fa9fa83c451f1d7bf2a1523dc"
+        }
+      ]
     },
     {
       "slug": "filip",
