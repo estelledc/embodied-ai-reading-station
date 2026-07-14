@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "eo-1",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/eo-1-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/eo-1.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/eo-1-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/eo-1-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/eo-1-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/eo-1-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "eo-1",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
+  "asset_fingerprint": "e6219532790c5bd143eda6edaa10c9719fe3a8f0f7ac5e39d3cd149ebfe0d233",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/eo-1-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/eo-1.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/eo-1-method-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/eo-1-method.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/eo-1-scene-800.webp",
+      "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/eo-1-scene.webp",
+      "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

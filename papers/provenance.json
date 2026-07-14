@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2",
+  "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27",
   "notes": [
     {
       "slug": "1x-world-model-2025",
@@ -28,7 +28,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -37,7 +37,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -46,7 +46,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -55,7 +55,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -64,7 +64,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -73,7 +73,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -103,7 +103,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -112,7 +112,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -121,7 +121,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -130,7 +130,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -139,7 +139,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -148,7 +148,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -258,7 +258,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -267,7 +267,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -276,7 +276,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -285,7 +285,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -294,7 +294,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -303,7 +303,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -414,6 +414,26 @@
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2306.12925",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "autort",
+      "note_path": "notes/autort.md",
+      "note_sha256": "5688c56bb7b3e7d86907a96fc479c2304d74e6f8d5fc8224908d65e436c235f6",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2401.12963",
         "path": null,
         "sha256": null,
         "artifact_type": null
@@ -597,6 +617,26 @@
         "path": "papers/code-as-policies/paper.md",
         "sha256": "035db5ea0f967fb1d7a0b5ab83e74bfd9ac7514c173cdacc133d22c652f59a8d",
         "artifact_type": "parsed-paper-markdown"
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "cogact",
+      "note_path": "notes/cogact.md",
+      "note_sha256": "bf67a786d3b56e6156fad8e5c0ef52950d0c41cf917c3acbb0045c6a629b563e",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2411.19650",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
       },
       "human_verification": {
         "status": "UNVERIFIED",
@@ -1028,6 +1068,26 @@
       "generated_assets": []
     },
     {
+      "slug": "eo-1",
+      "note_path": "notes/eo-1.md",
+      "note_sha256": "a4022dad8252c11b02fd1c59235c7cbf001ce3b54552f702c6ad847084aeb193",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2508.21112",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
       "slug": "equibot",
       "note_path": "notes/equibot.md",
       "note_sha256": "0c41899f70d261faf2aac06102671c6800076fabc49f262fbbe24891b9304d9e",
@@ -1133,7 +1193,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -1142,7 +1202,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -1151,7 +1211,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -1160,7 +1220,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -1169,7 +1229,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -1178,7 +1238,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -1648,7 +1708,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-cards/v2",
           "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -1657,7 +1717,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-cards/v2",
           "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -1666,7 +1726,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -1675,7 +1735,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -1684,7 +1744,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -1693,7 +1753,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -1824,6 +1884,26 @@
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2304.11477",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "lohovla",
+      "note_path": "notes/lohovla.md",
+      "note_sha256": "9bdc87a38297eff0c81c8670333a91323f747917c5fb3b19e3250c0d58acbf27",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2506.00411",
         "path": null,
         "sha256": null,
         "artifact_type": null
@@ -2323,7 +2403,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-scene",
@@ -2332,7 +2412,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -2341,7 +2421,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "inline-method",
@@ -2350,7 +2430,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -2359,7 +2439,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         },
         {
           "kind": "card",
@@ -2368,7 +2448,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "f648ea2d1028b255cfaf279e6722e198029209f2"
+          "content_commit": "9986e832fa11dec16c306d9d2128f430031b0f27"
         }
       ]
     },
@@ -3299,6 +3379,26 @@
       "source": {
         "kind": "remote",
         "url": "https://arxiv.org/abs/2310.06114",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": []
+    },
+    {
+      "slug": "universal-actions",
+      "note_path": "notes/universal-actions.md",
+      "note_sha256": "5b11f48c5789c9feb5b05eba49f613209ed8d041954ebcc27520592babf47c82",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2501.10105",
         "path": null,
         "sha256": null,
         "artifact_type": null
