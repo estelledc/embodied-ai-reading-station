@@ -1015,7 +1015,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/discrete-diffusion-vla-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/discrete-diffusion-vla.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-diffusion-vla-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-diffusion-vla-method.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-diffusion-vla-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-diffusion-vla-scene.webp",
+          "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
+          "content_commit": "d08da6d08908cedf26ae4429c60197c22810266f"
+        }
+      ]
     },
     {
       "slug": "dit-policy",
