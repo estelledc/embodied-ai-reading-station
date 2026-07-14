@@ -1,0 +1,36 @@
+papers/provenance.json
+  s_6f7803f3527784::t_72a2fd83101e38 3,31,40,49,58,67,76,106,115,124,133,142,151,261,270,279,288,297,306,456,465,474,483,492,501,711,720,729,738,747,756,1026,1035,1044,1053,1062,1071,1281,1290,1299,1308,1317,1326,1456,1465,1474,1483,1492,1501,1991,2000,2009,2018,2027,2036,2086,2095,2104,2113,2122,2131,2281,2290,2299,2308,2317,2326,2816,2825,2834,2843,2852,2861,3071,3080,3089,3098,3107,3116,3206,3215,3224,3233,3242,3251,3981,3990,3999,4008,4017,4026,4088-4143
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "232a66df714b72fd449ea546e8efadae084b70bc",
+  "prompts": {},
+  "sessions": {
+    "s_6f7803f3527784": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_6f7803f3527784",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {
+    "s_14db9d7da6debc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_db41f5841e030b": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
