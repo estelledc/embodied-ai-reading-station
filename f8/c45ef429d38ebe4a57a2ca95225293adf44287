@@ -1,0 +1,21 @@
+site/scripts/lib/responsive-images.test.mjs
+  s_137019bbea97a4::t_695d6c74da2ce1 124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f8c45ef429d38ebe4a57a2ca95225293adf44287",
+  "prompts": {},
+  "sessions": {
+    "s_137019bbea97a4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_137019bbea97a4",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
