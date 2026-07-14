@@ -1,19 +1,19 @@
 ---
-status: in_progress
+status: completed
 program_status: ACTIVE
-cycle_state: LOCAL_VALIDATED
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH02
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch02-four-deep-read-notes
 branch: main
 start_ref: 4ed7998
 baseline_ref: origin/main
-review_after: batch02 deploy or blocker
-external_outcome: pending-pr-ci-merge-pages-deploy
+review_after: next bounded research batch
+external_outcome: pr-34-merged-and-pages-deployed
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 2 批实施中
+# 当前接班：40 篇新论文 / 10 批推进，第 2 批已部署
 
 ## Cycle 合同
 
@@ -29,7 +29,9 @@ superseded_by: none
 - 第 2 批已完成 4 篇 deep-read：`vlaser`、`x-vla`、`et-vla`、`himoe-vla`。
 - 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 170 notes / 114 generated assets，`content_commit=53e2b5f0836042c8c57e516a1b47383737fe3bb8`。
 - 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `npm run check` 通过，repo-base check 160 passed；`git diff --check` 干净。
-- 待执行：推送分支、创建 PR、等待 PR CI、合并 main、验证 Pages deploy 与线上冒烟。
+- PR #34 已合并，merge commit `4181cda`；Pages workflow `29335730298` build + deploy 成功。
+- 线上冒烟通过：`/data/v2/provenance.json` 200，`schema_version=2.0.0`，`notes=170`，`generated_assets=114`；四篇新增论文页与 `card-800` / `method-800` / `scene-800` 图片资源均 HTTP 200。
+- 本地 `main` 与 `origin/main` 对齐；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除。
 
 ---
 status: completed
