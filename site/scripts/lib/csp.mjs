@@ -220,7 +220,7 @@ export function digestStyleValues(values) {
 export const CSP_STYLE_ATTRIBUTE_BUDGET = deepFreeze({
   maxAttributeCount: 4810,
   maxUniqueValueCount: 208,
-  uniqueValueSha256: "4f44774865a4525792250af5c38834068a3f4a633dac47f9cec1287347d35e62",
+  uniqueValueSha256: "840abc9dc9557c9d665bab9301863d655185c81ffb831844fc1c681ef033994b",
   sourceSymbols: [
     "deck/deck.js",
     "deck/index.html",
