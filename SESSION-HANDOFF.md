@@ -1,5 +1,5 @@
 ---
-status: active
+status: active_campaign
 program_status: ACTIVE
 cycle_state: IMPLEMENTING
 cycle_id: EAIRS-CYCLE-20260714-FIVE-NEW-PAPERS-DEPLOY
