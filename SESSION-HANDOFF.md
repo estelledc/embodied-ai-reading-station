@@ -1,16 +1,16 @@
 ---
-status: active_campaign
+status: completed
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260714-FIVE-NEW-PAPERS-DEPLOY
 activated_by: user-explicit-new-five-paper-research-deploy
 scope: five-new-deep-read-notes-provenance-assets-deploy
 branch: main
 start_ref: cfc977130967df1620514ea46ed3e394bc1584a7
 baseline_ref: origin/main
-review_after: after PR, merge, Pages deploy, and online smoke complete
+review_after: next user wake or new bounded research cycle
 total_budget: 1 run / 5 new papers / 1 writer / full deploy
-external_outcome: target-pr-merge-and-pages-deploy
+external_outcome: pr-30-merged-and-pages-deployed
 superseded_by: none
 ---
 
@@ -69,12 +69,42 @@ superseded_by: none
 
 ## 当前状态
 
-- 基线：`main` 与 `origin/main` 对齐在 `cfc977130967df1620514ea46ed3e394bc1584a7`。
-- 基线验证：
-  - `npm run test:unit`：342 passed。
-  - `npm run build`：157 note pages 构建成功。
-  - `npm run check`：160 passed。
-- 现存未跟踪项：根目录 `scripts/`（上一轮一次性批处理脚本），本轮不修改、不删除、不纳入 PR。
+- 起始基线：`cfc977130967df1620514ea46ed3e394bc1584a7`。
+- 内容快照：`58a5ec656edc0f54c593abfe9e4505f7e5004f1b`，canonical provenance 指向该快照，162 篇 note / 66 个 generated assets。
+- main 合并结果：
+  - [PR #30](https://github.com/estelledc/embodied-ai-reading-station/pull/30)：`342164a96bef5b56a11a6aff20615bd9eebadd50`。
+- Deploy 结果：
+  - [Deploy reading station to GitHub Pages #29331540918](https://github.com/estelledc/embodied-ai-reading-station/actions/runs/29331540918)：success，head SHA `342164a96bef5b56a11a6aff20615bd9eebadd50`。
+- 线上冒烟：
+  - `https://estelledc.github.io/embodied-ai-reading-station/data/v2/provenance.json`：200，`schema_version=2.0.0`，`notes=162`，`content_commit=58a5ec656edc0f54c593abfe9e4505f7e5004f1b`。
+  - `cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1` 五篇公开页面均 200。
+  - 五篇新增论文的 `images/cards/*-800.webp`、`images/inline/*-method-800.webp`、`images/inline/*-scene-800.webp` 均 200。
+- 本地工作树：
+  - `main` 与 `origin/main` 对齐在 `342164a96bef5b56a11a6aff20615bd9eebadd50` 后另开本 handoff 分支。
+  - 仍有未跟踪根目录 `scripts/`，包含既有一次性批处理脚本；本轮有意未纳入 PR，也未删除。
+
+## 已完成切片
+
+1. 用 LightRead / arXiv / PDF 文本筛选并核验 5 篇未收录论文：`cogact`、`universal-actions`、`lohovla`、`autort`、`eo-1`。
+2. 新增 5 篇 deep-read note，均达到强制章节、视觉元素和 ≥4000 字门禁。
+3. 用 topic asset fallback 生成 30 个 WebP 站点资产，并写入 5 个 portable receipt。
+4. 更新 `papers/provenance.json`、Data API / provenance / responsive image / CSP 预算相关契约到 162 篇。
+5. 本地验证通过：`npm run test:unit` 342 passed；root build 成功；root `npm run check` 160 passed；repo-base build 成功；repo-base `npm run check` 160 passed；`git diff --check` 干净。
+6. 创建并合并 PR #30，PR CI 与 main Pages deploy 均成功。
+7. 线上 provenance、五篇论文页与新增关键图片资源冒烟通过。
+
+## 下一条命令
+
+从最新 main 开始新的有限 cycle：
+
+```bash
+git fetch origin main
+git switch main
+git pull --ff-only origin main
+git status --short --branch
+```
+
+下一轮若要继续新增论文，先按 `AGENT-DEEPREAD.md` 明确选题和一手来源；若要清理本地 `scripts/`，先确认这些一次性脚本不再需要，再用安全删除流程处理。
 
 # 上一轮接班：五篇论文生成资产与 provenance 已部署
 
