@@ -1,7 +1,7 @@
 ---
 status: in_progress
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: LOCAL_VALIDATED
 cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH02
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch02-four-deep-read-notes
@@ -24,6 +24,12 @@ superseded_by: none
 **primary_sources**：arXiv PDF / abs：`2510.11027`、`2510.10274`、`2511.01224`、`2512.05693`。公开成功率只作为论文报告，不升级为本站 E4 artifact。
 
 **acceptance_checks**：`npm run test:unit`、root build/check、repo-base build/check、`git diff --check`、PR CI、main Pages deploy、线上 provenance + 四篇论文页 + 四组 card/method/scene 800w 图片 HTTP 200。
+
+**当前状态**：
+- 第 2 批已完成 4 篇 deep-read：`vlaser`、`x-vla`、`et-vla`、`himoe-vla`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 170 notes / 114 generated assets，`content_commit=53e2b5f0836042c8c57e516a1b47383737fe3bb8`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `npm run check` 通过，repo-base check 160 passed；`git diff --check` 干净。
+- 待执行：推送分支、创建 PR、等待 PR CI、合并 main、验证 Pages deploy 与线上冒烟。
 
 ---
 status: completed
