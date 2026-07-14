@@ -31,7 +31,7 @@ Discrete Diffusion VLA 把动作生成放回一个统一 transformer 里：视�
 
 对初学者来说，这类论文最容易误读成又一个大模型名字。更准确的读法是：它们在给具身 AI 建接口。所谓接口，就是模型和世界之间约好的语言。图像告诉模型世界长什么样，语言告诉模型人想要什么，身体描述告诉模型自己能怎么动，动作空间告诉模型输出该怎么被机器人执行。
 
-~~~text
+```text
 读者视角：为什么需要 Discrete Diffusion VLA
 
 旧路线：任务 A 模型 ─┐
@@ -45,9 +45,9 @@ Discrete Diffusion VLA：视觉 + 语言 + 身体约束 + 动作/轨迹
         │
         ▼
 更容易比较、复用和继续扩展
-~~~
+```
 
-~~~text
+```text
 机制视角：从观察到动作
 
 [图像/视频]   [语言指令]   [身体描述/控制约定]
@@ -61,7 +61,7 @@ Discrete Diffusion VLA：视觉 + 语言 + 身体约束 + 动作/轨迹
        action chunk / waypoint / trajectory
                   ▼
           仿真评测或真实机器人执行
-~~~
+```
 
 这个场景和纯聊天模型最大区别在于：输出不是一句话，而是会改变世界的动作。聊天模型答错可以重新问，机器人动作错了可能撞到桌子、夹坏物体、走到错误房间。所以论文里的 benchmark、动作表示、控制频率和 Sim2Real 细节，都不是边角料，而是决定结论能不能落地的核心。
 
@@ -209,7 +209,7 @@ VLA 的动作头常见两种：一种在 VLM 之外接 MLP 或连续 diffusion h
 
 ## 和本导读的关系
 
-本篇对应导读中的 [Ch04: 技术版图](../guide/ch04-landscape.md)、[Ch12: VLA](../guide/ch12-vla.md) 和后续 Sim2Real / benchmark 章节。读它之前，建议至少先知道三件事：VLM 为什么能对齐图文，VLA 为什么要把动作 token 化或连续化，机器人评测为什么必须区分仿真、真实和 OOD。
+本篇对应导读中的 [Ch04: 技术版图](../guide/ch04-landscape.md)、[Ch12: VLA](../guide/ch12-openvla-vlas-mla.md) 和后续 Sim2Real / benchmark 章节。读它之前，建议至少先知道三件事：VLM 为什么能对齐图文，VLA 为什么要把动作 token 化或连续化，机器人评测为什么必须区分仿真、真实和 OOD。
 
 对当前 40 篇扩展计划来说，Discrete Diffusion VLA 属于第一批，因为它能补上 2025–2026 前沿 VLA 的新分支。第一批不是为了追热点，而是为了把统一 VLA 和扩散式动作解码这两条线先接到站点现有 162 篇图谱上。
 
@@ -302,7 +302,7 @@ VLA 的动作头常见两种：一种在 VLM 之外接 MLP 或连续 diffusion h
 - arXiv: [2508.20072](https://arxiv.org/abs/2508.20072)
 - 本站状态：公开来源研究；未做本地训练、仿真或真机复现；human verification 仍应保持 UNVERIFIED，直到逐节人工核验完成。
 
-~~~bibtex
+```bibtex
 @misc{discrete_diffusion_vla_2025,
   title = {Discrete Diffusion VLA: Bringing Discrete Diffusion to Action Decoding in Vision-Language-Action Policies},
   year = {2025},
@@ -312,4 +312,4 @@ VLA 的动作头常见两种：一种在 VLM 之外接 MLP 或连续 diffusion h
   note = {Read through Embodied AI: Zero to One},
   url = {https://arxiv.org/abs/2508.20072}
 }
-~~~
+```
