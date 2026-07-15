@@ -3605,7 +3605,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/open-h-embodiment-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/open-h-embodiment.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/open-h-embodiment-method-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/open-h-embodiment-method.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/open-h-embodiment-scene-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/open-h-embodiment-scene.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        }
+      ]
     },
     {
       "slug": "open-x-embodiment",
