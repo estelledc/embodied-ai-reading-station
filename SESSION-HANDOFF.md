@@ -9,11 +9,11 @@ branch: codex/forty-papers-batch08
 start_ref: 36b8a1f
 baseline_ref: origin/main
 review_after: batch08 deploy or blocker
-external_outcome: sources-locked-notes-written-pending-provenance-assets-pr-ci-merge-pages-deploy
+external_outcome: notes-assets-provenance-ready-pending-local-validation-pr-ci-merge-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 8 批正文已写，待资产与验证
+# 当前接班：40 篇新论文 / 10 批推进，第 8 批待本地验证
 
 ## Cycle 合同
 
@@ -32,7 +32,8 @@ superseded_by: none
 **当前状态**：
 - 已完成 4 篇 deep-read 初稿：`gaze2act`、`lacy`、`villa-x`、`instructvla`。
 - 字数 / 视觉元素预检通过：`gaze2act=4523/2`、`lacy=4042/2`、`villa-x=4316/2`、`instructvla=4237/2`。
-- 下一步：生成 card / inline WebP 与 portable receipts，刷新 `papers/provenance.json` 到 194 notes，并同步 README / tests / budgets 后跑完整门禁。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 194 notes / 258 generated assets，`content_commit=bb2b67a88f8d5a37a16a1d032f0e709b8b68e62d`。
+- 已同步 README / CHANGELOG / check / unit test 计数到 194；下一步清理 `.tmp-paper-sources/`，跑完整本地门禁，并根据实际输出修 CSP / size budget。
 
 ---
 status: completed
