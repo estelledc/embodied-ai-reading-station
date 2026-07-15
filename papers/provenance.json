@@ -1400,7 +1400,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-agi-road-ahead-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-agi-road-ahead.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-agi-road-ahead-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-agi-road-ahead-method.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-agi-road-ahead-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-agi-road-ahead-scene.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        }
+      ]
     },
     {
       "slug": "embodied-navigation-foundation-model",
