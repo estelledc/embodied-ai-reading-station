@@ -5440,7 +5440,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/robotics-foundation-models-survey-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/robotics-foundation-models-survey.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-method-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-method.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-scene-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-scene.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        }
+      ]
     },
     {
       "slug": "rt-1",
