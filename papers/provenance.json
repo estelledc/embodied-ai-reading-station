@@ -1475,7 +1475,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-navigation-foundation-model-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-navigation-foundation-model.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-navigation-foundation-model-method-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-navigation-foundation-model-method.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-navigation-foundation-model-scene-800.webp",
+          "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-navigation-foundation-model-scene.webp",
+          "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+          "content_commit": "34dda86a3c482fb771c820e7e1e5208a786fb0d4"
+        }
+      ]
     },
     {
       "slug": "encodec",
