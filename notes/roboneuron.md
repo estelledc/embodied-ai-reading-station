@@ -189,16 +189,16 @@ RoboNeuron 把长运行模块作为 ROS2 node 或独立 OS process 启动，并�
 
 ## FAQ
 
-**Q：RoboNeuron 是不是替代 ROS？**  
+**Q：RoboNeuron 是不是替代 ROS？**
 A：不是。它建立在 ROS2 等机器人中间件之上，把 robot-side interface 暴露成 agent-callable tools。
 
-**Q：它是不是新的 VLA 模型？**  
+**Q：它是不是新的 VLA 模型？**
 A：不是。它是中间层，可以接 OpenVLA、OpenVLA-OFT、π0 等 backend。
 
-**Q：MCP 在这里起什么作用？**  
+**Q：MCP 在这里起什么作用？**
 A：MCP 是 agent 工具调用一侧的协议，让 LLM agent 能用结构化方式调用机器人能力。
 
-**Q：本站有没有跑 RoboNeuron？**  
+**Q：本站有没有跑 RoboNeuron？**
 A：没有。这里只记录论文描述和报告结果，不写成本站复现实验。
 
 ## 进一步读什么
