@@ -205,6 +205,15 @@ unsafe physical outcome
 
 这篇很适合转成工程排查模板。第一段看 semantic layer：用户意图、系统提示、任务分解和中间计划有没有被改变，是否出现“语言上没违规但动作上有风险”的情况。第二段看 grounding layer：目标物体、视觉区域、空间关系、工具状态和动作参数是否真的对齐，是否被图像、环境文字或物体布局带偏。第三段看 execution layer：控制器是否按计划执行，传感器噪声、接触力、环境变化和延迟是否让轨迹漂移。
 
+```text
+具身安全排查入口
+
+semantic layer -> grounding layer -> execution layer -> physical outcome
+      |                  |                  |                  |
+ intent / plan      object / pose       controller /       harm, drift,
+ consistency        modality match      sensor feedback    or recovery
+```
+
 这三段和普通 bug 排查也相通。不要一看到事故就说“LLM 幻觉”，也不要一看到碰撞就说“控制器有 bug”。具身系统的坏结论常常来自多层小偏差叠加：上层目标有一点歧义，中层 grounding 有一点偏差，下层执行有一点延迟，最后才形成物理风险。本文的价值就是帮我们把“坏了”拆成可观察的层。
 
 真正落地时，还要把这三段变成日志字段：原始指令、解析后的目标、识别到的对象、选择的动作、执行前安全检查、执行后状态差异。没有这些证据，事故复盘只能停留在猜测。
