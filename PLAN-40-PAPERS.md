@@ -47,10 +47,10 @@
 | 8 | 2 | lacy | LACY: A Vision-Language Model-based Language-Action Cycle for Self-Improving Robotic Manipulation | https://arxiv.org/abs/2511.02239 | 已部署 |
 | 8 | 3 | villa-x | villa-X: Enhancing Latent Action Modeling in Vision-Language-Action Models | https://arxiv.org/abs/2507.23682 | 已部署 |
 | 8 | 4 | instructvla | InstructVLA: Vision-Language-Action Instruction Tuning from Understanding to Manipulation | https://arxiv.org/abs/2507.17520 | 已部署 |
-| 9 | 1 | discrete-policy | discrete-policy | 待检索一手来源 | 候选，执行前复核 |
-| 9 | 2 | gembench | gembench | 待检索一手来源 | 候选，执行前复核 |
-| 9 | 3 | language-conditioned-manipulation-survey | language-conditioned-manipulation-survey | 待检索一手来源 | 候选，执行前复核 |
-| 9 | 4 | safeembodai | safeembodai | 待检索一手来源 | 候选，执行前复核 |
+| 9 | 1 | discrete-policy | Discrete Policy: Learning Disentangled Action Space for Multi-Task Robotic Manipulation | https://arxiv.org/abs/2409.18707 | 来源已锁定 |
+| 9 | 2 | gembench | Towards Generalizable Vision-Language Robotic Manipulation: A Benchmark and LLM-guided 3D Policy | https://arxiv.org/abs/2410.01345 | 来源已锁定 |
+| 9 | 3 | language-conditioned-manipulation-survey | A Survey of Language-Conditioned Robot Manipulation | https://arxiv.org/abs/2312.10807 | 来源已锁定 |
+| 9 | 4 | safeembodai | SafeEmbodAI: a Safety Framework for Mobile Robots in Embodied AI Systems | https://arxiv.org/abs/2409.01630 | 来源已锁定 |
 | 10 | 1 | causal-world-models-embodied-ai | causal-world-models-embodied-ai | 待检索一手来源 | 候选，执行前复核 |
 | 10 | 2 | call-for-embodied-ai | call-for-embodied-ai | 待检索一手来源 | 候选，执行前复核 |
 | 10 | 3 | robotics-foundation-models-survey | robotics-foundation-models-survey | 待检索一手来源 | 候选，执行前复核 |
