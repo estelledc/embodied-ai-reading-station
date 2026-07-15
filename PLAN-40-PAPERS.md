@@ -35,10 +35,10 @@
 | 5 | 2 | embodied-agi-road-ahead | Toward Embodied AGI: A Review of Embodied AI and the Road Ahead | https://arxiv.org/abs/2505.14235 | 已部署 |
 | 5 | 3 | roboneuron | RoboNeuron: A Middle-Layer Infrastructure for Agent-Driven Orchestration in Embodied AI | https://arxiv.org/abs/2512.10394 | 已部署 |
 | 5 | 4 | embodied-navigation-foundation-model | Embodied Navigation Foundation Model | https://arxiv.org/abs/2509.12129 | 已部署 |
-| 6 | 1 | mimo-embodied | MiMo-Embodied: X-Embodied Foundation Model Technical Report | https://arxiv.org/abs/2511.16518 | 来源已锁定 |
-| 6 | 2 | open-h-embodiment | Open-H-Embodiment: A Large-Scale Dataset for Enabling Foundation Models in Medical Robotics | https://arxiv.org/abs/2604.21017 | 来源已锁定 |
-| 6 | 3 | alanavlm | AlanaVLM: A Multimodal Embodied AI Foundation Model for Egocentric Video Understanding | https://arxiv.org/abs/2406.13807 | 来源已锁定 |
-| 6 | 4 | embodied-3d-generation-survey | 3D Generation for Embodied AI and Robotic Simulation: A Survey | https://arxiv.org/abs/2604.26509 | 来源已锁定 |
+| 6 | 1 | mimo-embodied | MiMo-Embodied: X-Embodied Foundation Model Technical Report | https://arxiv.org/abs/2511.16518 | 本地验证通过，PR 待创建 |
+| 6 | 2 | open-h-embodiment | Open-H-Embodiment: A Large-Scale Dataset for Enabling Foundation Models in Medical Robotics | https://arxiv.org/abs/2604.21017 | 本地验证通过，PR 待创建 |
+| 6 | 3 | alanavlm | AlanaVLM: A Multimodal Embodied AI Foundation Model for Egocentric Video Understanding | https://arxiv.org/abs/2406.13807 | 本地验证通过，PR 待创建 |
+| 6 | 4 | embodied-3d-generation-survey | 3D Generation for Embodied AI and Robotic Simulation: A Survey | https://arxiv.org/abs/2604.26509 | 本地验证通过，PR 待创建 |
 | 7 | 1 | disco-diffusion-policy | disco-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
 | 7 | 2 | time-unified-diffusion-policy | time-unified-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
 | 7 | 3 | primitive-skill-diffusion-policy | primitive-skill-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
