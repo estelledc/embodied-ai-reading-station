@@ -9,7 +9,7 @@ branch: codex/forty-papers-batch10
 start_ref: b153945
 baseline_ref: origin/main
 review_after: complete
-external_outcome: pr-50-merged-and-pages-deployed
+external_outcome: pr-50-content-and-pr-51-handoff-merged-and-pages-deployed
 superseded_by: none
 ---
 
@@ -32,12 +32,12 @@ superseded_by: none
 **当前状态**：
 - 已完成 4 篇 deep-read 初稿：`causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey`。
 - 字数 / 视觉元素预检通过：`causal-world-models-embodied-ai=4116/2`、`call-for-embodied-ai=4154/3`、`robotics-foundation-models-survey=4159/3`、`embodied-ai-security-cps-survey=4020/2`。
-- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 202 notes / 306 generated assets，`content_commit=99eb68dc287eb246b417c19c09ce965219c99e41`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 202 notes / 306 generated assets，`content_commit=bdbcabc593e3a9f57dc9d40d405c71322de14db6`。
 - 已同步 README / CHANGELOG / check / unit test 计数到 202；CSP style budget 更新为 5146 attributes / 207 unique values；`papers/index.html` repo-base 专项预算更新到 310KB。
 - 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
-- `git diff --check` 与 `git diff --check origin/main...HEAD` 通过；PR #50 已合并，merge commit `9cebf52`；Pages workflow `29391584320` build + deploy 成功。
+- `git diff --check` 与 `git diff --check origin/main...HEAD` 通过；内容 PR #50 已合并，merge commit `9cebf52`；Pages workflow `29391584320` build + deploy 成功；handoff PR #51 已合并，merge commit `efe58ca`。
 - 线上冒烟通过：`/data/v2/papers.json` 与 `/data/v2/provenance.json` 均 200，`paper_items=202`，`notes=202`，`remote_sources=156`，`generated_assets=306`；四篇新增论文页与 `card-800` / `method-800` / `scene-800` 图片资源均 HTTP 200。
-- 本地 `main` 与 `origin/main` 对齐到 `9cebf52`；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除；40 篇 / 10 批新增论文计划已完成。
+- 本地 `main` 与 `origin/main` 对齐到 `efe58ca`；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除；40 篇 / 10 批新增论文计划已完成。
 
 ---
 status: completed

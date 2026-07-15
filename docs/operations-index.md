@@ -2,6 +2,14 @@
 
 这是仓库唯一的活动操作入口。它规定如何启动和收口一次有限 run；目标与依赖仍来自 `ROADMAP.md`、`PLAN-1.3.md` 和专项证据，但这些文档不自动授权执行。
 
+常用专项入口：
+
+- 批量论文 deep-read、资产、provenance、PR 和部署闭环：[`docs/paper-batch-campaign-playbook.md`](paper-batch-campaign-playbook.md)
+- 单篇旧笔记升级参考：[`docs/paper-onboarding-guide.md`](paper-onboarding-guide.md)
+- provenance v2 字段和证据合同：[`docs/provenance-v2-contract.md`](provenance-v2-contract.md)
+
+入口优先级：批量新增、批量资产、部署和 handoff 先读批量 Playbook；`paper-onboarding-guide.md` 只保留为单篇旧笔记升级的 legacy 背景，不作为新 campaign 的执行入口。
+
 ## 1. 启动一次有限 run
 
 未来独立 agent 先读取仓库根目录 `AGENTS.md` 和 `SESSION-HANDOFF.md`，然后在写入前声明：
