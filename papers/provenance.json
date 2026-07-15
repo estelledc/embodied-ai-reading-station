@@ -5065,7 +5065,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/time-unified-diffusion-policy-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/time-unified-diffusion-policy.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/time-unified-diffusion-policy-method-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/time-unified-diffusion-policy-method.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/time-unified-diffusion-policy-scene-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/time-unified-diffusion-policy-scene.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        }
+      ]
     },
     {
       "slug": "tinyvla",
