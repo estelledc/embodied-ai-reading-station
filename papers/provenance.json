@@ -770,7 +770,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/call-for-embodied-ai-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/call-for-embodied-ai.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-method-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-method.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-scene-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-scene.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        }
+      ]
     },
     {
       "slug": "calvin",
