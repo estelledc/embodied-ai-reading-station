@@ -1,4 +1,40 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: SOURCE_LOCKED
+cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH10
+activated_by: user-explicit-continue-autonomous-embodied-ai-research
+scope: ten-batches-forty-new-papers-batch10-four-deep-read-notes
+branch: codex/forty-papers-batch10
+start_ref: b153945
+baseline_ref: origin/main
+review_after: batch10 deploy or blocker
+external_outcome: primary-sources-locked-pending-notes-assets-validation-pr-ci-merge-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 10 批来源已锁定
+
+## Cycle 合同
+
+**objective**：完成 `PLAN-40-PAPERS.md` 的第 10 批：新增 `causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey` 四篇 deep-read，并完成本地验证、PR、Pages 部署与线上冒烟。
+
+**scope**：去重、读取 arXiv / PDF / HTML 等一手来源；新增第 10 批 notes、刷新 provenance / Data API inventory 到 202 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 10 批之外的新论文、真机/仿真实验复现、owner 仓库保护设置、既有未跟踪根目录 `scripts/` 清理。
+
+**exit_conditions**：四篇来源均完成 deep-read 并部署；或任一来源在正文阶段发现与既有内容重复、缺少可复查一手材料、或无法满足 deep-read 门禁时，停止写该篇并回到计划修正。
+
+**evidence_boundary**：公开实验数字只作为论文报告，不升级为本站 E4 artifact；`human_verification` 保持 `UNVERIFIED`，除非后续有人类 reviewer 明确核验。
+
+**primary_sources**：arXiv abs/PDF：2402.06665、2402.03824、2312.08782、2602.17345。前三个候选由 Exa 搜索锁定；第四个原占位 `cyberspace-physical-world-survey` 未直接命中一手来源，Exa 查询触发 429 后改用 arXiv API fallback，锁定为更可复查的 CPS/security survey `embodied-ai-security-cps-survey`。
+
+**baseline_checks**：Batch 9 已部署并完成 handoff PR #49；本地 `main` 与 `origin/main` 对齐到 `b153945`。当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除。
+
+**当前状态**：
+- 已确认四个 Batch 10 slug/title/source；本地去重仅命中 `PLAN-40-PAPERS.md`，未发现既有 notes / provenance 冲突。
+- agent-reach doctor 显示 Exa Search、Jina Reader、GitHub CLI 可用；本轮使用 Exa + arXiv API fallback 锁源。
+- 下一步读取四篇一手来源，按 AGENT-DEEPREAD.md 写 4 篇 deep-read 初稿，并预检字数与视觉元素。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED
