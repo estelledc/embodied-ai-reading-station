@@ -1,7 +1,7 @@
 # Embodied AI: Zero to One
 
 > **把具身智能的论文海洋，编成一条从零基础到研究任务的学习路径。**
-> 22 章系统教程 + 190 篇结构化论文笔记，从 CLIP 到 LeRobot，覆盖 11 个主题。
+> 22 章系统教程 + 194 篇结构化论文笔记，从 CLIP 到 LeRobot，覆盖 11 个主题。
 > v1.2.0 · 2026-07（更新记录见 [CHANGELOG.md](CHANGELOG.md)，未来方向见 [ROADMAP.md](ROADMAP.md)）
 
 🌐 **[在线访问 →](https://estelledc.github.io/embodied-ai-reading-station/)**
@@ -17,8 +17,8 @@
 - **Problem**：新手缺的不是另一篇孤立摘要，而是一条能回答“先学什么、论文如何关联、怎样走到真实研究任务”的路线。
 - **Role**：个人项目；独立完成产品定义、内容架构、静态站工程、交互设计、公开数据与发布门禁。
 - **System**：Node 静态生成器把教程、论文笔记、主题/时间线/关系图、Pagefind 搜索和浏览器本地进度统一到一份内容数据上。
-- **Evidence**：22 章教程、190 篇笔记、11 个主题；公开 [质量页](https://estelledc.github.io/embodied-ai-reading-station/quality/)、[数据接口](https://estelledc.github.io/embodied-ai-reading-station/data/index.json) 和 [Actions 构建记录](https://github.com/estelledc/embodied-ai-reading-station/actions)。
-- **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，144 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明。
+- **Evidence**：22 章教程、194 篇笔记、11 个主题；公开 [质量页](https://estelledc.github.io/embodied-ai-reading-station/quality/)、[数据接口](https://estelledc.github.io/embodied-ai-reading-station/data/index.json) 和 [Actions 构建记录](https://github.com/estelledc/embodied-ai-reading-station/actions)。
+- **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，148 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明。
 
 > An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief. It is an owner-led, independently maintained, evidence-aware product—not a claim that every note has received line-by-line human review.
 
@@ -26,7 +26,7 @@
 
 ## 这站是什么
 
-具身智能（Embodied AI）= 让 AI 有身体地融入世界——看见、听懂、决定、动手。这站把 190 篇顶会论文与开源系统材料（CoRL/RSS/NeurIPS/ICML/MobiCom/CVPR/ICLR 等）翻译成入门读者也能跟下来的语言：
+具身智能（Embodied AI）= 让 AI 有身体地融入世界——看见、听懂、决定、动手。这站把 194 篇顶会论文与开源系统材料（CoRL/RSS/NeurIPS/ICML/MobiCom/CVPR/ICLR 等）翻译成入门读者也能跟下来的语言：
 
 - ✅ 第一次出现的术语必有一句话定义 + 生活类比
 - ✅ 公式后面必有人话翻译
@@ -35,16 +35,16 @@
 
 ### 内容状态与质量边界
 
-当前 190 篇笔记均采用 **deep-read（长篇结构化笔记）** 格式。这个状态表示页面结构和最低内容门禁，不等于“作者已逐页人工复核原论文”：
+当前 194 篇笔记均采用 **deep-read（长篇结构化笔记）** 格式。这个状态表示页面结构和最低内容门禁，不等于“作者已逐页人工复核原论文”：
 
 - 每篇 ≥4000 字（构建门禁校验）
 - 每篇 ≥2 个视觉元素（架构图 / ASCII 图 / 论文原图，构建门禁校验）
 - 统一包含实验解读、导读关系、思考题和原文信息
 - 笔记由 AI 辅助整理；关键事实、数字和结论仍应回到原论文核验
 
-其中 46 篇保留了本地解析文本（`papers/<slug>/paper.md`）及 SHA-256 清单，144 篇引用 arXiv 等 HTTPS 原文页面。旧版宣称的统一 Method 占比并未被现有内容满足，因此不再作为公开承诺；待补深度被记录为后续内容工作，不在 v1.2 中盲目扩写。
+其中 46 篇保留了本地解析文本（`papers/<slug>/paper.md`）及 SHA-256 清单，148 篇引用 arXiv 等 HTTPS 原文页面。旧版宣称的统一 Method 占比并未被现有内容满足，因此不再作为公开承诺；待补深度被记录为后续内容工作，不在 v1.2 中盲目扩写。
 
-这站起源于导师布置的 **13 篇精读任务**（详见 [research-task.md](research-task.md)），扩展到 190 篇是为了看到全景。13 篇任务论文在站内标有 `task: required` 标记。
+这站起源于导师布置的 **13 篇精读任务**（详见 [research-task.md](research-task.md)），扩展到 194 篇是为了看到全景。13 篇任务论文在站内标有 `task: required` 标记。
 
 ## 给读者
 
@@ -170,7 +170,7 @@ npm run serve      # 本地 dev server
 ## 项目结构
 
 ```
-notes/             190 篇论文笔记 (.md, frontmatter + body)
+notes/             194 篇论文笔记 (.md, frontmatter + body)
 papers/            解析文本 + 解析图片 + provenance SHA-256 清单
 site/
   scripts/build.mjs   主构建脚本（discoverPapers + buildIndex + ...）
@@ -184,7 +184,7 @@ explorations/       playground
 
 ```
 notes/*.md ──┐
-             ├──▶ discoverPapers() ──▶ 190 paper objects
+             ├──▶ discoverPapers() ──▶ 194 paper objects
 papers/      │                              │
   └─ images  │                              ▼
              │                       inferTags() → 21 tags
@@ -196,7 +196,7 @@ content/*.md ┤                              │
              ▼                       ... (~30 view pages)
         marked + gray-matter                │
              │                              ▼
-             │                       buildNotePage × 190
+             │                       buildNotePage × 194
              │                              │
              ▼                              ▼
        Pagefind index ◀──────── dist/
@@ -231,5 +231,5 @@ content/*.md ┤                              │
 
 ---
 
-> 这站是 Jason（编程零基础本科生）做的实验室科研任务的副产物。原任务是读 13 篇代表论文，扩展到 190 是因为 13 篇看不到全景。
+> 这站是 Jason（编程零基础本科生）做的实验室科研任务的副产物。原任务是读 13 篇代表论文，扩展到 194 是因为 13 篇看不到全景。
 > 完全个人项目。如果你也是入门读者，希望它能让你少绕几个弯。

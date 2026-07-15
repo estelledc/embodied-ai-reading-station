@@ -141,7 +141,7 @@ function shellUrlToDistPath(value) {
 // Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
 // import 时发现并读取全部笔记，不能让 symlink/坏路径绕过独立门禁。
 console.log("\n=== Source path integrity ===");
-const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 190 });
+const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 194 });
 if (!provenance.ok) {
   const rendered = formatProvenanceRepositoryErrors(provenance.errors);
   console.log(rendered.split("\n").map((line) => `  ✗ ${line}`).join("\n"));
@@ -955,7 +955,7 @@ check(`首页 index.html（SITE_BASE 归一化）${(indexSize / 1024).toFixed(0)
   indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`
 ));
 const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
-check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 290KB`, () => papersIndexSize < 290 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
+check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 300KB`, () => papersIndexSize < 300 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
 
 // 首页图片路由预算是确定性的静态代理，不冒充浏览器 Network 结果：
 // - default: img/src、image preload、inline CSS url 去重后的默认请求/字节；

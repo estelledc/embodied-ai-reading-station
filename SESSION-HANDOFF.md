@@ -1,4 +1,43 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: VALIDATED
+cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH08
+activated_by: user-explicit-continue-autonomous-embodied-ai-research
+scope: ten-batches-forty-new-papers-batch08-four-deep-read-notes
+branch: codex/forty-papers-batch08
+start_ref: 36b8a1f
+baseline_ref: origin/main
+review_after: batch08 deploy or blocker
+external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 8 批本地验证通过，待 PR
+
+## Cycle 合同
+
+**objective**：继续 `PLAN-40-PAPERS.md`，第 8 批先核验候选 `gaze2act`、`lacy`、`villa-x`、`instructvla` 的一手来源；来源锁定后新增 4 篇 deep-read，并完成本地验证、PR、Pages 部署与线上冒烟。
+
+**scope**：去重、搜索/读取 arXiv 或作者项目页等一手来源、必要时修正候选 slug/title/source；新增第 8 批 notes、刷新 provenance / Data API inventory 到 194 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 9–10 批正文、真机/仿真实验复现、owner 仓库保护设置、既有未跟踪根目录 `scripts/` 清理。
+
+**exit_conditions**：四个候选均有可复查一手来源并完成部署；或任一候选连续三轮搜索仍无法定位一手来源时，停止写正文并回到计划修正。
+
+**evidence_boundary**：公开成功率只作为论文报告，不升级为本站 E4 artifact；`human_verification` 保持 `UNVERIFIED`，除非后续有人类 reviewer 明确核验。
+
+**primary_sources**：arXiv PDF / abs：2605.30282、2511.02239、2507.23682、2507.17520。四个候选均未命中既有 notes/provenance，已锁定一手来源并完成正文初稿。
+
+**baseline_checks**：Batch 7 已部署并完成 handoff PR #45；本地 `main` 与 `origin/main` 对齐到 `36b8a1f`。当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除；Batch 8 临时 PDF/text 存放在 `.tmp-paper-sources/batch08/`，验证前必须清理。
+
+**当前状态**：
+- 已完成 4 篇 deep-read 初稿：`gaze2act`、`lacy`、`villa-x`、`instructvla`。
+- 字数 / 视觉元素预检通过：`gaze2act=4523/2`、`lacy=4042/2`、`villa-x=4316/2`、`instructvla=4237/2`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 194 notes / 258 generated assets，`content_commit=bb2b67a88f8d5a37a16a1d032f0e709b8b68e62d`。
+- 已同步 README / CHANGELOG / check / unit test 计数到 194；CSP style budget 更新为 5050 attributes / 207 unique values；`papers/index.html` repo-base 专项预算更新到 300KB。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
+- 下一步：`git diff --check` / `git diff --check origin/main...HEAD`，push branch，创建 PR，等待 CI、merge、Pages deploy 与线上 smoke。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED
