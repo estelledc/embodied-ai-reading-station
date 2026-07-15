@@ -2425,7 +2425,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/gembench-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/gembench.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/gembench-method-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/gembench-method.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/gembench-scene-800.webp",
+          "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/gembench-scene.webp",
+          "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        }
+      ]
     },
     {
       "slug": "genie",
