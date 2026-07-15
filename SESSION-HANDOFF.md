@@ -1,19 +1,19 @@
 ---
 status: in_progress
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: PR_READY
 cycle_id: EAIRS-CYCLE-20260714-FORTY-PAPERS-BATCH05
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch05-four-deep-read-notes
 branch: codex/forty-papers-batch05
 start_ref: af8b7f2
 baseline_ref: origin/main
-review_after: batch05 deploy or blocker
-external_outcome: sources-locked-pending-notes-pr-ci-merge-pages-deploy
+review_after: batch05 PR CI / deploy or blocker
+external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 5 批实施中
+# 当前接班：40 篇新论文 / 10 批推进，第 5 批本地验证通过，待 PR
 
 ## Cycle 合同
 
@@ -26,6 +26,15 @@ superseded_by: none
 **evidence_boundary**：公开成功率只作为论文报告，不升级为本站 E4 artifact；`human_verification` 保持 `UNVERIFIED`，除非后续有人类 reviewer 明确核验。
 
 **primary_sources**：arXiv PDF / abs：2505.20503、2505.14235、2512.10394、2509.12129。四个候选均未命中既有 notes/provenance，已锁定一手来源并进入正文实施。
+
+**acceptance_checks**：`npm run test:unit` 342 passed；root `npm run build` + `npm run check` 通过，root check 160 passed；repo-base `SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed；`git diff --check` 与 `git diff --check origin/main...HEAD` 通过。
+
+**当前状态**：
+- 第 5 批已完成 4 篇 deep-read：`mobile-service-robot-foundation-survey`、`embodied-agi-road-ahead`、`roboneuron`、`embodied-navigation-foundation-model`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 182 notes / 186 generated assets，`content_commit=b83ac8aa833cebeb994f30cd825a36d83ddc6e6f`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
+- 当前下一步：创建 Batch 5 内容 PR，等待 PR CI；合并后等待 Pages deploy，并线上 smoke `/data/v2/*`、四篇论文页和四组 `card-800` / `method-800` / `scene-800` 图片资源。
+- 既有未跟踪根目录 `scripts/` 仍未纳入也未删除；临时 `.tmp-paper-sources/` 已清理。
 
 ---
 status: completed

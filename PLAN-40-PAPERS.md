@@ -31,10 +31,10 @@
 | 4 | 2 | membership-inference-vla | Membership Inference Attacks on Vision-Language-Action Models | https://arxiv.org/abs/2605.07088 | 已部署 |
 | 4 | 3 | efficient-vla-survey | A Survey on Efficient Vision-Language-Action Models | https://arxiv.org/abs/2510.24795 | 已部署 |
 | 4 | 4 | vla-manipulation-survey | Survey of Vision-Language-Action Models for Embodied Manipulation | https://arxiv.org/abs/2508.15201 | 已部署 |
-| 5 | 1 | mobile-service-robot-foundation-survey | Embodied AI with Foundation Models for Mobile Service Robots: A Systematic Review | https://arxiv.org/abs/2505.20503 | 来源已锁定 |
-| 5 | 2 | embodied-agi-road-ahead | Toward Embodied AGI: A Review of Embodied AI and the Road Ahead | https://arxiv.org/abs/2505.14235 | 来源已锁定 |
-| 5 | 3 | roboneuron | RoboNeuron: A Middle-Layer Infrastructure for Agent-Driven Orchestration in Embodied AI | https://arxiv.org/abs/2512.10394 | 来源已锁定 |
-| 5 | 4 | embodied-navigation-foundation-model | Embodied Navigation Foundation Model | https://arxiv.org/abs/2509.12129 | 来源已锁定 |
+| 5 | 1 | mobile-service-robot-foundation-survey | Embodied AI with Foundation Models for Mobile Service Robots: A Systematic Review | https://arxiv.org/abs/2505.20503 | 本地验证通过，PR 待创建 |
+| 5 | 2 | embodied-agi-road-ahead | Toward Embodied AGI: A Review of Embodied AI and the Road Ahead | https://arxiv.org/abs/2505.14235 | 本地验证通过，PR 待创建 |
+| 5 | 3 | roboneuron | RoboNeuron: A Middle-Layer Infrastructure for Agent-Driven Orchestration in Embodied AI | https://arxiv.org/abs/2512.10394 | 本地验证通过，PR 待创建 |
+| 5 | 4 | embodied-navigation-foundation-model | Embodied Navigation Foundation Model | https://arxiv.org/abs/2509.12129 | 本地验证通过，PR 待创建 |
 | 6 | 1 | mimo-embodied | mimo-embodied | 待检索一手来源 | 候选，执行前复核 |
 | 6 | 2 | open-h-embodiment | open-h-embodiment | 待检索一手来源 | 候选，执行前复核 |
 | 6 | 3 | alanavlm | alanavlm | 待检索一手来源 | 候选，执行前复核 |
