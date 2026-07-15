@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf",
+  "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6",
   "notes": [
     {
       "slug": "1x-world-model-2025",
@@ -28,7 +28,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -37,7 +37,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -46,7 +46,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -55,7 +55,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -64,7 +64,7 @@
           "sha256": "fed3a23d4630740f95ddc3b751c43ce698b91af818d9f20d815f86b47d3f595e",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -73,7 +73,7 @@
           "sha256": "a182074b35acad5ec77aaf616130f3514c92f5c4c8988e6616878f03aa8ce292",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "e6e1853651b4f1e99a2dcefb20495a30be09e364b5c278eea83318abb3cd345e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -103,7 +103,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -112,7 +112,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -121,7 +121,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -130,7 +130,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -139,7 +139,7 @@
           "sha256": "03676ef45687532b332ce5197f1341dfc9cc6719795b12f8cd4e1daa6af8a4e7",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -148,7 +148,7 @@
           "sha256": "6f1f5e8e4ad8fe7f8d7479376fc4ec63b90da535fc9c24c4e0065b89f3138f35",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "0f4549caeb6b34bf277b7b934ae3fdbd64aa1c2f56287db2a8e457e02dc028ef",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -238,7 +238,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -247,7 +247,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -256,7 +256,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -265,7 +265,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -274,7 +274,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -283,7 +283,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8355c08b8fa0b622ae7f86939f848b39256e300f848a25d6574d0927fea872b6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -333,7 +333,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -342,7 +342,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -351,7 +351,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -360,7 +360,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -369,7 +369,7 @@
           "sha256": "3a7cb909e216c073f5ff5af3e8b17113e0de56208fb2c85f001ad0b52ce0324b",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -378,7 +378,7 @@
           "sha256": "1817151574c8ade2788feb81784ecc54296294f676ea9e66727bb24ac2a97f17",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "090d6f7307867e5b821b4e9d1bfcee81df99c897c19a2e61eafa72a69e1da6ae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -408,7 +408,7 @@
           "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -417,7 +417,7 @@
           "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -426,7 +426,7 @@
           "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -435,7 +435,7 @@
           "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -444,7 +444,7 @@
           "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -453,7 +453,7 @@
           "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -603,7 +603,7 @@
           "sha256": "f9459dae1992a2784a4037a2915c4e315398d732e110893328cb1caa9f6180e5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -612,7 +612,7 @@
           "sha256": "90acf6afbb2fdb8b2a83f37e32c3b63c980a768ff847ec9ccce264a6a1032dd2",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -621,7 +621,7 @@
           "sha256": "f9459dae1992a2784a4037a2915c4e315398d732e110893328cb1caa9f6180e5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -630,7 +630,7 @@
           "sha256": "90acf6afbb2fdb8b2a83f37e32c3b63c980a768ff847ec9ccce264a6a1032dd2",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -639,7 +639,7 @@
           "sha256": "f9459dae1992a2784a4037a2915c4e315398d732e110893328cb1caa9f6180e5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -648,7 +648,7 @@
           "sha256": "90acf6afbb2fdb8b2a83f37e32c3b63c980a768ff847ec9ccce264a6a1032dd2",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3ab67d2facd328871cb50f9c344b6bc241f33816db9e8fc98b6878d6503ac343",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -753,6 +753,81 @@
       "generated_assets": []
     },
     {
+      "slug": "call-for-embodied-ai",
+      "note_path": "notes/call-for-embodied-ai.md",
+      "note_sha256": "d0c71963de00b8a057a978ff8616337a344643e75bd69156d51ceba4ebcad141",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2402.03824",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/call-for-embodied-ai-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/call-for-embodied-ai.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-method-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-method.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-scene-800.webp",
+          "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/call-for-embodied-ai-scene.webp",
+          "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        }
+      ]
+    },
+    {
       "slug": "calvin",
       "note_path": "notes/calvin.md",
       "note_sha256": "ae739d4ffc058951711cf11c9230d791a5af57e0cd1a31c2edab069d77a92ab0",
@@ -771,6 +846,81 @@
         "blocked_reason": null
       },
       "generated_assets": []
+    },
+    {
+      "slug": "causal-world-models-embodied-ai",
+      "note_path": "notes/causal-world-models-embodied-ai.md",
+      "note_sha256": "36c6b3c7d2d156f8288f957d0673ac41d53b9823b4ce6d03af04b0ecf7dc9845",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2402.06665",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/causal-world-models-embodied-ai-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/causal-world-models-embodied-ai.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/causal-world-models-embodied-ai-method-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/causal-world-models-embodied-ai-method.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/causal-world-models-embodied-ai-scene-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/causal-world-models-embodied-ai-scene.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1b58f2e3f70bbbba7133ee8f435651060262310ca2a210fd4744b2aaa4124abc",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        }
+      ]
     },
     {
       "slug": "chatgpt-for-robotics",
@@ -858,7 +1008,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -867,7 +1017,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -876,7 +1026,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -885,7 +1035,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -894,7 +1044,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -903,7 +1053,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "3d1b12e47e5af51220b12f7a54d6486e280d760dc555174ee1484500123eafbd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1173,7 +1323,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1182,7 +1332,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1191,7 +1341,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1200,7 +1350,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1209,7 +1359,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1218,7 +1368,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cbbfc92cea2133c10a81839c1339c7f18db1bd14eab34b6b45af54906d82ed2f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1248,7 +1398,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1257,7 +1407,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1266,7 +1416,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1275,7 +1425,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1284,7 +1434,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1293,7 +1443,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "64f8189e9dc333987da428ff9f2c418897bc137ccf033ffeead30c6c4fdf47a0",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1323,7 +1473,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1332,7 +1482,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1341,7 +1491,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1350,7 +1500,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1359,7 +1509,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1368,7 +1518,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1558,7 +1708,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1567,7 +1717,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1576,7 +1726,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1585,7 +1735,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1594,7 +1744,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1603,7 +1753,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1f170333fb9e13a9f93e7e1e2d7fc993fda3a2240f9917eec795342fd3785035",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1633,7 +1783,7 @@
           "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1642,7 +1792,7 @@
           "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1651,7 +1801,7 @@
           "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1660,7 +1810,7 @@
           "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1669,7 +1819,7 @@
           "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1678,7 +1828,7 @@
           "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1708,7 +1858,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1717,7 +1867,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1726,7 +1876,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1735,7 +1885,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1744,7 +1894,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1753,7 +1903,82 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "5c2fcf1c48b40baef19c204e5ac2646d547d234247a570cf6d2ea78e1bfb5a93",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        }
+      ]
+    },
+    {
+      "slug": "embodied-ai-security-cps-survey",
+      "note_path": "notes/embodied-ai-security-cps-survey.md",
+      "note_sha256": "811c441080a2693b08b862a7faae229a257c4f15617a298e793fb4bfaf24f443",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2602.17345",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-ai-security-cps-survey-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-ai-security-cps-survey.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-method-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-method.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-scene-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-scene.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1783,7 +2008,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1792,7 +2017,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1801,7 +2026,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1810,7 +2035,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1819,7 +2044,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1828,7 +2053,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1878,7 +2103,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1887,7 +2112,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1896,7 +2121,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1905,7 +2130,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1914,7 +2139,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -1923,7 +2148,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "52512dbf3ee10c46c464316e35f8e0c287e1137fd74563c1c03f2f082ed98f94",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -1973,7 +2198,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -1982,7 +2207,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -1991,7 +2216,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2000,7 +2225,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2009,7 +2234,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2018,7 +2243,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "885c2313f0643bd6a80fef1607ff9c8ed22312a5200397ceb377245c60996f27",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2068,7 +2293,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2077,7 +2302,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2086,7 +2311,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2095,7 +2320,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2104,7 +2329,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2113,7 +2338,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "1d5e2e2e48170e673ea01ab9b8cd74a582ffe798ef6fe5f8242b52e08379f616",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2183,7 +2408,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2192,7 +2417,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2201,7 +2426,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2210,7 +2435,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2219,7 +2444,7 @@
           "sha256": "bd6830d9e409cfeead21b3675bd5ac64c959bbaa7b90370c5f5fb0cdb02b7a95",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2228,7 +2453,7 @@
           "sha256": "e19420bb7d876f75c5844147365538de1c21f7f97a123e890ba474917b06022d",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "b44e46ec3bf2ba37bf4489210474f5b90c69bbe129cb84f8bb8a0700bc673ff8",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2358,7 +2583,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2367,7 +2592,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2376,7 +2601,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2385,7 +2610,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2394,7 +2619,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2403,7 +2628,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "444cd06615c319cb2d0d4efca6d0afcf6c4d5a7e21586748bd87ce827c94c0b2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2433,7 +2658,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2442,7 +2667,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2451,7 +2676,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2460,7 +2685,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2469,7 +2694,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2478,7 +2703,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddf1dc6bfbf115714350dbb8f556ddca56a78a09149038deeae48bb16442809f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2568,7 +2793,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2577,7 +2802,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2586,7 +2811,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2595,7 +2820,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2604,7 +2829,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2613,7 +2838,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "293102a28c51fb3aa284603035e64cc78f3bd92542fb88c50fc42301faf249e9",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2703,7 +2928,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2712,7 +2937,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2721,7 +2946,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2730,7 +2955,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2739,7 +2964,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2748,7 +2973,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "dc1e467a4ae03a2af77294480d4959454d4b85c1d2b221ea68345701405bf06f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -2898,7 +3123,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -2907,7 +3132,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2916,7 +3141,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -2925,7 +3150,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2934,7 +3159,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -2943,7 +3168,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "c84df1c85cc34abb6a94564a4846d18d8bee9b4db7a55f944ab4f6f8fc752e02",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3073,7 +3298,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3082,7 +3307,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3091,7 +3316,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3100,7 +3325,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3109,7 +3334,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3118,7 +3343,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c994fbf2b1b98fa2a369f29c07aadacecf2bcd6cb35f41bf1caa55dad2ada29",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3148,7 +3373,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3157,7 +3382,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3166,7 +3391,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3175,7 +3400,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3184,7 +3409,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3193,7 +3418,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "fd379fcd1567001136b643cf0227175fec5c44244deeddf8409b1e111cfa1070",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3223,7 +3448,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-cards/v2",
           "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3232,7 +3457,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-cards/v2",
           "input_fingerprint": "d468aca2fc407796886b83255038f747b6bfe46c1f6de2ba6056c606c30c8c2c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3241,7 +3466,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3250,7 +3475,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3259,7 +3484,7 @@
           "sha256": "2863892a8bee5d1e5e7fff85a13a17287294a13c343d69eca70e6ba69a7e2bcc",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3268,7 +3493,7 @@
           "sha256": "f8d05adc847ba0beac57035bc4ed14761685feb2ba8581bd222febcad2023e95",
           "generator": "ffmpeg-fallback/fill-missing-inline/v2",
           "input_fingerprint": "6d75b6be0f25e02136a761033c421028039890d1efb706af1dfb11653031b4dd",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3318,7 +3543,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3327,7 +3552,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3336,7 +3561,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3345,7 +3570,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3354,7 +3579,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3363,7 +3588,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6c34c2b09b67c0bf6220873ce48b88e65bc5bf9fb9d758ce1b412d22845ad811",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3513,7 +3738,7 @@
           "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3522,7 +3747,7 @@
           "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3531,7 +3756,7 @@
           "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3540,7 +3765,7 @@
           "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3549,7 +3774,7 @@
           "sha256": "3d447b95eb85322e289cfdf431afd5d13e16a59c25c1f3642ca17cd0dacc27a0",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3558,7 +3783,7 @@
           "sha256": "3bbe837d223d066c71542276f39aba97116e345c80aea35e88ee18305a6cebfc",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "cc32d50c4b31f8790aa88031a939d32b5df47cbaf6b839900d68fbb40053e07a",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3628,7 +3853,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3637,7 +3862,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3646,7 +3871,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3655,7 +3880,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3664,7 +3889,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3673,7 +3898,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2ed7eda5a7138488e191fc7d7f38c4b6df4fa992954a9b69c16c7c3577ed096f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3783,7 +4008,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3792,7 +4017,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3801,7 +4026,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3810,7 +4035,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3819,7 +4044,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3828,7 +4053,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9da11cefc95a5d3149bac23f2967a77b00dad7ab8582f29b42e5b6b9c7f5e620",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -3938,7 +4163,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -3947,7 +4172,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3956,7 +4181,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -3965,7 +4190,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3974,7 +4199,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -3983,7 +4208,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "7ff7895c6180dd82667db2e1ed2c42442fdb1ec43256e276b38a5641a7b4781b",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4013,7 +4238,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4022,7 +4247,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4031,7 +4256,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4040,7 +4265,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4049,7 +4274,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4058,7 +4283,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "68decf90307a77b74a69349bb266619792908b93c819e4943eb3940571022303",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4248,7 +4473,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4257,7 +4482,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4266,7 +4491,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4275,7 +4500,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4284,7 +4509,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4293,7 +4518,7 @@
           "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4423,7 +4648,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4432,7 +4657,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4441,7 +4666,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4450,7 +4675,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4459,7 +4684,7 @@
           "sha256": "21ff7de530cde4a41f2dc7f926999f4832c55d768c74c9556121f70f505f2fc1",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4468,7 +4693,7 @@
           "sha256": "aa86fa31b759b0c2161f24bfe119b5a5c3d6723aff73c0ec56cc1ac9f1ae8846",
           "generator": "ffmpeg-fallback/fill-missing-batch/v2",
           "input_fingerprint": "ecd2b67a615e811eadf8c92d1b02b8b3b2e9e9cddab243097b8da5f8227da0b4",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4598,7 +4823,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4607,7 +4832,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4616,7 +4841,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4625,7 +4850,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4634,7 +4859,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4643,7 +4868,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4753,7 +4978,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4762,7 +4987,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4771,7 +4996,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4780,7 +5005,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4789,7 +5014,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4798,7 +5023,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "8be3d7aef63aab39a82a4fcad6e60852fe791b0e98dc6266e8c2a93916689ef2",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -4888,7 +5113,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -4897,7 +5122,7 @@
           "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4906,7 +5131,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -4915,7 +5140,7 @@
           "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4924,7 +5149,7 @@
           "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -4933,7 +5158,7 @@
           "sha256": "2e73517f308f23f2f99c518d5684cb8900e22c9dd7b54cdb6afc744a2d058ce5",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "386a0e132e83faba2346d13d5f2d07ba00251f27000c6e207fea04c30e229d48",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -5183,7 +5408,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -5192,7 +5417,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5201,7 +5426,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5210,7 +5435,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5219,7 +5444,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5228,7 +5453,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -5251,6 +5476,81 @@
         "blocked_reason": null
       },
       "generated_assets": []
+    },
+    {
+      "slug": "robotics-foundation-models-survey",
+      "note_path": "notes/robotics-foundation-models-survey.md",
+      "note_sha256": "c713ba8616b92ffd93fe7f72b6a1167843a41492f946838532a166afe313f588",
+      "source": {
+        "kind": "remote",
+        "url": "https://arxiv.org/abs/2312.08782",
+        "path": null,
+        "sha256": null,
+        "artifact_type": null
+      },
+      "human_verification": {
+        "status": "UNVERIFIED",
+        "by": null,
+        "date": null,
+        "scope": null,
+        "blocked_reason": null
+      },
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/robotics-foundation-models-survey-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/robotics-foundation-models-survey.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-method-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-method.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-scene-800.webp",
+          "sha256": "654552861089f965776d083633cfe48ec47f2088a1c1efcdb36a11b16dd5f797",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/robotics-foundation-models-survey-scene.webp",
+          "sha256": "1685c5432fb0e17af9f12caeadf9298f4e462cb266fc0c74d30451945a9cede2",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "8d9b6781131f21e3fffadf1973e791b825b8f894390d2787ce8309071a3ecac2",
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
+        }
+      ]
     },
     {
       "slug": "rt-1",
@@ -5338,7 +5638,7 @@
           "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -5347,7 +5647,7 @@
           "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5356,7 +5656,7 @@
           "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5365,7 +5665,7 @@
           "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5374,7 +5674,7 @@
           "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5383,7 +5683,7 @@
           "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -5653,7 +5953,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -5662,7 +5962,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5671,7 +5971,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5680,7 +5980,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5689,7 +5989,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5698,7 +5998,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "301af7742eb47b6784df3cf733432b827ba58a64645c5d4d33ab46d0c5071612",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -5788,7 +6088,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -5797,7 +6097,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5806,7 +6106,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5815,7 +6115,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5824,7 +6124,7 @@
           "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5833,7 +6133,7 @@
           "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "2846a4bdaf9b10fbca33e06101cc843e11ef00e7b6a02d9361501ea9e2e1edf1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -5963,7 +6263,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -5972,7 +6272,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5981,7 +6281,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -5990,7 +6290,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -5999,7 +6299,7 @@
           "sha256": "4c2c6d177c7207f2e676f1131a7db421dae9a30514e037cd3b4bf8b831faad19",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6008,7 +6308,7 @@
           "sha256": "f9454d4d6128b5e706d34aaef90c7dfb19defe4561a5161456d0c5735b1ad622",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "75ffa60fceca350377cc02803fda97639ee830e03701a70cece453256c9d8ab1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -6058,7 +6358,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -6067,7 +6367,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6076,7 +6376,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6085,7 +6385,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6094,7 +6394,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6103,7 +6403,7 @@
           "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "44af3e5bb7febfa2c5e69b2a462d4ad4abe6ff1350fd3b913258b1fcf25d25d5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -6133,7 +6433,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -6142,7 +6442,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6151,7 +6451,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6160,7 +6460,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6169,7 +6469,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6178,7 +6478,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "79b191c6472430da65b4593fd055e2cbbb2367519ffaf0fb0b0b6aff936503f5",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -6208,7 +6508,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -6217,7 +6517,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6226,7 +6526,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6235,7 +6535,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6244,7 +6544,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6253,7 +6553,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "9558c29ac2d11d7b10d343a1a2d29bde7602cadcf6406bd32733b6da5bfa1525",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -6303,7 +6603,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -6312,7 +6612,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6321,7 +6621,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6330,7 +6630,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6339,7 +6639,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6348,7 +6648,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "d93a3a2511715bd6cb7f741ab97a815fffb276303fa91fba7950f1e221e1297d",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
@@ -6478,7 +6778,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "card",
@@ -6487,7 +6787,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6496,7 +6796,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-method",
@@ -6505,7 +6805,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6514,7 +6814,7 @@
           "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         },
         {
           "kind": "inline-scene",
@@ -6523,7 +6823,7 @@
           "sha256": "351b7d5ec1a173020ec397a83104322c1a12a0ddbdaefa5202956876f6b6cf69",
           "generator": "cwebp-fallback/topic-assets/v1",
           "input_fingerprint": "bb22b5b0234feff59947251034b17ffebe497dca73a57d368fba946c688ddaa1",
-          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+          "content_commit": "bdbcabc593e3a9f57dc9d40d405c71322de14db6"
         }
       ]
     },
