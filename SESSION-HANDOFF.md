@@ -1,4 +1,42 @@
 ---
+status: in_progress
+program_status: ACTIVE
+cycle_state: VALIDATED
+cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH07
+activated_by: user-explicit-continue-autonomous-embodied-ai-research
+scope: ten-batches-forty-new-papers-batch07-four-deep-read-notes
+branch: codex/forty-papers-batch07
+start_ref: 213ffbf
+baseline_ref: origin/main
+review_after: batch07 deploy or blocker
+external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
+superseded_by: none
+---
+
+# 当前接班：40 篇新论文 / 10 批推进，第 7 批本地验证通过，待 PR
+
+## Cycle 合同
+
+**objective**：继续 `PLAN-40-PAPERS.md`，第 7 批新增 `disco-diffusion-policy`、`time-unified-diffusion-policy`、`primitive-skill-diffusion-policy`、`trace-focused-diffusion-policy` 四篇 diffusion-policy deep-read；本地验证已通过，下一步是 PR、CI、merge、Pages 部署与线上冒烟。
+
+**scope**：去重、搜索/读取 arXiv 或作者项目页等一手来源、必要时修正候选 slug/title/source；新增第 7 批 notes、刷新 provenance / Data API inventory 到 190 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 8–10 批正文、真机/仿真实验复现、owner 仓库保护设置、既有未跟踪根目录 `scripts/` 清理。
+
+**exit_conditions**：四个候选均有可复查一手来源并完成部署；或任一候选连续三轮搜索仍无法定位一手来源时，停止写正文并回到计划修正。
+
+**evidence_boundary**：公开成功率只作为论文报告，不升级为本站 E4 artifact；`human_verification` 保持 `UNVERIFIED`，除非后续有人类 reviewer 明确核验。
+
+**primary_sources**：arXiv PDF / abs：2406.09767、2506.09422、2601.01948、2602.07388。四个候选均未命中既有 notes/provenance，已锁定一手来源并完成正文、provenance 与资产登记。
+
+**acceptance_checks**：`npm run test:unit`、root build/check、repo-base build/check、`git diff --check`、PR CI、main Pages deploy、线上 provenance + 四篇论文页 + 四组 card/method/scene 800w 图片 HTTP 200。
+
+**当前状态**：
+- 第 7 批已完成 4 篇 deep-read：`disco-diffusion-policy`、`time-unified-diffusion-policy`、`primitive-skill-diffusion-policy`、`trace-focused-diffusion-policy`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 190 notes / 234 generated assets，`content_commit=4ba9172bba8dbce9e6a364060d1b4e3487418889`。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
+- 本轮同步了 README / CHANGELOG / check / unit test 计数到 190；CSP style budget 更新为 5004 attributes / 208 unique values；`papers/index.html` repo-base 专项预算更新到 290KB。
+- 当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除；Batch 7 临时 `.tmp-paper-sources/` 已清理。
+
+---
 status: completed
 program_status: ACTIVE
 cycle_state: DEPLOYED

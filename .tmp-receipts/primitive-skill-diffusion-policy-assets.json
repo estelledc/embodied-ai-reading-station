@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "primitive-skill-diffusion-policy",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "2cb988804089c829a4d6d32be0032b265a969f13",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/cards/primitive-skill-diffusion-policy-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/cards/primitive-skill-diffusion-policy.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/inline/primitive-skill-diffusion-policy-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/inline/primitive-skill-diffusion-policy-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/diffusion-policy.webp"
+        },
+        "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "primitive-skill-diffusion-policy",
+    "sources": [
+      {
+        "path": "site/src/images/topics/diffusion-policy.webp",
+        "sha256": "d488d7c86b0f5f1165938ee2d74e051e83dec368e6974fa7b2b361d16303efb0"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+  "asset_fingerprint": "9b2b27910e99780b31547cc8bc2a1c39fd3fb8cf7448e350ab74265b3f1456a1",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/primitive-skill-diffusion-policy-800.webp",
+      "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/primitive-skill-diffusion-policy.webp",
+      "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/primitive-skill-diffusion-policy-method-800.webp",
+      "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/primitive-skill-diffusion-policy-method.webp",
+      "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene-800.webp",
+      "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene.webp",
+      "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
