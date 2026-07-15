@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "embodied-navigation-foundation-model",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "034d76ab2c19bd58cac8234994131362e55cfe12",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/embodied-navigation-foundation-model-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/embodied-navigation-foundation-model.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/embodied-navigation-foundation-model-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/embodied-navigation-foundation-model-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/embodied-navigation-foundation-model-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/embodied-navigation-foundation-model-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "embodied-navigation-foundation-model",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "e206d55a46b0dd023646092fe5ea782ec0224d9fb47e987d4d5734eb2ca1c44e",
+  "asset_fingerprint": "cfb9ad626a104d6e4d9196bfe993651913f2c9644c106eb190879df814afcf1a",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/embodied-navigation-foundation-model-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/embodied-navigation-foundation-model.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/embodied-navigation-foundation-model-method-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/embodied-navigation-foundation-model-method.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/embodied-navigation-foundation-model-scene-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/embodied-navigation-foundation-model-scene.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

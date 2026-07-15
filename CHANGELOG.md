@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- 第 5 批新增 4 篇 frontier deep-read 笔记：`mobile-service-robot-foundation-survey`、`embodied-agi-road-ahead`、`roboneuron`、`embodied-navigation-foundation-model`；同步扩展 provenance / Data API inventory 到 182 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 第 4 批新增 4 篇 frontier deep-read 笔记：`vla-forget`、`membership-inference-vla`、`efficient-vla-survey`、`vla-manipulation-survey`；同步扩展 provenance / Data API inventory 到 178 篇，并补齐 card / inline 生成资产与 portable receipts。
 ### Added
 - 第 3 批新增 4 篇 frontier deep-read 笔记：`green-vla`、`ac2-vla`、`mos-vla`、`fast-slow-vla`；同步扩展 provenance / Data API inventory 到 174 篇，并补齐 card / inline 生成资产与 portable receipts。
