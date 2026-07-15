@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "alanavlm",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "84607cc03c3af63fc5ac9a896e9ca1d15f304b5a",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/cards/alanavlm-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/cards/alanavlm.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/inline/alanavlm-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/inline/alanavlm-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/inline/alanavlm-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/multimodal.webp"
+        },
+        "path": "site/src/images/inline/alanavlm-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "alanavlm",
+    "sources": [
+      {
+        "path": "site/src/images/topics/multimodal.webp",
+        "sha256": "d414d53554aa5a1221b9b45c0c7c726ffdd80c21170ab670ee06dd01259505ee"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+  "asset_fingerprint": "9daa560f7dbff92ae04a85b7622464807641b402771bf77a0a45afdda96b8e3f",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/alanavlm-800.webp",
+      "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/alanavlm.webp",
+      "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/alanavlm-method-800.webp",
+      "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/alanavlm-method.webp",
+      "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/alanavlm-scene-800.webp",
+      "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/alanavlm-scene.webp",
+      "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
