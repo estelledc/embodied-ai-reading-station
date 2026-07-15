@@ -1475,7 +1475,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-3d-generation-survey-800.webp",
+          "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-3d-generation-survey.webp",
+          "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-3d-generation-survey-method-800.webp",
+          "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-3d-generation-survey-method.webp",
+          "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-3d-generation-survey-scene-800.webp",
+          "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-3d-generation-survey-scene.webp",
+          "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        }
+      ]
     },
     {
       "slug": "embodied-agi-road-ahead",
