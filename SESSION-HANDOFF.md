@@ -1,19 +1,19 @@
 ---
-status: in_progress
+status: completed
 program_status: ACTIVE
-cycle_state: VALIDATED
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH08
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch08-four-deep-read-notes
 branch: codex/forty-papers-batch08
 start_ref: 36b8a1f
 baseline_ref: origin/main
-review_after: batch08 deploy or blocker
-external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
+review_after: next bounded research batch
+external_outcome: pr-46-merged-and-pages-deployed
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 8 批本地验证通过，待 PR
+# 当前接班：40 篇新论文 / 10 批推进，第 8 批已部署
 
 ## Cycle 合同
 
@@ -35,7 +35,9 @@ superseded_by: none
 - 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 194 notes / 258 generated assets，`content_commit=bb2b67a88f8d5a37a16a1d032f0e709b8b68e62d`。
 - 已同步 README / CHANGELOG / check / unit test 计数到 194；CSP style budget 更新为 5050 attributes / 207 unique values；`papers/index.html` repo-base 专项预算更新到 300KB。
 - 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
-- 下一步：`git diff --check` / `git diff --check origin/main...HEAD`，push branch，创建 PR，等待 CI、merge、Pages deploy 与线上 smoke。
+- `git diff --check` 与 `git diff --check origin/main...HEAD` 通过；PR #46 已合并，merge commit `321361f8`；Pages workflow `29388213106` build + deploy 成功。
+- 线上冒烟通过：`/data/v2/papers.json` 与 `/data/v2/provenance.json` 均 200，`paper_items=194`，`notes=194`，`remote_sources=148`，`generated_assets=258`；四篇新增论文页与 `card-800` / `method-800` / `scene-800` 图片资源均 HTTP 200。
+- 本地 `main` 与 `origin/main` 对齐到 `321361f8`；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除；Batch 8 临时 `.tmp-paper-sources/` 已清理。
 
 ---
 status: completed
