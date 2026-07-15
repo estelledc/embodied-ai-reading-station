@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "safeembodai",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "1bf52a65caa85e277f21a80a2506c5a0ca8c0b7d",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/cards/safeembodai-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/cards/safeembodai.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/safeembodai-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/safeembodai-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/safeembodai-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/planning.webp"
+        },
+        "path": "site/src/images/inline/safeembodai-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "safeembodai",
+    "sources": [
+      {
+        "path": "site/src/images/topics/planning.webp",
+        "sha256": "3aa5189efb5c8f6599ca7aa2a8c44f1c426182a5e6fae90af15d7042f2fb8029"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+  "asset_fingerprint": "40e9de2f7ab6f57f45abb7fcb57b90b1a87609ec0b3273458f7bdca9c80fc2b7",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/safeembodai-800.webp",
+      "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/safeembodai.webp",
+      "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/safeembodai-method-800.webp",
+      "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/safeembodai-method.webp",
+      "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/safeembodai-scene-800.webp",
+      "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/safeembodai-scene.webp",
+      "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
