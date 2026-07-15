@@ -400,7 +400,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/alanavlm-800.webp",
+          "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/alanavlm.webp",
+          "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/alanavlm-method-800.webp",
+          "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/alanavlm-method.webp",
+          "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/alanavlm-scene-800.webp",
+          "sha256": "1ec7c2185e230758dc65d91f20b7f8d5dee4250bf19c3b461fbce4ea7aab85c8",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/alanavlm-scene.webp",
+          "sha256": "ffdc310a271a3558d0f6199d3a46e294e3722bff18102ad356545339e6983e32",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "1c0820f51f056b052f331bbf9427509c0465f34bdc795522f4b15eb6d41cb9d3",
+          "content_commit": "098cb961566840aad2dd908cd34bb8e60a9bdeec"
+        }
+      ]
     },
     {
       "slug": "aloha-2",
