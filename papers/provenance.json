@@ -1315,7 +1315,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/discrete-policy-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/discrete-policy.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-policy-method-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-policy-method.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-policy-scene-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/discrete-policy-scene.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ff321caf3420d7c52905442a80a3984737617fd78dbda4ef547e43fa7328dda8",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        }
+      ]
     },
     {
       "slug": "dit-policy",
