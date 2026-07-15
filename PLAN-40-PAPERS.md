@@ -51,10 +51,10 @@
 | 9 | 2 | gembench | Towards Generalizable Vision-Language Robotic Manipulation: A Benchmark and LLM-guided 3D Policy | https://arxiv.org/abs/2410.01345 | 已部署 |
 | 9 | 3 | language-conditioned-manipulation-survey | A Survey of Language-Conditioned Robot Manipulation | https://arxiv.org/abs/2312.10807 | 已部署 |
 | 9 | 4 | safeembodai | SafeEmbodAI: a Safety Framework for Mobile Robots in Embodied AI Systems | https://arxiv.org/abs/2409.01630 | 已部署 |
-| 10 | 1 | causal-world-models-embodied-ai | The Essential Role of Causality in Foundation World Models for Embodied AI | https://arxiv.org/abs/2402.06665 | 资产已登记，待本地验证 |
-| 10 | 2 | call-for-embodied-ai | A call for embodied AI | https://arxiv.org/abs/2402.03824 | 资产已登记，待本地验证 |
-| 10 | 3 | robotics-foundation-models-survey | Toward General-Purpose Robots via Foundation Models: A Survey and Meta-Analysis | https://arxiv.org/abs/2312.08782 | 资产已登记，待本地验证 |
-| 10 | 4 | embodied-ai-security-cps-survey | What Breaks Embodied AI Security: LLM Vulnerabilities, CPS Flaws, or Something Else? | https://arxiv.org/abs/2602.17345 | 资产已登记，待本地验证 |
+| 10 | 1 | causal-world-models-embodied-ai | The Essential Role of Causality in Foundation World Models for Embodied AI | https://arxiv.org/abs/2402.06665 | 本地验证通过，待 PR |
+| 10 | 2 | call-for-embodied-ai | A call for embodied AI | https://arxiv.org/abs/2402.03824 | 本地验证通过，待 PR |
+| 10 | 3 | robotics-foundation-models-survey | Toward General-Purpose Robots via Foundation Models: A Survey and Meta-Analysis | https://arxiv.org/abs/2312.08782 | 本地验证通过，待 PR |
+| 10 | 4 | embodied-ai-security-cps-survey | What Breaks Embodied AI Security: LLM Vulnerabilities, CPS Flaws, or Something Else? | https://arxiv.org/abs/2602.17345 | 本地验证通过，待 PR |
 
 ## 本轮验收命令
 

@@ -1,7 +1,7 @@
 ---
 status: in_progress
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: LOCAL_VALIDATED
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH10
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch10-four-deep-read-notes
@@ -9,11 +9,11 @@ branch: codex/forty-papers-batch10
 start_ref: b153945
 baseline_ref: origin/main
 review_after: batch10 deploy or blocker
-external_outcome: notes-assets-provenance-ready-pending-local-validation-pr-ci-merge-pages-deploy
+external_outcome: notes-assets-provenance-local-validation-passed-pending-pr-ci-merge-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 10 批待本地验证
+# 当前接班：40 篇新论文 / 10 批推进，第 10 批本地验证通过，待 PR
 
 ## Cycle 合同
 
@@ -31,9 +31,11 @@ superseded_by: none
 
 **当前状态**：
 - 已完成 4 篇 deep-read 初稿：`causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey`。
-- 字数 / 视觉元素预检通过：`causal-world-models-embodied-ai=4016/3`、`call-for-embodied-ai=4154/3`、`robotics-foundation-models-survey=4159/3`、`embodied-ai-security-cps-survey=4059/3`。
-- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 202 notes / 306 generated assets，`content_commit=22e3b0a641151d4a356889630194e7a90eac33e9`。
-- 已同步 README / CHANGELOG / check / unit test 计数到 202；下一步跑完整本地门禁，并根据实际输出修 CSP / size budget。
+- 字数 / 视觉元素预检通过：`causal-world-models-embodied-ai=4116/2`、`call-for-embodied-ai=4154/3`、`robotics-foundation-models-survey=4159/3`、`embodied-ai-security-cps-survey=4020/2`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 202 notes / 306 generated assets，`content_commit=99eb68dc287eb246b417c19c09ce965219c99e41`。
+- 已同步 README / CHANGELOG / check / unit test 计数到 202；CSP style budget 更新为 5146 attributes / 207 unique values；`papers/index.html` repo-base 专项预算更新到 310KB。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
+- 下一步创建内容 PR，等待 CI、合并、Pages 部署与线上冒烟。
 
 ---
 status: completed
