@@ -29,6 +29,11 @@ superseded_by: none
 
 **baseline_checks**：Batch 8 已部署并完成 handoff PR #47；本地 `main` 与 `origin/main` 对齐到 `460ece4`。当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除；Batch 9 临时 PDF/text 将存放在 `.tmp-paper-sources/batch09/`，验证前必须清理。
 
+**当前状态**：
+- 已完成 4 篇 deep-read 初稿：`discrete-policy`、`gembench`、`language-conditioned-manipulation-survey`、`safeembodai`。
+- 字数 / 视觉元素预检通过：`discrete-policy=4255/2`、`gembench=4080/3`、`language-conditioned-manipulation-survey=4224/2`、`safeembodai=4160/2`。
+- 下一步：生成 card / inline WebP 与 portable receipts，刷新 `papers/provenance.json` 到 198 notes，并同步 README / tests / budgets 后跑完整门禁。
+
 ---
 status: completed
 program_status: ACTIVE
