@@ -1925,7 +1925,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-ai-security-cps-survey-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/embodied-ai-security-cps-survey.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-method-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-method.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-scene-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/embodied-ai-security-cps-survey-scene.webp",
+          "sha256": "2530eecdc3b386d424e041970f20686cf546d43baeffac5abecba06df1c2ecee",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "544ca1662cc188c97de87bef373a9d134c61639698034cc89eb33745e12d0baa",
+          "content_commit": "22e3b0a641151d4a356889630194e7a90eac33e9"
+        }
+      ]
     },
     {
       "slug": "embodied-navigation-foundation-model",
