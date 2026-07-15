@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "open-h-embodiment",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "84607cc03c3af63fc5ac9a896e9ca1d15f304b5a",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/cards/open-h-embodiment-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/cards/open-h-embodiment.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/open-h-embodiment-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/open-h-embodiment-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/open-h-embodiment-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/dataset-eval.webp"
+        },
+        "path": "site/src/images/inline/open-h-embodiment-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "open-h-embodiment",
+    "sources": [
+      {
+        "path": "site/src/images/topics/dataset-eval.webp",
+        "sha256": "0b0e68bdbb7afea6aa92755515be2d46391d81e31943fdf465e2af11db83cf81"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "6b8f0d20765a61a91df6afbe8736c58506365a2ea5dcd53b6e0f108cfd47ca1c",
+  "asset_fingerprint": "0c6de37840381f9f1841283180cca306c74ebb43b4f4fbbc19a1b8f22e88b16f",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/open-h-embodiment-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/open-h-embodiment.webp",
+      "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/open-h-embodiment-method-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/open-h-embodiment-method.webp",
+      "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/open-h-embodiment-scene-800.webp",
+      "sha256": "bac540b3e00496d0757f0f83cab95cbd558971ca596a8f8a30b40083409402a6",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/open-h-embodiment-scene.webp",
+      "sha256": "37ef45b7816f5c4b398e16248960d22b13ae17d688d5b415fb35fa662eb9146c",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}

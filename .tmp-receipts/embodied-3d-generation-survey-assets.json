@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "embodied-3d-generation-survey",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "84607cc03c3af63fc5ac9a896e9ca1d15f304b5a",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/cards/embodied-3d-generation-survey-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/cards/embodied-3d-generation-survey.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/inline/embodied-3d-generation-survey-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/inline/embodied-3d-generation-survey-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/inline/embodied-3d-generation-survey-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/sim.webp"
+        },
+        "path": "site/src/images/inline/embodied-3d-generation-survey-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "embodied-3d-generation-survey",
+    "sources": [
+      {
+        "path": "site/src/images/topics/sim.webp",
+        "sha256": "cb3aeb81047a559ef4bdd3d526f6ea71ad7b3141120c3d4f737091ae14c13d26"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "efa8707a378bb25c9ea519b970d75f9a8c18950a0dfa0b698ee42d13d9bcded6",
+  "asset_fingerprint": "28a8923ef5e251deed5aa0518c512ee78ab4498457f6ee51fae51a428b9d6af6",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/embodied-3d-generation-survey-800.webp",
+      "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/embodied-3d-generation-survey.webp",
+      "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/embodied-3d-generation-survey-method-800.webp",
+      "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/embodied-3d-generation-survey-method.webp",
+      "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/embodied-3d-generation-survey-scene-800.webp",
+      "sha256": "9a22c8f688e9781b7429683d3b0d948d53cbb0388d65152c21430174d0f35ecd",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/embodied-3d-generation-survey-scene.webp",
+      "sha256": "960b886e4bb5f63c5ab63e8eaede7668c7e6383268ef8c9ba40ea47fc3881442",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
