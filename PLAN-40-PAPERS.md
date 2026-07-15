@@ -39,10 +39,10 @@
 | 6 | 2 | open-h-embodiment | Open-H-Embodiment: A Large-Scale Dataset for Enabling Foundation Models in Medical Robotics | https://arxiv.org/abs/2604.21017 | 已部署 |
 | 6 | 3 | alanavlm | AlanaVLM: A Multimodal Embodied AI Foundation Model for Egocentric Video Understanding | https://arxiv.org/abs/2406.13807 | 已部署 |
 | 6 | 4 | embodied-3d-generation-survey | 3D Generation for Embodied AI and Robotic Simulation: A Survey | https://arxiv.org/abs/2604.26509 | 已部署 |
-| 7 | 1 | disco-diffusion-policy | disco-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
-| 7 | 2 | time-unified-diffusion-policy | time-unified-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
-| 7 | 3 | primitive-skill-diffusion-policy | primitive-skill-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
-| 7 | 4 | trace-focused-diffusion-policy | trace-focused-diffusion-policy | 待检索一手来源 | 候选，执行前复核 |
+| 7 | 1 | disco-diffusion-policy | DISCO: Language-Guided Manipulation with Diffusion Policies and Constrained Inpainting | https://arxiv.org/abs/2406.09767 | 来源已锁定 |
+| 7 | 2 | time-unified-diffusion-policy | Time-Unified Diffusion Policy with Action Discrimination for Robotic Manipulation | https://arxiv.org/abs/2506.09422 | 来源已锁定 |
+| 7 | 3 | primitive-skill-diffusion-policy | Learning Diffusion Policy from Primitive Skills for Robot Manipulation | https://arxiv.org/abs/2601.01948 | 来源已锁定 |
+| 7 | 4 | trace-focused-diffusion-policy | Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation | https://arxiv.org/abs/2602.07388 | 来源已锁定 |
 | 8 | 1 | gaze2act | gaze2act | 待检索一手来源 | 候选，执行前复核 |
 | 8 | 2 | lacy | lacy | 待检索一手来源 | 候选，执行前复核 |
 | 8 | 3 | villa-x | villa-x | 待检索一手来源 | 候选，执行前复核 |
