@@ -1,0 +1,328 @@
+notes/call-for-embodied-ai.md
+  s_14db9d7da6debc::t_789eb0097394c4 1-289 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a57130b327f744c7a925567","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,289]}]}]}
+notes/causal-world-models-embodied-ai.md
+  s_14db9d7da6debc::t_31579a15946615 1-276 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5712c3327f744c7a925542","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,276]}]}]}
+notes/robotics-foundation-models-survey.md
+  s_14db9d7da6debc::t_8b337486efca32 1-180,189-306 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a571355327f744c7a925589","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,180]},{"Range":[189,306]}]}]}
+  s_14db9d7da6debc::t_f7436b0fcb9f44 181-188 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a571401327f744c7a9255f6","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[181,188]}]}]}
+notes/embodied-ai-security-cps-survey.md
+  s_14db9d7da6debc::t_abe393d147bb15 1-203,214-308 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a5713a2327f744c7a9255ad","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[1,203]},{"Range":[214,308]}]}]}
+  s_14db9d7da6debc::t_701ba520f8569a 204-209,212-213 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a57140b327f744c7a92561a","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[204,209]},{"Range":[212,213]}]}]}
+  s_14db9d7da6debc::t_f8f130e8f99850 210-211 gitai:{"mixed_line_ranges":[],"operations":[{"operation_id":"6a571421327f744c7a925641","tool_type":"agent","tool_id":"apply_patch","line_ranges":[{"Range":[210,211]}]}]}
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "89d1fc1a0545972289f88131f174277372465423",
+  "prompts": {},
+  "sessions": {
+    "s_14db9d7da6debc": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a5629a8327f744c7a91f5ac",
+        "model": "gpt-5.5__max"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {
+    "notes/call-for-embodied-ai.md": [
+      {
+        "hash": "s_14db9d7da6debc::t_789eb0097394c4",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              289
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a57130b327f744c7a925567",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  289
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "notes/causal-world-models-embodied-ai.md": [
+      {
+        "hash": "s_14db9d7da6debc::t_31579a15946615",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              276
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5712c3327f744c7a925542",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  276
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "notes/embodied-ai-security-cps-survey.md": [
+      {
+        "hash": "s_14db9d7da6debc::t_abe393d147bb15",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              203
+            ]
+          },
+          {
+            "Range": [
+              214,
+              308
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a5713a2327f744c7a9255ad",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  203
+                ]
+              },
+              {
+                "Range": [
+                  214,
+                  308
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hash": "s_14db9d7da6debc::t_701ba520f8569a",
+        "line_ranges": [
+          {
+            "Range": [
+              204,
+              209
+            ]
+          },
+          {
+            "Range": [
+              212,
+              213
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a57140b327f744c7a92561a",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  204,
+                  209
+                ]
+              },
+              {
+                "Range": [
+                  212,
+                  213
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hash": "s_14db9d7da6debc::t_f8f130e8f99850",
+        "line_ranges": [
+          {
+            "Range": [
+              210,
+              211
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a571421327f744c7a925641",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  210,
+                  211
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "notes/robotics-foundation-models-survey.md": [
+      {
+        "hash": "s_14db9d7da6debc::t_8b337486efca32",
+        "line_ranges": [
+          {
+            "Range": [
+              1,
+              180
+            ]
+          },
+          {
+            "Range": [
+              189,
+              306
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a571355327f744c7a925589",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  1,
+                  180
+                ]
+              },
+              {
+                "Range": [
+                  189,
+                  306
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "hash": "s_14db9d7da6debc::t_f7436b0fcb9f44",
+        "line_ranges": [
+          {
+            "Range": [
+              181,
+              188
+            ]
+          }
+        ],
+        "mixed_line_ranges": [],
+        "operations": [
+          {
+            "operation_id": "6a571401327f744c7a9255f6",
+            "tool_type": "agent",
+            "tool_id": "apply_patch",
+            "line_ranges": [
+              {
+                "Range": [
+                  181,
+                  188
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "s_14db9d7da6debc": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_31579a15946615": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_503f746baf71e5": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_701ba520f8569a": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_789eb0097394c4": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_8b337486efca32": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_abe393d147bb15": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_f7436b0fcb9f44": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    },
+    "s_14db9d7da6debc::t_f8f130e8f99850": {
+      "tool": "trae",
+      "conversation_id": "6a5629a8327f744c7a91f5ac",
+      "session_id": "6a5629a8327f744c7a91f5ac",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
