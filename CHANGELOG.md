@@ -4,6 +4,7 @@
 
 ## [Unreleased]
 
+- 第 10 批新增 4 篇 frontier deep-read 笔记：`causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey`；同步扩展 provenance / Data API inventory 到 202 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 第 9 批新增 4 篇 frontier deep-read 笔记：`discrete-policy`、`gembench`、`language-conditioned-manipulation-survey`、`safeembodai`；同步扩展 provenance / Data API inventory 到 198 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 第 8 批新增 4 篇 frontier deep-read 笔记：`gaze2act`、`lacy`、`villa-x`、`instructvla`；同步扩展 provenance / Data API inventory 到 194 篇，并补齐 card / inline 生成资产与 portable receipts。
 - 第 7 批新增 4 篇 frontier deep-read 笔记：`disco-diffusion-policy`、`time-unified-diffusion-policy`、`primitive-skill-diffusion-policy`、`trace-focused-diffusion-policy`；同步扩展 provenance / Data API inventory 到 190 篇，并补齐 card / inline 生成资产与 portable receipts。

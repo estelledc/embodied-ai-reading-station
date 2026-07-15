@@ -1,7 +1,7 @@
 ---
 status: in_progress
 program_status: ACTIVE
-cycle_state: SOURCE_LOCKED
+cycle_state: IMPLEMENTING
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH10
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch10-four-deep-read-notes
@@ -9,11 +9,11 @@ branch: codex/forty-papers-batch10
 start_ref: b153945
 baseline_ref: origin/main
 review_after: batch10 deploy or blocker
-external_outcome: primary-sources-locked-pending-notes-assets-validation-pr-ci-merge-pages-deploy
+external_outcome: notes-assets-provenance-ready-pending-local-validation-pr-ci-merge-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 10 批来源已锁定
+# 当前接班：40 篇新论文 / 10 批推进，第 10 批待本地验证
 
 ## Cycle 合同
 
@@ -30,9 +30,10 @@ superseded_by: none
 **baseline_checks**：Batch 9 已部署并完成 handoff PR #49；本地 `main` 与 `origin/main` 对齐到 `b153945`。当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除。
 
 **当前状态**：
-- 已确认四个 Batch 10 slug/title/source；本地去重仅命中 `PLAN-40-PAPERS.md`，未发现既有 notes / provenance 冲突。
-- agent-reach doctor 显示 Exa Search、Jina Reader、GitHub CLI 可用；本轮使用 Exa + arXiv API fallback 锁源。
-- 下一步读取四篇一手来源，按 AGENT-DEEPREAD.md 写 4 篇 deep-read 初稿，并预检字数与视觉元素。
+- 已完成 4 篇 deep-read 初稿：`causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey`。
+- 字数 / 视觉元素预检通过：`causal-world-models-embodied-ai=4016/3`、`call-for-embodied-ai=4154/3`、`robotics-foundation-models-survey=4159/3`、`embodied-ai-security-cps-survey=4059/3`。
+- 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 202 notes / 306 generated assets，`content_commit=22e3b0a641151d4a356889630194e7a90eac33e9`。
+- 已同步 README / CHANGELOG / check / unit test 计数到 202；下一步跑完整本地门禁，并根据实际输出修 CSP / size budget。
 
 ---
 status: completed

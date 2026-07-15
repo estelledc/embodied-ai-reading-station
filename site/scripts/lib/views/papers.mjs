@@ -301,7 +301,7 @@ export function buildIndex(notes, latestIssue = null) {
       <summary>How this is made / 角色、来源与边界</summary>
       <div class="eai-method__grid">
         <div><span class="jx-source-tag" data-source="build">Owner-led</span><h3>Jason Xun</h3><p>负责产品定义、内容架构、静态站工程、交互设计、发布门禁与最终验收。</p></div>
-        <div><span class="jx-source-tag" data-source="external">AI-assisted notes</span><h3>内容生产</h3><p>AI 辅助整理笔记；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。</p></div>
+        <div><span class="jx-source-tag" data-source="external">AI-assisted notes</span><h3>内容生产</h3><p>AI 辅助整理笔记；46 篇保留本地解析文本与 SHA-256 清单，156 篇引用 HTTPS 原文。</p></div>
         <div><span class="jx-source-tag" data-source="history">Review boundary</span><h3>尚未证明</h3><p>结构门禁不等于逐页人工复核，也不证明学习效果；重要事实仍需回到原论文。</p></div>
       </div>
       <div class="eai-state-tools">
@@ -429,7 +429,7 @@ function buildLegacyPaperIndex(notes, latestIssue = null) {
         <div><dt>个人角色 / Role</dt><dd>独立完成产品定义、内容架构、静态站工程、交互设计与发布门禁。</dd></div>
         <div><dt>系统 / System</dt><dd>Node 静态生成 + Pagefind + D3 + KaTeX；路径、主题、时间线、关系图和本地进度共享同一份内容数据。</dd></div>
         <div><dt>证据 / Evidence</dt><dd>构建时检查来源路径、内容结构、图像覆盖、内部链接、公开数据和 PWA 资产。</dd></div>
-        <div><dt>局限 / Limitations</dt><dd class="jx-proof__limitation">笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，110 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不被包装成学习效果证明。</dd></div>
+        <div><dt>局限 / Limitations</dt><dd class="jx-proof__limitation">笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，156 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不被包装成学习效果证明。</dd></div>
       </dl>
     </section>
 

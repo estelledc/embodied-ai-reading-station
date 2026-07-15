@@ -141,7 +141,7 @@ function shellUrlToDistPath(value) {
 // Provenance 必须先于任何 notes/ 读取执行。通过后才动态加载 aggregates；该模块会在
 // import 时发现并读取全部笔记，不能让 symlink/坏路径绕过独立门禁。
 console.log("\n=== Source path integrity ===");
-const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 198 });
+const provenance = validateProvenanceRepositoryFile({ root: ROOT, expectedNoteCount: 202 });
 if (!provenance.ok) {
   const rendered = formatProvenanceRepositoryErrors(provenance.errors);
   console.log(rendered.split("\n").map((line) => `  ✗ ${line}`).join("\n"));
@@ -621,7 +621,7 @@ console.log("\n=== Public showcase contract ===");
     home.includes("An owner-led, independently maintained learning product")
     && home.includes("结构门禁不等于逐页人工复核")
     && home.includes("46 篇保留本地解析文本与 SHA-256 清单")
-    && home.includes("110 篇引用 HTTPS 原文")
+    && home.includes("156 篇引用 HTTPS 原文")
   ) || "English summary or limitations missing");
   check("首页不渲染全量论文墙，独立 Papers 页保留完整筛选库", () => (
     !home.includes('<article class="paper-card"')
