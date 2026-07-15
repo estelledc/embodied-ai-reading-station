@@ -4140,7 +4140,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/primitive-skill-diffusion-policy-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/primitive-skill-diffusion-policy.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/primitive-skill-diffusion-policy-method-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/primitive-skill-diffusion-policy-method.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene-800.webp",
+          "sha256": "5c61f0a95a4d52a7de7221b7fa3c7121fcfb732f2592e6005ed5bf1e9111448e",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/primitive-skill-diffusion-policy-scene.webp",
+          "sha256": "3fd629eb7b151e6aa180f221008fe8013eb56066096689d69ad99514907f27db",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "62af1be1498a53b7446de77fd523506aa099cfa5a4822f9f5c50b1ec5950aeae",
+          "content_commit": "4ba9172bba8dbce9e6a364060d1b4e3487418889"
+        }
+      ]
     },
     {
       "slug": "proactive-hearing",
