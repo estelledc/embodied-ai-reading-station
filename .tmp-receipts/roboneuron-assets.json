@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "roboneuron",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "034d76ab2c19bd58cac8234994131362e55cfe12",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/roboneuron-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/cards/roboneuron.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/roboneuron-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/roboneuron-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/roboneuron-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vla.webp"
+        },
+        "path": "site/src/images/inline/roboneuron-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "roboneuron",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vla.webp",
+        "sha256": "121652bbb22437a73d0609bc77d5b28e607394dabe9e216ed744f29f8dd7922d"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "de9cbc8879c295634f09f4808d5e31faa0c49cde6d2b9348dc6ad713f0387a62",
+  "asset_fingerprint": "facd441114669aac2942f4f4c5f2ec0ea2aa1aefde3310f81726de0b99034cd4",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/roboneuron-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/roboneuron.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/roboneuron-method-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/roboneuron-method.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/roboneuron-scene-800.webp",
+      "sha256": "83f8f8e870e87d43f9f0a3c4b62d67757764079ddd4926f37e2c4148cbf48e7b",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/roboneuron-scene.webp",
+      "sha256": "4e0508db00a9eeb15eb62506c9d0bfb83df38662ff3187c56fc7d55b5870abbd",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
