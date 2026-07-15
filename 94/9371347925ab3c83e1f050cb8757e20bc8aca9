@@ -1,0 +1,23 @@
+PLAN-40-PAPERS.md
+  s_e93df29a2b129a::t_f35d2abd90f13d 34-37
+SESSION-HANDOFF.md
+  s_e93df29a2b129a::t_cc8f5895fb82a0 4,12,16,28-29
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "949371347925ab3c83e1f050cb8757e20bc8aca9",
+  "prompts": {},
+  "sessions": {
+    "s_e93df29a2b129a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_e93df29a2b129a",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
