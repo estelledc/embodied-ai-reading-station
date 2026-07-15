@@ -1,23 +1,23 @@
 ---
-status: in_progress
+status: completed
 program_status: ACTIVE
-cycle_state: VALIDATED
+cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH07
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch07-four-deep-read-notes
 branch: codex/forty-papers-batch07
 start_ref: 213ffbf
 baseline_ref: origin/main
-review_after: batch07 deploy or blocker
-external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
+review_after: next bounded research batch
+external_outcome: pr-44-merged-and-pages-deployed
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 7 批本地验证通过，待 PR
+# 当前接班：40 篇新论文 / 10 批推进，第 7 批已部署
 
 ## Cycle 合同
 
-**objective**：继续 `PLAN-40-PAPERS.md`，第 7 批新增 `disco-diffusion-policy`、`time-unified-diffusion-policy`、`primitive-skill-diffusion-policy`、`trace-focused-diffusion-policy` 四篇 diffusion-policy deep-read；本地验证已通过，下一步是 PR、CI、merge、Pages 部署与线上冒烟。
+**objective**：继续 `PLAN-40-PAPERS.md`，第 7 批新增 `disco-diffusion-policy`、`time-unified-diffusion-policy`、`primitive-skill-diffusion-policy`、`trace-focused-diffusion-policy` 四篇 diffusion-policy deep-read，并完成本地验证、PR、Pages 部署与线上冒烟。
 
 **scope**：去重、搜索/读取 arXiv 或作者项目页等一手来源、必要时修正候选 slug/title/source；新增第 7 批 notes、刷新 provenance / Data API inventory 到 190 篇、补齐 card / inline 资产与 receipts、跑本地门禁、PR、merge、Pages deploy 与线上冒烟。明确排除：第 8–10 批正文、真机/仿真实验复现、owner 仓库保护设置、既有未跟踪根目录 `scripts/` 清理。
 
@@ -34,7 +34,9 @@ superseded_by: none
 - 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 190 notes / 234 generated assets，`content_commit=4ba9172bba8dbce9e6a364060d1b4e3487418889`。
 - 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
 - 本轮同步了 README / CHANGELOG / check / unit test 计数到 190；CSP style budget 更新为 5004 attributes / 208 unique values；`papers/index.html` repo-base 专项预算更新到 290KB。
-- 当前仍有既有未跟踪根目录 `scripts/`，本轮不纳入也不删除；Batch 7 临时 `.tmp-paper-sources/` 已清理。
+- `git diff --check` 与 `git diff --check origin/main...HEAD` 通过；PR #44 已合并，merge commit `6f381fbe`；Pages workflow `29386662371` build + deploy 成功。
+- 线上冒烟通过：`/data/v2/papers.json` 与 `/data/v2/provenance.json` 均 200，`paper_items=190`，`notes=190`，`remote_sources=144`，`generated_assets=234`；四篇新增论文页与 `card-800` / `method-800` / `scene-800` 图片资源均 HTTP 200。
+- 本地 `main` 与 `origin/main` 对齐到 `6f381fbe`；仍有既有未跟踪根目录 `scripts/`，本轮未纳入也未删除；Batch 7 临时 `.tmp-paper-sources/` 已清理。
 
 ---
 status: completed
