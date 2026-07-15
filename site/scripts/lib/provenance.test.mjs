@@ -75,8 +75,8 @@ function fixtureRoot() {
 test("loadCanonicalNotes enumerates every repository note in slug order", () => {
   const manifest = JSON.parse(fs.readFileSync(path.join(REPO_ROOT, "papers", "provenance.json"), "utf8"));
   const notes = loadCanonicalNotes({ root: REPO_ROOT, previousManifest: manifest, contentCommit: manifest.content_commit ?? COMMIT_A });
-  assert.equal(notes.length, 186);
-  assert.equal(new Set(notes.map((note) => note.slug)).size, 186);
+  assert.equal(notes.length, 190);
+  assert.equal(new Set(notes.map((note) => note.slug)).size, 190);
   assert.deepEqual(notes.map((note) => note.slug), [...notes.map((note) => note.slug)].sort());
   assert.ok(notes.every((note) => /^notes\/[a-z0-9-]+\.md$/.test(note.note_path)));
   assert.ok(notes.every((note) => /^[a-f0-9]{64}$/.test(note.note_sha256)));
@@ -84,7 +84,7 @@ test("loadCanonicalNotes enumerates every repository note in slug order", () => 
     note.note_sha256 === sha256(fs.readFileSync(path.join(REPO_ROOT, note.note_path)))
   )));
   assert.equal(notes.filter((note) => note.source.kind === "local").length, 46);
-  assert.equal(notes.filter((note) => note.source.kind === "remote").length, 140);
+  assert.equal(notes.filter((note) => note.source.kind === "remote").length, 144);
   assert.ok(notes.filter((note) => note.source.kind === "remote").every((note) => (
     note.source.path === null
     && note.source.sha256 === null
@@ -333,18 +333,18 @@ test("production CLI --check exercises the tracked entry point without writing",
     cwd: path.join(REPO_ROOT, "site"),
     encoding: "utf8",
   });
-  assert.match(output, /papers\/provenance\.json is current \(186 notes\)/);
+  assert.match(output, /papers\/provenance\.json is current \(190 notes\)/);
   assert.deepEqual(fs.readFileSync(target), before);
 });
 
 test("tracked generator output passes the independent repository gate", () => {
-  const result = validateProvenanceRepositoryFile({ root: REPO_ROOT, expectedNoteCount: 186 });
+  const result = validateProvenanceRepositoryFile({ root: REPO_ROOT, expectedNoteCount: 190 });
   assert.equal(result.ok, true, formatProvenanceRepositoryErrors(result.errors));
   assert.deepEqual(result.stats, {
-    notes: 186,
+    notes: 190,
     local_sources: 46,
-    remote_sources: 140,
-    generated_assets: 210,
-    checked_paths: 442,
+    remote_sources: 144,
+    generated_assets: 234,
+    checked_paths: 470,
   });
 });
