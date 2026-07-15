@@ -42,7 +42,7 @@ test("PAPERS uses slug as the deterministic tie-break for duplicate display numb
 
 test("loadNotes exposes canonical path, hash, source, and lifecycle fields without changing view shape", () => {
   const notes = loadNotes();
-  assert.equal(notes.length, 182);
+  assert.equal(notes.length, 186);
   assert.ok(notes.every((note) => note.notePath === `notes/${note.slug}.md`));
   assert.ok(notes.every((note) => /^[a-f0-9]{64}$/.test(note.noteSha256)));
   assert.ok(notes.every((note) => typeof note.sourcePath === "string" && note.sourcePath.length > 0));
