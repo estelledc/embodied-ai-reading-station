@@ -85,6 +85,13 @@ from PIL import Image
 status: deep-read
 ```
 
+提交这个 note 内容快照，再进入 provenance 登记。后续 `ASSET_COMMIT=$(git rev-parse HEAD)` 必须指向已经包含 note 状态变更和资产 bytes 的 Git 快照，不能在未提交的 note worktree 上登记 provenance：
+
+```bash
+git add notes/<slug>.md
+git commit -m "更新论文状态：<slug> deep-read"
+```
+
 ### 步骤 3：更新 Provenance
 
 将生成的资产记录到 `papers/provenance.json`。不要用临时 Python 手写 JSON；登记阶段会校验 Git blob、receipt、图片 hash、manifest CAS 和 `content_commit`：
