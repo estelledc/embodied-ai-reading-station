@@ -5330,7 +5330,62 @@
         "scope": null,
         "blocked_reason": null
       },
-      "generated_assets": []
+      "generated_assets": [
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/safeembodai-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "card",
+          "tracked": true,
+          "path": "site/src/images/cards/safeembodai.webp",
+          "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/safeembodai-method-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-method",
+          "tracked": true,
+          "path": "site/src/images/inline/safeembodai-method.webp",
+          "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/safeembodai-scene-800.webp",
+          "sha256": "23641ca1b903d66701f5bbd108cd7f7be42a5a100b27df1a5666e313b6bd26bf",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        },
+        {
+          "kind": "inline-scene",
+          "tracked": true,
+          "path": "site/src/images/inline/safeembodai-scene.webp",
+          "sha256": "39f8ee7d0903b542fe4a299b123ca7a524de7a13f5e2032e01a7503816bca107",
+          "generator": "cwebp-fallback/topic-assets/v1",
+          "input_fingerprint": "ddb191c49676762572ef6368430b0e1c3d6c46dc02d593acbb74a2bcf9779b3f",
+          "content_commit": "203ff84db1040bd7a0164ae8af560ea2e01a6baf"
+        }
+      ]
     },
     {
       "slug": "sapien",
