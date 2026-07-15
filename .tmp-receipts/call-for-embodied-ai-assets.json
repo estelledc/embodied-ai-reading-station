@@ -1,0 +1,143 @@
+{
+  "schema_version": "1.0.0",
+  "slug": "call-for-embodied-ai",
+  "generator": "cwebp-fallback/topic-assets/v1",
+  "inputs": {
+    "converter": {
+      "id": "cwebp",
+      "version": "1.6.0"
+    },
+    "generator": {
+      "id": "cwebp-fallback/topic-assets/v1",
+      "version": "1.6.0"
+    },
+    "input_content_commit": "89d1fc1a0545972289f88131f174277372465423",
+    "outputs": [
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/cards/call-for-embodied-ai-800.webp"
+      },
+      {
+        "kind": "card",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/cards/call-for-embodied-ai.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/inline/call-for-embodied-ai-method-800.webp"
+      },
+      {
+        "kind": "inline-method",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/inline/call-for-embodied-ai-method.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 800,
+          "quality": 80,
+          "role": "compact",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/inline/call-for-embodied-ai-scene-800.webp"
+      },
+      {
+        "kind": "inline-scene",
+        "parameters": {
+          "max_width": 1672,
+          "quality": 85,
+          "role": "full",
+          "source_path": "site/src/images/topics/vlm-foundation.webp"
+        },
+        "path": "site/src/images/inline/call-for-embodied-ai-scene.webp"
+      }
+    ],
+    "parameters": {
+      "codec": "webp",
+      "pair_atomic": true,
+      "source_priority": [
+        "topic"
+      ]
+    },
+    "prompt_sha256": null,
+    "slug": "call-for-embodied-ai",
+    "sources": [
+      {
+        "path": "site/src/images/topics/vlm-foundation.webp",
+        "sha256": "ee2c8573988ef79f3108c4cf3d3fee01e1494943cd2ab135de635e30afdd3be9"
+      }
+    ],
+    "template": {
+      "id": "topic-asset-fallback",
+      "version": "topic-asset-fallback-v1"
+    }
+  },
+  "input_fingerprint": "090ff3699e4e7c09904dc39d6dbff9c20d57070c0000ed71f22142469b4bd633",
+  "asset_fingerprint": "6c413cddcdc3524ce1b53da0686b937be5b7d2fe924721755b7c5d38afda89f1",
+  "outputs": [
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/call-for-embodied-ai-800.webp",
+      "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "card",
+      "path": "site/src/images/cards/call-for-embodied-ai.webp",
+      "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/call-for-embodied-ai-method-800.webp",
+      "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-method",
+      "path": "site/src/images/inline/call-for-embodied-ai-method.webp",
+      "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+      "width": 1672,
+      "height": 941
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/call-for-embodied-ai-scene-800.webp",
+      "sha256": "ec5143e6c66838536709f087eb2a949dc150d1023ce855535a8456e4fffbaa9e",
+      "width": 800,
+      "height": 451
+    },
+    {
+      "kind": "inline-scene",
+      "path": "site/src/images/inline/call-for-embodied-ai-scene.webp",
+      "sha256": "8c2d28e27a7c825b70ac268413c0df0afa803903d0320e6a9f8d4c30dc68d81b",
+      "width": 1672,
+      "height": 941
+    }
+  ]
+}
