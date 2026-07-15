@@ -1,7 +1,7 @@
 ---
 status: in_progress
 program_status: ACTIVE
-cycle_state: IMPLEMENTING
+cycle_state: VALIDATED
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH08
 activated_by: user-explicit-continue-autonomous-embodied-ai-research
 scope: ten-batches-forty-new-papers-batch08-four-deep-read-notes
@@ -9,11 +9,11 @@ branch: codex/forty-papers-batch08
 start_ref: 36b8a1f
 baseline_ref: origin/main
 review_after: batch08 deploy or blocker
-external_outcome: notes-assets-provenance-ready-pending-local-validation-pr-ci-merge-pages-deploy
+external_outcome: local-validation-passed-pending-pr-ci-merge-pages-deploy
 superseded_by: none
 ---
 
-# 当前接班：40 篇新论文 / 10 批推进，第 8 批待本地验证
+# 当前接班：40 篇新论文 / 10 批推进，第 8 批本地验证通过，待 PR
 
 ## Cycle 合同
 
@@ -33,7 +33,9 @@ superseded_by: none
 - 已完成 4 篇 deep-read 初稿：`gaze2act`、`lacy`、`villa-x`、`instructvla`。
 - 字数 / 视觉元素预检通过：`gaze2act=4523/2`、`lacy=4042/2`、`villa-x=4316/2`、`instructvla=4237/2`。
 - 已生成并登记 24 个 WebP 资产与 4 个 portable receipt；`papers/provenance.json` 当前为 194 notes / 258 generated assets，`content_commit=bb2b67a88f8d5a37a16a1d032f0e709b8b68e62d`。
-- 已同步 README / CHANGELOG / check / unit test 计数到 194；下一步清理 `.tmp-paper-sources/`，跑完整本地门禁，并根据实际输出修 CSP / size budget。
+- 已同步 README / CHANGELOG / check / unit test 计数到 194；CSP style budget 更新为 5050 attributes / 207 unique values；`papers/index.html` repo-base 专项预算更新到 300KB。
+- 本地验证已通过：`npm run test:unit` 342 passed；root build/check 通过，`npm run check` 160 passed；`SITE_BASE=/embodied-ai-reading-station npm run build` + `SITE_BASE=/embodied-ai-reading-station npm run check` 通过，repo-base check 160 passed。
+- 下一步：`git diff --check` / `git diff --check origin/main...HEAD`，push branch，创建 PR，等待 CI、merge、Pages deploy 与线上 smoke。
 
 ---
 status: completed

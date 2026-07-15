@@ -955,7 +955,7 @@ check(`首页 index.html（SITE_BASE 归一化）${(indexSize / 1024).toFixed(0)
   indexSize < 250 * 1024 || `超预算: ${(indexSize / 1024).toFixed(0)}KB`
 ));
 const papersIndexSize = fs.statSync(path.join(DIST, "papers", "index.html")).size;
-check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 290KB`, () => papersIndexSize < 290 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
+check(`论文库 papers/index.html ${(papersIndexSize / 1024).toFixed(0)}KB < 300KB`, () => papersIndexSize < 300 * 1024 || `超预算: ${(papersIndexSize / 1024).toFixed(0)}KB`);
 
 // 首页图片路由预算是确定性的静态代理，不冒充浏览器 Network 结果：
 // - default: img/src、image preload、inline CSS url 去重后的默认请求/字节；

@@ -43,10 +43,10 @@
 | 7 | 2 | time-unified-diffusion-policy | Time-Unified Diffusion Policy with Action Discrimination for Robotic Manipulation | https://arxiv.org/abs/2506.09422 | 已部署 |
 | 7 | 3 | primitive-skill-diffusion-policy | Learning Diffusion Policy from Primitive Skills for Robot Manipulation | https://arxiv.org/abs/2601.01948 | 已部署 |
 | 7 | 4 | trace-focused-diffusion-policy | Trace-Focused Diffusion Policy for Multi-Modal Action Disambiguation in Long-Horizon Robotic Manipulation | https://arxiv.org/abs/2602.07388 | 已部署 |
-| 8 | 1 | gaze2act | Gaze2Act: Gaze-Conditioned Vision-Language-Action Policies for Interactive Robot Manipulation | https://arxiv.org/abs/2605.30282 | 资产已登记，待本地验证 |
-| 8 | 2 | lacy | LACY: A Vision-Language Model-based Language-Action Cycle for Self-Improving Robotic Manipulation | https://arxiv.org/abs/2511.02239 | 资产已登记，待本地验证 |
-| 8 | 3 | villa-x | villa-X: Enhancing Latent Action Modeling in Vision-Language-Action Models | https://arxiv.org/abs/2507.23682 | 资产已登记，待本地验证 |
-| 8 | 4 | instructvla | InstructVLA: Vision-Language-Action Instruction Tuning from Understanding to Manipulation | https://arxiv.org/abs/2507.17520 | 资产已登记，待本地验证 |
+| 8 | 1 | gaze2act | Gaze2Act: Gaze-Conditioned Vision-Language-Action Policies for Interactive Robot Manipulation | https://arxiv.org/abs/2605.30282 | 本地验证通过，待 PR |
+| 8 | 2 | lacy | LACY: A Vision-Language Model-based Language-Action Cycle for Self-Improving Robotic Manipulation | https://arxiv.org/abs/2511.02239 | 本地验证通过，待 PR |
+| 8 | 3 | villa-x | villa-X: Enhancing Latent Action Modeling in Vision-Language-Action Models | https://arxiv.org/abs/2507.23682 | 本地验证通过，待 PR |
+| 8 | 4 | instructvla | InstructVLA: Vision-Language-Action Instruction Tuning from Understanding to Manipulation | https://arxiv.org/abs/2507.17520 | 本地验证通过，待 PR |
 | 9 | 1 | discrete-policy | discrete-policy | 待检索一手来源 | 候选，执行前复核 |
 | 9 | 2 | gembench | gembench | 待检索一手来源 | 候选，执行前复核 |
 | 9 | 3 | language-conditioned-manipulation-survey | language-conditioned-manipulation-survey | 待检索一手来源 | 候选，执行前复核 |
