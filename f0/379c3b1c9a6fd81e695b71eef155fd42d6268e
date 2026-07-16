@@ -1,0 +1,29 @@
+docs/paper-batch-campaign-playbook.md
+  s_7a21a033a51cf8::t_b15879baacd130 210,279-312,323-324,326,330,518
+site/scripts/gen-topic-fallback-assets.mjs
+  s_7a21a033a51cf8::t_4ea61196dd3e34 1-477
+site/scripts/gen-topic-fallback-assets.test.mjs
+  s_7a21a033a51cf8::t_70f8114eb4afb9 1-266
+site/scripts/lib/asset-generation.test.mjs
+  s_7a21a033a51cf8::t_7aed2e66199ff5 747,751,765,773,778
+site/scripts/lib/provenance-validator.test.mjs
+  s_7a21a033a51cf8::t_5685c6f60e6064 25-31
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.10",
+  "base_commit_sha": "f0379c3b1c9a6fd81e695b71eef155fd42d6268e",
+  "prompts": {},
+  "sessions": {
+    "s_7a21a033a51cf8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "s_7a21a033a51cf8",
+        "model": "unknown"
+      },
+      "human_author": "zhouxun <zhouxun.13@bytedance.com>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
