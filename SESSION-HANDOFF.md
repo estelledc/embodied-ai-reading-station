@@ -1,5 +1,44 @@
 ---
 status: completed
+program_status: ACTIVE
+cycle_state: PR_OPEN
+cycle_id: EAIRS-CYCLE-20260715-TOPIC-FALLBACK-CLI
+activated_by: user-explicit-three-project-foundation-goal
+scope: tracked-topic-fallback-combined-receipt-cli
+branch: codex/topic-fallback-cli
+start_ref: 2adb0f5
+baseline_ref: origin/main
+review_after: github-pr-53-checks-or-review-feedback
+external_outcome: draft-pr-53-open-awaiting-checks-and-review
+superseded_by: none
+---
+
+# 当前接班：topic fallback 资产入口已进入 Draft PR #53
+
+**objective**：把论文批次中已实践的 topic fallback 资产生成流程收回 tracked source of truth，并让六个 WebP 输出与 combined portable receipt 具备可执行、fail-closed 的契约。
+
+**scope**：新增 `site/scripts/gen-topic-fallback-assets.mjs` 与定向测试，扩充共享静态契约测试和批量论文 playbook。明确排除根目录未跟踪 `scripts/`、生产资产、provenance 内容、依赖、merge 与 deploy。
+
+**已完成切片**：
+- generation 模式校验 kebab-case 标识、40 位内容快照、note/topic/manifest 一致性、输入 blob 与 ancestor 关系，并在一个原子事务中生成六个输出和一份 receipt；任一转换失败会全组回滚。
+- record 模式只接受 canonical combined receipt，并通过既有 `recordGeneratedAsset` CAS 路径登记；`--dry-run` / `--preflight` 不写入。
+- playbook 明确 tracked CLI 与历史未跟踪 helper 的边界，以及 generation / record 两阶段命令。
+- 临时 Git fixture 统一关闭 `GIT_TRACE2*`，避免 Codex 环境注入 `.git/ai` 日志后与 teardown 竞争。
+
+**验证结果**：独立复核未发现 P0/P1；其唯一 P2 已通过三类新 CLI 直连负例关闭。Node 22 定向 32 tests 连续 5 轮、Node 26 连续 2 轮通过；Node 22 全量单测连续 2 轮 350/350，完整 `npm test` 的 build 与 160 checks 通过；隔离 fixture 中两次真实 `cwebp` / `ffprobe` generation -> portable receipt -> record dry-run 闭环通过，manifest 前后字节不变；`git diff --check` 通过。根目录两个未跟踪 helper 未修改，也未纳入本轮 diff。
+
+**发布证据**：实现提交 `f0379c3` 已推送到 `codex/topic-fallback-cli`，Draft PR [#53](https://github.com/estelledc/embodied-ai-reading-station/pull/53) 已打开。
+
+**external outcome**：真实评审请求已提交，D 轴从 D0 提升到 D1；当前仍等待 CI / reviewer，没有 merge 或 deploy。
+
+**下一条可执行命令**：
+
+```bash
+gh pr checks 53 --repo estelledc/embodied-ai-reading-station
+```
+
+---
+status: completed
 program_status: COMPLETE
 cycle_state: DEPLOYED
 cycle_id: EAIRS-CYCLE-20260715-FORTY-PAPERS-BATCH10
