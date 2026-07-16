@@ -744,10 +744,11 @@ test("recordGeneratedAsset compare-and-swap preserves a concurrent manifest upda
   assert.match(fs.readFileSync(fixture.manifestPath, "utf8"), /\n\n$/);
 });
 
-test("all four asset CLIs share the safe transaction contract without local-path parsing", () => {
+test("all five asset CLIs share the safe transaction contract without local-path parsing", () => {
   const scripts = [
     "gen-paper-cards.mjs",
     "gen-inline-figures.mjs",
+    "gen-topic-fallback-assets.mjs",
     "fill-missing-cards.mjs",
     "fill-missing-inline.mjs",
   ];
@@ -761,7 +762,7 @@ test("all four asset CLIs share the safe transaction contract without local-path
     assert.match(source, /"dry-run"/);
     assert.doesNotMatch(source, /\/Users\/|generated_images|\bexecSync\b|shell:\s*true/);
   }
-  for (const name of scripts.filter((value) => value.startsWith("gen-"))) {
+  for (const name of ["gen-paper-cards.mjs", "gen-inline-figures.mjs"]) {
     const source = fs.readFileSync(new URL(`../${name}`, import.meta.url), "utf8");
     assert.match(source, /--output-schema/);
     assert.match(source, /"--sandbox",\s*"workspace-write"/);
@@ -769,11 +770,12 @@ test("all four asset CLIs share the safe transaction contract without local-path
   }
 });
 
-test("all four asset CLIs redact an absolute receipt path from failures", () => {
+test("all five asset CLIs redact an absolute receipt path from failures", () => {
   const receiptPath = path.join(tempDirectory(), "private", "missing-receipt.json");
   const scripts = [
     "gen-paper-cards.mjs",
     "gen-inline-figures.mjs",
+    "gen-topic-fallback-assets.mjs",
     "fill-missing-cards.mjs",
     "fill-missing-inline.mjs",
   ];
