@@ -207,6 +207,7 @@ git commit -m "更新论文来源清单：纳入第 NN 批笔记"
 | 脚本 | 用途 |
 |---|---|
 | `site/scripts/generate-provenance.mjs` | 生成 / 校验 canonical manifest |
+| `site/scripts/gen-topic-fallback-assets.mjs` | 用单个 topic 图原子生成 card + inline 六个 WebP、combined receipt，并在资产提交后登记 provenance |
 | `site/scripts/fill-missing-inline.mjs` | 为单篇生成 inline scene / method WebP |
 | `site/scripts/fill-missing-cards.mjs` | 为单篇生成 card WebP |
 | `site/scripts/check.mjs` | 全站健康检查 |
@@ -275,7 +276,40 @@ git commit -m "登记第 NN 批 card 资产：<slug>"
 
 ### 5.3 Combined receipt 路径
 
-Batch 9/10 为了减少登记提交数，使用了“每篇 1 个 receipt，包含 card + inline 的 6 个 outputs”的 combined receipt。这个路径可复用，但应作为临时 Node snippet 或未来正式脚本，不要把未测试的 Python helper 当权威。
+Batch 9/10 为了减少登记提交数，使用了“每篇 1 个 receipt，包含 card + inline 的 6 个 outputs”的 combined receipt。后续仅在输入确实是单个 tracked topic 图时使用已跟踪入口：
+
+```bash
+CONTENT_COMMIT=$(git rev-parse HEAD)
+node site/scripts/gen-topic-fallback-assets.mjs \
+  --dry-run \
+  --slug <slug> \
+  --topic <topic> \
+  --content-commit "$CONTENT_COMMIT" \
+  --receipt-file .tmp-receipts/<slug>-assets.json
+
+node site/scripts/gen-topic-fallback-assets.mjs \
+  --slug <slug> \
+  --topic <topic> \
+  --content-commit "$CONTENT_COMMIT" \
+  --receipt-file .tmp-receipts/<slug>-assets.json
+```
+
+该命令把 card、scene、method 的 full/800 六个输出和 receipt 放进一个原子事务；任一转换、校验或 receipt 写入失败时整组回滚。生成后先提交 receipt 与六个资产，再用资产提交做只读登记检查，确认通过后才写 manifest：
+
+```bash
+ASSET_COMMIT=$(git rev-parse HEAD)
+node site/scripts/gen-topic-fallback-assets.mjs \
+  --record --dry-run \
+  --slug <slug> \
+  --content-commit "$ASSET_COMMIT" \
+  --receipt-file .tmp-receipts/<slug>-assets.json
+
+node site/scripts/gen-topic-fallback-assets.mjs \
+  --record \
+  --slug <slug> \
+  --content-commit "$ASSET_COMMIT" \
+  --receipt-file .tmp-receipts/<slug>-assets.json
+```
 
 注意不要把历史 combined receipt 传给 `fill-missing-inline.mjs` 或 `fill-missing-cards.mjs` 做 split receipt 验证；这两个脚本只接受自己生成的 split receipt。真实回归中，如果把 `.tmp-receipts/<slug>-assets.json` 传进去，会得到预期失败：
 
@@ -286,13 +320,14 @@ FAIL receipt was not created by fill-missing-cards
 
 因此：
 
-- 未来新增论文优先用第 5.2 节 split receipt 路径。
+- 有论文原图、需要不同 card / inline 语义或不适合 topic fallback 时，仍优先用第 5.2 节 split receipt 路径。
+- 单个 topic 图生成六个同源输出时，使用 `gen-topic-fallback-assets.mjs`，不用临时 snippet。
 - 已存在的 Batch 9/10 combined receipt，用 `node site/scripts/generate-provenance.mjs --check`、manifest 统计脚本和线上 smoke 验证。
-- 若要继续复用 combined receipt，应把本轮临时 Node snippet 正式迁入 `site/scripts/`，并补测试后再写入本文。
+- 历史 `cwebp-fallback/topic-assets/v1` receipts 保持原样；新入口生成 `cwebp-fallback/topic-assets/v2`，不伪装成旧生成器。
 
 Combined receipt 必须满足：
 
-- `generator` 固定为可识别的生成器 ID，例如 `cwebp-fallback/topic-assets/v1`。
+- `generator` 固定为可识别的生成器 ID；新入口使用 `cwebp-fallback/topic-assets/v2`。
 - `inputs.input_content_commit` 指向 note/provenance 输入快照。
 - `inputs.sources[]` 记录 topic fallback 图及 SHA-256。
 - `outputs[]` 包含 6 个文件：
@@ -480,7 +515,7 @@ sed -n '1,45p' SESSION-HANDOFF.md | rg -n "content_commit=|merge commit|本地 `
 
 ## 10. 后续迭代建议
 
-1. 若继续批量收录论文，优先把 combined receipt 生成逻辑沉淀为 tracked `site/scripts/gen-topic-fallback-assets.mjs`，并补 asset-generation 单测。
+1. 若继续批量收录论文，先按第 5.3 节运行 tracked `gen-topic-fallback-assets.mjs --dry-run`；只有单个 topic fallback 输入才走 combined receipt。
 2. 若要使用历史 `scripts/` helper，先确认是否仍需要，再决定删除、归档或迁入 tracked 工具；不要让未跟踪脚本成为隐性流程依赖。
 3. 每次批量 campaign 都保留内容 PR 和 post-deploy handoff PR 两段式，避免把“本地通过”误写成“已部署”。
 4. 任何人工核验、真实实验、仿真复现都另开 scope；不要因为 note 数或 asset 数增加而升级 `human_verification`。

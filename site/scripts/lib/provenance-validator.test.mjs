@@ -22,6 +22,13 @@ function git(root, args, options = {}) {
     cwd: root,
     encoding: "utf8",
     ...options,
+    env: {
+      ...process.env,
+      ...(options.env ?? {}),
+      GIT_TRACE2: "0",
+      GIT_TRACE2_EVENT: "0",
+      GIT_TRACE2_PERF: "0",
+    },
   }).trim();
 }
 
