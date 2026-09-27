@@ -51,12 +51,12 @@
       <div>
         <h3>中文</h3>
         <p class="lang-zh">本科生科研任务给了 13 篇论文，覆盖 7 个主题：从 <strong>VLM 基座</strong>，到 <strong>任务规划</strong>，再到 <strong>端到端 VLA</strong>、世界模型、射频与听觉。</p>
-        <p class="lang-zh">LLaVA 是 <strong>主题 I</strong>（VLM 基座）的开山论文，也是其余主题（OpenVLA / SayCan / Cosmos）默认的视觉接入范式。先读它，等于拿到这条主线的钥匙。</p>
+        <p class="lang-zh">LLaVA 是 <strong>主题 I</strong>（VLM 基座）的开山论文，它的"视觉编码器 + 投影层 + LLM"接入范式被 OpenVLA（经 Prismatic）沿用；SayCan（2022.4）早于 LLaVA，Cosmos Policy 基于视频生成模型，都不以它为视觉接入层。先读它，等于拿到这条主线的钥匙。</p>
       </div>
       <div>
         <h3>English</h3>
         <p class="lang-en">The undergraduate research brief lists 13 papers across 7 topics — from VLM foundations to high-level planning, end-to-end VLA, world models, RF perception, and auditory intelligence.</p>
-        <p class="lang-en">LLaVA opens <strong>topic I</strong> and quietly becomes the default visual front-end of nearly every later paper in the list. Reading it first hands us the key to the rest of the roadmap.</p>
+        <p class="lang-en">LLaVA opens <strong>topic I</strong>; its "vision encoder + projector + LLM" recipe is inherited by OpenVLA (via Prismatic). SayCan (Apr 2022) predates it and Cosmos Policy builds on a video-generation model, so neither uses it as a visual front-end. Reading it first hands us the key to the rest of the roadmap.</p>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@
         <ul class="lang-zh">
           <li><strong>视觉模型</strong>（CLIP、检测器）很强，但接口僵硬——一个模型只解一个任务，不能用人话切模式。</li>
           <li><strong>大语言模型</strong> 听得懂人话，但<strong>眼盲</strong>——只能处理文字。</li>
-          <li><strong>已有多模态模型</strong>（BLIP-2、Flamingo）能"看图说话"，但没专门用<strong>图文指令数据</strong>训过，一让它"按指令回答"就退化成"描述图片"。</li>
+          <li><strong>已有多模态模型</strong>（BLIP-2、Flamingo / OpenFlamingo）能"看图说话"，但没专门用<strong>图文指令数据</strong>训过；论文实测 BLIP-2 和 OpenFlamingo，一让它们"按指令回答"就退化成"描述图片"。</li>
         </ul>
       </div>
       <div>
@@ -94,7 +94,7 @@
         <ul class="lang-en">
           <li>Vision models are <strong>powerful but rigid</strong> — one task per model, no natural-language switching.</li>
           <li>LLMs <strong>understand language</strong> but are blind to pixels.</li>
-          <li>Existing multimodal models <strong>weren't trained on image-text instruction tuples</strong>, so they fall back to plain captioning when asked to follow instructions.</li>
+          <li>Existing multimodal models (BLIP-2, Flamingo / OpenFlamingo) <strong>weren't trained on image-text instruction tuples</strong>; in the paper's tests, BLIP-2 and OpenFlamingo fall back to plain captioning when asked to follow instructions.</li>
         </ul>
       </div>
     </div>
@@ -159,7 +159,7 @@
       <div class="arch-text">
         <p style="margin-bottom: 12px"><strong>CLIP ViT-L/14</strong> 把图切成 14×14 patch，输出视觉特征 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">Z_v</code>。</p>
         <p style="margin-bottom: 12px"><strong>Projection W</strong>（一个矩阵）把 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">Z_v</code> 投影成"伪词向量" <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">H_v</code>，维度对齐 LLM token embedding。</p>
-        <p><strong>Vicuna LLM</strong> 把 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">H_v</code> 当成几个特殊词，拼到指令文本前，端到端解码答案。</p>
+        <p><strong>Vicuna LLM</strong> 把 <code style="font-family:var(--font-mono);font-size:0.92em;background:var(--bone);padding:2px 6px;border:1px solid var(--paper-dark)">H_v</code> 当作一串视觉 token，和第一轮指令拼在一起（训练时随机放在问题前或后），端到端解码答案。</p>
         <p style="margin-top: 12px; font-style: italic; color: var(--ink-mute); font-family: var(--font-serif);">English: a single-layer projection acts like a USB-to-Type-C adapter — fast to iterate, easy to ablate, surprisingly effective.</p>
       </div>
     </div>
@@ -212,14 +212,14 @@
   <div class="col">
     <span class="eyebrow"><span class="roman">III.1</span> · numbers that matter · 关键指标</span>
     <h2 class="title">Four <em>numbers</em>, one verdict.</h2>
-    <p class="title-en">Strong instruction following, near-GPT-4 reasoning at 1/100 the data.</p>
+    <p class="title-en">Strong instruction following and near-GPT-4 reasoning, from an instruction set of only ~80K unique images.</p>
     <div class="stats">
       <div class="stat"><div class="val">67.3</div><div class="lbl">LLaVA-Bench (in-the-wild)</div><div class="sub">+29 pts vs BLIP-2 · +48 pts vs OpenFlamingo</div></div>
       <div class="stat"><div class="val">81.7</div><div class="lbl">Complex reasoning</div><div class="sub">relative to text-only GPT-4 with ground-truth captions</div></div>
       <div class="stat"><div class="val">92.5</div><div class="lbl">ScienceQA SOTA</div><div class="sub">LLaVA + GPT-4 ensemble · single-model 90.92</div></div>
-      <div class="stat"><div class="val" style="font-size:72px">158K</div><div class="lbl">Instruction tuples</div><div class="sub">Generated by GPT-4 — no human annotation</div></div>
+      <div class="stat"><div class="val" style="font-size:72px">158K</div><div class="lbl">Instruction tuples</div><div class="sub">Generated by GPT-4 — humans wrote only a few seed examples</div></div>
     </div>
-    <p style="margin-top: 32px; font-size: 14px; color: var(--ink-mute); font-family: var(--font-serif); font-style: italic;">"At ~1% the data of contemporaries, the simplest possible adapter outperformed elaborate cross-attention designs. Simplicity wins again."</p>
+    <p style="margin-top: 32px; font-size: 14px; color: var(--ink-mute); font-family: var(--font-serif); font-style: italic;">"Thanks to visual instruction tuning, LLaVA achieves significantly better performance compared with BLIP-2 (+29%) and OpenFlamingo (+48%)." — Liu et al. 2023, §5.1</p>
   </div>
   <div class="chrome"><span><span class="star">★</span>EMBODIED AI READING</span><span>LLaVA · stats</span><span class="pg">10 / 14</span></div>
 </section>
@@ -258,20 +258,20 @@
 <section class="slide" data-kind="content">
   <div class="col">
     <span class="eyebrow"><span class="roman">IV</span> · legacy · 为什么这篇是地基</span>
-    <h2 class="title">Quietly the <em>visual front-end</em> of every VLA that followed.</h2>
-    <p class="title-en">悄然成为后续所有 VLA 模型的视觉接入层。</p>
+    <h2 class="title">Quietly the <em>template</em> for the visual front-end of open VLAs like OpenVLA.</h2>
+    <p class="title-en">悄然成为 OpenVLA 等开源 VLA 视觉接入层的模板。</p>
     <div class="list-pair">
       <div>
         <h3>下游影响 · downstream</h3>
         <ul>
-          <li><strong>OpenVLA / RT-2 / π0</strong> 都复用 "CLIP + 投影层 + LLM" 范式（投影层从单层 MLP 升级到 2-layer，核心思路一致）</li>
-          <li><strong>SayCan / PaLM-E</strong> 把 LLaVA 视觉 token 化方案当作 embodied reasoning 的简化替代</li>
+          <li><strong>OpenVLA</strong> 沿用"视觉编码器 + 投影层 + LLM"范式（DINOv2 + SigLIP → 2-layer MLP → Llama 2）；RT-2 建在 PaLI-X / PaLM-E 上，π0 建在 PaliGemma 上——三者的视觉编码器都不是 CLIP</li>
+          <li><strong>SayCan / PaLM-E</strong> 不是下游：两者都早于 LLaVA（2022.4 / 2023.3），LLaVA 论文还把 PaLM-E 列为已有工作</li>
         </ul>
       </div>
       <div>
         <h3>方法论遗产 · methodology</h3>
         <ul>
-          <li>"用强模型造指令数据"（symbolic data generation）成为多模态训练的标配——RT-2、OpenVLA cotraining 数据都有它的影子</li>
+          <li>"用强模型造指令数据"（symbolic data generation）成为多模态训练的标配</li>
           <li>极简优于复杂（simplicity wins）成为后续 VLM 设计准则</li>
         </ul>
       </div>
@@ -290,7 +290,7 @@
       <div>
         <h3>已完成 · done</h3>
         <ul class="lang-zh">
-          <li>13 篇论文资料就位（10 篇带图 md + 1 篇网页 + 3 篇 stub）</li>
+          <li>13 篇论文资料就位</li>
           <li>13 篇机器辅助生成的中文 auto-summary 笔记</li>
           <li>静态学习站（atelier-zero 风格 · GitHub Pages 部署中）</li>
           <li>LLaVA 精读 · 本汇报</li>

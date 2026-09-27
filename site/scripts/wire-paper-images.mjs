@@ -48,7 +48,7 @@ const WIRE = {
   ],
   mmclip: [
     ["img_001.jpg", "Figure 1：mmCLIP 信号—文本对齐框架总览"],
-    ["img_007.jpg", "Figure 7：未见活动类别上的零样本 HAR 效果"],
+    ["img_007.jpg", "Figure 5：整体零样本性能（mmCLIP 与各基线对比）"],
   ],
   rlbench: [
     ["img_000.jpg", "Figure：RLBench 基于 CoppeliaSim 的任务与场景 API"],

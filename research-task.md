@@ -37,7 +37,7 @@
 > 把高层规划和低层控制合并，单一网络从多模态输入端到端输出控制指令。
 
 - **[2406.09246] OpenVLA: An Open-Source Vision-Language-Action Model**
-  基于 Llama-3 和 SigLIP 的 7B 参数开源模型。提供完整的 VLA 预训练 + LoRA 跨具身（Cross-embodiment）微调 + 推理部署流水线。
+  基于 Llama-3 和 SigLIP 的 7B 参数开源模型。提供完整的 VLA 预训练 + LoRA 跨具身（Cross-embodiment）微调 + 推理部署流水线。（注：论文实际使用 Llama 2 7B 语言骨干 + DINOv2/SigLIP 双视觉编码器，见 papers/openvla/paper.md。）
 
 #### 四、多模态交互与数据生态（Multimodal Ecology）
 > 探索文本之外的交互模态，解决物理机器人训练的数据规模瓶颈。
