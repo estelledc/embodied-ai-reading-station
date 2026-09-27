@@ -1,6 +1,7 @@
 # 运行时生成的数据（示范、评估结果、图片、视频）只放在这里，不提交
 outputs/
 
-# Python / pytest 缓存
+# Python 虚拟环境与 pytest 缓存
+.venv/
 __pycache__/
 .pytest_cache/
