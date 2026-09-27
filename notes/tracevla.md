@@ -268,7 +268,7 @@ TraceVLA 的解法很像在锅边架一支荧光笔：锅铲走过哪里，画�
 
 ## 和本导读的关系
 
-本篇对应 [Ch12: 开源 VLA——OpenVLA / VLAs 综述 / MLA](../guide/ch12-openvla-vlas-mla.md)。
+本篇对应 [Ch12: 端到端 VLA (II)——OpenVLA / VLAS / MLA，开源与扩展](../guide/ch12-openvla-vlas-mla.md)。
 
 Ch12 讲开源 VLA 的范式与变体，OpenVLA 是其中的标杆基座。TraceVLA 是围绕这个基座做"最小改动、最大收益"的代表——它不碰架构、不加参数，只在输入端把历史轨迹画进图里，就补上了单帧 VLA 缺失的时空记忆。读完 OpenVLA 理解"单帧 VLA 长什么样、为什么记不住历史"，再读 TraceVLA 就能看到"视觉提示这一招如何四两拨千斤"，也能顺势对照 OpenVLA-OFT（同样在 OpenVLA 上做改进，但改的是输出端而非输入端）。
 

@@ -299,7 +299,7 @@ OpenVLA-OFT 想让这个学徒改三个习惯：
 
 ## 和本导读的关系
 
-本篇对应 [Ch12: 开源 VLA——OpenVLA / VLAs 综述 / MLA](../guide/ch12-openvla-vlas-mla.md)。
+本篇对应 [Ch12: 端到端 VLA (II)——OpenVLA / VLAS / MLA，开源与扩展](../guide/ch12-openvla-vlas-mla.md)。
 
 Ch12 讲"VLA 范式有哪些变体"，OpenVLA 是其中 autoregressive token-based VLA 的标杆。OpenVLA-OFT 正是对这个标杆做"输出端手术"的续作：保留 OpenVLA 的看/听能力，把"动"的方式换成并行 + 分块 + 连续。读完 OpenVLA 理解"离散自回归 VLA 长什么样"，再读 OFT 就能看到"同一个基座如何通过配方进化成又快又准的版本"，并顺势对照 Ch13 扩散策略线的 π0 / RDT-1B。
 
