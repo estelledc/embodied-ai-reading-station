@@ -115,6 +115,8 @@ owner 外部证据：EAI13-T012 独立跟踪，不得伪装成已完成
 
 把 [research-task.md](research-task.md) Task 2 的实践过程沉淀为站点新板块,脚手架与内容解耦。
 
+> **2026-09-27 状态**：用户显式激活。先落地仓库内的实践工作区 `lab/`（[PR #55](https://github.com/estelledc/embodied-ai-reading-station/pull/55)）：阶段 1 练习、阶段 2 环境自检、阶段 3 仿真抓取与 SmolVLA 微调/评估脚本、日志模板和 CI 测试。站点 Lab 板块（下面前三项）会改变全站 CSP 内联样式计数，与 [PR #54](https://github.com/estelledc/embodied-ai-reading-station/pull/54) 的预算常量冲突，等两个 PR 合并后从新的 `main` 单独实现。首篇日志仍须来自本人真实运行。
+
 - [ ] 新增 lab 内容类型:`site/content/lab-*.md`(frontmatter 沿用 learn 页的 `title/order/intro`,加 `stage` 字段标注环境搭建/复现/数据/微调/部署)。
 - [ ] 仿 [site/scripts/lib/views/learn.mjs](site/scripts/lib/views/learn.mjs) 的 buildLearnIndex/buildLearnPage 增加 lab 构建器;导航入口进 masthead(位置与 More 折叠区权衡后定);`npm run check` 补 lab 页面存在性与死链检查。
 - [ ] 与 [site/content/tutorials.md](site/content/tutorials.md) 第 2 档(SmolVLA / LeRobot)互链;[ROADMAP.md](ROADMAP.md) 主线 B 的 5 篇规划作为占位目录展示,未成文的标注「未开始」。
@@ -126,6 +128,8 @@ owner 外部证据：EAI13-T012 独立跟踪，不得伪装成已完成
 
 建立"逐篇回原文核验"的可复制流程,选材料最全的 llava(本地 paper.md + 14 页 deck + Ch08/Ch09 两章 guide)。
 
+> **2026-09-27 状态**：用户显式激活，并把范围从 llava 扩大到全部 13 篇任务论文和 deck（[PR #54](https://github.com/estelledc/embodied-ai-reading-station/pull/54)）。agent 逐条对照 `papers/<slug>/paper.md` 改正 222 处可证伪错误，逐条依据和 60 项待人工核对条目记录在 `docs/verification-log.md`。agent 核对不算人工复核，`human_verification` 保持 `UNVERIFIED`，所以第二项仍未完成；第三项暂不做，核验格式先以 `docs/verification-log.md` 为准。
+
 - [ ] 对照 `papers/llava/paper.md` 逐节核验 `notes/llava.md` 的事实、数字与结论;发现的偏差逐条修正(改动必须有原文依据)。
 - [ ] 核验结果登记进批次 1 的 provenance 人工复核字段(首个 `verified` 条目)。
 - [ ] 把核验工作流沉淀为 [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md) 新章节「核验(verify)工作流」:触发词、逐节对照法、登记方式、不盲目扩写红线。
@@ -135,8 +139,8 @@ owner 外部证据：EAI13-T012 独立跟踪，不得伪装成已完成
 
 ## D 线节奏约束(不设 agent 任务项)
 
-- **本人消化**:[progress.md](progress.md) 的 12 篇待消化任务论文按 Guide Task 1 路径推进,每消化一篇勾选一篇——这是读者本人的事,agent 只保证材料与进度页可用。
-- **季度 Issue**:每季一期收 3–5 篇新论文,收录标准见 ROADMAP 主线 D;下一期(Issue 09)在 v1.3.0 发布后启动。
+- **本人学习**:2026-09 起按 `lab/` 的四个阶段推进并记录在 [progress.md](progress.md) 和 `lab/logs/`;12 篇待消化任务论文在做 Task 2 用到时再读——这是本人的事,agent 只保证材料、练习和进度页可用。
+- **季度 Issue**:每季一期收 3–5 篇新论文,收录标准见 ROADMAP 主线 D;2026-09 起暂停,恢复需本人明确要求(见 ROADMAP"2026-09 调整")。
 
 ## PR 与门禁约定
 
