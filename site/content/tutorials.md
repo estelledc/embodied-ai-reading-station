@@ -288,8 +288,9 @@ lerobot-info
 **重点提醒**：
 
 - 不要跳级。直接啃 OpenVLA 训练代码，会卡 80% 的时间在配环境上，反而学不到任何概念
-- **每跑通一个就在 [problems/](../../../../problems/) 记一笔**，至少写"今天遇到 XX 报错，搜了 XX 解决"
-- **每懂一个新概念就在 [learnings/](../../../../learnings/) 写一篇**，用自己的话解释一遍
+- **每跑通一个就在 [实践日志](https://github.com/estelledc/embodied-ai-reading-station/tree/main/lab/logs) 记一笔**，至少写"今天遇到 XX 报错，搜了 XX 解决"
+- **每懂一个新概念就在实践日志里写一篇**，用自己的话解释一遍
+- 想直接从"读"走到"做"：仓库里的 [实践工作区 `lab/`](https://github.com/estelledc/embodied-ai-reading-station/tree/main/lab) 有两个只用 numpy 的小练习（图片怎么变成 token、动作怎么变成 token），以及一个 MuJoCo 抓取场景，可以录示范、导出 LeRobot 数据、微调并评估 SmolVLA
 
 *读到这里你应该懂了：从看视频到自己跑模型大约需要 4-5 周，不要急。*
 
@@ -304,20 +305,20 @@ lerobot-info
 | LLaVA | https://github.com/haotian-liu/LLaVA | 已有 NeXT 版接班 | 能跑，建议直接用 LLaVA-NeXT |
 | SayCan | https://github.com/google-research/google-research/tree/master/saycan | 仅 Colab 演示 | 能跑 demo，不能复现训练 |
 | Cosmos | https://github.com/NVIDIA/Cosmos | 活跃，NVIDIA 官方 | 能跑推理，门槛高 |
-| CartoRadar | 未公开（MIT 实验室） | 论文公开，代码未开源 | 不能跑，等开源 |
+| CartoRadar | https://waves.seas.upenn.edu/projects/cartoradar | 宾夕法尼亚大学团队；论文称已公开代码和数据集 | 可以先用公开数据集跑；自己采数据需要毫米波雷达硬件 |
 | 大量硬件相关论文 | 多无开源代码 | - | 读论文为主，硬件复现不现实 |
 
-*读到这里你应该懂了：不是每篇论文都有代码可跑，但本页推荐的入门项目都已亲测能跑通。*
+*读到这里你应该懂了：不是每篇论文都有代码可跑。上表的"能跑"来自各项目的公开文档，本站没有逐个实测；本站实际运行过什么，见实践工作区 `lab/README.md` 里的"谁跑过什么"。*
 
 ---
 
 ## 跑代码遇到问题怎么办
 
-- 先 grep 看 [problems/](../../../../problems/) 有没有人踩过同一个坑
-- 报错信息直接复制到搜索引擎或 ChatGPT，90% 都有现成答案
+- 先翻一翻 [实践日志](https://github.com/estelledc/embodied-ai-reading-station/tree/main/lab/logs)，看自己以前有没有踩过同一个坑
+- 先把报错的最后几行读懂，再复制到搜索引擎或 ChatGPT 里查；大多数常见报错都有现成答案
 - 国内下载慢就换镜像源（清华 / 阿里）
 - 模型权重下载不动就用 [HuggingFace 镜像站](https://hf-mirror.com)
-- 解决了就回来记一笔到 [problems/](../../../../problems/)，下次自己或别人能直接用
+- 解决了就回来在实践日志里记一笔：现象、原因、解决办法，下次自己或别人能直接用
 
 *读到这里你应该懂了：遇坑不可怕，记下来就是经验。*
 
