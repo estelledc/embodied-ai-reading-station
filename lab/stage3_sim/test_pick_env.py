@@ -12,6 +12,7 @@
 
 import json
 import os
+import sys
 
 import numpy as np
 import pytest
@@ -31,6 +32,7 @@ from pick_env import (
     WORKSPACE_HIGH,
     WORKSPACE_LOW,
     PickCubeEnv,
+    check_rendering_backend,
 )
 from record_demos import main as record_demos_main
 from record_demos import record_demos
@@ -330,7 +332,22 @@ def test_record_demos_cli_and_overwrite_protection(tmp_path, capsys):
     assert sorted(p.name for p in out.iterdir()) == ["episode_0000.npz", "meta.json"]
 
 
-# ----- 渲染（需要 LAB_RENDER=1）---------------------------------------------
+# ----- 渲染 -----------------------------------------------------------------
+
+
+def test_headless_linux_without_mujoco_gl_gives_clear_error(monkeypatch):
+    """没有显示器又没设 MUJOCO_GL 时，应该得到看得懂的报错，而不是让 Python 直接崩溃。"""
+    monkeypatch.setattr(sys, "platform", "linux")
+    monkeypatch.delenv("DISPLAY", raising=False)
+    monkeypatch.delenv("WAYLAND_DISPLAY", raising=False)
+    monkeypatch.delenv("MUJOCO_GL", raising=False)
+    with pytest.raises(RuntimeError, match="MUJOCO_GL"):
+        PickCubeEnv(render=True)  # 在创建渲染器之前就报错，不会真的去碰图形库
+    monkeypatch.setenv("MUJOCO_GL", "egl")
+    check_rendering_backend()  # 设置了 egl 就不报错
+
+
+# 下面两个测试会真的渲染图像，需要 LAB_RENDER=1
 
 
 @needs_render

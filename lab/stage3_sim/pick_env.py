@@ -28,6 +28,9 @@
 
 from __future__ import annotations
 
+import os
+import sys
+
 import mujoco
 import numpy as np
 
@@ -190,6 +193,17 @@ def build_scene_xml(n_distractors: int = 0) -> str:
 """
 
 
+def check_rendering_backend():
+    """没有显示器的 Linux 上，默认的 GLFW 渲染方式会让 Python 直接崩溃，这里提前给出清楚的提示。"""
+    backend = os.environ.get("MUJOCO_GL", "").lower()
+    has_display = os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY")
+    if sys.platform.startswith("linux") and backend not in ("egl", "osmesa") and not has_display:
+        raise RuntimeError(
+            "这台 Linux 机器没有显示器，默认的 GLFW 渲染方式用不了。请在运行前设置 "
+            "MUJOCO_GL=egl（或 MUJOCO_GL=osmesa），或者改用 render=False / --no-render。"
+        )
+
+
 # ---------------------------------------------------------------------------
 # 环境
 # ---------------------------------------------------------------------------
@@ -308,6 +322,7 @@ class PickCubeEnv:
     # ----- 内部工具 -------------------------------------------------------
 
     def _make_renderer(self):
+        check_rendering_backend()
         height, width = self.image_size
         # 离屏渲染缓冲区不能比图像小
         self.model.vis.global_.offheight = max(self.model.vis.global_.offheight, height)

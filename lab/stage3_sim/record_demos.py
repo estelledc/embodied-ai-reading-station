@@ -75,11 +75,12 @@ def record_demos(
 ):
     """录制示范数据，返回写进 meta.json 的字典。第 i 个回合使用种子 seed + i。"""
     out_dir = Path(out_dir)
-    prepare_output_dir(out_dir, overwrite)
+    # 先创建环境：如果渲染配置有问题，在动任何文件之前就报错
     env = PickCubeEnv(render=render, image_size=image_size, n_distractors=n_distractors, max_steps=max_steps)
     expert = ScriptedExpert()
     saved, failed_seeds = [], []
     try:
+        prepare_output_dir(out_dir, overwrite)
         for i in range(episodes):
             episode_seed = seed + i
             arrays, success = record_episode(env, expert, episode_seed)
