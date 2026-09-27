@@ -10,11 +10,14 @@
     LAB_RENDER=1 MUJOCO_GL=egl pytest -q lab/stage3_sim
 """
 
+import json
 import os
 
 import numpy as np
 import pytest
 
+from evaluate import RandomPolicy, evaluate
+from evaluate import main as evaluate_main
 from pick_env import (
     CUBE_HALF_SIZE,
     CUBE_XY_RANGE,
@@ -29,6 +32,8 @@ from pick_env import (
     WORKSPACE_LOW,
     PickCubeEnv,
 )
+from record_demos import main as record_demos_main
+from record_demos import record_demos
 from scripted_expert import ScriptedExpert
 
 needs_render = pytest.mark.skipif(
@@ -251,6 +256,80 @@ def test_expert_actions_are_valid(env):
             break
 
 
+# ----- 评估与随机基线 --------------------------------------------------------
+
+
+def test_random_policy_almost_never_succeeds():
+    result = evaluate(RandomPolicy(seed=0), episodes=20, seed=0, render=False)
+    assert result["n_success"] <= 1
+
+
+def test_evaluate_expert_result_format():
+    result = evaluate(ScriptedExpert(), episodes=20, seed=0, render=False, allow_privileged=True)
+    assert set(result) == {"success_rate", "n_success", "n_episodes", "seed_start", "per_episode"}
+    assert result["n_episodes"] == 20
+    assert [episode["seed"] for episode in result["per_episode"]] == list(range(20))
+    assert result["success_rate"] >= 0.9
+
+
+def test_evaluate_hides_privileged_cube_pos():
+    seen_keys = []
+
+    def spy_policy(obs, task):
+        seen_keys.append(set(obs))
+        assert task == TASK
+        return np.zeros(4, dtype=np.float32)
+
+    evaluate(spy_policy, episodes=1, seed=0, render=False, max_steps=3)
+    assert seen_keys == [{"state"}] * 3
+    with pytest.raises(KeyError):  # 专家必须看 cube_pos，不开 allow_privileged 就拿不到
+        evaluate(ScriptedExpert(), episodes=1, seed=0, render=False)
+
+
+def test_evaluate_cli_prints_success_rate(capsys):
+    result = evaluate_main(["--policy", "random", "--episodes", "2", "--max-steps", "10"])
+    assert result["n_episodes"] == 2
+    assert "success_rate" in capsys.readouterr().out
+
+
+# ----- 录制示范数据 -----------------------------------------------------------
+
+
+def test_record_demos_writes_expected_files(tmp_path):
+    meta = record_demos(episodes=3, out_dir=tmp_path, seed=0, render=False)
+    assert meta["success_count"] == 3
+    expected_files = [f"episode_{i:04d}.npz" for i in range(3)] + ["meta.json"]
+    assert sorted(p.name for p in tmp_path.iterdir()) == expected_files
+
+    saved_meta = json.loads((tmp_path / "meta.json").read_text(encoding="utf-8"))
+    assert saved_meta == meta
+    assert saved_meta["fps"] == 10 and saved_meta["task"] == TASK
+    assert saved_meta["seeds"] == [0, 1, 2] and saved_meta["failed_seeds"] == []
+    assert len(saved_meta["state_semantics"]) == 4 and len(saved_meta["action_semantics"]) == 4
+
+    for episode in saved_meta["episodes"]:
+        with np.load(tmp_path / episode["file"]) as data:
+            assert set(data.files) == {"states", "actions"}  # render=False → 没有 images
+            states, actions = data["states"], data["actions"]
+        assert states.shape == (episode["length"], 4) and states.dtype == np.float32
+        assert actions.shape == (episode["length"], 4) and actions.dtype == np.float32
+        assert np.all(np.abs(actions[:, :3]) <= MAX_DELTA + 1e-7)
+
+
+def test_record_demos_cli_and_overwrite_protection(tmp_path, capsys):
+    out = tmp_path / "demos"
+    record_demos_main(["--episodes", "2", "--out", str(out), "--seed", "5", "--no-render"])
+    assert "success_rate" in capsys.readouterr().out
+    assert sorted(p.name for p in out.iterdir()) == ["episode_0000.npz", "episode_0001.npz", "meta.json"]
+
+    with pytest.raises(FileExistsError):  # 默认不覆盖旧数据
+        record_demos_main(["--episodes", "1", "--out", str(out), "--no-render"])
+
+    meta = record_demos_main(["--episodes", "1", "--out", str(out), "--no-render", "--overwrite"])
+    assert meta["episodes_attempted"] == 1
+    assert sorted(p.name for p in out.iterdir()) == ["episode_0000.npz", "meta.json"]
+
+
 # ----- 渲染（需要 LAB_RENDER=1）---------------------------------------------
 
 
@@ -268,3 +347,15 @@ def test_rendered_image_is_valid():
     next_obs, *_ = env.step([0.02, 0.0, -0.02, 0.0])
     assert not np.array_equal(next_obs["image"], image)  # 夹爪动了，画面也要变
     env.close()
+
+
+@needs_render
+def test_record_demos_saves_images(tmp_path):
+    meta = record_demos(episodes=1, out_dir=tmp_path, seed=0, render=True, image_size=(64, 80))
+    episode = meta["episodes"][0]
+    with np.load(tmp_path / episode["file"]) as data:
+        images = data["images"]
+    assert images.shape == (episode["length"], 64, 80, 3)
+    assert images.dtype == np.uint8
+    assert images.std() > 5
+    assert meta["image_size_hw"] == [64, 80] and meta["camera"] == "front"
