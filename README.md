@@ -15,10 +15,10 @@
 **Status:** Maintained · v1.2.0
 
 - **Problem**：新手缺的不是另一篇孤立摘要，而是一条能回答“先学什么、论文如何关联、怎样走到真实研究任务”的路线。
-- **Role**：个人项目；独立完成产品定义、内容架构、静态站工程、交互设计、公开数据与发布门禁。
+- **Role**：个人项目；选题、取舍和发布由本人负责，笔记正文、站点工程与门禁大量由 AI agent 协作完成（见提交记录）。
 - **System**：Node 静态生成器把教程、论文笔记、主题/时间线/关系图、Pagefind 搜索和浏览器本地进度统一到一份内容数据上。
 - **Evidence**：22 章教程、202 篇笔记、11 个主题；公开 [质量页](https://estelledc.github.io/embodied-ai-reading-station/quality/)、[数据接口](https://estelledc.github.io/embodied-ai-reading-station/data/index.json) 和 [Actions 构建记录](https://github.com/estelledc/embodied-ai-reading-station/actions)。
-- **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，156 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明。
+- **Limitations**：笔记由 AI 辅助整理；46 篇保留本地解析文本与 SHA-256 清单，156 篇引用 HTTPS 原文。结构门禁不等于逐页人工复核，也不是学习效果证明；2026-09 对 13 篇任务论文做过一轮 agent 逐条核对，同样不算人工复核。
 
 > An editorial learning system that turns embodied-AI papers into a navigable path from first concepts to a real research brief. It is an owner-led, independently maintained, evidence-aware product—not a claim that every note has received line-by-line human review.
 
@@ -171,13 +171,15 @@ npm run serve      # 本地 dev server
 
 ```
 notes/             202 篇论文笔记 (.md, frontmatter + body)
+guide/             22 章导读
 papers/            解析文本 + 解析图片 + provenance SHA-256 清单
+deck/              Task 1 的 LLaVA 英文汇报 deck
+docs/              操作索引、provenance 合同等流程文档；历史计划与接班记录在 docs/archive/
 site/
   scripts/build.mjs   主构建脚本（discoverPapers + buildIndex + ...）
   src/                CSS / JS / images / templates
   content/            issues / learn 页 markdown
   dist/               构建输出（git-ignored）
-explorations/       playground
 ```
 
 ## 构建流程

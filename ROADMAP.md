@@ -1,6 +1,6 @@
 # Roadmap — 项目未来方向
 
-> 状态:现行方向文档,2026-07 制定,2026-07-11 完成 EAI13 状态收口。
+> 状态:现行方向文档,2026-07 制定,2026-07-11 完成 EAI13 状态收口;2026-09-27 按"从读到做"调整优先级(见下方"2026-09 调整")。
 > 本文回答一个问题:**这个项目接下来往哪走。**
 > 各主线的具体执行以其引用的计划文档为准;完成状态以 [CHANGELOG.md](CHANGELOG.md) 为准。
 > 里程碑只定义出口条件与依赖顺序,不做日历时间承诺。
@@ -11,19 +11,28 @@
 
 **中文世界里,零基础读者从"读懂具身智能论文"走到"亲手跑通一个 VLA"的最短路径。**
 
-- 已有的一半:22 章 Guide(教材主线)+ 156 篇 deep-read 笔记(参考文献库)+ 多维浏览视图 + 学习工具箱。
+- 已有的一半:22 章 Guide(教材主线)+ 202 篇 deep-read 笔记(参考文献库)+ 多维浏览视图 + 学习工具箱。
 - 缺失的一半:动手实践线。[research-task.md](research-task.md) 的 Task 2(mujoco 复现 + VLA 微调部署)是这条线的天然起点——正如 Task 1 孕育了本站。
 - 质量哲学不变:零术语假设、可验证的门禁、如实披露边界(AI 辅助整理、结构门禁、非逐页人工复核)。
 
-## 现状快照(2026-07)
+## 2026-09 调整：先做，再扩
+
+2026-07 之后，内容和工程一直在扩张（笔记从 156 篇增加到 202 篇，门禁与流程文档越来越多），但路线图里"缺失的一半"——动手实践和本人学习——没有推进。2026-09-27 起的优先级：
+
+1. **本人能拿出的证据优先**：实践工作区 `lab/`（[PR #55](https://github.com/estelledc/embodied-ai-reading-station/pull/55)）的四个阶段（练习 → 跑通 VLM_Grasp_Interactive → 仿真里微调并评估 SmolVLA → 一个小研究问题），每个阶段以"拿出了什么"为出口。
+2. **核验优先于扩写**：13 篇任务论文笔记与 LLaVA deck 由 agent 逐条对照原文核对了一轮，改正 222 处可证伪错误（[PR #54](https://github.com/estelledc/embodied-ai-reading-station/pull/54)，逐条记录在 `docs/verification-log.md`）；`human_verification` 仍为 `UNVERIFIED`，待本人确认。
+3. **冻结扩张**：不再批量新增论文、不再扩展站点功能，除非本人明确要求；季度 Issue 收录暂停。
+4. **流程减负**：历史计划、审计与接班记录移入 [docs/archive/](docs/archive/README.md)；`AGENTS.md` 写明默认方向，agent 不再默认扩写内容。
+
+## 现状快照(2026-09)
 
 | 维度 | 状态 |
 |------|------|
-| 版本 | **v1.2.0 已发布**（见 [CHANGELOG.md](CHANGELOG.md)）；O1/T014 仓库保护由 owner 决定延后，不声称已关闭。后续按 [PLAN-1.3.md](PLAN-1.3.md) 批次 1+ 推进 |
-| 内容 | 156 篇全部 deep-read 格式;正文债务已冻结待清偿:42 篇 Method 低于 1,500 字、110 篇仅远程来源 |
-| 科研任务 | Task 1 完成(LLaVA 14 页 deck);Task 2(mujoco + SmolVLA)未开始 |
-| 学习闭环 | 13 篇任务论文中 12 篇"笔记已就绪、等本人消化"([progress.md](progress.md)) |
-| 工程 | v1.2 发布基线为 73 项单测 + 97 项健康检查；合同/API 硬门禁在 `19a64ca` 达到 183 项单测 + 110 项健康检查，旧 EAI-T008–T020 已映射到 EAI13 队列 |
+| 版本 | **v1.2.0 已发布**（见 [CHANGELOG.md](CHANGELOG.md)）；2026-09-27 的 PR 上 `Validate pull request / build` 已显示为 required check，main 保护规则与 Pages environment 仍未核实，O1/T014 不声称已关闭 |
+| 内容 | 202 篇全部 deep-read 格式（2026-07 中旬新增 40 篇）;13 篇任务论文完成一轮 agent 核对（[PR #54](https://github.com/estelledc/embodied-ai-reading-station/pull/54)）；其余 189 篇未核对 |
+| 科研任务 | Task 1 完成(LLaVA 14 页 deck，核验中改正 11 处);Task 2 本人尚未开始，`lab/` 备好了仿真抓取场景与 SmolVLA 微调/评估流程（[PR #55](https://github.com/estelledc/embodied-ai-reading-station/pull/55)；云端 CPU 只验证了流程能走通） |
+| 学习闭环 | 13 篇任务论文中 12 篇"笔记已就绪、等本人消化";进度改为按 `lab/` 四个阶段记录([progress.md](progress.md)) |
+| 工程 | 2026-09-27 实测：350 项单测、160 项健康检查全部通过；PR 依赖审计因 `js-yaml` 新公告失败，已随三个 PR 修复。EAI13-T001–T011 已完成，T012 见上一行 |
 
 ## 方向总览
 
@@ -103,7 +112,7 @@ v1.2 冻结的正文债务(42 篇 Method 低于 1,500 字、120 篇低于旧宣�
 |----|------|
 | 迁移站点框架(Astro / Starlight / mkdocs 等) | 无框架静态构建 + 自有门禁已满足需求;迁移是重写不是演进 |
 | 后端 / 评论系统 / 账号体系 | 个性化全部走前端 localStorage;纯静态是安全边界与可维护性的地基 |
-| 为扩量而扩量 | 新论文只按主线 D 的季度节奏收录,数量不是目标 |
+| 为扩量而扩量 | 2026-09 起暂停批量新增论文与季度收录；数量不是目标，恢复需本人明确要求 |
 | 盲目重写 156 篇既有正文 | 正文改动必须以逐篇回原文核验为前提(主线 C 红线) |
 | 日历时间承诺 | 里程碑只定义出口条件与依赖顺序 |
 
@@ -114,9 +123,9 @@ v1.2 冻结的正文债务(42 篇 Method 低于 1,500 字、120 篇低于旧宣�
 | 方向(本文) | ROADMAP.md |
 | 完成记录(唯一权威) | [CHANGELOG.md](CHANGELOG.md) |
 | 推进执行计划(现行) | [PLAN-1.3.md](PLAN-1.3.md)(本文的执行层:批次 0–9,出口 = v1.3.0) |
-| 工程执行计划 | [PLAN-1.3.md](PLAN-1.3.md)（现行 EAI13 编排）；[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)（v1.2 历史收口记录）；[PLAN-1.0.0.md](PLAN-1.0.0.md)、[PLAN-1.1.md](PLAN-1.1.md)（已完成） |
-| 科研任务与进度 | [research-task.md](research-task.md)、[progress.md](progress.md) |
-| 内容工作流 | [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)(精读标准)、[DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)(批量升级记录) |
-| 历史存档 | [AUDIT.md](AUDIT.md)、[BACKLOG.md](BACKLOG.md)、[IMPROVEMENTS.md](IMPROVEMENTS.md)、[TRANSFORMATION.md](TRANSFORMATION.md)、[delivery-checklist.md](delivery-checklist.md) |
+| 工程执行计划 | [PLAN-1.3.md](PLAN-1.3.md)（现行 EAI13 编排）；[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)（v1.2 历史收口记录）；[PLAN-1.0.0.md](docs/archive/PLAN-1.0.0.md)、[PLAN-1.1.md](docs/archive/PLAN-1.1.md)（已完成） |
+| 科研任务与进度 | [research-task.md](research-task.md)、[progress.md](progress.md)、`lab/`(实践工作区与本人实践日志) |
+| 内容工作流 | [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)(精读标准，显式 opt-in)、`docs/verification-log.md`(任务论文核验记录) |
+| 历史存档 | [docs/archive/](docs/archive/README.md)：旧计划、审计、改进建议、转型方案、交付清单、批量升级记录、首次部署说明与 2026-07 接班记录 |
 
 **本文的维护方式**:每次发版(CHANGELOG 切版)时回看本文;主线状态变化直接改本文,并在 CHANGELOG 记一行。

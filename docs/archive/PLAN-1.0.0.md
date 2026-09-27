@@ -67,7 +67,7 @@ Phase 1–5 之间无代码冲突（改动文件集合基本不相交），可�
 ```markdown
 ### 内容质量说明
 
-156 篇笔记已于 2026-07 全部升级为 **deep-read（深度精读）** 标准（升级过程见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)，标准定义见 [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)）：
+156 篇笔记已于 2026-07 全部升级为 **deep-read（深度精读）** 标准（升级过程见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)，标准定义见 [AGENT-DEEPREAD.md](../../AGENT-DEEPREAD.md)）：
 
 - 每篇 ≥4000 字，Method 拆解占比 ≥40%
 - 主实验表用 Markdown 表格还原，关键数字带生活语境
@@ -108,7 +108,7 @@ git add README.md && git commit -m "docs(readme): 修正过时的三级质量分
 ```markdown
 > ⚠️ **历史文档**：本文反映 2026-06-24 时点的状态，其中多数问题已在后续迭代中解决
 > （156 篇已全部升级 deep-read，见 [DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)）。
-> 现状以 [CHANGELOG.md](CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
+> 现状以 [CHANGELOG.md](../../CHANGELOG.md) 与 [PLAN-1.0.0.md](PLAN-1.0.0.md) 为准。
 ```
 
 - [ ] **Step 2:** 顺手修正 `BACKLOG.md` 中已完成项：给 #2（110 篇补 PDF）、#3（deep-read 升级计划）两节标题后追加 `（✅ 已于 2026-07-01 通过批量 deep-read 升级解决，见 DEEPREAD-BATCH.md）`。

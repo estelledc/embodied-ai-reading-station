@@ -2,11 +2,16 @@
 
 这是仓库唯一的活动操作入口。它规定如何启动和收口一次有限 run；目标与依赖仍来自 `ROADMAP.md`、`PLAN-1.3.md` 和专项证据，但这些文档不自动授权执行。
 
+默认方向见 `AGENTS.md` 的“默认方向”：本人能拿出的证据优先，调用方没有明确要求时不新增论文、不扩展站点。
+
 常用专项入口：
 
-- 批量论文 deep-read、资产、provenance、PR 和部署闭环：[`docs/paper-batch-campaign-playbook.md`](paper-batch-campaign-playbook.md)
-- 单篇旧笔记升级参考：[`docs/paper-onboarding-guide.md`](paper-onboarding-guide.md)
+- 实践工作区：`lab/README.md`（阶段 1–4、谁跑过什么、测试命令 `python -m pytest -q lab`）
+- 笔记核验：`docs/verification-log.md`（逐条依据与待人工核对条目的格式）
 - provenance v2 字段和证据合同：[`docs/provenance-v2-contract.md`](provenance-v2-contract.md)
+- 批量论文 deep-read、资产、provenance、PR 和部署闭环（2026-07 的已完成 campaign，只在调用方明确要求新增论文时使用）：[`docs/paper-batch-campaign-playbook.md`](paper-batch-campaign-playbook.md)
+- 单篇旧笔记升级参考：[`docs/paper-onboarding-guide.md`](paper-onboarding-guide.md)
+- 历史计划、审计与接班记录：[`docs/archive/`](archive/README.md)
 
 入口优先级：批量新增、批量资产、部署和 handoff 先读批量 Playbook；`paper-onboarding-guide.md` 只保留为单篇旧笔记升级的 legacy 背景，不作为新 campaign 的执行入口。
 
@@ -57,7 +62,7 @@ git diff --stat origin/main...HEAD
 
 ## 3. 当前优先模式：从已接受基线启动
 
-截至 `SESSION-HANDOFF.md` 记录的最新完成态，远端 `main` 已经是当前已接受基线，open PR 为空；后续 run 应先按第 2 节重新 fetch / 对齐 `origin/main`，再声明新的有限 run contract。
+截至 `SESSION-HANDOFF.md` 记录的 2026-09-27 campaign，三个 PR 都从同一已接受基线 `7bc7584` 出发、改动文件互不重叠：[#54](https://github.com/estelledc/embodied-ai-reading-station/pull/54)（任务论文核验）、[#55](https://github.com/estelledc/embodied-ai-reading-station/pull/55)（实践工作区）、[#56](https://github.com/estelledc/embodied-ai-reading-station/pull/56)（流程减负）。它们等待 owner 评审；合并前不在其上叠加新工作，只按评审意见修改对应分支。三个都合并后，按第 2 节对齐新的 `origin/main`，再声明新的有限 run contract。
 
 如果未来再次出现“本地实现栈未进入远端已接受基线，同时 `main` 已有后续改动”的状态，才切回“集成收口”优先：单独设计合同，冻结 source/target ref，盘点重叠路径，选择 merge/cherry-pick 等非破坏性策略，写独立验收，并在实际修改前确认授权。
 
