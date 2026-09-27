@@ -72,13 +72,13 @@
 pytest -q
 ```
 
-（在仓库根目录运行 `pytest -q lab/stage3_sim` 也可以。）应该看到类似 `29 passed, 2 skipped` 的结果。每个点 `.` 是一个通过的测试；`s` 表示「跳过」，被跳过的是两个需要渲染图像的测试。想把它们也跑上：
+（在仓库根目录运行 `pytest -q lab/stage3_sim` 也可以。）应该看到类似 `30 passed, 4 skipped` 的结果。每个点 `.` 是一个通过的测试；`s` 表示「跳过」：被跳过的测试需要渲染图像、装好 LeRobot 或者要跑很久，条件不满足时自动跳过。想把渲染测试也跑上：
 
 ```bash
 LAB_RENDER=1 MUJOCO_GL=egl pytest -q
 ```
 
-这时应该是 `31 passed`。（Windows PowerShell 的写法是 `$env:LAB_RENDER=1; pytest -q`。）
+装了 `requirements-vla.txt` 时，这一步应该是 `33 passed, 1 skipped`；剩下那一个要在 CPU 上真的训练 SmolVLA，再加 `LAB_SLOW=1` 才会跑（会下载约 2 GB 权重，本机约 40 秒）。（Windows PowerShell 的写法是 `$env:LAB_RENDER=1; pytest -q`。）
 
 测试检查了这些事情：观测和动作的形状与类型、动作裁剪、夹爪不会跑出工作空间、同一个种子两次运行结果完全一样、脚本专家在种子 0～19 上至少成功 18 次（带不带干扰方块都测）、随机乱动几乎不可能成功、录制的数据文件齐全、没有显示器时会给出看得懂的提示，以及（渲染测试里）图像不是一张纯色图。
 
@@ -174,7 +174,7 @@ env.close()
 **和 OpenVLA 的关系**：OpenVLA 每一步输出 7 个数：x/y/z 三个方向的平移、绕三个轴的旋转、夹爪开合（见本站的 [OpenVLA 笔记](../../notes/openvla.md)）。本场景的夹爪不能旋转，所以相当于**去掉了三个旋转维度**，只剩 `[dx, dy, dz, gripper]` 这 4 个数。另外有两点不同：
 
 1. OpenVLA 把每一维切成 256 档，变成语言模型能输出的 token；这里直接用以米为单位的小数。
-2. 不同数据集对夹爪数值的约定不一样。比如在 OpenVLA 的训练数据处理里，夹爪一般用 1 表示张开、0 表示闭合，正好和这里相反。以后混用不同来源的数据时，一定要先核对这种约定。
+2. 不同数据集对夹爪数值的约定不一样。OpenVLA 的数据加载器把夹爪统一成 0 = 闭合、1 = 张开（见 OpenVLA 代码 `experiments/robot/robot_utils.py` 里 `invert_gripper_action` 的注释），正好和这里相反。以后混用不同来源的数据时，一定要先核对这种约定。
 
 ## `cube_pos` 是什么？为什么策略不能用它？
 
@@ -196,6 +196,43 @@ env.close()
 第 t 行的图像、状态、动作是同一时刻的：「看到 `images[t]` 和 `states[t]`，于是做出 `actions[t]`」。
 
 `meta.json` 里记录了：帧率 `fps`（10）、任务文字 `task`、state / action 每一维的含义、用到的种子 `seeds`、失败的种子 `failed_seeds`、成功数 `success_count`、每个文件对应的种子和长度 `episodes`，以及 MuJoCo 版本等。
+
+## 进阶：导出 LeRobotDataset、微调 SmolVLA、放回仿真评估
+
+这一步对应 Task 2 的进阶要求："采集数据 → 微调一个简单的 VLA → 部署回仿真抓取"。先装 `pip install -r ../requirements-vla.txt`。
+
+1. **录带图像的示范**（VLA 要看图，所以不能用 `--no-render`）：
+
+   ```bash
+   python record_demos.py --episodes 50 --out outputs/demos --seed 0
+   ```
+
+2. **转成 LeRobotDataset**（LeRobot 训练脚本认的格式）：
+
+   ```bash
+   python export_lerobot.py --demos outputs/demos --root outputs/lerobot_pick_cube
+   ```
+
+   对应关系：`images` → `observation.images.front`，`states` → `observation.state`，`actions` → `action`，`meta.json` 里的任务文字 → 每一帧的 `task`。
+
+3. **微调 SmolVLA**。`finetune_smolvla.sh` 把 `lerobot-train` 需要的参数都写好了：
+
+   ```bash
+   bash finetune_smolvla.sh                                   # 默认 DEVICE=cuda，需要 NVIDIA 显卡
+   STEPS=2 BATCH_SIZE=2 DEVICE=cpu bash finetune_smolvla.sh   # 只跑 2 步，检查流程能不能走通
+   ```
+
+   `smolvla_base` 预训练时的三个相机叫 `camera1/2/3`，我们只有一个 `front` 相机，所以脚本用 `--rename_map` 把 `front` 当成 `camera1`；缺的两个相机会被跳过。步数和批大小只是起点，不是调好的配方。
+
+4. **放回仿真评估**：
+
+   ```bash
+   python evaluate_smolvla.py --checkpoint outputs/train/smolvla_pick_cube/checkpoints/last/pretrained_model --episodes 20
+   ```
+
+   评估种子默认从 1000 开始，和录示范用的种子分开，这样测的是没见过的摆放。SmolVLA 一次预测 50 步动作，评估时默认每 10 步重新看图预测一次（`--n-action-steps`）。
+
+2026-09-27 在没有 GPU 的云主机上把这四步都走了一遍（3 个回合、96×96 图像、CPU 训练 2 步，每步约 1 秒）：流程能走通，但 2 步训练的模型成功率是 0/2。这只说明代码和数据格式对得上，**不说明 SmolVLA 能学会这个任务**。真正的数字要你在有显卡的机器上训练后自己测。
 
 ## 自己动手的实验点子
 
@@ -234,7 +271,11 @@ env.close()
 | `scripted_expert.py` | 脚本专家 `ScriptedExpert`：接近 → 下降 → 闭合 → 抬起 → 保持 |
 | `record_demos.py` | 录制示范数据（`.npz` + `meta.json`） |
 | `evaluate.py` | 评估函数 `evaluate(policy_fn, episodes, seed, render)` 和命令行工具 |
-| `test_pick_env.py` | 自动化测试 |
+| `export_lerobot.py` | 把示范数据转成 LeRobotDataset |
+| `finetune_smolvla.sh` | 用 `lerobot-train` 微调 SmolVLA |
+| `evaluate_smolvla.py` | 把微调后的 SmolVLA 放回场景里评估 |
+| `test_pick_env.py` | 环境、专家、录制的自动化测试 |
+| `test_lerobot_pipeline.py` | 导出、微调、评估流程的测试（需要额外条件的会自动跳过） |
 | `pytest.ini` | 让 pytest 把缓存留在本目录 |
 | `.gitignore` | 忽略 `outputs/`、虚拟环境和缓存 |
 
