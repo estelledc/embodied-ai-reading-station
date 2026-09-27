@@ -10,7 +10,7 @@ start_ref: 7bc75844de37a81c5c63db2a7a4130d3adacfcaa
 baseline_ref: origin/main
 review_after: owner-review-of-pr-54-55-56
 total_budget: 8 runs or 24 hours; 1 writer per worktree; read-only audits may run in parallel
-external_outcome: three-draft-prs-open-ci-recorded-awaiting-owner-review
+external_outcome: three-draft-prs-open-all-ci-green-awaiting-owner-review
 superseded_by: none
 ---
 
@@ -57,8 +57,16 @@ superseded_by: none
 ## 当前状态
 
 - 源实现锚点：`7bc75844de37a81c5c63db2a7a4130d3adacfcaa`。三条分支都从这里出发，改动文件互不重叠。
-- PR #54：CI `Validate pull request / build` 成功。
-- PR #55、#56：CI 结果以 GitHub 上的记录为准；创建时的本地验证见下文。
+- CI 结果（GitHub）：
+  - PR #54：`Validate pull request / build` 成功；
+  - PR #55：`build` 与新增的 `lab` 两个任务均成功；
+  - PR #56：`build` 成功。
+- 合并模拟：在临时 worktree 里按 #54 → #55 → #56 和 #56 → #55 → #54 两种顺序合并，都没有冲突。合并结果上，下面这些都通过了：
+  - 350 项单测；
+  - root 与 repo-base 各 160 项检查；
+  - `generate-provenance.mjs --check`；
+  - lab 51 passed、5 skipped；
+  - `npm audit --audit-level=high` 为 0。
 - 合并顺序可以任意：
   - CSP style 预算只在 #54 里改动（5146/207 → 5150/206，来自年份与会议字段变化带来的统计页柱宽变化）；
   - CHANGELOG 三处新增分别写在 Added、Changed、Fixed 小节；
