@@ -1,0 +1,5 @@
+# 运行时生成的数据与缓存不提交
+.venv/
+__pycache__/
+.pytest_cache/
+outputs/

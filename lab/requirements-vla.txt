@@ -1,0 +1,5 @@
+# 真实 CLIP、LeRobotDataset 导出、SmolVLA 微调与评估（需要 Python >= 3.12）
+# 没有 NVIDIA 显卡：先 pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+-r requirements.txt
+lerobot[smolvla,dataset]==0.6.0
+pillow>=10
