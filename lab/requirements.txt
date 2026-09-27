@@ -1,0 +1,5 @@
+# 阶段 1 练习 + 阶段 3 仿真：CPU 即可
+numpy>=1.26,<2.3
+mujoco>=3.2
+imageio>=2.30
+pytest>=8

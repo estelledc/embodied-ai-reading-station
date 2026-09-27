@@ -149,6 +149,17 @@ v2 papers/index 使用 `schema_version`、`content_commit`、`generated_at`、`d
 - 部署：GitHub Pages + Actions
 - 图片生成：codex CLI generate_image + cwebp
 
+## 从读到做：实践工作区
+
+[`lab/`](lab/) 只放能运行的代码和真实的运行记录，按四个阶段组织：两个只用 numpy 的小练习（图片怎么变成 token、动作怎么变成 token）→ 跑通 Task 2 基础项 VLM_Grasp_Interactive → 在 MuJoCo 里录示范、导出 LeRobotDataset、微调并评估 SmolVLA → 一个自己的小研究问题。每个阶段的出口是"拿出了什么"，不是"看完了什么"。
+
+```bash
+pip install -r lab/requirements.txt
+python -m pytest -q lab
+```
+
+AI agent 在云端 CPU 环境里跑过的内容记在 [`lab/README.md`](lab/README.md) 的"谁跑过什么"；本人的记录写在 [`lab/logs/`](lab/logs/)。
+
 ## 开发
 
 ```bash
