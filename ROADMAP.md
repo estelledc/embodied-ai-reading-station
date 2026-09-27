@@ -114,9 +114,9 @@ v1.2 冻结的正文债务(42 篇 Method 低于 1,500 字、120 篇低于旧宣�
 | 方向(本文) | ROADMAP.md |
 | 完成记录(唯一权威) | [CHANGELOG.md](CHANGELOG.md) |
 | 推进执行计划(现行) | [PLAN-1.3.md](PLAN-1.3.md)(本文的执行层:批次 0–9,出口 = v1.3.0) |
-| 工程执行计划 | [PLAN-1.3.md](PLAN-1.3.md)（现行 EAI13 编排）；[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)（v1.2 历史收口记录）；[PLAN-1.0.0.md](PLAN-1.0.0.md)、[PLAN-1.1.md](PLAN-1.1.md)（已完成） |
+| 工程执行计划 | [PLAN-1.3.md](PLAN-1.3.md)（现行 EAI13 编排）；[docs/v1.2-healthcheck-roadmap.md](docs/v1.2-healthcheck-roadmap.md)（v1.2 历史收口记录）；[PLAN-1.0.0.md](docs/archive/PLAN-1.0.0.md)、[PLAN-1.1.md](docs/archive/PLAN-1.1.md)（已完成） |
 | 科研任务与进度 | [research-task.md](research-task.md)、[progress.md](progress.md) |
-| 内容工作流 | [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)(精读标准)、[DEEPREAD-BATCH.md](DEEPREAD-BATCH.md)(批量升级记录) |
-| 历史存档 | [AUDIT.md](AUDIT.md)、[BACKLOG.md](BACKLOG.md)、[IMPROVEMENTS.md](IMPROVEMENTS.md)、[TRANSFORMATION.md](TRANSFORMATION.md)、[delivery-checklist.md](delivery-checklist.md) |
+| 内容工作流 | [AGENT-DEEPREAD.md](AGENT-DEEPREAD.md)(精读标准)、[DEEPREAD-BATCH.md](docs/archive/DEEPREAD-BATCH.md)(批量升级记录) |
+| 历史存档 | [docs/archive/](docs/archive/README.md)：旧计划、审计、改进建议、转型方案、交付清单、批量升级记录与首次部署说明 |
 
 **本文的维护方式**:每次发版(CHANGELOG 切版)时回看本文;主线状态变化直接改本文,并在 CHANGELOG 记一行。

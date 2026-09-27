@@ -14,7 +14,7 @@
 - [x] 22 章导读完成（guide/ch01 ~ ch22）
 - [x] 11 主题 × 3 篇 primer 入门体系
 - [x] 站点功能：30 天路径 / 主题 / Timeline / Graph / Heatmap / 搜索 / PWA
-- [x] 笔记质量提升：**2026-07-01 完成 156/156 全部升级为 deep-read**（见 `DEEPREAD-BATCH.md`）
+- [x] 笔记质量提升：**2026-07-01 完成 156/156 全部升级为 deep-read**（见 `docs/archive/DEEPREAD-BATCH.md`）
 
 ### 先打基础（5 篇入门轨道，learn track）
 

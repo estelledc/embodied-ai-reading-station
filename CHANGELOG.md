@@ -126,7 +126,7 @@
 - research-task.md 截止日期笔误（6/31 → 6/30）
 
 ### Known Issues
-- build.mjs / theme.css 拆分与测试框架（Vitest/Playwright）引入推迟到 1.1（见 [PLAN-1.0.0.md](PLAN-1.0.0.md) 的「明确不做」）
+- build.mjs / theme.css 拆分与测试框架（Vitest/Playwright）引入推迟到 1.1（见 [PLAN-1.0.0.md](docs/archive/PLAN-1.0.0.md) 的「明确不做」）
 
 ## [0.1.0] - 2026-06
 - 初始版本：156 篇笔记 + 22 章导读 + 11 主题 + 多视图站点，GitHub Pages 部署

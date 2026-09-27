@@ -1,5 +1,7 @@
 # 论文批量迭代 Playbook
 
+> 状态：历史 campaign 记录。40 篇 / 10 批扩充已于 2026-07-15 完成；按 `AGENTS.md` 的默认方向，新增论文不再是默认工作，只有调用方明确要求时才按本文执行。
+
 本文沉淀 2026-07-14 至 2026-07-15 的 40 篇 / 10 批 embodied AI 论文扩充 campaign。它的目标不是替代 `AGENTS.md`、`docs/operations-index.md` 或 `AGENT-DEEPREAD.md`，而是把这轮实际跑通的笔记、资产、provenance、PR、Pages 和 handoff 流程整理成后续可复用的项目文档。
 
 ## 1. 适用范围
@@ -30,7 +32,7 @@
 
 | 工件 | 角色 | 维护方式 |
 |---|---|---|
-| `PLAN-40-PAPERS.md` | 10 批 / 40 篇计划台账 | 每批从候选 -> 来源锁定 -> 本地验证 -> 已部署 |
+| `docs/archive/PLAN-40-PAPERS.md` | 10 批 / 40 篇计划台账 | 每批从候选 -> 来源锁定 -> 本地验证 -> 已部署 |
 | `SESSION-HANDOFF.md` | 当前 cycle 接班合同 | 每批顶部新增 active block，部署后标 completed |
 | `notes/<slug>.md` | Markdown 源真相 | deep-read 正文，只写可回到原文核验的事实 |
 | `.tmp-receipts/<slug>-assets.json` | 生成资产 portable receipt | 与资产一起提交，记录输入源、生成器、输出 hash |
@@ -47,7 +49,7 @@
 | Batch 9 | `discrete-policy`、`gembench`、`language-conditioned-manipulation-survey`、`safeembodai` | #48 | #49 |
 | Batch 10 | `causal-world-models-embodied-ai`、`call-for-embodied-ai`、`robotics-foundation-models-survey`、`embodied-ai-security-cps-survey` | #50 | #51 |
 
-完整 40 篇以 `PLAN-40-PAPERS.md` 为准，不在本文复制正文台账。
+完整 40 篇以 `docs/archive/PLAN-40-PAPERS.md` 为准，不在本文复制正文台账。
 
 ## 4. 标准批次流程
 
@@ -90,7 +92,7 @@ external_outcome: primary-sources-locked-pending-notes-assets-validation-pr-ci-m
 先本地去重：
 
 ```bash
-rg -n "<slug-or-title-keywords>" notes papers/provenance.json PLAN-40-PAPERS.md
+rg -n "<slug-or-title-keywords>" notes papers/provenance.json docs/archive/PLAN-40-PAPERS.md
 ```
 
 再锁一手来源：
@@ -108,10 +110,10 @@ pdftotext -layout /tmp/embodied-ai-batchNN/<slug>.pdf /tmp/embodied-ai-batchNN/<
 pdfinfo /tmp/embodied-ai-batchNN/<slug>.pdf
 ```
 
-来源锁定后更新 `PLAN-40-PAPERS.md` 与 `SESSION-HANDOFF.md`，提交一笔：
+来源锁定后更新 `docs/archive/PLAN-40-PAPERS.md` 与 `SESSION-HANDOFF.md`，提交一笔：
 
 ```bash
-git add PLAN-40-PAPERS.md SESSION-HANDOFF.md
+git add docs/archive/PLAN-40-PAPERS.md SESSION-HANDOFF.md
 git commit -m "更新论文计划：锁定第 NN 批来源"
 ```
 
@@ -348,7 +350,7 @@ Combined receipt 必须满足：
 |---|---|
 | `README.md` | note count、remote source count、质量边界 |
 | `CHANGELOG.md` | Unreleased 增加批次说明 |
-| `PLAN-40-PAPERS.md` | 状态列 |
+| `docs/archive/PLAN-40-PAPERS.md` | 状态列 |
 | `SESSION-HANDOFF.md` | cycle_state、统计、验收命令 |
 | `site/scripts/check.mjs` | expectedNoteCount、公开文案计数、CSP/size budget |
 | `site/scripts/lib/content.test.mjs` | `notes.length` |
@@ -473,7 +475,7 @@ for (const result of await Promise.all(paths.map(headOrGet))) {
 NODE
 ```
 
-部署后单独开 handoff PR，只改 `PLAN-40-PAPERS.md` 和 `SESSION-HANDOFF.md`。
+部署后单独开 handoff PR，只改 `docs/archive/PLAN-40-PAPERS.md` 和 `SESSION-HANDOFF.md`。
 
 ## 9. Handoff 完成态
 
